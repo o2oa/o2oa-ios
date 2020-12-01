@@ -15,6 +15,7 @@ class MeetingFormRoomPickerCell: Cell<OOMeetingRoomInfo>, CellType {
     
     override func setup() {
         super.setup()
+        selectionStyle = .none
     }
     
     override func update() {

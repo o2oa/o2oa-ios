@@ -107,7 +107,7 @@ class OOBindRegisterController: OOBaseViewController {
                             self.dismissVC(completion:nil)
                         }
                         let destVC = O2MainController.genernateVC()
-                        destVC.selectedIndex = 2
+//                        destVC.selectedIndex = 2
                         UIApplication.shared.keyWindow?.rootViewController = destVC
                         UIApplication.shared.keyWindow?.makeKeyAndVisible()
                     }
@@ -140,7 +140,7 @@ class OOBindRegisterController: OOBaseViewController {
                             self.dismissVC(completion:nil)
                         }
                         let destVC = O2MainController.genernateVC()
-                        destVC.selectedIndex = 2
+//                        destVC.selectedIndex = 2
                         UIApplication.shared.keyWindow?.rootViewController = destVC
                         UIApplication.shared.keyWindow?.makeKeyAndVisible()
                     }

@@ -117,7 +117,7 @@ class LoginViewController: UIViewController {
                         self.viewModel._saveAppConfigToDb()
                         //跳转到主页
                         let destVC = O2MainController.genernateVC()
-                        destVC.selectedIndex = 2 // 首页选中 TODO 图标不亮。。。。。
+//                        destVC.selectedIndex = 2 // 首页选中 TODO 图标不亮。。。。。
                         UIApplication.shared.keyWindow?.rootViewController = destVC
                         UIApplication.shared.keyWindow?.makeKeyAndVisible()
                     }
@@ -143,7 +143,7 @@ class LoginViewController: UIViewController {
                         self.viewModel._saveAppConfigToDb()
                         //跳转到主页
                         let destVC = O2MainController.genernateVC()
-                        destVC.selectedIndex = 2 // 首页选中 TODO 图标不亮。。。。。
+//                        destVC.selectedIndex = 2 // 首页选中 TODO 图标不亮。。。。。
                         UIApplication.shared.keyWindow?.rootViewController = destVC
                         UIApplication.shared.keyWindow?.makeKeyAndVisible()
                     }

@@ -65,6 +65,22 @@ struct O2 {
 
     // MARK: - 本地缓存目录
 
+    /// 会议管理缓存目录
+    public static func meetingFileLocalFolder() -> URL {
+        let manager = FileManager.default
+        let documentsURL = manager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let meetingFolder = documentsURL
+            .appendingPathComponent("O2")
+            .appendingPathComponent("meeting")
+        if !manager.fileExists(atPath: meetingFolder.path) {
+            do {
+                try manager.createDirectory(at: meetingFolder, withIntermediateDirectories: true, attributes: nil)
+            } catch {
+                DDLogError("创建文件夹错误，\(error.localizedDescription)")
+            }
+        }
+        return meetingFolder
+    }
     ///云盘缓存目录
     public static func cloudFileLocalFolder() -> URL {
         let manager = FileManager.default

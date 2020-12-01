@@ -11,8 +11,8 @@ import Eureka
 
 
 class DuringTime: NSObject {
-    var startTime: Date = Date()
-    var endTime = Date().add(component: .hour, value: 1)
+    var startTime: Date?
+    var endTime: Date?
 }
 
 
@@ -62,8 +62,8 @@ class MeetingFormTimeDuringCell: Cell<DuringTime>, CellType {
         super.update()
         //数据变化显示到界面
         if let value = self.row.value {
-            self.startTimeLabel.text = value.startTime .toString("HH时mm分")
-            self.endTimeLable.text = value.endTime.toString("HH时mm分")
+            self.startTimeLabel.text = value.startTime?.toString("HH时mm分")
+            self.endTimeLable.text = value.endTime?.toString("HH时mm分")
         }
     }
    

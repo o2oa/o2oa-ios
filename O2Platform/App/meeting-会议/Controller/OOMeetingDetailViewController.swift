@@ -8,12 +8,17 @@
 
 import UIKit
 import Eureka
+import QuickLook
 
 class OOMeetingDetailViewController: FormViewController {
 
  
     private lazy var  viewModel:OOMeetingCreateViewModel = {
        return OOMeetingCreateViewModel()
+    }()
+    //预览文件
+    private lazy var previewVC: CloudFilePreviewController = {
+        return CloudFilePreviewController()
     }()
     var meetingInfo: OOMeetingInfo? //需要传入会议对象
     
@@ -64,20 +69,56 @@ class OOMeetingDetailViewController: FormViewController {
                 row.title = "参会人员"
                 row.value = self.meetingInfo
             }
+            <<< LabelRow(){ row in
+                row.title = "会议描述"
+                row.value = self.meetingInfo?.summary
+            }
+            <<< MeetingFormAttachmentCellRow("attachmentList") { row in
+                row.cell.openFileAction = { atta in
+                    self.downloadFile(atta: atta)
+                }
+                row.value = self.meetingInfo?.attachmentList
+            }
             
+    }
+    
+    private func downloadFile(atta: OOMeetingAttachmentList) {
+        self.showLoading()
+        self.viewModel.downloadMeetingFile(file: atta) { (err, filePath) in
+            self.hideLoading()
+            if let path = filePath {
+                self.previewFile(path: path)
+            } else if let msg = err {
+                self.showError(title: msg)
+            }
+        }
+    }
+    
+    private func previewFile(path: URL) {
+        let currentURL = NSURL(fileURLWithPath: path.path)
+        print(currentURL.description)
+        print(path.path)
+        if QLPreviewController.canPreview(currentURL) {
+            self.previewVC.currentFileURLS.removeAll()
+            self.previewVC.currentFileURLS.append(currentURL)
+            self.previewVC.reloadData()
+            self.pushVC(self.previewVC)
+        }else {
+            self.showError(title: "当前文件类型不支持预览！")
+        }
     }
     
     @objc private func toUpdateMeeting() {
         if let meeting = self.meetingInfo {
-            self.performSegue(withIdentifier: "showEditMeeting", sender: meeting)
+            self.performSegue(withIdentifier: "showEditMeetingNew", sender: meeting)
         }
     }
     
    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showEditMeeting" {
-            if let vc = segue.destination as? OOMeetingCreateViewController {
+        if segue.identifier == "showEditMeetingNew" {
+            if let vc = segue.destination as? OOMeetingFormViewController {
                 if let meeting = sender as? OOMeetingInfo {
                     vc.meetingInfo = meeting
                     vc.fromDetail = true

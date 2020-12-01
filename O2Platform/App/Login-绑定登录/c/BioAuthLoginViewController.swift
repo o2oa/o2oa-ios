@@ -118,7 +118,7 @@ class BioAuthLoginViewController: UIViewController {
                      self.hideLoading()
                     DispatchQueue.main.async {
                         let destVC = O2MainController.genernateVC()
-                        destVC.selectedIndex = 2
+//                        destVC.selectedIndex = 2
                         UIApplication.shared.keyWindow?.rootViewController = destVC
                         UIApplication.shared.keyWindow?.makeKeyAndVisible()
                     }

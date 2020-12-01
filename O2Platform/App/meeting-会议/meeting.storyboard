@@ -39,7 +39,6 @@
                     <tabBarItem key="tabBarItem" title="邀请" image="icon_zjhy_nor" selectedImage="icon_zjhy_pro" id="5cl-UJ-ob5"/>
                     <connections>
                         <outlet property="tableView" destination="WO0-Qv-Wsx" id="FU3-Fn-8ww"/>
-                        <segue destination="sr4-Bj-7Cm" kind="show" identifier="showEditMeetingSgue" id="OEH-Pj-eDs"/>
                         <segue destination="Stp-Kt-FSy" kind="show" identifier="showMeetingDetail" id="jmR-kW-ZDU"/>
                     </connections>
                 </viewController>
@@ -79,7 +78,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pm9-0q-509" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1114" y="-1134"/>
+            <point key="canvasLocation" x="3154" y="642"/>
         </scene>
         <!--Meeting Room Detail View Controller-->
         <scene sceneID="e3T-cB-USG">
@@ -111,7 +110,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Inh-uD-hmQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2247" y="-1135"/>
+            <point key="canvasLocation" x="4354" y="642"/>
         </scene>
         <!--Meeting Detail View Controller-->
         <scene sceneID="5hn-7t-lPp">
@@ -125,12 +124,12 @@
                     </view>
                     <navigationItem key="navigationItem" id="8bI-Pi-nfq"/>
                     <connections>
-                        <segue destination="sr4-Bj-7Cm" kind="show" identifier="showEditMeeting" id="Sbf-BZ-8SW"/>
+                        <segue destination="xhD-LR-7UF" kind="show" identifier="showEditMeetingNew" id="Ivm-Lu-l8X"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yok-wP-XV2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1159" y="1110"/>
+            <point key="canvasLocation" x="881" y="1110"/>
         </scene>
         <!--Meeting Form View Controller-->
         <scene sceneID="VHM-Ea-hry">
@@ -149,7 +148,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AF7-fU-Dx0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2471" y="1110"/>
+            <point key="canvasLocation" x="2177" y="1110"/>
         </scene>
         <!--会议-->
         <scene sceneID="F6p-6J-Dvv">
@@ -181,113 +180,13 @@
                     <tabBarItem key="tabBarItem" title="会议" image="icon_huiyi_nor" selectedImage="icon_huiyi_pro" id="TkH-d1-ljz"/>
                     <connections>
                         <outlet property="tableView" destination="aRc-Qw-Nkh" id="j9J-yl-OB0"/>
-                        <segue destination="sr4-Bj-7Cm" kind="show" identifier="showCreateMeetingSgue" id="cqA-vL-IU5"/>
                         <segue destination="Stp-Kt-FSy" kind="show" identifier="showMeetingDetail" id="RwV-B2-gpp"/>
                         <segue destination="xhD-LR-7UF" kind="show" identifier="showMeetingForm" id="vuy-SZ-f1L"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KJa-uQ-N7J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="686" y="172"/>
-        </scene>
-        <!--Meeting Create View Controller-->
-        <scene sceneID="KHp-Be-Tza">
-            <objects>
-                <viewController storyboardIdentifier="meetingCreateVC" id="sr4-Bj-7Cm" customClass="OOMeetingCreateViewController" customModule="O2Platform" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="vBy-U9-Cpy">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lmO-6k-ReQ" customClass="OOMeetingCreateFormView" customModule="O2Platform" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="175"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="175" id="TbO-PL-M67"/>
-                                </constraints>
-                            </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rKZ-tL-7bA">
-                                <rect key="frame" x="0.0" y="194" width="375" height="453"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="MvY-Oa-I0J">
-                                    <size key="itemSize" width="60" height="75"/>
-                                    <size key="headerReferenceSize" width="320" height="44"/>
-                                    <size key="footerReferenceSize" width="320" height="20"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="SVR-7J-LSa">
-                                        <rect key="frame" x="0.0" y="44" width="60" height="75"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="60" height="75"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </view>
-                                    </collectionViewCell>
-                                </cells>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bCp-pt-nSQ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </collectionReusableView>
-                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="pa8-HP-Ma5">
-                                    <rect key="frame" x="0.0" y="119" width="375" height="20"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </collectionReusableView>
-                            </collectionView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="hfh-Yb-S11"/>
-                        <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="rKZ-tL-7bA" firstAttribute="leading" secondItem="hfh-Yb-S11" secondAttribute="leading" id="9k8-WC-8yM"/>
-                            <constraint firstItem="rKZ-tL-7bA" firstAttribute="top" secondItem="lmO-6k-ReQ" secondAttribute="bottom" constant="19" id="Nen-u3-IHk"/>
-                            <constraint firstItem="rKZ-tL-7bA" firstAttribute="bottom" secondItem="hfh-Yb-S11" secondAttribute="bottom" id="XhJ-gg-o1s"/>
-                            <constraint firstItem="rKZ-tL-7bA" firstAttribute="trailing" secondItem="hfh-Yb-S11" secondAttribute="trailing" id="bAX-8d-eTD"/>
-                            <constraint firstItem="lmO-6k-ReQ" firstAttribute="leading" secondItem="hfh-Yb-S11" secondAttribute="leading" id="ha1-wD-WZI"/>
-                            <constraint firstItem="lmO-6k-ReQ" firstAttribute="top" secondItem="vBy-U9-Cpy" secondAttribute="top" id="uH9-6Y-G6K"/>
-                            <constraint firstItem="lmO-6k-ReQ" firstAttribute="trailing" secondItem="hfh-Yb-S11" secondAttribute="trailing" id="zGi-t1-cOv"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="918-gD-7Ez"/>
-                    <connections>
-                        <outlet property="ooFormView" destination="lmO-6k-ReQ" id="1ie-8T-Ft3"/>
-                        <outlet property="ooPersonCollectionView" destination="rKZ-tL-7bA" id="WVi-yx-oNR"/>
-                        <outlet property="topLayouConstraint" destination="uH9-6Y-G6K" id="wh4-bC-P4e"/>
-                        <segue destination="VXJ-tL-8ic" kind="presentation" identifier="showPersonSelectedSegue" id="3c1-8o-qOu"/>
-                        <segue destination="VTD-mP-cJf" kind="show" identifier="showPickerRoom" id="tQL-f1-ym1"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cC9-lv-qiD" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1586" y="173"/>
-        </scene>
-        <!--选择用户-->
-        <scene sceneID="u7n-G2-Onp">
-            <objects>
-                <tableViewController title="选择用户" id="mjR-iH-o32" customClass="OOMeetingSelectedPersonController" customModule="O2Platform" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="4o5-Tz-n4Y">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="I6R-VA-e7T">
-                                <rect key="frame" x="0.0" y="28" width="375" height="60"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="I6R-VA-e7T" id="8EH-2v-zhD">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="mjR-iH-o32" id="62R-2K-Y8K"/>
-                            <outlet property="delegate" destination="mjR-iH-o32" id="vOi-Df-Yf8"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="UZt-ak-cph"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hDi-cv-aYO" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3310" y="172"/>
+            <point key="canvasLocation" x="881" y="149"/>
         </scene>
         <!--会议管理-->
         <scene sceneID="vfk-Jf-EQj">
@@ -308,27 +207,9 @@
             </objects>
             <point key="canvasLocation" x="-206" y="174"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="pE2-gZ-HXN">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="VXJ-tL-8ic" customClass="ZLNavigationController" customModule="O2Platform" customModuleProvider="target" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="G6d-1V-eSR">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="mjR-iH-o32" kind="relationship" relationship="rootViewController" id="c3y-jS-Vqr"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="v4M-so-uX1" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2498" y="172"/>
-        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="cqA-vL-IU5"/>
+        <segue reference="Ivm-Lu-l8X"/>
         <segue reference="RwV-B2-gpp"/>
         <segue reference="i02-wa-pKi"/>
     </inferredMetricsTieBreakers>

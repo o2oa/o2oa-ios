@@ -45,8 +45,13 @@ enum O2MeetingAPI {
     case meetingItemRejectById(String)
     
     case meetingItemByCreate(OOMeetingFormBean)
+    case meetingCreate(OOMeetingInfo)
     case meetingItemUpdate(OOMeetingInfo)
     case meetingItemDelete(String)
+    case meetingUploadFile(String, String, Data)
+    case meetingAttachmentList(String)
+    case meetingAttachmentDelete(String)
+    case meetingAttachmentDownload(OOMeetingAttachmentList)
     
     
     
@@ -134,12 +139,20 @@ extension O2MeetingAPI:TargetType{
             return "/jaxrs/meeting/\(id)/manual/completed"
         case .meetingItemRejectById(let id):
             return "/jaxrs/meeting/\(id)/reject"
-        case .meetingItemByCreate(_):
+        case .meetingItemByCreate(_), .meetingCreate(_):
             return "/jaxrs/meeting"
         case .meetingItemUpdate(let form):
             return "/jaxrs/meeting/\(form.id!)"
         case .meetingItemDelete(let id):
             return "/jaxrs/meeting/\(id)"
+        case .meetingUploadFile(let meetingId, _, _):
+            return "/jaxrs/attachment/meeting/\(meetingId)/upload/false"
+        case .meetingAttachmentList(let meetingId):
+            return "/jaxrs/attachment/list/meeting/\(meetingId)"
+        case .meetingAttachmentDelete(let id):
+            return "/jaxrs/attachment/\(id)"
+        case .meetingAttachmentDownload(let atta):
+            return "/jaxrs/attachment/\(atta.id!)/download/false"
         }
             
     }
@@ -202,12 +215,20 @@ extension O2MeetingAPI:TargetType{
             return .get
         case .meetingItemRejectById(_):
             return .get
-        case .meetingItemByCreate(_):
+        case .meetingItemByCreate(_), .meetingCreate(_):
             return .post
         case .meetingItemUpdate(_):
             return .put
         case .meetingItemDelete(_):
             return .delete
+        case .meetingUploadFile(_, _, _):
+            return .post
+        case .meetingAttachmentList(_):
+            return .get
+        case .meetingAttachmentDelete(_):
+            return .delete
+        case .meetingAttachmentDownload(_):
+            return .get
         }
     }
     
@@ -219,8 +240,24 @@ extension O2MeetingAPI:TargetType{
         switch self {
         case .meetingItemByCreate(let mBean):
             return .requestParameters(parameters: mBean.toJSON()!, encoding: JSONEncoding.default)
+        case .meetingCreate(let mBean):
+            return .requestParameters(parameters: mBean.toJSON()!, encoding: JSONEncoding.default)
         case .meetingItemUpdate(let meeting):
             return .requestParameters(parameters: meeting.toJSON()!, encoding: JSONEncoding.default)
+        case .meetingUploadFile(_, let fileName, let data):
+            //字符串类型 文件名
+            let strData = fileName.data(using: .utf8)
+            let fileNameData = MultipartFormData(provider: .data(strData!), name: "fileName")
+            //文件类型
+            let fileData = MultipartFormData(provider: .data(data), name: "file", fileName: fileName)
+            return .uploadMultipart([fileData, fileNameData])
+        case .meetingAttachmentDownload(let atta):
+            let myDest:DownloadDestination = { temporaryURL, response in
+                let fileName = "\(atta.name ?? "untitle").\(atta.extension ?? "png")"
+                let fileURL = O2.meetingFileLocalFolder().appendingPathComponent(fileName)
+                return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
+            }
+            return .downloadDestination(myDest)
         default:
             return .requestPlain
         }

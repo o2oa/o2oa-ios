@@ -102,7 +102,7 @@ extension OOMeetingCreateViewModel{
     //创建会议
     func createMeetingAction(_ meeting:OOMeetingFormBean,completedBlock:@escaping (_ returnMessage:String?) -> Void){
         ooMeetingAPI.request(.meetingItemByCreate(meeting)) { (result) in
-            let myResult = OOResult<BaseModelClass<[OOCommonModel]>>(result)
+            let myResult = OOResult<BaseModelClass<OOCommonIdModel>>(result)
             if myResult.isResultSuccess() {
                 completedBlock(nil)
             }else{
@@ -111,14 +111,65 @@ extension OOMeetingCreateViewModel{
         }
         
     }
+    
+    /// 创建会议
+    func createMeetingActionNew(_ meeting:OOMeetingInfo, completedBlock:@escaping (_ returnMessage:String?, _ meetingId: String?) -> Void){
+        ooMeetingAPI.request(.meetingCreate(meeting)) { (result) in
+            let myResult = OOResult<BaseModelClass<OOCommonIdModel>>(result)
+            if myResult.isResultSuccess() {
+                completedBlock(nil, myResult.model?.data?.id)
+            }else{
+                completedBlock(myResult.error?.errorDescription, nil)
+            }
+        }
+        
+    }
     /// 更新会议
     func updateMeetingAction(meeting: OOMeetingInfo, completedBlock: @escaping (_ returnMessage:String?) -> Void) {
         ooMeetingAPI.request(.meetingItemUpdate(meeting)) { (result) in
-            let myResult = OOResult<BaseModelClass<[OOCommonModel]>>(result)
+            let myResult = OOResult<BaseModelClass<OOCommonIdModel>>(result)
             if myResult.isResultSuccess() {
                 completedBlock(nil)
             }else{
                 completedBlock(myResult.error?.errorDescription)
+            }
+        }
+    }
+    
+    /// 上传会议材料 返回当前会议的材料列表
+    func uploadMeetingFile(meetingId: String, fileName: String, file: Data, completedBlock:@escaping (_ returnMessage:String?, _ list: [OOMeetingAttachmentList]?) -> Void) {
+        ooMeetingAPI.request(.meetingUploadFile(meetingId, fileName, file)) { result in
+            let myResult = OOResult<BaseModelClass<OOCommonIdModel>>(result)
+            if myResult.isResultSuccess() {
+                self.ooMeetingAPI.request(.meetingAttachmentList(meetingId)) { attListResult in
+                    let attList = OOResult<BaseModelClass<[OOMeetingAttachmentList]>>(attListResult)
+                    if attList.isResultSuccess() {
+                        completedBlock(nil, attList.model?.data)
+                    }else {
+                        completedBlock(attList.error?.errorDescription, nil)
+                    }
+                }
+            }else{
+                completedBlock(myResult.error?.errorDescription, nil)
+            }
+        }
+    }
+    
+    /// 删除一个会议材料 返回当前会议的材料列表
+    func deleteMeetingFile(meetingId: String, fileId: String, completedBlock:@escaping (_ returnMessage:String?, _ list: [OOMeetingAttachmentList]?) -> Void) {
+        ooMeetingAPI.request(.meetingAttachmentDelete(fileId)) { deleteResult in
+            let myDeleteResult = OOResult<BaseModelClass<OOCommonIdModel>>(deleteResult)
+            if myDeleteResult.isResultSuccess() {
+                self.ooMeetingAPI.request(.meetingAttachmentList(meetingId)) { attListResult in
+                    let myAttListResult = OOResult<BaseModelClass<[OOMeetingAttachmentList]>>(attListResult)
+                    if myAttListResult.isResultSuccess() {
+                        completedBlock(nil, myAttListResult.model?.data)
+                    }else {
+                        completedBlock(myAttListResult.error?.errorDescription, nil)
+                    }
+                }
+            }else {
+                completedBlock(myDeleteResult.error?.errorDescription, nil)
             }
         }
     }
@@ -155,6 +206,23 @@ extension OOMeetingCreateViewModel{
                 completedBlock(myResult.error?.errorDescription)
             }
         }
+    }
+    
+    /// 下载附件到本地 返回本地url 可以前端打开
+    func downloadMeetingFile(file: OOMeetingAttachmentList, completedBlock: @escaping (_ error: String?, _ url: URL?) -> Void) {
+        self.ooMeetingAPI.request(.meetingAttachmentDownload(file)) { result in
+            switch result {
+            case .success(_):
+                completedBlock(nil, self.meetingFilePath(file: file))
+            case .failure(let err):
+                completedBlock(err.errorDescription, nil)
+            }
+        }
+    }
+    
+    private func meetingFilePath(file: OOMeetingAttachmentList) -> URL {
+        let fileName = "\(file.name ?? "untitle").\(file.extension ?? "png")"
+        return O2.meetingFileLocalFolder().appendingPathComponent(fileName)
     }
     
     //表单模型
