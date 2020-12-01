@@ -17,9 +17,11 @@ class MeetingFormChoosePersonCell: Cell<[OOPersonModel]>, CellType {
     private var persons: [OOPersonModel] = []
     
     var viewModel:OOMeetingCreateViewModel?
+    var isUpdate = false // 更新会议只能增加不能删除
     
     override func setup() {
         super.setup()
+        selectionStyle = .none
         self.personsView.dataSource = self
         self.personsView.delegate = self
         self.personsView.register(UINib.init(nibName: "OOMeetingPersonCell", bundle: nil), forCellWithReuseIdentifier: "OOMeetingPersonCell")
@@ -47,8 +49,8 @@ class MeetingFormChoosePersonCell: Cell<[OOPersonModel]>, CellType {
     //会更新数据？
     func resetValue(persons: [OOPersonModel]) {
         self.row.value = persons
-        self.persons = persons
-        self.personsView.reloadData()
+        self.row.updateCell()
+        print("reset Value........")
     }
 }
 
@@ -68,15 +70,15 @@ extension MeetingFormChoosePersonCell: UICollectionViewDataSource,UICollectionVi
             let uCell = cell as! (OOMeetingPersonCell & Configurable)
             let person = self.persons[indexPath.row - 1]
             uCell.viewModel = self.viewModel
-            uCell.setupModel(p: person)
+            uCell.setupModel(p: person, ishiddenDelBtn: isUpdate)
              
         }
         return cell!
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row != 0 {
-            self.persons.remove(at: indexPath.row)
+        if indexPath.row != 0 && !isUpdate {
+            self.persons.remove(at: indexPath.row - 1)
             self.resetValue(persons: self.persons)
         }
     }
@@ -94,7 +96,7 @@ extension MeetingFormChoosePersonCell: OOMeetingPersonActionCellDelegate {
     func addPersonActionClick(_ sender: UIButton) {
         //已经选择的人员
         var alreadyChoosePersons: [String] = []
-        if !self.persons.isEmpty {
+        if !self.persons.isEmpty && !self.isUpdate {
             self.persons.forEach { (model) in
                 if let dn = model.distinguishedName {
                     alreadyChoosePersons.append(dn)
@@ -117,6 +119,11 @@ extension MeetingFormChoosePersonCell: OOMeetingPersonActionCellDelegate {
                         persons.append(pm)
                     })
                     if !persons.isEmpty {
+                        if !self.persons.isEmpty && self.isUpdate {
+                            self.persons.forEach { (model) in
+                                persons.append(model)
+                            }
+                        }
                         self.resetValue(persons: persons)
                     }
                 }

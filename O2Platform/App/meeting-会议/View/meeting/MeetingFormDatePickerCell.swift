@@ -22,11 +22,11 @@ class MeetingFormDatePickerCell: Cell<Date>, CellType  {
     
     override func update() {
         super.update()
-        var defaultDate = Date()
+        
         if let v = row.value {
-            defaultDate = v
+            self.dateLabel.text = v.toString("yyyy-MM-dd")
         }
-        self.dateLabel.text = defaultDate.toString("yyyy-MM-dd")
+        
     }
     
     override func didSelect() {

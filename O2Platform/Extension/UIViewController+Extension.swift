@@ -341,8 +341,16 @@ extension UIViewController {
     //照片选择器
     func choosePhotoWithImagePicker(callback: @escaping (String, Data)-> Void) {
         let vc = FileBSImagePickerViewController().bsImagePicker()
-        vc.settings.fetch.assets.supportedMediaTypes = [.image]
-        presentImagePicker(vc, select: nil, deselect: nil, cancel: nil, finish: {
+//        vc.settings.fetch.assets.supportedMediaTypes = [.image]
+        presentImagePicker(vc, select: { (asset: PHAsset) -> Void in
+                // User selected an asset.
+                // Do something with it, start upload perhaps?
+            }, deselect: { (asset: PHAsset) -> Void in
+                // User deselected an assets.
+                // Do something, cancel upload?
+            }, cancel: { (assets: [PHAsset]) -> Void in
+                // User cancelled. And this where the assets currently selected.
+            }, finish: {
             (arr) in
             let count = arr.count
             print("选择了照片数量：\(count)")

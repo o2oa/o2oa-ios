@@ -16,14 +16,10 @@ class O2MainController: UITabBarController, UITabBarControllerDelegate {
     static var tabBarVC: O2MainController!
 
     static func genernateVC() -> O2MainController {
-//        guard let vc = tabBarVC else {
-//            tabBarVC = O2MainController()
-//            return tabBarVC
-//        }
-//        return vc
         return O2MainController()
     }
 
+    private var isSimple = false
     private var currentIndex: Int = 0
     // demo服务器弹出公告
     private var demoAlertView = O2DemoAlertView()
@@ -48,10 +44,20 @@ class O2MainController: UITabBarController, UITabBarControllerDelegate {
         //
         self.tabBar.tintColor = O2ThemeManager.color(for: "Base.base_color")!
         self.delegate = self
-        _initControllers()
-        selectedIndex = 2
-        currentIndex = 2
-//        _loginIM()
+        // 配置是否简易模式
+        if let mode = O2AuthSDK.shared.customStyle()?.simpleMode, mode == true {
+            isSimple = true
+        }
+        if isSimple {
+            _initSimpleControllers()
+            selectedIndex = 0
+            currentIndex = 0
+        }else {
+            _initControllers()
+            selectedIndex = 2
+            currentIndex = 2
+        }
+
         if O2IsConnect2Collect == false {
             //处理内部直连的时候推送的设备绑定
             O2JPushManager.shared.o2JPushBind()
@@ -87,9 +93,9 @@ class O2MainController: UITabBarController, UITabBarControllerDelegate {
         self.currentIndex = tabBarController.selectedIndex
     }
 
+    /// 普通模式
     private func _initControllers() {
         //消息
-//        let conversationVC = JCConversationListViewController()
         let conversationVC = IMConversationListViewController()
         conversationVC.title = "消息"
         let messages = ZLNavigationController(rootViewController: conversationVC)
@@ -123,6 +129,26 @@ class O2MainController: UITabBarController, UITabBarControllerDelegate {
 
         self.viewControllers = [messages, address, mainVC, apps, settings]
 
+    }
+    
+    /// 简版 只有首页和设置
+    private func _initSimpleControllers() {
+        // main
+        let mainVC = mainController()
+        mainVC.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "icon_zhuye_nor"), selectedImage: O2ThemeManager.image(for: "Icon.icon_zhuye_pre"))
+        mainVC.tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
+        let blurImage = OOCustomImageManager.default.loadImage(.index_bottom_menu_logo_blur)
+        let newBlurImage = blurImage?.withRenderingMode(.alwaysOriginal)
+        mainVC.tabBarItem.image = newBlurImage
+        let focusImage = OOCustomImageManager.default.loadImage(.index_bottom_menu_logo_focus)
+        let newFocusImage = focusImage?.withRenderingMode(.alwaysOriginal)
+        mainVC.tabBarItem.selectedImage = newFocusImage
+        //设置
+        let settingsVC = OOTabBarHelper.getVC(storyboardName: "setting", vcName: nil)
+        let settings = ZLNavigationController(rootViewController: settingsVC)
+        settings.tabBarItem = UITabBarItem(title: "设置", image: UIImage(named: "setting_normal"), selectedImage: O2ThemeManager.image(for: "Icon.setting_selected"))
+
+        self.viewControllers = [mainVC, settings]
     }
 
     private func mainController() -> UIViewController {
@@ -201,6 +227,7 @@ class O2MainController: UITabBarController, UITabBarControllerDelegate {
             }
         })
     }
+    
     //消息模块未读消息数量加1
     private func addUnreadNumber() {
         self.viewControllers?.forEach({ (vc) in
@@ -222,28 +249,6 @@ class O2MainController: UITabBarController, UITabBarControllerDelegate {
             }
         })
     }
-
-//    private func _loginIM() {
-//        viewModel.registerIM().then { (result) in
-//            self.viewModel.loginIM().then({ (result) in
-//                Log.debug(message: "IM登陆完成")
-//            })
-//        }.catch { (imError) in
-//            let error = imError as! OOLoginError
-//            switch error {
-//            case .imRegisterFail(let myErr):
-//                Log.debug(message: myErr.errorDescription!)
-//                self.viewModel.loginIM().then({ (result) in
-//                    Log.debug(message: "IM登陆完成")
-//                }).catch({ (loginError) in
-//                    Log.error(message: "im Login Error \(loginError)")
-//                })
-//                break
-//            default:
-//                break
-//            }
-//        }
-//    }
 
     
     // MARK: - app update 

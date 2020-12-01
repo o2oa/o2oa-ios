@@ -254,6 +254,8 @@
 		B19D55BC25358EF800CE3B22 /* SymmetricCryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19D55BB25358EF800CE3B22 /* SymmetricCryptor.swift */; };
 		B19FF89E226DBD3600FA0B76 /* O2JsApiNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19FF89D226DBD3600FA0B76 /* O2JsApiNotification.swift */; };
 		B1ABAA0C237E498C0027EC48 /* O2VersionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ABAA0B237E498C0027EC48 /* O2VersionManager.swift */; };
+		B1ACCC642574C38E00949F8C /* MeetingFormAttachmentItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ACCC622574C38E00949F8C /* MeetingFormAttachmentItemCell.swift */; };
+		B1ACCC652574C38E00949F8C /* MeetingFormAttachmentItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1ACCC632574C38E00949F8C /* MeetingFormAttachmentItemCell.xib */; };
 		B1AE4E6621A3F60200183FCD /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AE4E6521A3F60200183FCD /* Data+Extension.swift */; };
 		B1B0102823585473002BF874 /* CloudFileListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B0102723585473002BF874 /* CloudFileListController.swift */; };
 		B1B0102B23586831002BF874 /* CFFolderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B0102923586831002BF874 /* CFFolderTableViewCell.swift */; };
@@ -285,6 +287,8 @@
 		B1C0A172256E2AF800C7041E /* MeetingFormRoomPickerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1C0A170256E2AF800C7041E /* MeetingFormRoomPickerCell.xib */; };
 		B1C0A1A2256E3EEA00C7041E /* MeetingFormChoosePersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C0A1A0256E3EEA00C7041E /* MeetingFormChoosePersonCell.swift */; };
 		B1C0A1A3256E3EEA00C7041E /* MeetingFormChoosePersonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1C0A1A1256E3EEA00C7041E /* MeetingFormChoosePersonCell.xib */; };
+		B1C0A1A7256E552D00C7041E /* MeetingFormAttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C0A1A5256E552D00C7041E /* MeetingFormAttachmentCell.swift */; };
+		B1C0A1A8256E552D00C7041E /* MeetingFormAttachmentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1C0A1A6256E552D00C7041E /* MeetingFormAttachmentCell.xib */; };
 		B1C19025211437E200935829 /* OOCalendarLeftMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C19024211437E200935829 /* OOCalendarLeftMenuController.swift */; };
 		B1C1905D2114410D00935829 /* CalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C1905C2114410D00935829 /* CalendarTableViewCell.swift */; };
 		B1C303E622D58C1A00C17E5A /* CMSAttachmentInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C303E522D58C1A00C17E5A /* CMSAttachmentInfoResponse.swift */; };
@@ -350,9 +354,7 @@
 		E40E24AD20B7DA3C009F8BE7 /* OOMeetingRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40E247420B7DA3C009F8BE7 /* OOMeetingRoomViewModel.swift */; };
 		E40E24AE20B7DA3C009F8BE7 /* OOMeetingAcceptController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40E247620B7DA3C009F8BE7 /* OOMeetingAcceptController.swift */; };
 		E40E24AF20B7DA3C009F8BE7 /* OOMeetingRoomDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40E247720B7DA3C009F8BE7 /* OOMeetingRoomDetailViewController.swift */; };
-		E40E24B020B7DA3C009F8BE7 /* OOMeetingSelectedPersonController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40E247820B7DA3C009F8BE7 /* OOMeetingSelectedPersonController.swift */; };
 		E40E24B120B7DA3C009F8BE7 /* OOMeetingInforController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40E247920B7DA3C009F8BE7 /* OOMeetingInforController.swift */; };
-		E40E24B220B7DA3C009F8BE7 /* OOMeetingCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40E247A20B7DA3C009F8BE7 /* OOMeetingCreateViewController.swift */; };
 		E40E24B320B7DA3C009F8BE7 /* OOMeetingMeetingRoomManageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40E247B20B7DA3C009F8BE7 /* OOMeetingMeetingRoomManageController.swift */; };
 		E40E24B420B7DA3C009F8BE7 /* OOMeetingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40E247D20B7DA3C009F8BE7 /* OOMeetingModels.swift */; };
 		E40E24B520B7DA3C009F8BE7 /* OOFormModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40E247E20B7DA3C009F8BE7 /* OOFormModels.swift */; };
@@ -1440,6 +1442,8 @@
 		B19D55BB25358EF800CE3B22 /* SymmetricCryptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SymmetricCryptor.swift; sourceTree = "<group>"; };
 		B19FF89D226DBD3600FA0B76 /* O2JsApiNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2JsApiNotification.swift; sourceTree = "<group>"; };
 		B1ABAA0B237E498C0027EC48 /* O2VersionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2VersionManager.swift; sourceTree = "<group>"; };
+		B1ACCC622574C38E00949F8C /* MeetingFormAttachmentItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFormAttachmentItemCell.swift; sourceTree = "<group>"; };
+		B1ACCC632574C38E00949F8C /* MeetingFormAttachmentItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingFormAttachmentItemCell.xib; sourceTree = "<group>"; };
 		B1AE4E6521A3F60200183FCD /* Data+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Extension.swift"; sourceTree = "<group>"; };
 		B1B0102723585473002BF874 /* CloudFileListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFileListController.swift; sourceTree = "<group>"; };
 		B1B0102923586831002BF874 /* CFFolderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CFFolderTableViewCell.swift; sourceTree = "<group>"; };
@@ -1471,6 +1475,8 @@
 		B1C0A170256E2AF800C7041E /* MeetingFormRoomPickerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingFormRoomPickerCell.xib; sourceTree = "<group>"; };
 		B1C0A1A0256E3EEA00C7041E /* MeetingFormChoosePersonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFormChoosePersonCell.swift; sourceTree = "<group>"; };
 		B1C0A1A1256E3EEA00C7041E /* MeetingFormChoosePersonCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingFormChoosePersonCell.xib; sourceTree = "<group>"; };
+		B1C0A1A5256E552D00C7041E /* MeetingFormAttachmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFormAttachmentCell.swift; sourceTree = "<group>"; };
+		B1C0A1A6256E552D00C7041E /* MeetingFormAttachmentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingFormAttachmentCell.xib; sourceTree = "<group>"; };
 		B1C19024211437E200935829 /* OOCalendarLeftMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOCalendarLeftMenuController.swift; sourceTree = "<group>"; };
 		B1C1905C2114410D00935829 /* CalendarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTableViewCell.swift; sourceTree = "<group>"; };
 		B1C303E522D58C1A00C17E5A /* CMSAttachmentInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSAttachmentInfoResponse.swift; sourceTree = "<group>"; };
@@ -1543,9 +1549,7 @@
 		E40E247420B7DA3C009F8BE7 /* OOMeetingRoomViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OOMeetingRoomViewModel.swift; sourceTree = "<group>"; };
 		E40E247620B7DA3C009F8BE7 /* OOMeetingAcceptController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OOMeetingAcceptController.swift; sourceTree = "<group>"; };
 		E40E247720B7DA3C009F8BE7 /* OOMeetingRoomDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OOMeetingRoomDetailViewController.swift; sourceTree = "<group>"; };
-		E40E247820B7DA3C009F8BE7 /* OOMeetingSelectedPersonController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OOMeetingSelectedPersonController.swift; sourceTree = "<group>"; };
 		E40E247920B7DA3C009F8BE7 /* OOMeetingInforController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OOMeetingInforController.swift; sourceTree = "<group>"; };
-		E40E247A20B7DA3C009F8BE7 /* OOMeetingCreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OOMeetingCreateViewController.swift; sourceTree = "<group>"; };
 		E40E247B20B7DA3C009F8BE7 /* OOMeetingMeetingRoomManageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OOMeetingMeetingRoomManageController.swift; sourceTree = "<group>"; };
 		E40E247D20B7DA3C009F8BE7 /* OOMeetingModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OOMeetingModels.swift; sourceTree = "<group>"; };
 		E40E247E20B7DA3C009F8BE7 /* OOFormModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OOFormModels.swift; sourceTree = "<group>"; };
@@ -2989,9 +2993,7 @@
 			children = (
 				E40E247620B7DA3C009F8BE7 /* OOMeetingAcceptController.swift */,
 				E40E247720B7DA3C009F8BE7 /* OOMeetingRoomDetailViewController.swift */,
-				E40E247820B7DA3C009F8BE7 /* OOMeetingSelectedPersonController.swift */,
 				E40E247920B7DA3C009F8BE7 /* OOMeetingInforController.swift */,
-				E40E247A20B7DA3C009F8BE7 /* OOMeetingCreateViewController.swift */,
 				E40E247B20B7DA3C009F8BE7 /* OOMeetingMeetingRoomManageController.swift */,
 				B12FD1EE228425BE00E636BA /* OOMeetingTabBarController.swift */,
 				B1B144ED2564C74A00CD7D2B /* OOMeetingDetailViewController.swift */,
@@ -3057,6 +3059,10 @@
 		E40E249320B7DA3C009F8BE7 /* meeting */ = {
 			isa = PBXGroup;
 			children = (
+				B1C0A1A5256E552D00C7041E /* MeetingFormAttachmentCell.swift */,
+				B1C0A1A6256E552D00C7041E /* MeetingFormAttachmentCell.xib */,
+				B1ACCC622574C38E00949F8C /* MeetingFormAttachmentItemCell.swift */,
+				B1ACCC632574C38E00949F8C /* MeetingFormAttachmentItemCell.xib */,
 				B1C0A1A0256E3EEA00C7041E /* MeetingFormChoosePersonCell.swift */,
 				B1C0A1A1256E3EEA00C7041E /* MeetingFormChoosePersonCell.xib */,
 				B14CCF79256DEE66003ECC3C /* MeetingFormDatePickerCell.swift */,
@@ -4875,6 +4881,7 @@
 				B165CD5F2242093500373B66 /* OOAlertViewController.xib in Resources */,
 				E46E6C7C1DD41F5D00AB7561 /* ZSSh4@2x.png in Resources */,
 				B168BF2B24F797DF0070329F /* bds_license.dat in Resources */,
+				B1C0A1A8256E552D00C7041E /* MeetingFormAttachmentCell.xib in Resources */,
 				B1908E4C22687B1A00D75632 /* Localizable.strings in Resources */,
 				E4B2321020B2A9F60082F30A /* OOAttandanceWorkPlaceController.xib in Resources */,
 				E441994C206C8A1A0050AE0C /* OORegisterTableView.xib in Resources */,
@@ -4922,6 +4929,7 @@
 				E46E6CB51DD41F5D00AB7561 /* jQuery.js in Resources */,
 				E46E6C801DD41F5D00AB7561 /* ZSSh6@2x.png in Resources */,
 				E46E6C971DD41F5D00AB7561 /* ZSSparagraph.png in Resources */,
+				B1ACCC652574C38E00949F8C /* MeetingFormAttachmentItemCell.xib in Resources */,
 				B1489CAE2491FF13009EE9FD /* IMChatEmojiBarView.xib in Resources */,
 				E4B888E01D9D48F1002E1A46 /* apps.storyboard in Resources */,
 				E428AF6120AD4DCE00D964B9 /* OOAttanceCheckInController.xib in Resources */,
@@ -5586,6 +5594,7 @@
 				B12FD1DC2283D5B700E636BA /* ThemeScrollViewIndicatorStylePicker.swift in Sources */,
 				B12FD1DD2283D5B700E636BA /* UITextField+PlaceholderAttributes.swift in Sources */,
 				B1E0BA9F2378FA05001D741F /* JPushDevice.swift in Sources */,
+				B1ACCC642574C38E00949F8C /* MeetingFormAttachmentItemCell.swift in Sources */,
 				B12FD1E72283D5B700E636BA /* ThemeImagePicker.swift in Sources */,
 				B19D55BC25358EF800CE3B22 /* SymmetricCryptor.swift in Sources */,
 				E428AF5020AA7A1500D964B9 /* OOAttanceHeaderView.swift in Sources */,
@@ -5633,6 +5642,7 @@
 				E4B7815C1DF5032C007B58A9 /* ImageSlidesShowTableViewCell.swift in Sources */,
 				E4AA12631DB0B1A600AEE5B0 /* SPersonViewController.swift in Sources */,
 				B12FD1D72283D5B700E636BA /* ThemeColorPicker.swift in Sources */,
+				B1C0A1A7256E552D00C7041E /* MeetingFormAttachmentCell.swift in Sources */,
 				E4B888A41D9D48F1002E1A46 /* MJRefreshBackNormalFooter.m in Sources */,
 				E4B2320F20B2A9F60082F30A /* OOAttandanceWorkPlaceController.swift in Sources */,
 				E46E6CB91DD41F5D00AB7561 /* CYRTextView.m in Sources */,
@@ -5733,10 +5743,8 @@
 				B18398B0249B079B001C6FAA /* IMLocationChooseController.swift in Sources */,
 				E4B888621D9D48F1002E1A46 /* ZLCollectionView.swift in Sources */,
 				B1298E812366B2E7006E9236 /* CFImageViewCell.swift in Sources */,
-				E40E24B220B7DA3C009F8BE7 /* OOMeetingCreateViewController.swift in Sources */,
 				B1FEDACE22D314F90002ECF4 /* CMSCreateDocViewController.swift in Sources */,
 				B15F812C21102BC000B81F35 /* DatePickerView.swift in Sources */,
-				E40E24B020B7DA3C009F8BE7 /* OOMeetingSelectedPersonController.swift in Sources */,
 				E4B888FB1D9D48F1002E1A46 /* AppCategoryCell.swift in Sources */,
 				E428AF4E20A9790B00D964B9 /* OONewAttanceNavController.swift in Sources */,
 				E4C24C3E208D7EDE00E426B0 /* OOContactViewModel.swift in Sources */,

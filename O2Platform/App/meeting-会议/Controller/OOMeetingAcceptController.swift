@@ -64,24 +64,11 @@ class OOMeetingAcceptController: UIViewController,EmptyDataSetSource,EmptyDataSe
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showEditMeetingSgue" {
-            if let vc = segue.destination as? OOMeetingCreateViewController, let meeting = sender as? OOMeetingInfo {
-                vc.meetingInfo = meeting
-            }
-        } else if segue.identifier == "showMeetingDetail" {
+        if segue.identifier == "showMeetingDetail" {
             if let vc = segue.destination as? OOMeetingDetailViewController, let meeting = sender as? OOMeetingInfo {
                 vc.meetingInfo = meeting
             }
         }
-    }
-    
-    func openEdit(meeting: OOMeetingInfo)  {
-//        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "meetingCreateVC") as? OOMeetingCreateViewController {
-//            vc.meetingInfo = meeting
-//            self.presentVC(vc)
-//        }
-        self.performSegue(withIdentifier: "showEditMeetingSgue", sender: meeting)
-        DDLogDebug("点击完成。。。。。。")
     }
     
     func title(forEmptyDataSet scrollView: UIScrollView) -> NSAttributedString? {
@@ -137,14 +124,7 @@ extension OOMeetingAcceptController:UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = viewModel.nodeForIndexPath(indexPath)
-        if uIndex == 1 {
-            if item?.status == "wait" && O2AuthSDK.shared.myInfo()?.distinguishedName == item?.applicant {
-                DDLogDebug("点击了。。。")
-                self.openEdit(meeting: item!)
-            }
-        }else {
-            self.performSegue(withIdentifier: "showMeetingDetail", sender: item)
-        }
+        self.performSegue(withIdentifier: "showMeetingDetail", sender: item)
     }
     
     

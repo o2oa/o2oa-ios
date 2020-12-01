@@ -30,6 +30,7 @@ class PersonListCell: Cell<OOMeetingInfo>, CellType {
     
     override func setup() {
         super.setup()
+        selectionStyle = .none
         self.personsView.dataSource = self
         self.personsView.delegate = self
         self.personsView.register(UINib.init(nibName: "OOMeetingPersonCell", bundle: nil), forCellWithReuseIdentifier: "OOMeetingPersonCell")
