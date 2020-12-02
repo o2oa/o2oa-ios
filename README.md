@@ -26,9 +26,21 @@ Xcode版本 使用最新的版本
 
 
 
-![image](https://cdn.nlark.com/yuque/0/2019/png/638329/1577344616417-c05a849f-8839-47bd-ad6f-ff6c7c508da8.png)
+![image](./image/1577344616417-c05a849f-8839-47bd-ad6f-ff6c7c508da8.png)
 
 
+
+
+
+------
+
+百度语音的SDK 包，因为比较大，所以没有放到源码里面
+
+百度语音外部包：[📎BaiDuASR-ios百度语音扩展包.zip](https://www.yuque.com/attachments/yuque/0/2020/zip/501589/1598593095547-810a5f9b-75cf-4108-b931-a1b5266087d0.zip)
+
+这个包解压到 O2Platform > Framework 目录下。
+
+![image.png](./image/1598593047453-6c2420cb-105f-481b-aa20-bbd1b62f2280.png)
 
 
 
@@ -40,7 +52,7 @@ Xcode版本 使用最新的版本
 
  
 
-![image](https://cdn.nlark.com/yuque/0/2019/png/638329/1577344616379-ef62fc42-9434-438d-99e0-2441c59b0a08.png)
+![image](./image/1577344616379-ef62fc42-9434-438d-99e0-2441c59b0a08.png)
 
  
 
@@ -52,7 +64,7 @@ Xcode版本 使用最新的版本
 
 
 
-![image](https://cdn.nlark.com/yuque/0/2019/png/638329/1577344616447-f32d284e-5213-43f2-9d3b-651b41853499.png?x-oss-process=image%2Fresize%2Cw_1500)
+![image](./image/1577344616447-f32d284e-5213-43f2-9d3b-651b41853499.png)
 
  
 
@@ -93,7 +105,7 @@ let BAIDU_ASR_APP_SECRET = 百度语音Secret
 
 修改方式如下：  
 
-![image](https://cdn.nlark.com/yuque/0/2019/png/638329/1577344616446-c8547ab2-2b5f-4f3f-9554-b504ecebbfba.png)
+![image](./image/1577344616446-c8547ab2-2b5f-4f3f-9554-b504ecebbfba.png)
 
 
 
@@ -110,7 +122,7 @@ let O2IsConnect2Collect = false
 
 
 
-![image](https://cdn.nlark.com/yuque/0/2019/png/638329/1577344616422-71b8a740-84ea-46f5-be13-1815914574f5.png)
+![image](./image/1577344616422-71b8a740-84ea-46f5-be13-1815914574f5.png)
 
 
 
