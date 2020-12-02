@@ -166,7 +166,6 @@
 		B15F812D21102BC000B81F35 /* DatePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15F812B21102BBF00B81F35 /* DatePickerView.xib */; };
 		B162F28924AB0E7300A6BF06 /* O2StringPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B162F28824AB0E7300A6BF06 /* O2StringPicker.swift */; };
 		B162F28B24AB0E9900A6BF06 /* O2StringPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = B162F28A24AB0E9900A6BF06 /* O2StringPicker.xib */; };
-		B165CCD52241DBD700373B66 /* LWDatePickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165CCD42241DBD700373B66 /* LWDatePickerDialog.swift */; };
 		B165CD582242093500373B66 /* CoverVerticalAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165CD412242093500373B66 /* CoverVerticalAnimation.swift */; };
 		B165CD592242093500373B66 /* PresentrController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165CD422242093500373B66 /* PresentrController.swift */; };
 		B165CD5A2242093500373B66 /* Presentr.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165CD432242093500373B66 /* Presentr.swift */; };
@@ -1343,7 +1342,6 @@
 		B15F812B21102BBF00B81F35 /* DatePickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DatePickerView.xib; sourceTree = "<group>"; };
 		B162F28824AB0E7300A6BF06 /* O2StringPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2StringPicker.swift; sourceTree = "<group>"; };
 		B162F28A24AB0E9900A6BF06 /* O2StringPicker.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = O2StringPicker.xib; sourceTree = "<group>"; };
-		B165CCD42241DBD700373B66 /* LWDatePickerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LWDatePickerDialog.swift; sourceTree = "<group>"; };
 		B165CD412242093500373B66 /* CoverVerticalAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverVerticalAnimation.swift; sourceTree = "<group>"; };
 		B165CD422242093500373B66 /* PresentrController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentrController.swift; sourceTree = "<group>"; };
 		B165CD432242093500373B66 /* Presentr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Presentr.swift; sourceTree = "<group>"; };
@@ -2503,14 +2501,6 @@
 				B162F28A24AB0E9900A6BF06 /* O2StringPicker.xib */,
 			);
 			path = stringsPicker;
-			sourceTree = "<group>";
-		};
-		B165CC9D2241DB9F00373B66 /* DatePickerDialogSwift */ = {
-			isa = PBXGroup;
-			children = (
-				B165CCD42241DBD700373B66 /* LWDatePickerDialog.swift */,
-			);
-			path = DatePickerDialogSwift;
 			sourceTree = "<group>";
 		};
 		B165CD402242093500373B66 /* Presentr */ = {
@@ -3870,7 +3860,6 @@
 				B108F3C3229E34B700778050 /* scan */,
 				B12FD1892283D5B700E636BA /* SwiftTheme */,
 				B165CD402242093500373B66 /* Presentr */,
-				B165CC9D2241DB9F00373B66 /* DatePickerDialogSwift */,
 				B19BCE442228272500BD454C /* O2OA_Flutter_SDK */,
 				E4D23115209EF74C00837868 /* thirdlibs */,
 				E40502C120722208009A8D30 /* ImageRow */,
@@ -5404,7 +5393,6 @@
 				B1C19025211437E200935829 /* OOCalendarLeftMenuController.swift in Sources */,
 				E4B8889F1D9D48F1002E1A46 /* MJRefreshHeader.m in Sources */,
 				E4B8885F1D9D48F1002E1A46 /* O2CollectionViewCell.swift in Sources */,
-				B165CCD52241DBD700373B66 /* LWDatePickerDialog.swift in Sources */,
 				E4C24C212087162500E426B0 /* Notification+Extension.swift in Sources */,
 				E4B6972C207602A40062F6E8 /* OOResult.swift in Sources */,
 				E42E41C81E6E5CAB00C5B5C7 /* MainPublishHeaderView.swift in Sources */,
@@ -5948,7 +5936,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 85;
+				CURRENT_PROJECT_VERSION = 86;
 				DEVELOPMENT_TEAM = C79YTQHHFY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5977,7 +5965,7 @@
 					"$(PROJECT_DIR)/O2Platform/Framework/lame/opencore-amr/lib",
 					"$(PROJECT_DIR)/O2Platform/Framework/BaiDuASR/BDSClientLib",
 				);
-				MARKETING_VERSION = 5.2.5;
+				MARKETING_VERSION = 5.2.6;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -6056,7 +6044,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 85;
+				CURRENT_PROJECT_VERSION = 86;
 				DEVELOPMENT_TEAM = C79YTQHHFY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6085,7 +6073,7 @@
 					"$(PROJECT_DIR)/O2Platform/Framework/lame/opencore-amr/lib",
 					"$(PROJECT_DIR)/O2Platform/Framework/BaiDuASR/BDSClientLib",
 				);
-				MARKETING_VERSION = 5.2.5;
+				MARKETING_VERSION = 5.2.6;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

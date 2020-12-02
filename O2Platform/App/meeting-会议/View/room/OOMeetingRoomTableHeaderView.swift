@@ -98,43 +98,6 @@ class OOMeetingRoomTableHeaderView: UIView {
         block.setTheDate(startDate, completedDate)
     }
     
-    func datePickerTapped(_ title:String,_ dateType:UIDatePicker.Mode,_ format:String,_ textField:UITextField) {
-        let locale = Locale(identifier: "zh")
-        var theDate = currentDate
-        if textField == theTimeField {
-            theDate = currentTime
-        }
-        var dateComponents = DateComponents()
-        dateComponents.month = -12
-        let threeMonthAgo = Calendar.current.date(byAdding: dateComponents, to: theDate)
-        dateComponents.month = 12
-        let nextYearMonthAgo = Calendar.current.date(byAdding: dateComponents, to: theDate)
-        
-        let datePicker = LWDatePickerDialog(textColor: .red,
-                                            buttonColor: .red,
-                                            font: UIFont.boldSystemFont(ofSize: 17),
-                                            locale:locale ,
-                                            showCancelButton: true)
-        datePicker.show(title,
-                        doneButtonTitle: "确定",
-                        cancelButtonTitle: "取消",
-                        defaultDate: theDate,
-                        minimumDate: threeMonthAgo,
-                        maximumDate: nextYearMonthAgo,
-                        datePickerMode: dateType) { (date) in
-                            if let dt = date {
-                                let formatter = DateFormatter()
-                                formatter.dateFormat = format
-                                textField.text = formatter.string(from: dt)
-                                if textField == self.theDateField {
-                                    self.currentDate = dt
-                                }else{
-                                    self.currentTime = dt
-                                }
-                                self.callbackDelegate()
-                            }
-        }
-    }
     
     ///日期时间选择
     func datePicker(textField: UITextField) {

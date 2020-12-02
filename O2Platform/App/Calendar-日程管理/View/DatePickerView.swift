@@ -20,6 +20,7 @@ extension NibLoadable {
 enum DateStyle {
     case all                    // 年月日时分秒
     case yearMonthDay           // 年月日
+    case yearMonth              // 年月
     case hourMinuteSecond       // 时分秒
     case yearMonthDayHourMinute // 年月日时分
 }
@@ -194,22 +195,6 @@ class DatePickerView: UIView, NibLoadable, UIGestureRecognizerDelegate, UIPicker
     }
 }
 
-/*
-extension DatePickerView {
-    public struct DateStyle: OptionSet {
-        let rawValue: Int
-        
-        static let second   = DateStyle(rawValue: 1 << 0)
-        static let minute   = DateStyle(rawValue: 1 << 1)
-        static let hour     = DateStyle(rawValue: 1 << 2)
-        static let day      = DateStyle(rawValue: 1 << 3)
-        static let month    = DateStyle(rawValue: 1 << 4)
-        static let year     = DateStyle(rawValue: 1 << 5)
-        
-        static let all: DateStyle = [.year, .month, .day, .hour, .minute, .second]
-    }
-}
- */
 
 extension DatePickerView {
     private func setupUI() {
@@ -240,6 +225,10 @@ extension DatePickerView {
         case .yearMonthDay:
             
             initDataWithYearMonthDayStyle()
+            
+        case .yearMonth:
+            
+            initDataWithYearMonthStyle()
             
         case .hourMinuteSecond:
             
@@ -278,6 +267,13 @@ extension DatePickerView {
             
             return Date.date(dateStr, formatter: "yyyy-MM-dd")
             
+        case .yearMonth:
+            guard result.count == 2 else { return nil }
+            
+            let dateStr = String(result[0]) + "-" + String(result[1])
+            
+            return Date.date(dateStr, formatter: "yyyy-MM")
+
         case .hourMinuteSecond:
             
             guard result.count == 3 else { return nil }
@@ -298,22 +294,6 @@ extension DatePickerView {
         }
         
     }
-    
-    /*
-     
-    class func dateStyleIsValid(_ style: DateStyle) -> Bool {
-        // 传进来的时间单位必须是连续的
-        let array = String(style.rawValue, radix: 2, uppercase: false).compactMap({Int(String($0))})
-
-        guard let index = array.index(where: { $0 == 0 }) else { return true }
-        
-        if array.count == 1 || array[index..<array.count].contains(1) {
-            return false
-        }
-        
-        return true
-    }
- */
     
 }
 
@@ -341,6 +321,10 @@ extension DatePickerView {
         case .yearMonthDay:
             
             yearMonthDayStyleScrollTo(scrollToDate)
+            
+        case .yearMonth:
+            
+            yearMonthStyleScrollTo(scrollToDate)
             
         case .hourMinuteSecond:
             
@@ -401,6 +385,21 @@ extension DatePickerView {
         
         if let dayIndex = componentsArray[2][dayKey]?.firstIndex(of: date.day) {
             pickerView.selectRow(dayIndex, inComponent: 2, animated: true)
+        }
+    }
+    
+    private func yearMonthStyleScrollTo(_ date: Date) {
+        
+        guard componentsArray.count == 2 else {
+            return
+        }
+        
+        if let yearIndex = componentsArray[0][yearKey]?.firstIndex(of: date.year) {
+            pickerView.selectRow(yearIndex, inComponent: 0, animated: true)
+        }
+        
+        if let monthIndex = componentsArray[1][monthKey]?.firstIndex(of: date.month) {
+            pickerView.selectRow(monthIndex, inComponent: 1, animated: true)
         }
     }
     
@@ -502,6 +501,11 @@ extension DatePickerView {
 //        } else {
             componentsArray.append([dayKey : Array(1...scrollToDate.numberOfDaysInMonth())])
 //        }
+    }
+    
+    private func initDataWithYearMonthStyle() {
+        componentsArray.append([yearKey : Array(minLimitDate.year...maxLimitDate.year)])
+        componentsArray.append([monthKey : Array(1...12)])
     }
     
     private func initDataWithHourMinuteSecondStyle() {
@@ -674,6 +678,10 @@ extension DatePickerView {
             
             return
             
+        }
+        
+        if self.style == .yearMonth {
+            return
         }
 
         let numberOfDays = date.numberOfDaysInMonth() // 当前月的天数
