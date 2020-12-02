@@ -6,7 +6,7 @@
 build/
 DerivedData/
 BuildShell/
-## O2Platform/Framework/BaiDuASR/
+O2Platform/Framework/BaiDuASR/
 
 ## Various settings
 *.pbxuser
