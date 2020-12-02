@@ -251,10 +251,12 @@ extension OOVoiceAIController: BDSClientASRDelegate {
             if let resDic = aObj as? NSDictionary, let arr = resDic["results_recognition"] as? Array<String> {
                 let first = arr[0]
                 DDLogInfo("识别成功 返回结果 \(first)")
+                let resultNoPunct = first.trimmingCharacters(in: .punctuationCharacters)
+                DDLogInfo("去除标点符号后的结果 \(resultNoPunct)")
                 DispatchQueue.main.async {
                     if !self.closeVC {
                         self.stopListen()
-                        self.viewModel.command = first
+                        self.viewModel.command = resultNoPunct
                     }
                 }
             }else {
