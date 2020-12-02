@@ -165,7 +165,7 @@ extension OOAttandanceViewModel{
     }
     
     // MARK:- 读取考勤分析数据
-    func getCheckinAnalyze(_ cycleDetail:OOAttandanceCycleDetail) -> Promise<OOAttandanceAnalyze>{
+    func getCheckinAnalyze(_ cycleDetail:OOAttandanceCycleDetail) -> Promise<OOAttandanceAnalyze?>{
         let bean = getRequestBean(cycleDetail)
         return Promise { fulfill,reject in
             self.ooAttanceAPI.request(.checkinAnalyze(bean)) { (result) in
@@ -174,7 +174,8 @@ extension OOAttandanceViewModel{
                     if let data =  myResult.model?.data {
                         fulfill((data.first)!)
                     }else{
-                        reject(OOAppError.common(type: "checkinError", message: "本月无考勤数据", statusCode: 5001))
+//                        reject(OOAppError.common(type: "checkinError", message: "本月无考勤数据", statusCode: 5001))
+                        fulfill(nil)
                     }
                 }else{
                     //let errorMessage = myResult.error?.errorDescription

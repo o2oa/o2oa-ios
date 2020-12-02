@@ -61,10 +61,6 @@ extension OOFormDateItemView:UITextFieldDelegate {
             self.model?.callbackValue = theDate
         }, defaultDate: date)
         
-//        self.datePickerTapped("选择日期", .date, "yyyy年MM月dd日", textField) {
-//            theDate in
-//            self.model?.callbackValue = theDate
-//        }
         return false
     }
     

@@ -57,6 +57,10 @@ class OOAttandanceTotalHeaderView: UIView,Configurable {
     
     func config(withItem item: Any?) {
         guard let model = item as? OOAttandanceAnalyze else {
+            normalLabel.text = "0"
+            lateLabel.text = "0"
+            leaveLabel.text = "0"
+            abnormalLabel.text = "0"
             return
         }
         

@@ -34,7 +34,6 @@ class OOAttanceTotalController: UITableViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-//        title = "统计"
         NotificationCenter.default.addObserver(self, selector: #selector(showDatePicker(_:)), name: OONotification.staticsTotal.notificationName, object: nil)
         tableView.register(UINib.init(nibName: "OOAttandanceTotalItemCell", bundle: nil), forCellReuseIdentifier: "OOAttandanceTotalItemCell")
         tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: {
@@ -44,18 +43,22 @@ class OOAttanceTotalController: UITableViewController {
     }
     
     @objc private func showDatePicker(_ notification:Notification) {
-        self.datePickerTapped("选择日期", .date, "yyyy-MM") { (result) in
-            self.year = result.toString("yyyy")
-            self.month = result.toString("MM")
+        
+        let datePicker = DatePickerView.datePicker(style: .yearMonth, scrollToDate: Date()) { date in
+            guard let d = date else { return }
+            self.year = d.toString("yyyy")
+            self.month = d.toString("MM")
             DispatchQueue.main.async {
                 self.getTotalDetailList()
             }
         }
+        datePicker.show()
+        
     }
     
     func getTotalDetailList(){
         self.showLoading()
-        viewModel.getCheckinCycle(self.year, self.month).then { (cycleDetail) -> Promise<(OOAttandanceAnalyze,[OOAttandanceCheckinTotal])> in
+        viewModel.getCheckinCycle(self.year, self.month).then { (cycleDetail) -> Promise<(OOAttandanceAnalyze?, [OOAttandanceCheckinTotal])> in
                 self.headerView.requestBean = cycleDetail
                return all(self.viewModel.getCheckinAnalyze(cycleDetail), self.viewModel.getCheckinTotal(cycleDetail))
             }.always {
