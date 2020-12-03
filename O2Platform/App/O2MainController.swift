@@ -46,6 +46,7 @@ class O2MainController: UITabBarController, UITabBarControllerDelegate {
         self.delegate = self
         // 配置是否简易模式
         if let mode = O2AuthSDK.shared.customStyle()?.simpleMode, mode == true {
+            DDLogDebug("进入简易模式！！！！！！！")
             isSimple = true
         }
         if isSimple {
