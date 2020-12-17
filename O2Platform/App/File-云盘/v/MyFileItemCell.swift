@@ -21,7 +21,7 @@ class MyFileItemCell: UITableViewCell {
         didSet {
             self.nameLabel.text = fileName!
             let extName = fileName?.components(separatedBy: ".").last!
-            self.iconImageView.image = UIImage(named: calcFileIcon(extName!))
+            self.iconImageView.image = UIImage(named: O2.fileExtension2Icon(extName))
             
         }
     }
@@ -37,25 +37,25 @@ class MyFileItemCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func calcFileIcon(_ ext:String) -> String{
-        switch ext {
-        case "doc","docx":
-            return "file_doc_icon"
-        case "xls","xlsx":
-            return "file_excel_icon"
-        case "ppt","pptx":
-            return "file_ppt_icon"
-        case "pdf":
-            return "file_pdf_icon"
-        case "rar","zip","war":
-            return "file_compressFile_icon"
-        case "txt":
-            return "file_txt_icon"
-        case "jpg","png","gif","jpeg":
-            return "file_image_icon"
-        default:
-            return "file_unknown_icon"
-        }
-    }
+//    func calcFileIcon(_ ext:String) -> String{
+//        switch ext {
+//        case "doc","docx":
+//            return "file_doc_icon"
+//        case "xls","xlsx":
+//            return "file_excel_icon"
+//        case "ppt","pptx":
+//            return "file_ppt_icon"
+//        case "pdf":
+//            return "file_pdf_icon"
+//        case "rar","zip","war":
+//            return "file_compressFile_icon"
+//        case "txt":
+//            return "file_txt_icon"
+//        case "jpg","png","gif","jpeg":
+//            return "file_image_icon"
+//        default:
+//            return "file_unknown_icon"
+//        }
+//    }
 
 }

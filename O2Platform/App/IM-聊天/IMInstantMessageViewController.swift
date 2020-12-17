@@ -78,7 +78,7 @@ class IMInstantMessageViewController: UITableViewController {
 }
 
 extension IMInstantMessageViewController : IMChatMessageDelegate {
-    func clickImageMessage(info: IMMessageBodyInfo) {
+    func openImageOrFileMessage(info: IMMessageBodyInfo) {
         //无需实现
     }
     

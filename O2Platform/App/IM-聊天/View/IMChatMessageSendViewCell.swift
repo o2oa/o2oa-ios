@@ -31,6 +31,13 @@ class IMChatMessageSendViewCell: UITableViewCell {
         return view
     }()
     
+    //文件消息
+    private lazy var fileView: IMFileView = {
+        let view = Bundle.main.loadNibNamed("IMFileView", owner: self, options: nil)?.first as! IMFileView
+        view.frame = CGRect(x: 0, y: 0, width: IMFileView.IMFileView_width, height: IMFileView.IMFileView_height)
+        return view
+    }()
+    
     var delegate: IMChatMessageDelegate?
     
     override func awakeFromNib() {
@@ -71,13 +78,34 @@ class IMChatMessageSendViewCell: UITableViewCell {
                 audioMsgRender(info: body)
             } else if o2_im_msg_type_location == body.type {
                 locationMsgRender(info: body)
-            }  else {
+            } else if o2_im_msg_type_file == body.type {
+                fileMsgRender(info: body)
+            } else {
                 textMsgRender(msg: body.body!)
             }
         }
     }
     
     
+    //文件消息
+    private func fileMsgRender(info: IMMessageBodyInfo) {
+        self.messageBgWidth.constant = IMFileView.IMFileView_width + 20
+        self.messageBgHeight.constant = IMFileView.IMFileView_height + 20
+        self.fileView.translatesAutoresizingMaskIntoConstraints = false
+        self.messageBackgroundView.addSubview(self.fileView)
+        if let _ = info.fileId {
+            self.fileView.setFile(name: info.fileName ?? "", fileExt: info.fileExtension)
+        }else if let filePath = info.fileTempPath {
+            let ext = filePath.pathExtension
+            let fileName = filePath.pathFileName
+            self.fileView.setFile(name: fileName, fileExt: ext)
+        }
+        self.fileView.addTapGesture { (tap) in
+            self.delegate?.openImageOrFileMessage(info: info)
+        }
+        //点击事件
+        self.constraintWithContent(contentView: self.fileView)
+    }
     
     //位置消息
     private func locationMsgRender(info: IMMessageBodyInfo) {
@@ -172,7 +200,7 @@ class IMChatMessageSendViewCell: UITableViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         self.messageBackgroundView.addSubview(imageView)
         imageView.addTapGesture { (tap) in
-            self.delegate?.clickImageMessage(info: info)
+            self.delegate?.openImageOrFileMessage(info: info)
         }
         self.constraintWithContent(contentView: imageView)
     }

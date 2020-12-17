@@ -270,6 +270,8 @@
 		B1B2148F216073B400D9CA7E /* ScanHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B21459216073B400D9CA7E /* ScanHelper.swift */; };
 		B1B214912160A69E00D9CA7E /* Tuling123API.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B214902160A69E00D9CA7E /* Tuling123API.swift */; };
 		B1B214932160A8A300D9CA7E /* TulingPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B214922160A8A300D9CA7E /* TulingPostModel.swift */; };
+		B1B4EEF12588A9D700E8B7C8 /* IMFileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1B4EEF02588A9D700E8B7C8 /* IMFileView.xib */; };
+		B1B4EEF32588AC6900E8B7C8 /* IMFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B4EEF22588AC6900E8B7C8 /* IMFileView.swift */; };
 		B1B6A8E92175C20000C10F3C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1B6A8E82175C1FF00C10F3C /* CoreMedia.framework */; };
 		B1B6A8F9217710C800C10F3C /* FaceRecognizeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B6A8F8217710C800C10F3C /* FaceRecognizeAPI.swift */; };
 		B1B6A8FB21771A3000C10F3C /* FaceResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B6A8FA21771A3000C10F3C /* FaceResponseModel.swift */; };
@@ -1457,6 +1459,8 @@
 		B1B21459216073B400D9CA7E /* ScanHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanHelper.swift; sourceTree = "<group>"; };
 		B1B214902160A69E00D9CA7E /* Tuling123API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tuling123API.swift; sourceTree = "<group>"; };
 		B1B214922160A8A300D9CA7E /* TulingPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TulingPostModel.swift; sourceTree = "<group>"; };
+		B1B4EEF02588A9D700E8B7C8 /* IMFileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IMFileView.xib; sourceTree = "<group>"; };
+		B1B4EEF22588AC6900E8B7C8 /* IMFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMFileView.swift; sourceTree = "<group>"; };
 		B1B6A8E82175C1FF00C10F3C /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		B1B6A8F8217710C800C10F3C /* FaceRecognizeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceRecognizeAPI.swift; sourceTree = "<group>"; };
 		B1B6A8FA21771A3000C10F3C /* FaceResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceResponseModel.swift; sourceTree = "<group>"; };
@@ -2347,6 +2351,8 @@
 				B183987C249AFF64001C6FAA /* IMLocationView.xib */,
 				B18398AC249B00AA001C6FAA /* IMLocationView.swift */,
 				B1D4AFEC24B409A9004E648E /* AudioTouchButton.swift */,
+				B1B4EEF02588A9D700E8B7C8 /* IMFileView.xib */,
+				B1B4EEF22588AC6900E8B7C8 /* IMFileView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -4902,6 +4908,7 @@
 				E4B888A91D9D48F1002E1A46 /* MJRefresh.bundle in Resources */,
 				E46E6C951DD41F5D00AB7561 /* ZSSoutdent.png in Resources */,
 				E46E6CB31DD41F5D00AB7561 /* ZSSviewsource.png in Resources */,
+				B1B4EEF12588A9D700E8B7C8 /* IMFileView.xib in Resources */,
 				B1DFFAAF235EB1FE00FEF9D6 /* CloudFile.storyboard in Resources */,
 				E46E6C851DD41F5D00AB7561 /* ZSSimageDevice.png in Resources */,
 				E46E6C8C1DD41F5D00AB7561 /* ZSSitalic@2x.png in Resources */,
@@ -5462,6 +5469,7 @@
 				E4B888701D9D48F1002E1A46 /* ContactPersonInfoController.swift in Sources */,
 				B142B083230FB58B00E7D127 /* Swime.swift in Sources */,
 				E4C24C45208D7EDE00E426B0 /* OOListUnitViewController.swift in Sources */,
+				B1B4EEF32588AC6900E8B7C8 /* IMFileView.swift in Sources */,
 				E4B6970D2075FA560062F6E8 /* OOUISwitch.swift in Sources */,
 				E424BAD81EE10C190078DB47 /* O2ReachabilityManager.swift in Sources */,
 				B1B7470921523F010041948D /* O2UISignatureView.swift in Sources */,

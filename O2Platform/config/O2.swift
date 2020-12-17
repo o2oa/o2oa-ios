@@ -142,4 +142,48 @@ struct O2 {
             DDLogError("删除目录失败，\(error.localizedDescription)")
         }
     }
+    
+    /// 文件后缀 对应的图片
+    public static func fileExtension2Icon(_ ext: String?) -> String {
+        guard let et = ext else {
+            return "icon_file_more"
+        }
+        switch et {
+        case "jpg", "png", "jepg", "gif":
+            return "icon_img"
+        case "html":
+            return "icon_html"
+        case "xls", "xlsx":
+            return "icon_excel"
+        case "doc", "docx":
+            return "icon_word"
+        case "ppt", "pptx":
+            return "icon_ppt"
+        case "pdf":
+            return "icon_pdf"
+        case "mp4":
+            return "icon_mp4"
+        case "mp3":
+            return "icon_mp3"
+        case "zip", "rar", "7z":
+            return "icon_zip"
+        case "txt":
+            return "file_txt_icon"
+        default :
+            return "icon_file_more"
+        }
+    }
+    
+    /// 是否图片文件
+    public static func isImageExt(_ ext: String?) ->  Bool {
+        guard let e = ext else {
+            return false
+        }
+        switch e.lowercased() {
+        case "jpg", "png", "jepg", "gif", "bmp":
+            return true
+        default:
+            return false
+        }
+    }
 }

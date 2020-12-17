@@ -31,7 +31,7 @@ class FileTableViewCell: UITableViewCell {
             self.fileNameLabel.text = file?.name
             switch  (file?.fileType)! {
             case .file:
-                self.fileIconImageView.image = UIImage(named: calcFileIcon((file?.extend)!))
+                self.fileIconImageView.image = UIImage(named: O2.fileExtension2Icon((file?.extend)))
                 break
             case .folder:
                 self.fileIconImageView.image = UIImage(named: "file_folder_icon")
@@ -52,26 +52,26 @@ class FileTableViewCell: UITableViewCell {
         delegate?.cellDidClicked(self, file: self.file!)
     }
     
-    func calcFileIcon(_ ext:String) -> String{
-        switch ext {
-        case "doc","docx":
-            return "file_doc_icon"
-        case "xls","xlsx":
-            return "file_excel_icon"
-        case "ppt","pptx":
-            return "file_ppt_icon"
-        case "pdf":
-            return "file_pdf_icon"
-        case "rar","zip","war":
-            return "file_compressFile_icon"
-        case "txt":
-            return "file_txt_icon"
-        case "jpg","png","gif","jpeg":
-            return "file_image_icon"
-        default:
-            return "file_unknown_icon"
-        }
-    }
+//    func calcFileIcon(_ ext:String) -> String{
+//        switch ext {
+//        case "doc","docx":
+//            return "file_doc_icon"
+//        case "xls","xlsx":
+//            return "file_excel_icon"
+//        case "ppt","pptx":
+//            return "file_ppt_icon"
+//        case "pdf":
+//            return "file_pdf_icon"
+//        case "rar","zip","war":
+//            return "file_compressFile_icon"
+//        case "txt":
+//            return "file_txt_icon"
+//        case "jpg","png","gif","jpeg":
+//            return "file_image_icon"
+//        default:
+//            return "file_unknown_icon"
+//        }
+//    }
 
 
     override func awakeFromNib() {

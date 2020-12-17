@@ -382,9 +382,27 @@ class IMChatViewController: UIViewController {
         self.scrollMessageToBottom()
         return msgId
     }
+    
+    private func prepareForSendFileMsg(filePath: String) ->  String {
+        let body = IMMessageBodyInfo()
+        body.type = o2_im_msg_type_file
+        body.body = o2_im_msg_body_file
+        body.fileTempPath = filePath
+        let message = IMMessageInfo()
+        let msgId = UUID().uuidString
+        message.body = body.toJSONString()
+        message.id = msgId
+        message.conversationId = self.conversation?.id
+        message.createPerson = O2AuthSDK.shared.myInfo()?.distinguishedName
+        message.createTime = Date().formatterDate(formatter: "yyyy-MM-dd HH:mm:ss")
+        //添加到界面
+        self.chatMessageList.append(message)
+        self.scrollMessageToBottom()
+        return msgId
+    }
 
     //发送消息前 先载入界面
-    private func prepareForSendFileMsg(tempMessage: IMMessageBodyInfo) -> String {
+    private func prepareForSendAudioMsg(tempMessage: IMMessageBodyInfo) -> String {
         let message = IMMessageInfo()
         let msgId = UUID().uuidString
         message.body = tempMessage.toJSONString()
@@ -400,7 +418,7 @@ class IMChatViewController: UIViewController {
 
      
 
-    //上传图片 音频 等文件到服务器并发送消息
+    //上传图片 音频 文档 等文件到服务器并发送消息
     private func uploadFileAndSendMsg(messageId: String, data: Data, fileName: String, type: String) {
         guard let cId = self.conversation?.id else {
             return
@@ -416,6 +434,7 @@ class IMChatViewController: UIViewController {
             let body = IMMessageBodyInfo.deserialize(from: message.body)
             body?.fileId = back.id
             body?.fileExtension = back.fileExtension
+            body?.fileName = back.fileName
             body?.fileTempPath = nil
             message.body = body?.toJSONString()
             //发送消息到服务器
@@ -430,6 +449,23 @@ class IMChatViewController: UIViewController {
         }.catch { err in
             self.showError(title: "上传错误，\(err.localizedDescription)")
         }
+    }
+    
+    // 选择外部文件
+    private func chooseFile() {
+        let documentTypes = ["public.content",
+                                 "public.text",
+                                 "public.source-code",
+                                 "public.image",
+                                 "public.audiovisual-content",
+                                 "com.adobe.pdf",
+                                 "com.apple.keynote.key",
+                                 "com.microsoft.word.doc",
+                                 "com.microsoft.excel.xls",
+                                 "com.microsoft.powerpoint.ppt"]
+        let picker = UIDocumentPickerViewController(documentTypes: documentTypes, in: .open)
+        picker.delegate = self
+        self.present(picker, animated: true, completion: nil)
     }
 
 
@@ -497,6 +533,40 @@ class IMChatViewController: UIViewController {
         self.navigationController?.pushViewController(vc, animated: false)
     }
 
+    @IBAction func fileBtnClick(_ sender: UIButton) {
+        DDLogDebug("点击了文件按钮")
+        self.chooseFile()
+    }
+    
+}
+
+// MARK: - 外部文件选择代理
+extension IMChatViewController: UIDocumentPickerDelegate {
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        if urls.count > 0 {
+            let file = urls[0]
+            if file.startAccessingSecurityScopedResource() { //访问权限
+                let fileName = file.lastPathComponent
+                if let data = try? Data(contentsOf: file) {
+                    let fileext = file.pathExtension
+                    if O2.isImageExt(fileext) { // 图片消息
+                        let localFilePath = self.storageLocalImage(imageData: data, fileName: fileName)
+                        let msgId = self.prepareForSendImageMsg(filePath: localFilePath)
+                        self.uploadFileAndSendMsg(messageId: msgId, data: data, fileName: fileName, type: o2_im_msg_type_image)
+                    }else { // 文件消息
+                        let localFilePath = self.storageLocalImage(imageData: data, fileName: fileName)
+                        let msgId = self.prepareForSendFileMsg(filePath: localFilePath)
+                        self.uploadFileAndSendMsg(messageId: msgId, data: data, fileName: fileName, type: o2_im_msg_type_file)
+                    }
+                } else {
+                    self.showError(title: "读取文件失败")
+                }
+            } else {
+                self.showError(title: "没有获取文件的权限")
+            }
+        }
+        
+    }
 
 }
 
@@ -557,7 +627,7 @@ extension IMChatViewController: IMChatAudioViewDelegate {
         msg.body = o2_im_msg_body_audio
         msg.type = o2_im_msg_type_audio
         msg.audioDuration = duration
-        let msgId = self.prepareForSendFileMsg(tempMessage: msg)
+        let msgId = self.prepareForSendAudioMsg(tempMessage: msg)
         let fileName = path.split("/").last ?? "MySound.ilbc"
         DDLogDebug("音频文件：\(fileName)")
         self.uploadFileAndSendMsg(messageId: msgId, data: voice, fileName: fileName, type: o2_im_msg_type_audio)
@@ -655,7 +725,7 @@ extension IMChatViewController: IMChatMessageDelegate {
                                                       address: info.address, addressDetail: info.addressDetail)
     }
     
-    func clickImageMessage(info: IMMessageBodyInfo) {
+    func openImageOrFileMessage(info: IMMessageBodyInfo) {
         if let id = info.fileId {
             self.showLoading()
             var ext = info.fileExtension ?? "png"
@@ -751,7 +821,10 @@ extension IMChatViewController: UITableViewDelegate, UITableViewDataSource {
             } else if o2_im_msg_type_location == body.type {
                  // 上边距 69 + 位置图高度 + 内边距 + 底部空白高度
                  return 69 + IMLocationView.IMLocationViewHeight + 20 + 10
-            } else {
+            }  else if o2_im_msg_type_file == body.type {
+                
+                return 69 + IMFileView.IMFileView_height + 20 + 10
+           } else {
                 let size = body.body!.getSizeWithMaxWidth(fontSize: 16, maxWidth: messageWidth)
                 // 上边距 69 + 文字高度 + 内边距 + 底部空白高度
                 return 69 + size.height + 28 + 10
