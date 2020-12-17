@@ -48,7 +48,8 @@ class CFFileTableViewCell: UITableViewCell {
         self.fileNameLabel.text = file.name ?? ""
         self.fileTimeLabel.text = file.lastUpdateTime ?? ""
         self.fileSizeLabel.text = self.formatSize(len: file.length)
-        self.setFileTypeImage(ext: file.extension)
+//        self.setFileTypeImage(ext: file.extension)
+        self.fileTypeImageView.image = UIImage(named: O2.fileExtension2Icon(file.extension))
         self.showCheckBox = isShowCheck
         if self.showCheckBox {
             self.checkBoxButton.isHidden = false
@@ -76,43 +77,43 @@ class CFFileTableViewCell: UITableViewCell {
         }
     }
     
-    private func setFileTypeImage(ext: String?) {
-        if let type = ext {
-            switch type {
-            case "jpg", "png", "jepg", "gif":
-                self.fileTypeImageView.image = UIImage(named: "icon_img")
-                break
-            case "html":
-                self.fileTypeImageView.image = UIImage(named: "icon_html")
-                break
-            case "xls", "xlsx":
-                self.fileTypeImageView.image = UIImage(named: "icon_excel")
-                break
-            case "doc", "docx":
-                self.fileTypeImageView.image = UIImage(named: "icon_word")
-                break
-            case "ppt", "pptx":
-                self.fileTypeImageView.image = UIImage(named: "icon_ppt")
-                break
-            case "pdf":
-                self.fileTypeImageView.image = UIImage(named: "icon_pdf")
-                break
-            case "mp4":
-                self.fileTypeImageView.image = UIImage(named: "icon_mp4")
-                break
-            case "mp3":
-                self.fileTypeImageView.image = UIImage(named: "icon_mp3")
-                break
-            case "zip", "rar", "7z":
-                self.fileTypeImageView.image = UIImage(named: "icon_zip")
-                break
-            default :
-                self.fileTypeImageView.image = UIImage(named: "icon_moren")
-                break
-            }
-        }else {
-            self.fileTypeImageView.image = UIImage(named: "icon_moren")
-        }
-    }
+//    private func setFileTypeImage(ext: String?) {
+//        if let type = ext {
+//            switch type {
+//            case "jpg", "png", "jepg", "gif":
+//                self.fileTypeImageView.image = UIImage(named: "icon_img")
+//                break
+//            case "html":
+//                self.fileTypeImageView.image = UIImage(named: "icon_html")
+//                break
+//            case "xls", "xlsx":
+//                self.fileTypeImageView.image = UIImage(named: "icon_excel")
+//                break
+//            case "doc", "docx":
+//                self.fileTypeImageView.image = UIImage(named: "icon_word")
+//                break
+//            case "ppt", "pptx":
+//                self.fileTypeImageView.image = UIImage(named: "icon_ppt")
+//                break
+//            case "pdf":
+//                self.fileTypeImageView.image = UIImage(named: "icon_pdf")
+//                break
+//            case "mp4":
+//                self.fileTypeImageView.image = UIImage(named: "icon_mp4")
+//                break
+//            case "mp3":
+//                self.fileTypeImageView.image = UIImage(named: "icon_mp3")
+//                break
+//            case "zip", "rar", "7z":
+//                self.fileTypeImageView.image = UIImage(named: "icon_zip")
+//                break
+//            default :
+//                self.fileTypeImageView.image = UIImage(named: "icon_file_more")
+//                break
+//            }
+//        }else {
+//            self.fileTypeImageView.image = UIImage(named: "icon_file_more")
+//        }
+//    }
     
 }

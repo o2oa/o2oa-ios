@@ -10,7 +10,7 @@ import UIKit
 import CocoaLumberjack
 
 protocol IMChatMessageDelegate {
-    func clickImageMessage(info: IMMessageBodyInfo)
+    func openImageOrFileMessage(info: IMMessageBodyInfo)
     func openLocatinMap(info: IMMessageBodyInfo)
     func openApplication(storyboard: String)
     func openWork(workId: String)
@@ -36,6 +36,13 @@ class IMChatMessageViewCell: UITableViewCell {
     private lazy var locationView: IMLocationView = {
         let view = Bundle.main.loadNibNamed("IMLocationView", owner: self, options: nil)?.first as! IMLocationView
         view.frame = CGRect(x: 0, y: 0, width: IMLocationView.IMLocationViewWidth, height: IMLocationView.IMLocationViewHeight)
+        return view
+    }()
+    
+    //文件消息
+    private lazy var fileView: IMFileView = {
+        let view = Bundle.main.loadNibNamed("IMFileView", owner: self, options: nil)?.first as! IMFileView
+        view.frame = CGRect(x: 0, y: 0, width: IMFileView.IMFileView_width, height: IMFileView.IMFileView_height)
         return view
     }()
 
@@ -262,10 +269,32 @@ class IMChatMessageViewCell: UITableViewCell {
                 audioMsgRender(info: body)
             } else if o2_im_msg_type_location == body.type {
                 locationMsgRender(info: body)
+            } else if o2_im_msg_type_file == body.type {
+                fileMsgRender(info: body)
             } else {
                 _ = textMsgRender(msg: body.body!)
             }
         }
+    }
+    
+    //文件消息
+    private func fileMsgRender(info: IMMessageBodyInfo) {
+        self.messageBackgroundWidth.constant = IMFileView.IMFileView_width + 20
+        self.messageBackgroundHeight.constant = IMFileView.IMFileView_height + 20
+        self.fileView.translatesAutoresizingMaskIntoConstraints = false
+        self.messageBackgroundView.addSubview(self.fileView)
+        if let _ = info.fileId {
+            self.fileView.setFile(name: info.fileName ?? "", fileExt: info.fileExtension)
+        }else if let filePath = info.fileTempPath {
+            let ext = filePath.pathExtension
+            let fileName = filePath.pathFileName
+            self.fileView.setFile(name: fileName, fileExt: ext)
+        }
+        self.fileView.addTapGesture { (tap) in
+            self.delegate?.openImageOrFileMessage(info: info)
+        }
+        //点击事件
+        self.constraintWithContent(contentView: self.fileView)
     }
 
     //位置消息
@@ -361,7 +390,7 @@ class IMChatMessageViewCell: UITableViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         self.messageBackgroundView.addSubview(imageView)
         imageView.addTapGesture { (tap) in
-            self.delegate?.clickImageMessage(info: info)
+            self.delegate?.openImageOrFileMessage(info: info)
         }
         self.constraintWithContent(contentView: imageView)
 

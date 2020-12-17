@@ -12,6 +12,20 @@ import UIKit
 extension String {
     
     
+    /// 获取扩展名 比如 png gif 等
+    public var pathExtension: String {
+        guard let url = URL(string: self) else { return "" }
+        return url.pathExtension.isEmpty ? "" : url.pathExtension
+    }
+    
+    /// 获取文件名称
+    public var pathFileName: String {
+        guard let url = URL(string: self) else {
+            return ""
+        }
+        return url.lastPathComponent
+    }
+    
     /// EZSE: Checks if string is empty or consists only of whitespace and newline characters
     public var isBlank: Bool {
         let trimmed = trimmingCharacters(in: .whitespacesAndNewlines)

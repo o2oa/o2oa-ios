@@ -23,12 +23,14 @@ let o2_im_msg_type_emoji = "emoji"
 let o2_im_msg_type_image = "image"
 let o2_im_msg_type_audio = "audio"
 let o2_im_msg_type_location = "location"
+let o2_im_msg_type_file = "file"
 
 //消息body
 let o2_im_msg_body_image = "[图片]"
 let o2_im_msg_body_audio = "[语音]"
 let o2_im_msg_body_video = "[视频]"
 let o2_im_msg_body_location = "[位置]"
+let o2_im_msg_body_file = "[文件]"
 
 let messageWidth: CGFloat = 176
 

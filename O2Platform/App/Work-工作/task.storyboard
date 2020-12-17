@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Yna-g7-LKp">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Yna-g7-LKp">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,8 +18,8 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="10" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="vbb-IJ-YEQ">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <viewLayoutGuide key="safeArea" id="PYp-D5-Izp"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                                 <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -142,6 +142,7 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="x7N-Xx-soD"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="vbb-IJ-YEQ" firstAttribute="leading" secondItem="x7N-Xx-soD" secondAttribute="leading" id="7AL-Lk-FOE"/>
@@ -149,7 +150,6 @@
                             <constraint firstItem="vbb-IJ-YEQ" firstAttribute="bottom" secondItem="x7N-Xx-soD" secondAttribute="bottom" id="JjK-h4-xKS"/>
                             <constraint firstItem="vbb-IJ-YEQ" firstAttribute="top" secondItem="OVh-U5-Tp6" secondAttribute="top" identifier="tableViewTopConstraint" id="MI0-xl-tRF"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="x7N-Xx-soD"/>
                     </view>
                     <connections>
                         <outlet property="tableView" destination="vbb-IJ-YEQ" id="Ov2-c9-jlM"/>
@@ -170,8 +170,8 @@
                     <view key="view" contentMode="scaleToFill" id="hnU-lW-Yfw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="Yd1-83-sxc"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <segue destination="WbW-7g-if6" kind="show" identifier="showStartFlowSegue" id="5wC-JK-al1"/>
@@ -190,13 +190,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Fxs-la-XTP">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="2"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="4"/>
                             </progressView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xk8-sE-hkR">
-                                <rect key="frame" x="0.0" y="2" width="414" height="714"/>
+                                <rect key="frame" x="0.0" y="4" width="414" height="712"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="pfi-d8-97v"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="pfi-d8-97v" firstAttribute="bottom" secondItem="xk8-sE-hkR" secondAttribute="bottom" identifier="webViewBottomConstraint" id="EUz-Kz-DyP"/>
@@ -207,14 +208,13 @@
                             <constraint firstItem="xk8-sE-hkR" firstAttribute="leading" secondItem="pfi-d8-97v" secondAttribute="leading" id="tlN-EH-YY2"/>
                             <constraint firstItem="pfi-d8-97v" firstAttribute="trailing" secondItem="xk8-sE-hkR" secondAttribute="trailing" id="zLK-N1-wh9"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="pfi-d8-97v"/>
                     </view>
                     <connections>
                         <outlet property="progress" destination="Fxs-la-XTP" id="jY5-ms-d4w"/>
                         <outlet property="webViewContainer" destination="xk8-sE-hkR" id="PrO-iZ-Re7"/>
                         <segue destination="Sfc-Ai-ZAp" kind="show" identifier="showTodoProcessSegue" id="uXT-xk-tPp"/>
-                        <segue destination="VGE-xN-Kgj" kind="unwind" identifier="backToTodoTask" unwindAction="unWindForTodoTask:" id="06j-3H-FFT"/>
-                        <segue destination="VGE-xN-Kgj" kind="unwind" identifier="backMainTask" unwindAction="unWindRefreshSegueForMainTask:" id="vzu-Qi-lRg"/>
+                        <segue destination="VGE-xN-Kgj" kind="unwind" identifier="backToTodoTask" animates="NO" unwindAction="unWindForTodoTask:" id="06j-3H-FFT"/>
+                        <segue destination="VGE-xN-Kgj" kind="unwind" identifier="backMainTask" animates="NO" unwindAction="unWindRefreshSegueForMainTask:" id="vzu-Qi-lRg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mZR-S3-Ygb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -246,13 +246,13 @@
                                 </items>
                             </toolbar>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="sbW-Wt-YzA"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="OgO-QY-gIk" firstAttribute="leading" secondItem="sbW-Wt-YzA" secondAttribute="leading" id="AZc-LO-oxb"/>
                             <constraint firstItem="OgO-QY-gIk" firstAttribute="bottom" secondItem="sbW-Wt-YzA" secondAttribute="bottom" id="Ywf-uh-dH9"/>
                             <constraint firstItem="sbW-Wt-YzA" firstAttribute="trailing" secondItem="OgO-QY-gIk" secondAttribute="trailing" id="cVW-Bc-9bW"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="sbW-Wt-YzA"/>
                     </view>
                     <connections>
                         <outlet property="submitButton" destination="gz3-q5-3qh" id="Yrk-qB-PaR"/>
@@ -272,7 +272,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="klO-Tg-ZJm">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <color key="separatorColor" red="0.8666666666666667" green="0.8666666666666667" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="todoedActionCell" rowHeight="60" id="dh0-qn-yzU" customClass="TodoedActionCell" customModule="O2Platform" customModuleProvider="target">
@@ -282,7 +282,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4QR-kX-X1w">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4QR-kX-X1w">
                                             <rect key="frame" x="314" y="19" width="80" height="22"/>
                                             <color key="backgroundColor" red="0.98431372549999996" green="0.2784313725" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
@@ -354,7 +354,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="申请人身份" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1sJ-rz-ZFy">
                                             <rect key="frame" x="231" y="22.666666666666671" width="171" height="21"/>
                                             <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="15"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" systemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="选择了【送核稿】" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zrc-o6-jGO">
@@ -500,8 +500,8 @@
                     <view key="view" contentMode="scaleToFill" id="CFQ-mc-UDD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="iQj-Zk-TIa"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <connections>
                         <segue destination="OmA-pM-4sR" kind="unwind" identifier="newToBackMainSegue" unwindAction="unBackAppsForMain:" id="cQt-RA-ACO"/>
@@ -623,8 +623,8 @@
                     <view key="view" contentMode="scaleToFill" id="bVr-W1-3Yg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="dAJ-dt-sRa"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="邮箱" id="wHL-oq-LdW">
                         <barButtonItem key="leftBarButtonItem" title="关闭" id="6AG-HD-uq1">
@@ -664,5 +664,11 @@
     <resources>
         <image name="icon_daiban" width="38" height="38"/>
         <image name="todoedStatusIcon" width="32" height="32"/>
+        <systemColor name="darkTextColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="groupTableViewBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

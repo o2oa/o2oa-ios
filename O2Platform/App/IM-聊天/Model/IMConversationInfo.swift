@@ -77,6 +77,7 @@ class IMMessageBodyInfo: NSObject, DataModel {
     @objc var type: String?
     @objc var body: String?
     @objc var fileId: String? //文件id
+    @objc var fileName: String? //文件名称
     @objc var fileExtension: String? //文件扩展
     @objc var fileTempPath: String? //本地临时文件地址
     @objc var audioDuration: String? // 音频文件时长
@@ -100,6 +101,7 @@ class IMUploadBackModel: NSObject, DataModel {
     
     @objc var id:String?
     @objc var fileExtension: String? //文件扩展
+    @objc var fileName: String? //文件名称
     
     required override init() { }
 

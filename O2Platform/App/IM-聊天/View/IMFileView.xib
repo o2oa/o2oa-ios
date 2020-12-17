@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="IMFileView" customModule="O2Platform" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="175" height="75"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_file_more" translatesAutoresizingMaskIntoConstraints="NO" id="1Ru-zq-dZI">
+                    <rect key="frame" x="24" y="17.5" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="F6i-hQ-qx3"/>
+                        <constraint firstAttribute="width" constant="40" id="xRh-wH-ADK"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="文件.png" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vr0-sq-1BQ">
+                    <rect key="frame" x="76" y="29.5" width="87" height="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="vr0-sq-1BQ" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="B8a-Ba-bhs"/>
+                <constraint firstAttribute="trailing" secondItem="vr0-sq-1BQ" secondAttribute="trailing" constant="12" id="Lwa-Gc-Xxg"/>
+                <constraint firstItem="1Ru-zq-dZI" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="24" id="byU-pl-9Po"/>
+                <constraint firstItem="vr0-sq-1BQ" firstAttribute="leading" secondItem="1Ru-zq-dZI" secondAttribute="trailing" constant="12" id="pYp-nQ-SGW"/>
+                <constraint firstItem="1Ru-zq-dZI" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="wDB-ks-Q67"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="fileIcon" destination="1Ru-zq-dZI" id="4BG-gF-BSr"/>
+                <outlet property="fileNameLabel" destination="vr0-sq-1BQ" id="vdq-9T-hPz"/>
+            </connections>
+            <point key="canvasLocation" x="-163.04347826086959" y="-290.95982142857139"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="icon_file_more" width="40" height="40"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
