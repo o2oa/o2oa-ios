@@ -1,23 +1,22 @@
 //
-//  IMAudioView.swift
+//  IMAudioViewSend.swift
 //  O2Platform
 //
-//  Created by FancyLou on 2020/6/17.
+//  Created by FancyLou on 2020/12/21.
 //  Copyright © 2020 zoneland. All rights reserved.
 //
 
 import UIKit
 
-class IMAudioView: UIView {
+
+class IMAudioViewSend: UIView {
     
     static let IMAudioView_width: CGFloat = 92
     static let IMAudioView_height: CGFloat = 28
     
+    override func awakeFromNib() { }
     @IBOutlet weak var playImageView: UIImageView!
     @IBOutlet weak var durationLabel: UILabel!
-    
-    
-    override func awakeFromNib() { }
     
     
     func setDuration(duration: String) {
@@ -26,7 +25,7 @@ class IMAudioView: UIView {
     }
     /// 设置gif图片 进行播放
     func playAudioGif() {
-        let url: URL? = Bundle.main.url(forResource: "chat_play_left", withExtension: "gif")
+        let url: URL? = Bundle.main.url(forResource: "chat_play_right", withExtension: "gif")
         guard let u = url else {
             return
         }
@@ -36,8 +35,8 @@ class IMAudioView: UIView {
         playImageView.image = UIImage.sd_animatedGIF(with: data)
     }
     
-    /// 设置静态图片 
+    /// 设置静态图片
     func stopPlayAudioGif() {
-        playImageView.image = UIImage(named: "chat_play_left_s")
+        playImageView.image = UIImage(named: "chat_play_right_s")
     }
 }

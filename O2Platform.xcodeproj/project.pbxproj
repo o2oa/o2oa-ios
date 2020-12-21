@@ -97,6 +97,8 @@
 		B12FD1EB2283D62B00E636BA /* O2ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12FD1EA2283D62B00E636BA /* O2ThemeManager.swift */; };
 		B12FD1ED2283FA2E00E636BA /* blue.plist in Resources */ = {isa = PBXBuildFile; fileRef = B12FD1EC2283FA2E00E636BA /* blue.plist */; };
 		B12FD1EF228425BE00E636BA /* OOMeetingTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B12FD1EE228425BE00E636BA /* OOMeetingTabBarController.swift */; };
+		B1302A03259075DA00848637 /* IMAudioViewSend.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1302A02259075DA00848637 /* IMAudioViewSend.xib */; };
+		B1302A322590770E00848637 /* IMAudioViewSend.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1302A312590770E00848637 /* IMAudioViewSend.swift */; };
 		B130A74F2281559900282AD1 /* DeviceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B130A74E2281559900282AD1 /* DeviceListViewController.swift */; };
 		B130A7832281565F00282AD1 /* DeviceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B130A7822281565F00282AD1 /* DeviceTableViewCell.swift */; };
 		B130A7852281597000282AD1 /* DeviceManagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B130A7842281597000282AD1 /* DeviceManagerViewModel.swift */; };
@@ -293,6 +295,9 @@
 		B1C19025211437E200935829 /* OOCalendarLeftMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C19024211437E200935829 /* OOCalendarLeftMenuController.swift */; };
 		B1C1905D2114410D00935829 /* CalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C1905C2114410D00935829 /* CalendarTableViewCell.swift */; };
 		B1C303E622D58C1A00C17E5A /* CMSAttachmentInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C303E522D58C1A00C17E5A /* CMSAttachmentInfoResponse.swift */; };
+		B1D14739258C8F610053DB4F /* listener08_anim.gif in Resources */ = {isa = PBXBuildFile; fileRef = B1D14736258C8F610053DB4F /* listener08_anim.gif */; };
+		B1D1473A258C8F610053DB4F /* chat_play_left.gif in Resources */ = {isa = PBXBuildFile; fileRef = B1D14737258C8F610053DB4F /* chat_play_left.gif */; };
+		B1D1473B258C8F610053DB4F /* chat_play_right.gif in Resources */ = {isa = PBXBuildFile; fileRef = B1D14738258C8F610053DB4F /* chat_play_right.gif */; };
 		B1D1BC89234C5514002025DA /* CloudFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D1BC88234C5514002025DA /* CloudFileViewController.swift */; };
 		B1D1BC8B234C5C49002025DA /* CloudFileShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D1BC8A234C5C49002025DA /* CloudFileShareViewController.swift */; };
 		B1D1BC8D234C7EC9002025DA /* CloudFileFolderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D1BC8C234C7EC9002025DA /* CloudFileFolderCell.swift */; };
@@ -1269,6 +1274,8 @@
 		B12FD1EA2283D62B00E636BA /* O2ThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = O2ThemeManager.swift; sourceTree = "<group>"; };
 		B12FD1EC2283FA2E00E636BA /* blue.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = blue.plist; sourceTree = "<group>"; };
 		B12FD1EE228425BE00E636BA /* OOMeetingTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOMeetingTabBarController.swift; sourceTree = "<group>"; };
+		B1302A02259075DA00848637 /* IMAudioViewSend.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IMAudioViewSend.xib; sourceTree = "<group>"; };
+		B1302A312590770E00848637 /* IMAudioViewSend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMAudioViewSend.swift; sourceTree = "<group>"; };
 		B130A74E2281559900282AD1 /* DeviceListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceListViewController.swift; sourceTree = "<group>"; };
 		B130A7822281565F00282AD1 /* DeviceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTableViewCell.swift; sourceTree = "<group>"; };
 		B130A7842281597000282AD1 /* DeviceManagerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManagerViewModel.swift; sourceTree = "<group>"; };
@@ -1482,6 +1489,9 @@
 		B1C19024211437E200935829 /* OOCalendarLeftMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOCalendarLeftMenuController.swift; sourceTree = "<group>"; };
 		B1C1905C2114410D00935829 /* CalendarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTableViewCell.swift; sourceTree = "<group>"; };
 		B1C303E522D58C1A00C17E5A /* CMSAttachmentInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSAttachmentInfoResponse.swift; sourceTree = "<group>"; };
+		B1D14736258C8F610053DB4F /* listener08_anim.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = listener08_anim.gif; sourceTree = "<group>"; };
+		B1D14737258C8F610053DB4F /* chat_play_left.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = chat_play_left.gif; sourceTree = "<group>"; };
+		B1D14738258C8F610053DB4F /* chat_play_right.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = chat_play_right.gif; sourceTree = "<group>"; };
 		B1D1BC88234C5514002025DA /* CloudFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFileViewController.swift; sourceTree = "<group>"; };
 		B1D1BC8A234C5C49002025DA /* CloudFileShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFileShareViewController.swift; sourceTree = "<group>"; };
 		B1D1BC8C234C7EC9002025DA /* CloudFileFolderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFileFolderCell.swift; sourceTree = "<group>"; };
@@ -2346,6 +2356,8 @@
 				B1489CB02492045D009EE9FD /* IMChatEmojiItemCell.xib */,
 				B15BE0ED2499DD7E008CD1DB /* IMChatAudioView.swift */,
 				B15BE0EF2499DD90008CD1DB /* IMChatAudioView.xib */,
+				B1302A02259075DA00848637 /* IMAudioViewSend.xib */,
+				B1302A312590770E00848637 /* IMAudioViewSend.swift */,
 				B15BE10B249A0EFE008CD1DB /* IMAudioView.xib */,
 				B15BE10D249A107C008CD1DB /* IMAudioView.swift */,
 				B183987C249AFF64001C6FAA /* IMLocationView.xib */,
@@ -2749,6 +2761,16 @@
 			path = FaceRecognizeAPI;
 			sourceTree = "<group>";
 		};
+		B1D14735258C8F610053DB4F /* audio */ = {
+			isa = PBXGroup;
+			children = (
+				B1D14736258C8F610053DB4F /* listener08_anim.gif */,
+				B1D14737258C8F610053DB4F /* chat_play_left.gif */,
+				B1D14738258C8F610053DB4F /* chat_play_right.gif */,
+			);
+			path = audio;
+			sourceTree = "<group>";
+		};
 		B1E0BA732378F9E9001D741F /* jpush */ = {
 			isa = PBXGroup;
 			children = (
@@ -2791,6 +2813,7 @@
 		B1F79C44233B5F9B004D0AEE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B1D14735258C8F610053DB4F /* audio */,
 				B1173B2C2489F48C005075F0 /* O2Emoji.bundle */,
 				B19776E7217D9D810019F3A8 /* beep.wav */,
 				E4B888231D9D48F1002E1A46 /* images */,
@@ -4887,6 +4910,7 @@
 				E46E6C991DD41F5D00AB7561 /* ZSSpicker.png in Resources */,
 				B168BF2C24F797DF0070329F /* bds_easr_basic_model.dat in Resources */,
 				E46E6C9F1DD41F5D00AB7561 /* ZSSrightjustify.png in Resources */,
+				B1302A03259075DA00848637 /* IMAudioViewSend.xib in Resources */,
 				E40E24C620B7DA3C009F8BE7 /* OOMeetingRoomInforCell.xib in Resources */,
 				E40E24C820B7DA3C009F8BE7 /* OMeetingPersonActionCell.xib in Resources */,
 				E4C24C4F208D7EDE00E426B0 /* OOContactUnitHeader.xib in Resources */,
@@ -4901,6 +4925,7 @@
 				E4FF449B206354B7007C3FC4 /* OONoticationSettingController.xib in Resources */,
 				B168BF2F24F797DF0070329F /* bds_easr_gramm.dat in Resources */,
 				E46E6C711DD41F5D00AB7561 /* ZSSfonts.png in Resources */,
+				B1D14739258C8F610053DB4F /* listener08_anim.gif in Resources */,
 				E46E6CB41DD41F5D00AB7561 /* ZSSviewsource@2x.png in Resources */,
 				E4B2321820B3C1870082F30A /* OOAttanceFooterView.xib in Resources */,
 				E428AF5620AA7A7500D964B9 /* OOAttanceItemCell.xib in Resources */,
@@ -4988,8 +5013,10 @@
 				E46E6CB11DD41F5D00AB7561 /* ZSSunorderedlist.png in Resources */,
 				E40E246D20B68AF6009F8BE7 /* OOAttandanceTotalHeaderView.xib in Resources */,
 				B1489CB724935104009EE9FD /* IMInstantMessageViewController.xib in Resources */,
+				B1D1473A258C8F610053DB4F /* chat_play_left.gif in Resources */,
 				B1EA1A6724DA9BDD00EDCB3A /* IdentitySelectView.xib in Resources */,
 				E46E6C7E1DD41F5D00AB7561 /* ZSSh5@2x.png in Resources */,
+				B1D1473B258C8F610053DB4F /* chat_play_right.gif in Resources */,
 				B168BF3124F797DF0070329F /* bds_easr_dnn_wakeup_model.dat in Resources */,
 				E46E6C871DD41F5D00AB7561 /* ZSSindent.png in Resources */,
 				E46E6CC31DD41F5D00AB7561 /* ZSSRichTextEditor.js in Resources */,
@@ -5339,6 +5366,7 @@
 				E4CB27701E78D5B1004A7ACB /* UIColor+RGB.swift in Sources */,
 				E42E41CC1E6E8B3800C5B5C7 /* MainPublishContentCell.swift in Sources */,
 				B1FDBE8D22952F0C00BB434E /* O2WorkMoreActionSheet.swift in Sources */,
+				B1302A322590770E00848637 /* IMAudioViewSend.swift in Sources */,
 				B175007F233C6A63003DA7B9 /* UIDeviceExtensions.swift in Sources */,
 				E4B889031D9D48F1002E1A46 /* TodoTaskTableViewCell.swift in Sources */,
 				E4A54C6920A435600024EDAC /* OOAppEditController.swift in Sources */,

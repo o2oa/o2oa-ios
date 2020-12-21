@@ -10,6 +10,7 @@ import UIKit
 import CocoaLumberjack
 
 protocol IMChatMessageDelegate {
+    func playAudio(info: IMMessageBodyInfo, id: String?)
     func openImageOrFileMessage(info: IMMessageBodyInfo)
     func openLocatinMap(info: IMMessageBodyInfo)
     func openApplication(storyboard: String)
@@ -47,6 +48,8 @@ class IMChatMessageViewCell: UITableViewCell {
     }()
 
     var delegate: IMChatMessageDelegate?
+    //是否正在播放音频 音频消息使用
+    private var isPlayingAudio = false
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -239,7 +242,8 @@ class IMChatMessageViewCell: UITableViewCell {
     
 
     //聊天消息
-    func setContent(item: IMMessageInfo) {
+    func setContent(item: IMMessageInfo, isPlayingAudio: Bool) {
+        self.isPlayingAudio = isPlayingAudio
         //time
         if let time = item.createTime {
             let date = time.toDate(formatter: "yyyy-MM-dd HH:mm:ss")
@@ -266,7 +270,7 @@ class IMChatMessageViewCell: UITableViewCell {
             } else if body.type == o2_im_msg_type_image {
                 imageMsgRender(info: body)
             } else if o2_im_msg_type_audio == body.type {
-                audioMsgRender(info: body)
+                audioMsgRender(info: body, id: item.id)
             } else if o2_im_msg_type_location == body.type {
                 locationMsgRender(info: body)
             } else if o2_im_msg_type_file == body.type {
@@ -283,8 +287,8 @@ class IMChatMessageViewCell: UITableViewCell {
         self.messageBackgroundHeight.constant = IMFileView.IMFileView_height + 20
         self.fileView.translatesAutoresizingMaskIntoConstraints = false
         self.messageBackgroundView.addSubview(self.fileView)
-        if let _ = info.fileId {
-            self.fileView.setFile(name: info.fileName ?? "", fileExt: info.fileExtension)
+        if let fileId = info.fileId {
+            self.fileView.setFile(name: info.fileName ?? fileId, fileExt: info.fileExtension)
         }else if let filePath = info.fileTempPath {
             let ext = filePath.pathExtension
             let fileName = filePath.pathFileName
@@ -313,44 +317,33 @@ class IMChatMessageViewCell: UITableViewCell {
     }
 
     //音频消息
-    private func audioMsgRender(info: IMMessageBodyInfo) {
-        self.messageBackgroundWidth.constant = IMAudioView.IMAudioView_width + 20
-        self.messageBackgroundHeight.constant = IMAudioView.IMAudioView_height + 20
+    private func audioMsgRender(info: IMMessageBodyInfo, id: String?) {
+        let width = IMAudioView.IMAudioView_width + 20
+        let height = IMAudioView.IMAudioView_height + 20
+        self.messageBackgroundWidth.constant = width
+        self.messageBackgroundHeight.constant = height
+        //背景图片
+        let bgImg = UIImageView(frame: CGRect(x: 0, y: 0, width: width, height: height))
+        let insets = UIEdgeInsets(top: 28, left: 10, bottom: 5, right: 5); // 上、左、下、右
+        var bubble = UIImage(named: "chat_bubble_incomming")
+        bubble = bubble?.resizableImage(withCapInsets: insets, resizingMode: .stretch)
+        bgImg.image = bubble
+        self.messageBackgroundView.addSubview(bgImg)
+        
         self.audioView.translatesAutoresizingMaskIntoConstraints = false
         self.messageBackgroundView.addSubview(self.audioView)
         self.audioView.setDuration(duration: info.audioDuration ?? "0")
+        if self.isPlayingAudio {
+            self.audioView.playAudioGif()
+        }else {
+            self.audioView.stopPlayAudioGif()
+        }
         self.audioView.addTapGesture { (tap) in
-            self.playAudio(info: info)
+            self.delegate?.playAudio(info: info, id: id)
         }
         self.constraintWithContent(contentView: self.audioView)
     }
 
-    private func playAudio(info: IMMessageBodyInfo) {
-        if let fileId = info.fileId {
-            var ext = info.fileExtension ?? "mp3"
-            if ext.isEmpty {
-                ext = "mp3"
-            }
-            O2IMFileManager.shared.getFileLocalUrl(fileId: fileId, fileExtension: ext)
-                .then { (url) in
-                    do {
-                        let data = try Data(contentsOf: url)
-                        AudioPlayerManager.shared.managerAudioWithData(data, toplay: true)
-                    } catch {
-                        DDLogError(error.localizedDescription)
-                    }
-                }.catch { (e) in
-                    DDLogError(e.localizedDescription)
-            }
-        } else if let filePath = info.fileTempPath {
-            do {
-                let data = try Data(contentsOf: URL(fileURLWithPath: filePath))
-                AudioPlayerManager.shared.managerAudioWithData(data, toplay: true)
-            } catch {
-                DDLogError(error.localizedDescription)
-            }
-        }
-    }
 
     private func constraintWithContent(contentView: UIView) {
         let top = NSLayoutConstraint(item: contentView, attribute: .top, relatedBy: .equal, toItem: contentView.superview!, attribute: .top, multiplier: 1, constant: 10)
