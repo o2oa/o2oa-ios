@@ -108,13 +108,21 @@ class OOMeetingMeetingRoomManageController: UIViewController {
             return
         }
         var hasReIdle = false
-        for room in selectedMeetingRooms {
+        var hasClose = false
+        if let room = self.selectedMeetingRooms.first {
             if room.idle == false {
                 hasReIdle = true
+            }
+            if room.available == false {
+                hasClose = true
             }
         }
         if hasReIdle {
             self.showError(title: "会议室已预约，请选择其它时间段")
+            return
+        }
+        if hasClose {
+            self.showError(title: "会议室已关闭，请选择其它会议室")
             return
         }
         block.backResult("OOMeetingMeetingRoomManageController", selectedMeetingRooms)
