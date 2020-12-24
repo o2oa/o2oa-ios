@@ -78,6 +78,9 @@ class IMInstantMessageViewController: UITableViewController {
 }
 
 extension IMInstantMessageViewController : IMChatMessageDelegate {
+    func playAudio(info: IMMessageBodyInfo, id: String?) {
+        
+    }
     func openImageOrFileMessage(info: IMMessageBodyInfo) {
         //无需实现
     }

@@ -67,7 +67,13 @@ class IMChatViewController: UIViewController {
     private var isShowAudioView = false
     private var bottomBarHeight = 64 //底部输入框 表情按钮 的高度
     private let bottomToolbarHeight = 46 //底部工具栏 麦克风 相册 相机等按钮的位置
+    
+    private var playingAudioMessageId: String? // 正在播放音频的消息id
 
+    
+    deinit {
+        AudioPlayerManager.shared.delegate = nil
+    }
 
     // MARK: - functions
     override func viewDidLoad() {
@@ -84,7 +90,11 @@ class IMChatViewController: UIViewController {
            self.loadMsgList()
         })
         
+        // 输入框 delegate
         self.messageInputView.delegate = self
+        
+        // 播放audio delegate
+        AudioPlayerManager.shared.delegate = self
 
         //底部安全距离 老机型没有
         self.bottomBarHeight = Int(iPhoneX ? 64 + IPHONEX_BOTTOM_SAFE_HEIGHT: 64) + self.bottomToolbarHeight
@@ -467,6 +477,26 @@ class IMChatViewController: UIViewController {
         picker.delegate = self
         self.present(picker, animated: true, completion: nil)
     }
+    
+    private func playAudioGif(id: String?) {
+        self.playingAudioMessageId = id
+        self.tableView.reloadData()
+    }
+    
+    private func stopPlayAudioGif() {
+        self.playingAudioMessageId = nil
+        self.tableView.reloadData()
+    }
+    
+    // 播放audio
+    private func playAudio(url: URL) {
+        do {
+            let data = try Data(contentsOf: url)
+            AudioPlayerManager.shared.managerAudioWithData(data, toplay: true)
+        } catch {
+            DDLogError(error.localizedDescription)
+        }
+    }
 
 
     // MARK: - IBAction
@@ -573,6 +603,17 @@ extension IMChatViewController: UIDocumentPickerDelegate {
 // MARK: - 录音delegate
 extension IMChatViewController: IMChatAudioViewDelegate {
     
+    private func audioRecordingGif() -> UIImage? {
+        let url: URL? = Bundle.main.url(forResource: "listener08_anim", withExtension: "gif")
+        guard let u = url else {
+            return nil
+        }
+        guard let data = try? Data.init(contentsOf: u) else {
+            return nil
+        }
+        return UIImage.sd_animatedGIF(with: data)
+    }
+    
     func showAudioRecordingView() {
         if self.voiceIconImage == nil {
             self.voiceImageSuperView = UIView()
@@ -602,7 +643,11 @@ extension IMChatViewController: IMChatAudioViewDelegate {
             }
         }
         self.voiceImageSuperView?.isHidden = false
-        self.voiceIconImage?.image = UIImage(named: "chat_audio_voice")
+        if let gifImage = self.audioRecordingGif() {
+            self.voiceIconImage?.image = gifImage
+        }else {
+            self.voiceIconImage?.image = UIImage(named: "chat_audio_voice")
+        }
         self.voiceIocnTitleLable?.text = "松开发送，上滑取消";
        
     }
@@ -617,7 +662,11 @@ extension IMChatViewController: IMChatAudioViewDelegate {
     }
     
     func changeRecordingView2down() {
-        self.voiceIconImage?.image = UIImage(named: "chat_audio_voice")
+        if let gifImage = self.audioRecordingGif() {
+            self.voiceIconImage?.image = gifImage
+        }else {
+            self.voiceIconImage?.image = UIImage(named: "chat_audio_voice")
+        }
         self.voiceIocnTitleLable?.text = "松开发送，上滑取消";
     }
     
@@ -668,7 +717,25 @@ extension IMChatViewController: UIImagePickerControllerDelegate & UINavigationCo
 
 }
 
-// MARK: - 图片消息点击 delegate
+// MARK: - audio 播放 delegate
+extension IMChatViewController: AudioPlayerManagerDelegate {
+    func didAudioPlayerBeginPlay(_ AudioPlayer: AVAudioPlayer) {
+        DDLogDebug("播放开始")
+    }
+    
+    func didAudioPlayerStopPlay(_ AudioPlayer: AVAudioPlayer) {
+        DDLogDebug("播放结束")
+        self.stopPlayAudioGif()
+    }
+    
+    func didAudioPlayerPausePlay(_ AudioPlayer: AVAudioPlayer) {
+        DDLogDebug("播放暂停")
+    }
+    
+    
+}
+
+// MARK: - 消息点击 delegate
 extension IMChatViewController: IMChatMessageDelegate {
     
     func openApplication(storyboard: String) {
@@ -767,6 +834,30 @@ extension IMChatViewController: IMChatMessageDelegate {
             }
         }
     }
+     
+    func playAudio(info: IMMessageBodyInfo, id: String?) {
+        if self.playingAudioMessageId != nil && self.playingAudioMessageId == id {
+            DDLogError("正在播放中。。。。。")
+            return
+        }
+        if let fileId = info.fileId {
+            var ext = info.fileExtension ?? "mp3"
+            if ext.isEmpty {
+                ext = "mp3"
+            }
+            O2IMFileManager.shared.getFileLocalUrl(fileId: fileId, fileExtension: ext)
+                .then { (url) in
+                    self.playAudio(url: url)
+            }.catch { (e) in
+                DDLogError(e.localizedDescription)
+            }
+        } else if let filePath = info.fileTempPath {
+            self.playAudio(url: URL(fileURLWithPath: filePath))
+        }
+        self.playAudioGif(id: id)
+    }
+    
+    
 }
 
 // MARK: - 表情点击 delegate
@@ -786,15 +877,16 @@ extension IMChatViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let msg = self.chatMessageList[indexPath.row]
+        let isPlaying = self.playingAudioMessageId == nil ? false : (self.playingAudioMessageId == msg.id)
         if msg.createPerson == O2AuthSDK.shared.myInfo()?.distinguishedName { //发送者
             if let cell = tableView.dequeueReusableCell(withIdentifier: "IMChatMessageSendViewCell", for: indexPath) as? IMChatMessageSendViewCell {
-                cell.setContent(item: self.chatMessageList[indexPath.row])
+                cell.setContent(item: self.chatMessageList[indexPath.row], isPlayingAudio: isPlaying)
                 cell.delegate = self
                 return cell
             }
         } else {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "IMChatMessageViewCell", for: indexPath) as? IMChatMessageViewCell {
-                cell.setContent(item: self.chatMessageList[indexPath.row])
+                cell.setContent(item: self.chatMessageList[indexPath.row], isPlayingAudio: isPlaying)
                 cell.delegate = self
                 return cell
             }

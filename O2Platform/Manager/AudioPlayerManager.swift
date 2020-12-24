@@ -36,7 +36,7 @@ class AudioPlayerManager: NSObject {
     
     func playAudioWithData(_ voiceData:Data) {
         do {
-            try AVAudioSession.sharedInstance().setCategory(.playAndRecord, mode: .default, options: .defaultToSpeaker)
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: .defaultToSpeaker)
         } catch let error as NSError {
             print("set category fail \(error)")
         }
