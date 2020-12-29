@@ -4476,7 +4476,7 @@
 				TargetAttributes = {
 					E4B887121D9D477A002E1A46 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = C79YTQHHFY;
+						DevelopmentTeam = NTDRU2P6T4;
 						LastSwiftMigration = 0930;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
@@ -5973,7 +5973,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 86;
-				DEVELOPMENT_TEAM = C79YTQHHFY;
+				DEVELOPMENT_TEAM = NTDRU2P6T4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6053,10 +6053,10 @@
 					"\"SwiftyUserDefaults\"",
 					"-w",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.o2oa.app.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = net.zoneland.m.o2oa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "9ebefd7c-6117-4bee-a96c-7ddb06ad4c6f";
-				PROVISIONING_PROFILE_SPECIFIER = "Company Developer profile";
+				PROVISIONING_PROFILE_SPECIFIER = ZheJiangOfficeWorkMngDevProfile;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = none;
 				SWIFT_OBJC_BRIDGING_HEADER = "O2Platform/O2Platform-Bridging-Header.h";
@@ -6081,7 +6081,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 86;
-				DEVELOPMENT_TEAM = C79YTQHHFY;
+				DEVELOPMENT_TEAM = NTDRU2P6T4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6161,10 +6161,10 @@
 					"\"SwiftyUserDefaults\"",
 					"-w",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.o2oa.app.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = net.zoneland.m.o2oa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "b23067fd-fb08-4b85-8255-d8f3d25abc8a";
-				PROVISIONING_PROFILE_SPECIFIER = "Company Distribute profile";
+				PROVISIONING_PROFILE_SPECIFIER = ZheJiangOfficeWorkMngDisProfile;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = none;
 				SWIFT_OBJC_BRIDGING_HEADER = "O2Platform/O2Platform-Bridging-Header.h";

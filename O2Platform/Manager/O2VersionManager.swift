@@ -27,30 +27,30 @@ class O2VersionManager {
     func checkAppUpdate(call:@escaping (_ versionInfo: O2VersionInfoModel?, _ error :String?) -> Void)  {
         call(nil, "") // 上架版本不需要应用内更新
         
-//        if let infoPath = Bundle.main.path(forResource: "Info", ofType: "plist"), let dic = NSDictionary(contentsOfFile: infoPath) {
-//            if let versionUrl = dic["o2 app version url"] as? String {
-//                all(self.loadLastAppVersionInfo(url: versionUrl), self.appBuild()).then { (results) in
-//                    let ios = results.0
-//                    let appBuild = results.1
-//                    let onlineIosBuild = Int(string: ios.buildNo ?? "0") ?? 0
-//                    let thisAppBuild = Int(string: appBuild) ?? 0
-//                    if onlineIosBuild > thisAppBuild {
-//                        call(ios, nil)
-//                    }else {
-//                        call(nil, "没有新版本，不需要更新！")
-//                    }
-//                }.catch { (err) in
-//                    DDLogError(err.localizedDescription)
-//                    call(nil, err.localizedDescription)
-//                }
-//            }else {
-//                DDLogError("没有配置版本更新地址，无法检查更新！")
-//                call(nil, "没有配置版本更新地址，无法检查更新！")
-//            }
-//        }else {
-//            DDLogError("没有Info.plist文件。。。。。是吗？？？")
-//            call(nil, "没有配置版本更新地址，无法检查更新！")
-//        }
+        if let infoPath = Bundle.main.path(forResource: "Info", ofType: "plist"), let dic = NSDictionary(contentsOfFile: infoPath) {
+            if let versionUrl = dic["o2 app version url"] as? String {
+                all(self.loadLastAppVersionInfo(url: versionUrl), self.appBuild()).then { (results) in
+                    let ios = results.0
+                    let appBuild = results.1
+                    let onlineIosBuild = Int(string: ios.buildNo ?? "0") ?? 0
+                    let thisAppBuild = Int(string: appBuild) ?? 0
+                    if onlineIosBuild > thisAppBuild {
+                        call(ios, nil)
+                    }else {
+                        call(nil, "没有新版本，不需要更新！")
+                    }
+                }.catch { (err) in
+                    DDLogError(err.localizedDescription)
+                    call(nil, err.localizedDescription)
+                }
+            }else {
+                DDLogError("没有配置版本更新地址，无法检查更新！")
+                call(nil, "没有配置版本更新地址，无法检查更新！")
+            }
+        }else {
+            DDLogError("没有Info.plist文件。。。。。是吗？？？")
+            call(nil, "没有配置版本更新地址，无法检查更新！")
+        }
     }
     
     func updateAppVersion(_ downloadUrl: String?) {

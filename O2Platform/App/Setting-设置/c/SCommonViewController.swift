@@ -51,6 +51,7 @@ class SCommonViewController: UITableViewController {
                 UIApplication.shared.keyWindow?.rootViewController?.present(alertController, animated: true, completion: nil)
             }else {
                 DDLogInfo("没有版本更新：\(error ?? "")")
+                self.showMessage(msg: "没有新版本")
             }
         }
     }

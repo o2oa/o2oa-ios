@@ -9,7 +9,8 @@ import Foundation
 
 
 class O2ConfigInfo {
-    static let COLLECT_SERVER_URL = "http://collect.o2oa.net:20080/o2_collect_assemble"
+//    static let COLLECT_SERVER_URL = "http://collect.o2oa.net:20080/o2_collect_assemble"
+    static let COLLECT_SERVER_URL = "http://114.116.108.117:20080/o2_collect_assemble"
     // oa 的key
     static let O2_OA_DES_KEY = "xplatform"
     static let O2_OA_SSO_CLIENT = "oa"
