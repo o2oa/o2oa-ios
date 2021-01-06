@@ -78,7 +78,7 @@ class SAccoutSecViewController: FormViewController {
                     if row?.value == true { //开启
                         //这里需要将unitId和 userId 组合 否则切换登录服务器后 绑定的userId不能正常登录
                         let unitId = O2AuthSDK.shared.bindUnit()?.id ?? ""
-                        let userId = O2AuthSDK.shared.myInfo()?.id ?? ""
+                        let userId = O2AuthSDK.shared.myInfo()?.distinguishedName ?? ""
                         AppConfigSettings.shared.bioAuthUser = "\(unitId)^^\(userId)"
                     }else { //关闭
                         AppConfigSettings.shared.bioAuthUser = ""

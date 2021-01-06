@@ -159,6 +159,99 @@ extension String {
         }
         return s
     }
+    
+    /// o2 后台统一的des加密
+    func o2DESEncode() -> String? {
+        if let encode = desEncrypt(key: O2ConfigInfo.O2_OA_DES_KEY, iv: "12345678", options: (kCCOptionECBMode + kCCOptionPKCS7Padding)) {
+            print("解密后的字符串：\(encode)")
+            let first = encode.replacingOccurrences(of: "+", with: "-")
+            let second = first.replacingOccurrences(of: "/", with: "_")
+            let token = second.replacingOccurrences(of: "=", with: "")
+            print("安全替换后的字符串：\(token)")
+            return token
+        }else {
+            print("加密错误")
+            return nil
+        }
+    }
+    
+    /// o2 后台统一的des解密
+    func o2DESDecode() -> String? {
+        return desDecrypt(key: O2ConfigInfo.O2_OA_DES_KEY, iv: "12345678", options: (kCCOptionECBMode + kCCOptionPKCS7Padding))
+    }
+    
+    /// DES 加密
+    func desEncrypt(key:String, iv:String, options:Int = kCCOptionPKCS7Padding) -> String? {
+        if let keyData = key.data(using: String.Encoding.utf8),
+            let data = self.data(using: String.Encoding.utf8),
+            let cryptData    = NSMutableData(length: Int((data.count)) + kCCBlockSizeDES) {
+
+
+            let keyLength              = size_t(kCCKeySizeDES)
+            let operation: CCOperation = UInt32(kCCEncrypt)
+            let algoritm:  CCAlgorithm = UInt32(kCCAlgorithmDES)
+            let options:   CCOptions   = UInt32(options)
+
+
+
+            var numBytesEncrypted :size_t = 0
+
+            let cryptStatus = CCCrypt(operation,
+                                      algoritm,
+                                      options,
+                                      (keyData as NSData).bytes, keyLength,
+                                      iv,
+                                      (data as NSData).bytes, data.count,
+                                      cryptData.mutableBytes, cryptData.length,
+                                      &numBytesEncrypted)
+
+            if UInt32(cryptStatus) == UInt32(kCCSuccess) {
+                cryptData.length = Int(numBytesEncrypted)
+//                    let base64cryptString = cryptData.base64EncodedString(options: .lineLength64Characters)
+                let base64cryptString = cryptData.base64EncodedString()
+                return base64cryptString
+
+            }
+            else {
+                return nil
+            }
+        }
+        return nil
+    }
+    /// DES 解密
+    func desDecrypt(key:String, iv:String, options:Int = kCCOptionPKCS7Padding) -> String? {
+        if let keyData = key.data(using: String.Encoding.utf8),
+            let data = NSData(base64Encoded: self, options: .ignoreUnknownCharacters),
+            let cryptData    = NSMutableData(length: Int((data.length)) + kCCBlockSizeDES) {
+
+            let keyLength              = size_t(kCCKeySizeDES)
+            let operation: CCOperation = UInt32(kCCDecrypt)
+            let algoritm:  CCAlgorithm = UInt32(kCCAlgorithmDES)
+            let options:   CCOptions   = UInt32(options)
+
+            var numBytesEncrypted :size_t = 0
+
+            let cryptStatus = CCCrypt(operation,
+                                      algoritm,
+                                      options,
+                                      (keyData as NSData).bytes, keyLength,
+                                      iv,
+                                      data.bytes, data.length,
+                                      cryptData.mutableBytes, cryptData.length,
+                                      &numBytesEncrypted)
+
+            if UInt32(cryptStatus) == UInt32(kCCSuccess) {
+                cryptData.length = Int(numBytesEncrypted)
+                let unencryptedMessage = String(data: cryptData as Data, encoding:String.Encoding.utf8)
+                return unencryptedMessage
+            }
+            else {
+                return nil
+            }
+        }
+        return nil
+    }
+    
 
     // MARK:- 获取帐号中的中文名称
     func getChinaName() -> String{

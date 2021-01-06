@@ -8,7 +8,6 @@
 import UIKit
 import RxSwift
 import Moya
-import CommonCrypto
 
 
 
@@ -1194,28 +1193,12 @@ public class O2AuthSDK: NSObject {
     /// - Returns:
     private func desEncrypt(_ uid: String) -> Observable<String> {
         return Observable<String>.create({ (observer) -> Disposable in
-            do {
-                let en = SymmetricCryptor(algorithm: .des, options: (kCCOptionECBMode + kCCOptionPKCS7Padding))
-                en.setRandomIV()
-                let timeInterval = Date().timeIntervalSince1970
-                let time = CLongLong(round(timeInterval*1000))
-                let code = "\(uid)#\(time)"
-                print("code: \(code)")
-                let encrypt = try en.crypt(string: code, key: O2ConfigInfo.O2_OA_DES_KEY)
-                let base64 = encrypt.base64EncodedString()
-                print("加密后的字符串:\(base64)")
-                let decrypt = try en.decrypt(encrypt, key: O2ConfigInfo.O2_OA_DES_KEY)
-                let deString = String(data: decrypt, encoding: String.Encoding.utf8)
-                print("解密后的字符串：\(deString ?? "")")
-                let first = base64.replacingOccurrences(of: "+", with: "-")
-                let second = first.replacingOccurrences(of: "/", with: "_")
-                let token = second.replacingOccurrences(of: "=", with: "")
-                print("安全替换后的字符串：\(token)")
-                observer.onNext(token)
-            }catch {
-                print("加密异常，\(error)")
-                observer.onError(error)
-            }
+            let timeInterval = Date().timeIntervalSince1970
+            let time = CLongLong(round(timeInterval*1000))
+            let code = "\(uid)#\(time)"
+            print("code: \(code)")
+            let token = code.o2DESEncode() ?? ""
+            observer.onNext(token)
             observer.onCompleted()
             return Disposables.create()
         })
