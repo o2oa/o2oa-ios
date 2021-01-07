@@ -167,6 +167,10 @@ class OOAttandanceMobileCheckinForm:NSObject,DataModel {
     
     @objc var checkin_type: String? //上午上班打卡 下午下班打卡 。。。。 对应OOAttandanceFeature里面的checkinType
     
+    var isExternal: Bool? // 是否外勤打卡
+    
+    @objc var workAddress: String? // 当前打卡的工作地点
+    
     required override init() {
         
     }
