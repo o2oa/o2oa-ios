@@ -38,6 +38,7 @@ class OOAttendanceCheckInNewController: UIViewController {
     private var lastRecord: OOAttandanceMobileDetail? = nil
     private var needCheckIn = false
     private var isInWorkPlace = false
+    private var currentWorkPlace: OOAttandanceWorkPlace? = nil
     private var bmkResult: BMKReverseGeoCodeSearchResult? = nil
     //打卡对象
     var checkinForm: OOAttandanceMobileCheckinForm = OOAttandanceMobileCheckinForm()
@@ -72,16 +73,7 @@ class OOAttendanceCheckInNewController: UIViewController {
 
     ///打卡
     private func postCheckinButton(_ scheduleInfo: OOAttandanceMobileScheduleInfo?) {
-        if !self.needCheckIn {
-            self.showError(title: "当前不需要打卡！")
-            return
-        }
-        if !self.isInWorkPlace {
-            self.showError(title: "不在打卡范围内！")
-            return
-        }
-
-
+        
         if let info = scheduleInfo, info.recordId != nil { //更新打卡
             self.showDefaultConfirm(title: "更新打卡", message: "确定要更新这条打卡数据吗？") { (action) in
                 self.showLoading()
@@ -98,6 +90,8 @@ class OOAttendanceCheckInNewController: UIViewController {
                 self.checkinForm.optMachineType = UIDevice.deviceModelReadable()
                 self.checkinForm.optSystemName = "\(UIDevice.systemName()) \(UIDevice.systemVersion())"
                 self.checkinForm.checkin_type = info.checkinType
+                self.checkinForm.isExternal = !self.isInWorkPlace
+                self.checkinForm.workAddress = self.currentWorkPlace?.placeName
                 self.viewModel.postMyCheckin(self.checkinForm) { (result) in
                     DispatchQueue.main.async {
                         self.hideLoading()
@@ -115,6 +109,11 @@ class OOAttendanceCheckInNewController: UIViewController {
                 }
             }
         } else {
+            if !self.needCheckIn {
+                self.showError(title: "当前不需要打卡！")
+                return
+            }
+            
             let reversed = self.schedules.reversed()
             var newList: [OOAttandanceMobileScheduleInfo] = []
             reversed.forEach { (info) in
@@ -137,24 +136,37 @@ class OOAttendanceCheckInNewController: UIViewController {
             checkinForm.optMachineType = UIDevice.deviceModelReadable()
             checkinForm.optSystemName = "\(UIDevice.systemName()) \(UIDevice.systemVersion())"
             checkinForm.checkin_type = checkType
-            viewModel.postMyCheckin(checkinForm) { (result) in
-                DispatchQueue.main.async {
-                    self.hideLoading()
-                }
-                switch result {
-                case .ok(_):
-                    self.loadMyRecords()
-                    break
-                case .fail(let errorMessage):
-                    DDLogError(errorMessage)
-                    break
-                default:
-                    break
-                }
+            
+            if !self.isInWorkPlace {
+                self.checkinForm.isExternal = true
+                self.checkinForm.workAddress = ""
+                self.showDefaultConfirm(title: "提示", message: "当前不在打卡范围内，你确定要进行外勤打卡吗？", okHandler: { action in
+                    self.postMyCheckin(checkinForm: self.checkinForm)
+                })
+            }else {
+                self.checkinForm.isExternal = false
+                self.checkinForm.workAddress = self.currentWorkPlace?.placeName
+                self.postMyCheckin(checkinForm: checkinForm)
             }
         }
-
-
+    }
+    
+    private func postMyCheckin(checkinForm: OOAttandanceMobileCheckinForm) {
+        viewModel.postMyCheckin(checkinForm) { (result) in
+            DispatchQueue.main.async {
+                self.hideLoading()
+            }
+            switch result {
+            case .ok(_):
+                self.loadMyRecords()
+                break
+            case .fail(let errorMessage):
+                DDLogError(errorMessage)
+                break
+            default:
+                break
+            }
+        }
     }
 
     ///接收到位置信息
@@ -165,6 +177,7 @@ class OOAttendanceCheckInNewController: UIViewController {
             // 打卡按钮启用
             self.locationLabel.text = workPlace?.placeName
             self.locationCheckImageView.image = UIImage(named: "icon__ok2_click")
+            self.currentWorkPlace = workPlace
         } else {
             //打卡按钮禁用
             self.locationLabel.text = bmkResult.address
