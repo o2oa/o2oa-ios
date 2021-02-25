@@ -30,12 +30,7 @@ struct TodoTaskJS {
     static let CHECK_FORM = "layout.appForm.formValidation(null, null)"
     static let CLOSE_WORK = "layout.app.appForm.finishOnMobile()"
 
-//    static func getDataWithJS(_ webView: UIWebView, jscode: String) -> [String: AnyObject] {
-//        let str = webView.stringByEvaluatingJavaScript(from: jscode)
-//        //let data = str?.dataUsingEncoding(NSUTF8StringEncoding)
-//        let json = JSON.init(parseJSON: str!)
-//        return json.dictionaryObject! as [String: AnyObject]
-//    }
+ 
 }
 
 
@@ -45,6 +40,9 @@ class TodoTaskDetailViewController: BaseWebViewUIViewController {
 
     @IBOutlet weak var webViewContainer: UIView!
 
+    private lazy var viewModel: WorkViewModel = {
+        return WorkViewModel()
+    }()
 
     var qlController = TaskAttachmentPreviewController()
 
@@ -263,30 +261,20 @@ class TodoTaskDetailViewController: BaseWebViewUIViewController {
         DDLogDebug("btnDeleteDoc Click")
         showDefaultConfirm(title: "提示", message: "确认要删除这个文档吗，删除后无法恢复？", okHandler: { (action) in
             self.showLoading(title: "删除中...")
-            let url = AppDelegate.o2Collect.generateURLWithAppContextKey(TaskContext.taskDataContextKey, query: TaskContext.taskWorkDeleteQuery, parameter: ["##id##": self.workId! as AnyObject])
-            AF.request(url!, method: .delete, parameters: nil, encoding: JSONEncoding.default, headers: nil).responseJSON { response in
-                switch response.result {
-                case .success(let val):
-                    //DDLogDebug(val)
-                    let json = JSON(val)
-                    if json["type"] == "success" {
-                        self.showSuccess(title: "删除成功")
-                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3, execute: {
-                                // 删除之后没有这个工作了，所以直接返回列表 防止返回到已办的TodoedTaskViewController
-                                if self.backFlag == 4 {
-                                    self.backFlag = 2
-                                }
-                                self.goBack()
-                            })
-                    } else {
-                        DDLogError(json.description)
-                        self.showError(title: "删除失败")
+            self.viewModel.deleteWork(workId: self.workId!).then { (result) in
+                self.showSuccess(title: "删除成功")
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3, execute: {
+                    // 删除之后没有这个工作了，所以直接返回列表 防止返回到已办的TodoedTaskViewController
+                    if self.backFlag == 4 {
+                        self.backFlag = 2
                     }
-                case .failure(let err):
-                    DDLogError(err.localizedDescription)
-                    self.showError(title: "删除失败")
-                }
+                    self.goBack()
+                })
+            }.catch { (err) in
+                DDLogError(err.localizedDescription)
+                self.showError(title: "删除失败")
             }
+
         })
 
     }
@@ -297,22 +285,11 @@ class TodoTaskDetailViewController: BaseWebViewUIViewController {
         self.setupData()
         group.notify(queue: DispatchQueue.main) {
             if self.isJSExecuted {
-                let url = AppDelegate.o2Collect.generateURLWithAppContextKey(TaskContext.taskDataContextKey, query: TaskContext.taskDataSaveQuery, parameter: ["##id##": self.taskProcess.workId! as AnyObject])
-                AF.request(url!, method: .put, parameters: self.taskProcess.businessDataDict!, encoding: JSONEncoding.default, headers: nil).responseJSON { response in
-                    switch response.result {
-                    case .success(let val):
-                        //DDLogDebug(val)
-                        let json = JSON(val)
-                        if json["type"] == "success" {
-                            self.showSuccess(title: "保存成功")
-                        } else {
-                            DDLogError(json.description)
-                            self.showError(title: "保存失败")
-                        }
-                    case .failure(let err):
-                        DDLogError(err.localizedDescription)
-                        self.showError(title: "保存失败")
-                    }
+                self.viewModel.saveWorkData(workId: self.taskProcess.workId!, data: self.taskProcess.businessDataDict!).then { (result) in
+                    self.showSuccess(title: "保存成功")
+                }.catch { (err) in
+                    DDLogError(err.localizedDescription)
+                    self.showError(title: "保存失败")
                 }
             } else {
                 self.showError(title: "保存失败")
@@ -365,64 +342,56 @@ class TodoTaskDetailViewController: BaseWebViewUIViewController {
                 self.showError(title: "表单验证失败，请正确填写表单内容")
             }
         }
-//        let str = self.todoWebView.stringByEvaluatingJavaScript(from: TodoTaskJS.CHECK_FORM)
-//        //let str  = "true"
-//        if str == "true" {
-//            DDLogDebug("next Step")
-//            self.setupData()
-//            self.performSegue(withIdentifier: "showTodoProcessSegue", sender: nil)
-//        }
-
     }
 
     @objc func itemBtnReadDocAction() {
         DDLogDebug("readButtonAction")
-        let url = AppDelegate.o2Collect.generateURLWithAppContextKey(ReadContext.readContextKey, query: ReadContext.readProcessing, parameter: ["##id##": (todoTask?.id)! as AnyObject])
-        self.showLoading(title: "提交中...")
-        AF.request(url!, method: .post, parameters: myRead, encoding: JSONEncoding.default, headers: nil).responseJSON { response in
-            switch response.result {
-            case .success(let val):
-                DDLogDebug(JSON(val).description)
-                let json = JSON(val)
-                if json["type"] == "success" {
-                    self.showSuccess(title: "提交成功")
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3, execute: {
-                            self.goBack()
-                        })
-                } else {
-                    DDLogError(json["message"].description)
-                    self.showError(title: "提交失败")
-                }
-            case .failure(let err):
-                DDLogError(err.localizedDescription)
-                self.showError(title: "提交失败")
-            }
-        }
+//        let url = AppDelegate.o2Collect.generateURLWithAppContextKey(ReadContext.readContextKey, query: ReadContext.readProcessing, parameter: ["##id##": (todoTask?.id)! as AnyObject])
+//        self.showLoading(title: "提交中...")
+//        AF.request(url!, method: .post, parameters: myRead, encoding: JSONEncoding.default, headers: nil).responseJSON { response in
+//            switch response.result {
+//            case .success(let val):
+//                DDLogDebug(JSON(val).description)
+//                let json = JSON(val)
+//                if json["type"] == "success" {
+//                    self.showSuccess(title: "提交成功")
+//                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3, execute: {
+//                            self.goBack()
+//                        })
+//                } else {
+//                    DDLogError(json["message"].description)
+//                    self.showError(title: "提交失败")
+//                }
+//            case .failure(let err):
+//                DDLogError(err.localizedDescription)
+//                self.showError(title: "提交失败")
+//            }
+//        }
     }
 
     @objc func itemBtnRetractDocAction() {
         DDLogDebug("撤回开始。。。")
-        let url = AppDelegate.o2Collect.generateURLWithAppContextKey(TaskedContext.taskedContextKey, query: TaskedContext.taskedRetractQuery, parameter: ["##work##": (self.workId)! as AnyObject])
-        self.showLoading(title: "提交中...")
-        AF.request(url!, method: .put, parameters: nil, encoding: JSONEncoding.default, headers: nil).responseJSON { response in
-            switch response.result {
-            case .success(let val):
-                DDLogDebug(JSON(val).description)
-                let json = JSON(val)
-                if json["type"] == "success" {
-                    self.showSuccess(title: "提交成功")
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3, execute: {
-                            self.goBack()
-                        })
-                } else {
-                    DDLogError(json["message"].description)
-                    self.showError(title: "提交失败")
-                }
-            case .failure(let err):
-                DDLogError(err.localizedDescription)
-                self.showError(title: "提交失败")
-            }
-        }
+//        let url = AppDelegate.o2Collect.generateURLWithAppContextKey(TaskedContext.taskedContextKey, query: TaskedContext.taskedRetractQuery, parameter: ["##work##": (self.workId)! as AnyObject])
+//        self.showLoading(title: "提交中...")
+//        AF.request(url!, method: .put, parameters: nil, encoding: JSONEncoding.default, headers: nil).responseJSON { response in
+//            switch response.result {
+//            case .success(let val):
+//                DDLogDebug(JSON(val).description)
+//                let json = JSON(val)
+//                if json["type"] == "success" {
+//                    self.showSuccess(title: "提交成功")
+//                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3, execute: {
+//                            self.goBack()
+//                        })
+//                } else {
+//                    DDLogError(json["message"].description)
+//                    self.showError(title: "提交失败")
+//                }
+//            case .failure(let err):
+//                DDLogError(err.localizedDescription)
+//                self.showError(title: "提交失败")
+//            }
+//        }
     }
 
 
@@ -882,11 +851,6 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
 
     //上传附件
     private func uploadAttachment(_ site: String) {
-        //选择附件上传
-        let updloadURL = AppDelegate.o2Collect.generateURLWithAppContextKey(TaskContext.taskContextKey, query: TaskContext.todoTaskUploadAttachmentQuery, parameter: ["##workId##": workId as AnyObject])
-        self.uploadAttachment(site, uploadURL: updloadURL!)
-    }
-    private func uploadAttachment(_ site: String, uploadURL url: String) {
         let vc = FileBSImagePickerViewController().bsImagePicker()
         presentImagePicker(vc, select: { (asset: PHAsset) -> Void in
             // User selected an asset.
@@ -909,16 +873,6 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
                         //获取文件名
                         let fileName = (asset.value(forKey: "filename") as? String) ?? "untitle.png"
                         PHImageManager.default().requestImageData(for: asset, options: options, resultHandler: { (imageData, result, imageOrientation, dict) in
-                            //DDLogDebug("result = \(result) imageOrientation = \(imageOrientation) \(dict)")
-//                            var fileName = ""
-//
-//                            if dict?["PHImageFileURLKey"] != nil {
-//                                let fileURL = dict?["PHImageFileURLKey"] as! URL
-//                                fileName = fileURL.lastPathComponent
-//                            } else {
-//                                fileName = result ?? "untitle.png"
-//                            }
-
                             DispatchQueue.main.async {
                                 self.showLoading(title: "上传中...")
                             }
@@ -930,67 +884,40 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
                                     newData = newImage?.pngData()
                                 }
                             }
-                            AF.upload(multipartFormData: { (mData) in
-                                mData.append(newData!, withName: "file", fileName: fileName, mimeType: "application/octet-stream")
-                                let siteData = site.data(using: String.Encoding.utf8, allowLossyConversion: false)
-                                mData.append(siteData!, withName: "site")
-                            }, to: url).responseJSON { (response) in
-                                print(response)
-                                if let err = response.error {
-                                    DispatchQueue.main.async {
-                                        DDLogError(err.localizedDescription)
-                                        self.showError(title: "上传失败")
-                                    }
-                                }else {
-                                    let attachId = JSON(response.data)["data"]["id"].string!
-                                    DispatchQueue.main.async {
-                                        //ProgressHUD.showSuccess("上传成功")
-                                        let callJS = "layout.appForm.uploadedAttachment(\"\(site)\", \"\(attachId)\")"
-                                        self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
-                                            self.showSuccess(title: "上传成功")
-                                        })
-                                    }
+                            self.viewModel.uploadAttachment(workId: self.workId!, site: site, fileName: fileName, fileData: newData!).then { (idData)  in
+                                DispatchQueue.main.async {
+                                    //ProgressHUD.showSuccess("上传成功")
+                                    let callJS = "layout.appForm.uploadedAttachment(\"\(site)\", \"\(idData.id ?? "")\")"
+                                    self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
+                                        
+                                    })
+                                    self.showSuccess(title: "上传成功")
                                 }
+                            }.catch { (err) in
+                                DDLogError(err.localizedDescription)
+                                self.showError(title: "上传失败")
                             }
-//                            DispatchQueue.global(qos: .userInitiated).async {
-//                                AF.upload(multipartFormData: { (mData) in
-//                                    //mData.append(fileURL, withName: "file")
-//                                    mData.append(newData!, withName: "file", fileName: fileName, mimeType: "application/octet-stream")
-//                                    let siteData = site.data(using: String.Encoding.utf8, allowLossyConversion: false)
-//                                    mData.append(siteData!, withName: "site")
-//                                }, to: url, encodingCompletion: { (encodingResult) in
-//                                        switch encodingResult {
-//                                        case .success(let upload, _, _):
-//                                            debugPrint(upload)
-//                                            upload.responseJSON {
-//                                                respJSON in
-//                                                switch respJSON.result {
-//                                                case .success(let val):
-//                                                    let attachId = JSON(val)["data"]["id"].string!
-//                                                    DispatchQueue.main.async {
-//                                                        //ProgressHUD.showSuccess("上传成功")
-//                                                        let callJS = "layout.appForm.uploadedAttachment(\"\(site)\", \"\(attachId)\")"
-//                                                        self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
-//                                                            self.showSuccess(title: "上传成功")
-//                                                        })
-//                                                    }
-//                                                case .failure(let err):
-//                                                    DispatchQueue.main.async {
-//                                                        DDLogError(err.localizedDescription)
-//                                                        self.showError(title: "上传失败")
-//                                                    }
-//                                                    break
-//                                                }
-//
-//                                            }
-//                                        case .failure(let errType):
-//                                            DispatchQueue.main.async {
-//                                                DDLogError(errType.localizedDescription)
-//                                                self.showError(title: "上传失败")
-//                                            }
-//                                        }
-//
-//                                    })
+//                            AF.upload(multipartFormData: { (mData) in
+//                                mData.append(newData!, withName: "file", fileName: fileName, mimeType: "application/octet-stream")
+//                                let siteData = site.data(using: String.Encoding.utf8, allowLossyConversion: false)
+//                                mData.append(siteData!, withName: "site")
+//                            }, to: url).responseJSON { (response) in
+//                                print(response)
+//                                if let err = response.error {
+//                                    DispatchQueue.main.async {
+//                                        DDLogError(err.localizedDescription)
+//                                        self.showError(title: "上传失败")
+//                                    }
+//                                }else {
+//                                    let attachId = JSON(response.data)["data"]["id"].string!
+//                                    DispatchQueue.main.async {
+//                                        //ProgressHUD.showSuccess("上传成功")
+//                                        let callJS = "layout.appForm.uploadedAttachment(\"\(site)\", \"\(attachId)\")"
+//                                        self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
+//                                            self.showSuccess(title: "上传成功")
+//                                        })
+//                                    }
+//                                }
 //                            }
                         })
                     case .video:
@@ -1007,63 +934,34 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
 
     //下载预览附件
     private func downloadAttachment(_ attachmentId: String) {
-        //生成两个URL，一个获取附件信息，一个链接正式下载
-        var infoURL: String?, downURL: String?
         if isWorkCompeleted {
-            infoURL = AppDelegate.o2Collect.generateURLWithAppContextKey(TaskedContext.taskedContextKey, query: TaskedContext.taskedGetAttachmentInfoQuery, parameter: ["##attachmentId##": attachmentId as AnyObject, "##workcompletedId##": workId as AnyObject])
-            downURL = AppDelegate.o2Collect.generateURLWithAppContextKey(TaskedContext.taskedContextKey, query: TaskedContext.taskedGetAttachmentQuery, parameter: ["##attachmentId##": attachmentId as AnyObject, "##workcompletedId##": workId as AnyObject])
-        } else {
-            infoURL = AppDelegate.o2Collect.generateURLWithAppContextKey(TaskContext.taskContextKey, query: TaskContext.todoTaskGetAttachmentInfoQuery, parameter: ["##attachmentId##": attachmentId as AnyObject, "##workId##": workId as AnyObject])
-            downURL = AppDelegate.o2Collect.generateURLWithAppContextKey(TaskContext.taskContextKey, query: TaskContext.todoTaskGetAttachmentQuery, parameter: ["##attachmentId##": attachmentId as AnyObject, "##workId##": workId as AnyObject])
-        }
-        self.showAttachViewInController(infoURL!, downURL!)
-    }
-    private func showAttachViewInController(_ infoURL: String, _ downURL: String) {
-        self.showLoading(title: "下载中...")
-        DDLogDebug("infoUrl:\(infoURL) ,down url:\(downURL)")
-        AF.request(infoURL).responseJSON { (response) in
-            switch response.result {
-            case .success(let val):
-                //DDLogDebug(JSON(val).description)
-                let info = Mapper<O2TaskAttachmentInfo>().map(JSONString: JSON(val).description)
-                //执行下载
-                let destination: DownloadRequest.Destination = { _, _ in
-                    let documentsURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
-
-                    let fileURL = documentsURL.appendingPathComponent((info?.data?.name)!)
-
-                    return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
-                }
-                AF.download(downURL, to: destination).response(completionHandler: { (response) in
-                    if response.error == nil, let fileurl = response.fileURL?.path {
-                        //打开文件
-                        self.hideLoading()
-                        self.previewAttachment(fileurl)
-                    } else {
-                        DispatchQueue.main.async {
-                            self.showError(title: "预览文件出错")
-                        }
-                    }
-                })
-                break
-            case .failure(let err):
+            self.showLoading(title: "下载中...")
+            self.viewModel.getWorkcompletedAttachment(workcompleted: self.workId!, id: attachmentId).then { path in
+                self.hideLoading()
+                self.previewAttachment(path)
+            }.catch { (err) in
                 DDLogError(err.localizedDescription)
                 DispatchQueue.main.async {
-                    self.showError(title: "预览文件出错")
+                    self.showError(title: "下载文件出错")
                 }
-                break
+            }
+            
+        } else {
+            self.showLoading(title: "下载中...")
+            self.viewModel.getWorkAttachment(workId: self.workId!, id: attachmentId).then { path in
+                self.hideLoading()
+                self.previewAttachment(path)
+            }.catch { (err) in
+                DDLogError(err.localizedDescription)
+                DispatchQueue.main.async {
+                    self.showError(title: "下载文件出错")
+                }
             }
         }
+        
     }
-
-    //替换附件
-    private func replaceAttachment(_ attachmentId: String, _ site: String) {
-        //替换结束后回调js名称
-        let replaceURL = AppDelegate.o2Collect.generateURLWithAppContextKey(TaskContext.taskContextKey, query: TaskContext.todoTaskUpReplaceAttachmentQuery, parameter: ["##attachmentId##": attachmentId as AnyObject, "##workId##": workId as AnyObject])!
-        self.replaceAttachment(site, attachmentId, replaceURL: replaceURL)
-    }
-
-
+    
+    
     /**
      * 下载公文 并阅览
      **/
@@ -1094,8 +992,9 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
             }
         })
     }
-
-    private func replaceAttachment(_ site: String, _ attachmentId: String, replaceURL url: String) {
+    
+    /// 替换附件
+    private func replaceAttachment(_ attachmentId: String, _ site: String) {
         let vc = FileBSImagePickerViewController().bsImagePicker()
         presentImagePicker(vc, select: { (asset: PHAsset) -> Void in
             // User selected an asset.
@@ -1118,70 +1017,53 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
                         //获取文件名
                         let fileName = (asset.value(forKey: "filename") as? String) ?? "untitle.png"
                         PHImageManager.default().requestImageData(for: asset, options: options, resultHandler: { (imageData, result, imageOrientation, dict) in
-                            //DDLogDebug("result = \(result) imageOrientation = \(imageOrientation) \(dict)")
-//                            let fileURL = dict?["PHImageFileURLKey"] as! URL
+ 
                             DispatchQueue.main.async {
                                 self.showLoading(title: "上传中...")
                             }
-//                            DispatchQueue.global(qos: .userInitiated).async {
-                                AF.upload(multipartFormData: { (mData) in
-                                    mData.append(imageData!, withName: "file", fileName: fileName, mimeType: "application/octet-stream")
-                                    let siteData = site.data(using: String.Encoding.utf8, allowLossyConversion: false)
-                                    mData.append(siteData!, withName: "site")
-                                }, to: url, method: .put).responseJSON { (response) in
-                                    if let err = response.error {
-                                        DispatchQueue.main.async {
-                                            DDLogError(err.localizedDescription)
-                                            self.showError(title: "替换失败")
-                                        }
-                                    }else {
-                                        DispatchQueue.main.async {
-                                            let callJS = "layout.appForm.replacedAttachment(\"\(site)\", \"\(attachmentId)\")"
-                                            self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
-                                                self.showSuccess(title: "替换成功")
-                                            })
-                                        }
-                                    }
+                            var newData = imageData
+                            //处理图片旋转的问题
+                            if imageOrientation != UIImage.Orientation.up && imageData != nil {
+                                let newImage = UIImage(data: imageData!)?.fixOrientation()
+                                if newImage != nil {
+                                    newData = newImage?.pngData()
                                 }
+                            }
+                            
+                            self.viewModel.replaceAttachment(id: attachmentId, workId: self.workId!, site: site, fileName: fileName, fileData: newData!).then { (idData) in
+                                DispatchQueue.main.async {
+                                    let callJS = "layout.appForm.replacedAttachment(\"\(site)\", \"\(attachmentId)\")"
+                                    self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
+                                        
+                                    })
+                                    self.showSuccess(title: "替换成功")
+                                }
+                            }.catch { (err) in
+                                DispatchQueue.main.async {
+                                    DDLogError(err.localizedDescription)
+                                    self.showError(title: "替换失败")
+                                }
+                            }
+
 //                                AF.upload(multipartFormData: { (mData) in
-//                                    //mData.append(fileURL, withName: "file")
-//                                    mData.append(imageData!, withName: "file", fileName: fileURL.lastPathComponent, mimeType: "application/octet-stream")
+//                                    mData.append(imageData!, withName: "file", fileName: fileName, mimeType: "application/octet-stream")
 //                                    let siteData = site.data(using: String.Encoding.utf8, allowLossyConversion: false)
 //                                    mData.append(siteData!, withName: "site")
-//                                }, usingThreshold: SessionManager.multipartFormDataEncodingMemoryThreshold, to: url, method: .put, headers: nil, encodingCompletion: { (encodingResult) in
-//                                        switch encodingResult {
-//                                        case .success(let upload, _, _):
-//                                            debugPrint(upload)
-//                                            upload.responseJSON {
-//                                                respJSON in
-//                                                switch respJSON.result {
-//                                                case .success(_):
-//                                                    //let attachId = JSON(val)["data"]["id"].string!
-//                                                    DispatchQueue.main.async {
-//                                                        //ProgressHUD.showSuccess("上传成功")
-//                                                        let callJS = "layout.appForm.replacedAttachment(\"\(site)\", \"\(attachmentId)\")"
-//                                                        self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
-//                                                            self.showSuccess(title: "替换成功")
-//                                                        })
-//                                                    }
-//                                                case .failure(let err):
-//                                                    DispatchQueue.main.async {
-//                                                        DDLogError(err.localizedDescription)
-//                                                        self.showError(title: "替换失败")
-//                                                    }
-//                                                    break
-//                                                }
-//
-//                                            }
-//                                        case .failure(let errType):
-//                                            DispatchQueue.main.async {
-//                                                DDLogError(errType.localizedDescription)
-//                                                self.showError(title: "替换失败")
-//                                            }
+//                                }, to: url, method: .put).responseJSON { (response) in
+//                                    if let err = response.error {
+//                                        DispatchQueue.main.async {
+//                                            DDLogError(err.localizedDescription)
+//                                            self.showError(title: "替换失败")
 //                                        }
-//
-//                                    })
-//                            }
+//                                    }else {
+//                                        DispatchQueue.main.async {
+//                                            let callJS = "layout.appForm.replacedAttachment(\"\(site)\", \"\(attachmentId)\")"
+//                                            self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
+//                                                self.showSuccess(title: "替换成功")
+//                                            })
+//                                        }
+//                                    }
+//                                }
                         })
                     case .video:
                         let options = PHVideoRequestOptions()

@@ -28,6 +28,14 @@ public class FileUtil {
         return FileManager.default.fileExists(atPath: filePath, isDirectory: nil)
     }
     
+    /// 获取本地文件的最后修改时间
+    public func fileModificationDate(filePath: String) -> NSDate? {
+        if let attribute = try? FileManager.default.attributesOfItem(atPath: filePath) {
+            return attribute[.modificationDate] as? NSDate
+        }
+        return nil
+    }
+    
     public func deleteFile(filePath: String) -> Bool {
         do {
             try FileManager.default.removeItem(atPath: filePath)

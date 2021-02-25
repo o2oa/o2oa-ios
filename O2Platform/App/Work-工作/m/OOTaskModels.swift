@@ -87,6 +87,37 @@ class O2WorkPostResult:NSObject,DataModel {
     @objc var type: String?
 }
 
+/// 附件对象
+class O2WorkAttachmentInfo:NSObject,DataModel {
+    required override init() {
+           
+       }
+    @objc var id : String?
+    @objc var name : String?
+    @objc var `extension` : String?
+    @objc var sequence : String?
+    @objc var site : String?
+    @objc var storage : String?
+    var length : Int?
+    @objc var application : String?
+    @objc var process : String?
+    @objc var job : String?
+    @objc var person : String?
+    @objc var lastUpdatePerson : String?
+    @objc var lastUpdateTime : String?
+    @objc var activity : String?
+    @objc var activityName : String?
+    @objc var activityToken : String?
+    @objc var activityType : String?
+    var completed : Bool?
+    @objc var work: String?
+    @objc var workCompleted: String?
+    @objc var createTime : String?
+    var distributeFactor : Int?
+    @objc var updateTime : String?
+    @objc var workCreateTime : String?
+}
+
 class O2AppProcess: NSObject,DataModel {
     @objc var id:String?
     @objc var name:String?
