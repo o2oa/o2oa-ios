@@ -105,11 +105,6 @@ class TodoTaskData: NSObject,DataModel {
     @objc var routeList:String?
     @objc var routeNameList:String?
     
-   
-    override var description: String {
-        return "task:[\(id),\(title),\(job),\(work)]"
-    }
-    
     required override init() {
         
     }
@@ -225,6 +220,117 @@ class Process:NSObject,Mappable{
     }
 }
 
+/// 已办参考数据
+class TaskCompletedReference: NSObject,DataModel {
+    @objc var taskCompleted:TaskCompletedData?
+    @objc var workList:[WorkData] = []
+    @objc var workCompletedList:[WorkData] = []
+    @objc var workLogList:[ActivityTaskData] = []
+    
+    required override init() {
+        
+    }
+}
+
+/// 已办对象
+class TaskCompletedData: NSObject,DataModel {
+    @objc var id:String?
+    @objc var updateTime:String?
+    @objc var job:String?
+    @objc var title:String?
+    @objc var startTime:String?
+    @objc var work:String?
+    @objc var task:String?
+    @objc var application:String?
+    @objc var applicationName:String?
+    @objc var process:String?
+    @objc var processName:String?
+    @objc var person:String?
+    @objc var identity:String?
+    @objc var department:String?
+    var completed:Bool?
+    @objc var workCompleted:String?
+    @objc var company:String?
+    @objc var activity:String?
+    @objc var activityName:String?
+    @objc var activityType:String?
+    @objc var activityToken:String?
+    @objc var processingType:String?
+    @objc var routeName:String?
+    @objc var opinion:String?
+    @objc var creatorPerson:String?
+    @objc var creatorIdentity:String?
+    
+    required override init() {
+        
+    }
+}
+
+///
+class WorkData: NSObject,DataModel {
+    
+    @objc var id:String?
+    @objc var updateTime:String?
+    @objc var job:String?
+    @objc var title:String?
+    @objc var startTime:String?
+    @objc var work:String?
+    @objc var application:String?
+    @objc var applicationName:String?
+    @objc var process:String?
+    @objc var processName:String?
+    @objc var person:String?
+    @objc var identity:String?
+    @objc var department:String?
+    var completed:Bool?
+    @objc var workCompleted:String?
+    @objc var completedTime:String?
+    @objc var company:String?
+    @objc var activity:String?
+    @objc var activityName:String?
+    @objc var activityType:String?
+    @objc var activityToken:String?
+    @objc var routeList:String?
+    @objc var routeNameList:String?
+    
+    required override init() {
+        
+    }
+    
+}
+
+/// 活动任务
+class ActivityTaskData: NSObject,DataModel {
+    @objc var job:String?
+    @objc var work:String?
+    @objc var fromActivity:String?
+    @objc var fromActivityName:String?
+    @objc var fromActivityToken:String?
+    @objc var fromActivityType:String?
+    @objc var fromTime:String?
+    @objc var arrivedActivity:String?
+    @objc var arrivedActivityName:String?
+    @objc var arrivedActivityToken:String?
+    @objc var arrivedActivityType:String?
+    @objc var route:String?
+    @objc var routeName:String?
+    @objc var arrivedTime:String?
+    var completed:Bool?
+    var connected:Bool?
+    var duration:Int64?
+    @objc var createTime:String?
+    var currentTaskIndex:Int?
+    @objc var id:String?
+    @objc var splitTokenList:[AnyObject]?
+    var splitting:Int?
+    @objc var taskCompletedList:[AnyObject]?
+    @objc var taskList:[TodoTaskData]?
+    @objc var updateTime:String?
+    
+    required override init() {
+    }
+}
+
 /// 活动任务
 class ActivityTask:NSObject,Mappable {
     var fromActivity:String?
@@ -327,11 +433,13 @@ class TodoedActionModel {
     var destText:String?
     var workType:String?
     var workId:String?
+    var workTitle:String?
     
-    init(destText:String?,workType:String?,workId:String?){
+    init(destText:String?,workType:String?,workId:String?, workTitle: String){
         self.destText = destText
         self.workType = workType
         self.workId = workId
+        self.workTitle = workTitle
     }
 }
 

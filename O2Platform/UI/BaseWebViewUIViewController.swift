@@ -102,6 +102,13 @@ open class BaseWebViewUIViewController: UIViewController {
             userContentController.add(self, name: item.key)
         }
         self.webView = WKWebView(frame: self.view.frame, configuration: webViewConfig)
+        /// 设置 userAgent
+        self.webView.evaluateJavaScript("navigator.userAgent") { (result, err) in
+            if let ua = result as? String {
+                self.webView.customUserAgent = "\(ua) o2oa"
+            }
+        }
+        
     }
     
     ///Generates script to create given cookies

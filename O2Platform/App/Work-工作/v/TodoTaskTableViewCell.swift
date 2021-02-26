@@ -33,7 +33,7 @@ class TodoTaskTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setData(cellModel:TodoCellModel<TodoTask>) {
+    func setData(cellModel:TodoCellModel<TodoTaskData>) {
         if let applicationId = cellModel.sourceObj?.application {
             ImageUtil.shared.getProcessApplicationIcon(id: applicationId)
                 .then { (image)  in

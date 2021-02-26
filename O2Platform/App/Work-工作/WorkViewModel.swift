@@ -13,11 +13,119 @@ class WorkViewModel : NSObject {
     override init() {
         super.init()
     }
-    
+    private let pageCount = 15
     private let api = OOMoyaProvider<OOApplicationAPI>()
 }
 
 extension WorkViewModel {
+    
+    
+    /// 分页查询待办列表
+    func taskV2ListNext(lastId: String, key: String) -> Promise<[TodoCellModel<TodoTaskData>]> {
+        return Promise{ fulfill, reject in
+            self.api.request(.taskV2ListNext(lastId, self.pageCount, key), completion: {result in
+                let response = OOResult<BaseModelClass<[TodoTaskData]>>(result)
+                if response.isResultSuccess() {
+                    if let list = response.model?.data {
+                        var taskList:[TodoCellModel<TodoTaskData>] = []
+                        for task in list {
+                            let model = TodoCellModel<TodoTaskData>(title: task.title,applicationName: task.applicationName,status: task.activityName,time: task.updateTime,sourceObj: task)
+                            taskList.append(model)
+                        }
+                        fulfill(taskList)
+                    }else {
+                        reject(OOAppError.apiEmptyResultError)
+                    }
+                }else {
+                    reject(response.error!)
+                }
+            })
+        }
+    }
+    /// 分页查询已办列表
+    func taskcompletedV2ListNext(lastId: String, key: String) -> Promise<[TodoCellModel<TodoTaskData>]> {
+        return Promise{ fulfill, reject in
+            self.api.request(.taskcompletedV2ListNext(lastId, self.pageCount, key), completion: {result in
+                let response = OOResult<BaseModelClass<[TodoTaskData]>>(result)
+                if response.isResultSuccess() {
+                    if let list = response.model?.data {
+                        var taskList:[TodoCellModel<TodoTaskData>] = []
+                        for task in list {
+                            let model = TodoCellModel<TodoTaskData>(title: task.title,applicationName: task.applicationName,status: task.activityName,time: task.updateTime,sourceObj: task)
+                            taskList.append(model)
+                        }
+                        fulfill(taskList)
+                    }else {
+                        reject(OOAppError.apiEmptyResultError)
+                    }
+                }else {
+                    reject(response.error!)
+                }
+            })
+        }
+    }
+    /// 待阅
+    func readV2ListNext(lastId: String, key: String) -> Promise<[TodoCellModel<TodoTaskData>]> {
+        return Promise{ fulfill, reject in
+            self.api.request(.readV2ListNext(lastId, self.pageCount, key), completion: {result in
+                let response = OOResult<BaseModelClass<[TodoTaskData]>>(result)
+                if response.isResultSuccess() {
+                    if let list = response.model?.data {
+                        var taskList:[TodoCellModel<TodoTaskData>] = []
+                        for task in list {
+                            let model = TodoCellModel<TodoTaskData>(title: task.title,applicationName: task.applicationName,status: task.activityName,time: task.updateTime,sourceObj: task)
+                            taskList.append(model)
+                        }
+                        fulfill(taskList)
+                    }else {
+                        reject(OOAppError.apiEmptyResultError)
+                    }
+                }else {
+                    reject(response.error!)
+                }
+            })
+        }
+    }
+    /// 已阅
+    func readcompletedV2ListNext(lastId: String, key: String) -> Promise<[TodoCellModel<TodoTaskData>]> {
+        return Promise{ fulfill, reject in
+            self.api.request(.readcompletedV2ListNext(lastId, self.pageCount, key), completion: {result in
+                let response = OOResult<BaseModelClass<[TodoTaskData]>>(result)
+                if response.isResultSuccess() {
+                    if let list = response.model?.data {
+                        var taskList:[TodoCellModel<TodoTaskData>] = []
+                        for task in list {
+                            let model = TodoCellModel<TodoTaskData>(title: task.title,applicationName: task.applicationName,status: task.activityName,time: task.updateTime,sourceObj: task)
+                            taskList.append(model)
+                        }
+                        fulfill(taskList)
+                    }else {
+                        reject(OOAppError.apiEmptyResultError)
+                    }
+                }else {
+                    reject(response.error!)
+                }
+            })
+        }
+    }
+    
+    /// 已办参考数据 包含worklog
+    func getReferenc(id: String) -> Promise<TaskCompletedReference> {
+        return Promise { fulfill, reject in
+            self.api.request(.taskcompletedGetReference(id), completion: { result in
+                let response = OOResult<BaseModelClass<TaskCompletedReference>>(result)
+                if response.isResultSuccess() {
+                    if let reference = response.model?.data {
+                        fulfill(reference)
+                    }else {
+                        reject(OOAppError.apiEmptyResultError)
+                    }
+                }else {
+                    reject(response.error!)
+                }
+            })
+        }
+    }
     
     /// 删除工作
     func deleteWork(workId: String) -> Promise<Bool> {

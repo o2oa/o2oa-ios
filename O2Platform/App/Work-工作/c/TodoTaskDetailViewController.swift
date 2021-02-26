@@ -20,14 +20,13 @@ import QuickLook
 
 struct TodoTaskJS {
 
-    static let DATA_TASK = "JSON.encode(layout.appForm.businessData.task);"
-    static let DATA_READ = "JSON.encode(layout.appForm.businessData.read);"
-    static let DATA_OPINION = "JSON.encode(layout.appForm.getOpinion());"
-    static let DATA_CONTROL = "JSON.encode(layout.appForm.businessData.control);"
-    static let DATA_WORK_TITLE = "JSON.encode(layout.appForm.businessData.work.title);"
-    static let DATA_WORK = "JSON.encode(layout.appForm.businessData.work);"
-    static let DATA_BUSINESS = "JSON.encode(layout.appForm.getData());"
-    static let CHECK_FORM = "layout.appForm.formValidation(null, null)"
+    static let DATA_TASK = "JSON.encode(layout.app.appForm.businessData.task);"
+    static let DATA_READ = "JSON.encode(layout.app.appForm.businessData.read);"
+    static let DATA_OPINION = "JSON.encode(layout.app.appForm.getOpinion());"
+    static let DATA_CONTROL = "JSON.encode(layout.app.appForm.businessData.control);"
+    static let DATA_WORK = "JSON.encode(layout.app.appForm.businessData.work);"
+    static let DATA_BUSINESS = "JSON.encode(layout.app.appForm.getData());"
+    static let CHECK_FORM = "layout.app.appForm.formValidation(null, null)"
     static let CLOSE_WORK = "layout.app.appForm.finishOnMobile()"
 
  
@@ -83,6 +82,21 @@ class TodoTaskDetailViewController: BaseWebViewUIViewController {
             self.loadUrl = url
         }
     }
+    var todoData: TodoTaskData? {
+        didSet {
+            var url: String?
+            if let workCompletedId = todoData?.workCompleted, workCompletedId != "" {
+                url = AppDelegate.o2Collect.genrateURLWithWebContextKey(DesktopContext.DesktopContextKey, query: DesktopContext.todoedDestopQuery, parameter: ["##workCompletedId##": workCompletedId as AnyObject])
+                self.isWorkCompeleted = true
+                self.workId = workCompletedId
+            } else if let workId = todoData?.work, workId != "" {
+                url = AppDelegate.o2Collect.genrateURLWithWebContextKey(DesktopContext.DesktopContextKey, query: DesktopContext.todoDesktopQuery, parameter: ["##workid##": workId as AnyObject])
+                self.isWorkCompeleted = false
+                self.workId = workId
+            }
+            self.loadUrl = url
+        }
+    }
     //草稿模式
     var draft: ProcessDraftBean? {
         didSet {
@@ -98,7 +112,6 @@ class TodoTaskDetailViewController: BaseWebViewUIViewController {
     var myControl: [String: AnyObject]?
     var myNewControls: [WorkNewActionItem] = []
     var moreActionMenus: O2WorkMoreActionSheet? = nil
-    var myTitle: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,12 +127,18 @@ class TodoTaskDetailViewController: BaseWebViewUIViewController {
         //toolbar
         self.toolbarView = UIToolbar(frame: CGRect(x: 0, y: self.view.height - 44, width: self.view.width, height: 44))
 
-
-        myTitle = todoTask?.title
-        if myTitle?.isBlank == false {
-            title = myTitle
-        } else if todoTask?.processName?.isBlank == false {
-            title = todoTask?.processName
+        if let todo = todoTask {
+            if let title = todo.title, !title.trim().isEmpty {
+                self.title = title
+            }else if let pname = todo.processName {
+                self.title = pname
+            }
+        }else if let tododata = todoData {
+            if let title = tododata.title, !title.trim().isEmpty {
+                self.title = title
+            }else if let pname = tododata.processName {
+                self.title = pname
+            }
         }
 
         //添加工作页面特殊的js处理
@@ -426,22 +445,6 @@ class TodoTaskDetailViewController: BaseWebViewUIViewController {
                 self.group.leave()
             })
         }))
-        if myTitle == nil || myTitle!.trim().isEmpty {
-            group.enter()
-            DispatchQueue.main.async(group: group, execute: DispatchWorkItem(block: {
-                DDLogDebug("执行 \(TodoTaskJS.DATA_WORK_TITLE)")
-                self.webView.evaluateJavaScript(TodoTaskJS.DATA_WORK_TITLE, completionHandler: { (data, err) in
-                    if err == nil && data != nil {
-                        self.myTitle = data as? String
-                        self.title = self.myTitle ?? ""
-                    } else {
-                        DDLogError(String(describing: err))
-                    }
-                    self.group.leave()
-                })
-            }))
-        }
-
         group.notify(queue: DispatchQueue.main) {
             self.setupToolbarItems()
         }
