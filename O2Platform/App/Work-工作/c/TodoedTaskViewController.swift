@@ -24,12 +24,16 @@ class TodoedTaskViewController: UITableViewController {
     
     var todoedStatus:[TodoedStatusModel] = []
     
-    var todoTask:TodoTask? {
+    var todoTask:TodoTaskData? {
         didSet {
             let url = AppDelegate.o2Collect.generateURLWithAppContextKey(TaskedContext.taskedContextKey, query: TaskedContext.taskedDataByIdQuery, parameter: ["##id##":(todoTask?.id)! as AnyObject])
             self.loadUrl = url
         }
     }
+    
+    private lazy var viewModel: WorkViewModel = {
+        return WorkViewModel()
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,57 +46,91 @@ class TodoedTaskViewController: UITableViewController {
     }
     
     func loadTodoedData(){
-        self.showLoading(title: "加载中...")
-        AF.request(loadUrl!).responseJSON(completionHandler:{  response in
-            debugPrint(response.result)
-            switch response.result {
-            case .success(let val):
-                let data = JSON(val)["data"]
-                let type = JSON(val)["type"]
-                DDLogDebug(data.description)
-                if type == "success" {
-                    self.setActionModel(data["taskCompleted"].array,completed: true)
-                    self.setActionModel(data["workCompletedList"].array, completed: true)
-                    self.setActionModel(data["workList"].array,completed: false)
-                    self.setStatusModel(Mapper<ActivityTask>().mapArray(JSONString:data["workLogList"].description))
-                    self.tableView.reloadData()
-                    self.showSuccess(title: "加载完成")
-                }else{
-                    DDLogError(JSON(val)["message"].description)
-                    self.showError(title: "加载失败")
+        if let id = self.todoTask?.id {
+            self.showLoading(title: "加载中...")
+            self.viewModel.getReferenc(id: id).then { (reference) in
+                let workList = reference.workList
+                let workcompletedList = reference.workCompletedList
+                if workList.count > 0 {
+                    self.setActionModel(workList,completed: false)
+                }else if workcompletedList.count > 0 {
+                    self.setActionModel(workcompletedList,completed: true)
                 }
-            case .failure(let err):
+                let worklogList = reference.workLogList
+                self.setStatusModel(worklogList)
+                self.tableView.reloadData()
+            }.always {
+                self.hideLoading()
+            }.catch { (err) in
                 DDLogError(err.localizedDescription)
                 self.showError(title: "加载失败")
             }
-        })
+        }
+        
+        
+        
+//        AF.request(loadUrl!).responseJSON(completionHandler:{  response in
+//            debugPrint(response.result)
+//            switch response.result {
+//            case .success(let val):
+//                let data = JSON(val)["data"]
+//                let type = JSON(val)["type"]
+//                DDLogDebug(data.description)
+//                if type == "success" {
+//                    self.setActionModel(data["taskCompleted"].array,completed: true)
+//                    self.setActionModel(data["workCompletedList"].array, completed: true)
+//                    self.setActionModel(data["workList"].array,completed: false)
+//                    self.setStatusModel(Mapper<ActivityTask>().mapArray(JSONString:data["workLogList"].description))
+//                    self.tableView.reloadData()
+//                    self.showSuccess(title: "加载完成")
+//                }else{
+//                    DDLogError(JSON(val)["message"].description)
+//                    self.showError(title: "加载失败")
+//                }
+//            case .failure(let err):
+//                DDLogError(err.localizedDescription)
+//                self.showError(title: "加载失败")
+//            }
+//        })
     }
     
-    func setActionModel(_ actionArray:[JSON]?,completed:Bool){
-        if actionArray != nil {
-        for action  in actionArray! {
+    func setActionModel(_ actionArray:[WorkData],completed:Bool){
+        for action  in actionArray {
             if completed {
-                let title = "\(action["title"].stringValue) 完成于\(action["completedTime"].stringValue)"
-                let id = action["id"].stringValue
+                let title = "\(action.title ?? "") 完成于\(action.completedTime ?? "")"
+                let id = action.id
                 let workType = "workCompletedList"
-                let actionModel = TodoedActionModel(destText: title, workType: workType, workId: id)
+                var workTitle = ""
+                let wtitle = action.title ?? ""
+                let pName = action.processName ?? ""
+                if !wtitle.trim().isEmpty {
+                    workTitle = wtitle
+                }else if !pName.trim().isEmpty {
+                    workTitle = pName
+                }
+                let actionModel = TodoedActionModel(destText: title, workType: workType, workId: id, workTitle: workTitle)
                 self.todoedActions.append(actionModel)
             }else{
-//                %@于%@ 停留在%@",item[@"title"],item[@"updateTime"],item[@"activityName"]
-                let title = "\(action["title"].stringValue) 当前在\(action["activityName"].stringValue)"
-                let id = action["id"].stringValue
+                let title = "\(action.title ?? "") 当前在\(action.activityName ?? "")"
+                let id = action.id
                 let workType = "workList"
-                let actionModel = TodoedActionModel(destText: title, workType: workType, workId: id)
+                var workTitle = ""
+                let wtitle = action.title ?? ""
+                let pName = action.processName ?? ""
+                if !wtitle.trim().isEmpty {
+                    workTitle = wtitle
+                }else if !pName.trim().isEmpty {
+                    workTitle = pName
+                }
+                let actionModel = TodoedActionModel(destText: title, workType: workType, workId: id, workTitle: workTitle)
                 self.todoedActions.append(actionModel)
             }
             
         }
-        }
     }
     
-    func setStatusModel(_ statusArray:[ActivityTask]?){
-
-        for task in statusArray! {
+    func setStatusModel(_ statusArray:[ActivityTaskData]){
+        for task in statusArray {
             if task.fromActivityType == "begin" {
                 continue
             }
@@ -187,7 +225,7 @@ class TodoedTaskViewController: UITableViewController {
             let destVC = segue.destination as! TodoTaskDetailViewController
             if let model =  sender as? TodoedActionModel {
                 let id = model.workId ?? ""
-                let title = model.destText ?? ""
+                let title = model.workTitle ?? ""
                 let json: String
                 if model.workType == "workCompletedList" {
                     json = """

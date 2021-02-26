@@ -19,6 +19,18 @@ enum OOApplicationAPI {
     case availableIdentityWithProcess(String)
     case startProcess(String, String, String) // processId identity title
     case icon(String)
+    case workDelete(String)
+    case dataUpdateWithWork(String,[String:AnyObject])
+    case attachmentGetWithWorkOrWorkCompleted(String, String) // workOrWorkcompleted id
+    case attachmentDownloadWithWorkCompleted(String, String, URL) // id workcompleted path
+    case attachmentDownloadWithWorkId(String, String, URL) // id workId path
+    case attachmentUpload(String, String, String, Data) // 上传附件 workId site fileName fileData
+    case attachmentReplace(String, String, String, String, Data) // 替换附件 attachmentId workId site  fileName fileData
+    case taskV2ListNext(String, Int, String) //分页查询待办列表
+    case taskcompletedV2ListNext(String, Int, String) //分页查询已办列表
+    case readV2ListNext(String, Int, String) //分页查询待阅列表
+    case readcompletedV2ListNext(String, Int, String) //分页查询已阅列表
+    case taskcompletedGetReference(String) //已办的所有的相关的待办已办列表数据
 }
 
 // MARK:- 上下文实现
@@ -59,13 +71,42 @@ extension OOApplicationAPI:TargetType {
             return "/jaxrs/work/process/\(processId)"
         case .icon(let applicationId):
             return "/jaxrs/application/\(applicationId)/icon"
+        case .workDelete(let workId):
+            return "/jaxrs/work/\(workId)"
+        case .dataUpdateWithWork(let workId, _):
+            return "/jaxrs/data/work/\(workId)"
+        case .attachmentGetWithWorkOrWorkCompleted(let workOrWorkcompleted, let id):
+            return "/jaxrs/attachment/\(id)/workorworkcompleted/\(workOrWorkcompleted)"
+        case .attachmentDownloadWithWorkCompleted(let id, let workcompleted, _):
+            return "/jaxrs/attachment/download/\(id)/workcompleted/\(workcompleted)"
+        case .attachmentDownloadWithWorkId(let id, let workId, _):
+            return "/jaxrs/attachment/download/\(id)/work/\(workId)"
+        case .attachmentUpload(let workId, _, _, _):
+            return "/jaxrs/attachment/upload/work/\(workId)"
+        case .attachmentReplace(let id, let workId, _, _, _):
+            return "/jaxrs/attachment/update/\(id)/work/\(workId)"
+        case .taskV2ListNext(let lastId, let count, _):
+            return "/jaxrs/task/v2/list/\(lastId)/next/\(count)"
+        case .taskcompletedV2ListNext(let lastId, let count, _):
+            return "/jaxrs/taskcompleted/v2/list/\(lastId)/next/\(count)"
+        case .readV2ListNext(let lastId, let count, _):
+            return "/jaxrs/read/v2/list/\(lastId)/next/\(count)"
+        case .readcompletedV2ListNext(let lastId, let count, _):
+            return "/jaxrs/readcompleted/v2/list/\(lastId)/next/\(count)"
+        case .taskcompletedGetReference(let id):
+            return "/jaxrs/taskcompleted/\(id)/reference"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .startProcess(_, _, _), .applicationItemWithFilter(_):
+        case .startProcess(_, _, _), .applicationItemWithFilter(_), .attachmentUpload(_, _, _, _), .attachmentReplace(_, _, _, _, _),
+             .taskV2ListNext(_, _, _), .taskcompletedV2ListNext(_, _, _), .readV2ListNext(_, _, _), .readcompletedV2ListNext(_, _, _):
             return .post
+        case .workDelete(_):
+            return .delete
+        case .dataUpdateWithWork(_, _):
+            return .put
         default:
             return .get
         }
@@ -83,6 +124,48 @@ extension OOApplicationAPI:TargetType {
             let filter = O2ProcessFilter()
             filter.startableTerminal = "mobile" //移动端过滤 仅pc的流程不出现在这里
             return .requestParameters(parameters: filter.toJSON()!, encoding: JSONEncoding.default)
+        case .dataUpdateWithWork(_, let data):
+            return .requestParameters(parameters: data, encoding: JSONEncoding.default)
+        case .attachmentDownloadWithWorkCompleted(_, _, let path):
+            let myDest:DownloadDestination = { temporaryURL, response in
+                //本地存储
+                return (path, [.removePreviousFile, .createIntermediateDirectories])
+            }
+            return .downloadDestination(myDest)
+        case .attachmentDownloadWithWorkId(_, _, let path):
+            let myDest:DownloadDestination = { temporaryURL, response in
+                //本地存储
+                return (path, [.removePreviousFile, .createIntermediateDirectories])
+            }
+            return .downloadDestination(myDest)
+        case .attachmentUpload(_, let site, let fileName, let data):
+            //字符串类型 文件名
+            let strData = fileName.data(using: .utf8)
+            let fileNameData = MultipartFormData(provider: .data(strData!), name: "fileName")
+            // site 标识
+            let siteData = site.data(using: .utf8)
+            let siteFormData = MultipartFormData(provider: .data(siteData!), name: "site")
+            //文件类型
+            let fileData = MultipartFormData(provider: .data(data), name: "file", fileName: fileName)
+            return .uploadMultipart([fileData, fileNameData, siteFormData])
+        case .attachmentReplace(_, _, let site, let fileName, let data):
+            //字符串类型 文件名
+            let strData = fileName.data(using: .utf8)
+            let fileNameData = MultipartFormData(provider: .data(strData!), name: "fileName")
+            // site 标识
+            let siteData = site.data(using: .utf8)
+            let siteFormData = MultipartFormData(provider: .data(siteData!), name: "site")
+            //文件类型
+            let fileData = MultipartFormData(provider: .data(data), name: "file", fileName: fileName)
+            return .uploadMultipart([fileData, fileNameData, siteFormData])
+        case .taskV2ListNext(_, _, let key):
+            return .requestParameters(parameters: ["key": key], encoding: JSONEncoding.default)
+        case .taskcompletedV2ListNext(_, _, let key):
+            return .requestParameters(parameters: ["key": key], encoding: JSONEncoding.default)
+        case .readV2ListNext(_, _, let key):
+            return .requestParameters(parameters: ["key": key], encoding: JSONEncoding.default)
+        case .readcompletedV2ListNext(_, _, let key):
+            return .requestParameters(parameters: ["key": key], encoding: JSONEncoding.default)
         default:
             return .requestPlain
         }

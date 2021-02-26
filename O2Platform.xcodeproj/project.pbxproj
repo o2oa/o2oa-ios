@@ -302,6 +302,7 @@
 		B1D1BC8B234C5C49002025DA /* CloudFileShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D1BC8A234C5C49002025DA /* CloudFileShareViewController.swift */; };
 		B1D1BC8D234C7EC9002025DA /* CloudFileFolderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D1BC8C234C7EC9002025DA /* CloudFileFolderCell.swift */; };
 		B1D1BC8F234C8349002025DA /* CloudFileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D1BC8E234C8349002025DA /* CloudFileCell.swift */; };
+		B1D46F0225E6286F00679514 /* WorkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D46F0125E6286F00679514 /* WorkViewModel.swift */; };
 		B1D4AFED24B409A9004E648E /* AudioTouchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D4AFEC24B409A9004E648E /* AudioTouchButton.swift */; };
 		B1DA305F2282754500669418 /* QCalendarPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DA305E2282754500669418 /* QCalendarPicker.swift */; };
 		B1DB0843252314F400EE6673 /* SecurityCheckManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DB0842252314F400EE6673 /* SecurityCheckManager.swift */; };
@@ -1496,6 +1497,7 @@
 		B1D1BC8A234C5C49002025DA /* CloudFileShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFileShareViewController.swift; sourceTree = "<group>"; };
 		B1D1BC8C234C7EC9002025DA /* CloudFileFolderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFileFolderCell.swift; sourceTree = "<group>"; };
 		B1D1BC8E234C8349002025DA /* CloudFileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFileCell.swift; sourceTree = "<group>"; };
+		B1D46F0125E6286F00679514 /* WorkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkViewModel.swift; sourceTree = "<group>"; };
 		B1D4AFEC24B409A9004E648E /* AudioTouchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioTouchButton.swift; sourceTree = "<group>"; };
 		B1DA305E2282754500669418 /* QCalendarPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QCalendarPicker.swift; sourceTree = "<group>"; };
 		B1DB0842252314F400EE6673 /* SecurityCheckManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCheckManager.swift; sourceTree = "<group>"; };
@@ -4163,6 +4165,7 @@
 				E4B8883F1D9D48F1002E1A46 /* c */,
 				E4B8884B1D9D48F1002E1A46 /* m */,
 				E4B888511D9D48F1002E1A46 /* v */,
+				B1D46F0125E6286F00679514 /* WorkViewModel.swift */,
 			);
 			path = "Work-工作";
 			sourceTree = "<group>";
@@ -5251,6 +5254,7 @@
 				B1B214932160A8A300D9CA7E /* TulingPostModel.swift in Sources */,
 				B19FF89E226DBD3600FA0B76 /* O2JsApiNotification.swift in Sources */,
 				B165CD5A2242093500373B66 /* Presentr.swift in Sources */,
+				B1D46F0225E6286F00679514 /* WorkViewModel.swift in Sources */,
 				B1750078233C6908003DA7B9 /* BlockPan.swift in Sources */,
 				E4B888DF1D9D48F1002E1A46 /* SettingHomeCell.swift in Sources */,
 				E40E24BC20B7DA3C009F8BE7 /* OOMeetingRoomMainCell.swift in Sources */,
