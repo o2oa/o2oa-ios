@@ -278,15 +278,37 @@ class O2BaseJsMessageHandler: O2WKScriptMessageHandlerImplement {
                     options.isSynchronous = true
                     options.deliveryMode = .fastFormat
                     options.resizeMode = .none
-                    let fName = (asset.value(forKey: "filename") as? String) ?? "untitle.png"
+                    var fName = (asset.value(forKey: "filename") as? String) ?? "untitle.png"
+                    // 判断是否是heif
+                    var isHEIF = false
+                    if #available(iOS 9.0, *) {
+                        let resList = PHAssetResource.assetResources(for: asset)
+                        resList.forEachEnumerated { (idx, res) in
+                            let uti = res.uniformTypeIdentifier
+                            if uti == "public.heif" || uti == "public.heic" {
+                                isHEIF = true
+                            }
+                        }
+                    } else {
+                        if let uti = asset.value(forKey: "uniformTypeIdentifier") as? String {
+                            if uti == "public.heif" || uti == "public.heic" {
+                                isHEIF = true
+                            }
+                        }
+                    }
                     PHImageManager.default().requestImageData(for: asset, options: options, resultHandler: { (imageData, result, imageOrientation, dict) in
                         DispatchQueue.main.async {
                             self.viewController.showLoading(title: "上传中...")
                         }
                         var newData = imageData
+                        if isHEIF {
+                            let image: UIImage = UIImage(data: imageData!)!
+                            newData = image.jpegData(compressionQuality: 1.0)!
+                            fName += ".jpg"
+                        }
                         //处理图片旋转的问题
-                        if imageOrientation != UIImage.Orientation.up && imageData != nil {
-                            let newImage = UIImage(data: imageData!)?.fixOrientation()
+                        if imageOrientation != UIImage.Orientation.up && newData != nil {
+                            let newImage = UIImage(data: newData!)?.fixOrientation()
                             if newImage != nil {
                                 newData = newImage?.pngData()
                             }

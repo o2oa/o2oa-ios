@@ -311,57 +311,11 @@ class IMChatViewController: UIViewController {
 
     //选择照片
     private func chooseImage() {
-        let vc = FileBSImagePickerViewController().bsImagePicker()
-        vc.settings.fetch.assets.supportedMediaTypes = [.image]
-
-        presentImagePicker(vc, select: { (asset) in
-            //选中一个
-        }, deselect: { (asset) in
-                //取消选中一个
-            }, cancel: { (assets) in
-                //取消
-            }, finish: { (assets) in
-                //结果
-                if assets.count > 0 {
-                    switch assets[0].mediaType {
-                    case .image:
-                        let options = PHImageRequestOptions()
-                        options.isSynchronous = true
-                        options.deliveryMode = .fastFormat
-                        options.resizeMode = .none
-                        let fName = (assets[0].value(forKey: "filename") as? String) ?? "untitle.png"
-                        PHImageManager.default().requestImageData(for: assets[0], options: options) { (imageData, result, imageOrientation, dict) in
-                            guard let data = imageData else {
-                                return
-                            }
-                            var newData = data
-                            //处理图片旋转的问题
-                            if imageOrientation != UIImage.Orientation.up {
-                                let newImage = UIImage(data: data)?.fixOrientation()
-                                if newImage != nil {
-                                    newData = newImage!.pngData()!
-                                }
-                            }
-//                            var fileName = ""
-//                            if dict?["PHImageFileURLKey"] != nil {
-//                                let fileURL = dict?["PHImageFileURLKey"] as! URL
-//                                fileName = fileURL.lastPathComponent
-//                            } else {
-//                                fileName = "\(UUID().uuidString).png"
-//                            }
-                            let localFilePath = self.storageLocalImage(imageData: newData, fileName: fName)
-                            let msgId = self.prepareForSendImageMsg(filePath: localFilePath)
-                            self.uploadFileAndSendMsg(messageId: msgId, data: newData, fileName: fName, type: o2_im_msg_type_image)
-                        }
-                        break
-                    default:
-                        //
-                        DDLogError("不支持的类型")
-                        self.showError(title: "不支持的类型！")
-                        break
-                    }
-                }
-            }, completion: nil)
+        self.choosePhotoWithImagePicker { (fileName, newData) in
+            let localFilePath = self.storageLocalImage(imageData: newData, fileName: fileName)
+            let msgId = self.prepareForSendImageMsg(filePath: localFilePath)
+            self.uploadFileAndSendMsg(messageId: msgId, data: newData, fileName: fileName, type: o2_im_msg_type_image)
+        }         
     }
     //临时存储本地
     private func storageLocalImage(imageData: Data, fileName: String) -> String {
@@ -742,6 +696,7 @@ extension IMChatViewController: IMChatMessageDelegate {
         if storyboard == "mind" {
             let flutterViewController = O2FlutterViewController()
             flutterViewController.setInitialRoute("mindMap")
+            flutterViewController.modalPresentationStyle = .fullScreen
             self.present(flutterViewController, animated: false, completion: nil)
         }else {
             let storyBoard = UIStoryboard(name: storyboard, bundle: nil)

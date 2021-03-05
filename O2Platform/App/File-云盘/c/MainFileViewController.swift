@@ -292,112 +292,39 @@ class MainFileViewController: UIViewController {
             url = AppDelegate.o2Collect.generateURLWithAppContextKey(FileContext.fileContextKey, query: FileContext.fileUploadSubQuery, parameter: ["##id##":(self.folderQueue.last?.id!)! as AnyObject],coverted: true)!
         }
         url = url.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)!
-        let vc = FileBSImagePickerViewController().bsImagePicker()
-        presentImagePicker(vc, select: { (asset: PHAsset) -> Void in
-                                            // User selected an asset.
-                                            // Do something with it, start upload perhaps?
-        }, deselect: { (asset: PHAsset) -> Void in
-            // User deselected an assets.
-            // Do something, cancel upload?
-        }, cancel: { (assets: [PHAsset]) -> Void in
-            // User cancelled. And this where the assets currently selected.
-        }, finish: { (assets: [PHAsset]) -> Void in
-            for asset in assets {
-                switch asset.mediaType {
-                case .audio:
-                    DDLogDebug("Audio")
-                case .image:
-                    let options = PHImageRequestOptions()
-                    options.isSynchronous = true
-                    options.deliveryMode = .fastFormat
-                    options.resizeMode = .none
-//                    let headers:HTTPHeaders = ["x-token":(O2AuthSDK.shared.myInfo()?.token!)!]
-                    //获取文件名
-                    let fName = (asset.value(forKey: "filename") as? String) ?? "untitle.png"
-                    PHImageManager.default().requestImageData(for: asset, options: options, resultHandler: { (imageData, result, imageOrientation, dict) in
-                        //debugPrint(imageData,result,imageOrientation,dict)
-                        //DDLogDebug("result = \(result) imageOrientation = \(imageOrientation) \(dict)")
-//                        let fileURL = dict?["PHImageFileURLKey"] as! URL
-//                        let fileSrcName = fileURL.description
-//                        let fName = fileSrcName.components(separatedBy: "/").last!
-                        let fExtName = fName.components(separatedBy: ".").last!
-                        let fPreName = fName.components(separatedBy: ".").first!
+        self.choosePhotoWithImagePicker { (fName, imageData) in
+            let fExtName = fName.components(separatedBy: ".").last!
+            let fPreName = fName.components(separatedBy: ".").first!
+            DispatchQueue.main.async {
+                self.showLoading(title:"上传中...")
+                AF.upload(multipartFormData: { (mData) in
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "yyyyMMddHHmmss"
+                    let str = formatter.string(from: Date())
+                    let fileName = "\(fPreName.lowercased())_\(str).\(fExtName.lowercased())"
+                    mData.append(imageData, withName: "file", fileName: fileName, mimeType: "image/\(fExtName)")
+                }, to: url).responseJSON { (response) in
+                    print(response)
+                    if let err = response.error {
                         DispatchQueue.main.async {
-                            self.showLoading(title:"上传中...")
-                            AF.upload(multipartFormData: { (mData) in
-                                let formatter = DateFormatter()
-                                formatter.dateFormat = "yyyyMMddHHmmss"
-                                let str = formatter.string(from: Date())
-                                let fileName = "\(fPreName.lowercased())_\(str).\(fExtName.lowercased())"
-                                mData.append(imageData!, withName: "file", fileName: fileName, mimeType: "image/\(fExtName)")
-                            }, to: url).responseJSON { (response) in
-                                print(response)
-                                if let err = response.error {
-                                    DispatchQueue.main.async {
-                                        DDLogError(err.localizedDescription)
-                                        DispatchQueue.main.async {
-                                            self.showError(title: "上传失败")
-                                        }
-                                    }
-                                }else {
-                                    DispatchQueue.main.async {
-                                        self.showSuccess(title: "上传成功")
-                                        Timer.after(0.8, {
-                                            self.tableView.mj_header.beginRefreshing()
-                                        })
-
-                                    }
-                                }
+                            DDLogError(err.localizedDescription)
+                            DispatchQueue.main.async {
+                                self.showError(title: "上传失败")
                             }
-//                            AF.upload(multipartFormData: { (mData) in
-//                                let formatter = DateFormatter()
-//                                formatter.dateFormat = "yyyyMMddHHmmss"
-//                                let str = formatter.string(from: Date())
-//                                let fileName = "\(fPreName.lowercased())_\(str).\(fExtName.lowercased())"
-//                                mData.append(imageData!, withName: "file", fileName: fileName, mimeType: "image/\(fExtName)")
-//                            }, to: url,headers:headers,encodingCompletion: { (encodingResult) in
-//                                switch encodingResult {
-//                                case .success(let upload,_,_):
-//                                    debugPrint(upload)
-//                                    upload.responseJSON { response in
-//                                        debugPrint(response)
-//                                        DispatchQueue.main.async {
-//                                            self.showSuccess(title: "上传成功")
-//                                            Timer.after(0.8, {
-//                                                self.tableView.mj_header.beginRefreshing()
-//                                            })
-//
-//                                        }
-//                                    }
-//                                case .failure(let errType):
-//                                    DispatchQueue.main.async {
-//                                        DDLogError(errType.localizedDescription)
-//                                        DispatchQueue.main.async {
-//                                            self.showError(title: "上传失败")
-//                                        }
-//                                    }
-//                                }
-//                                
-//                            })
                         }
-                        
-                    })
-                case .video:
-                    let options = PHVideoRequestOptions()
-                    options.deliveryMode = .fastFormat
-                    options.isNetworkAccessAllowed = true
-                    options.progressHandler = { (progress,err, stop,dict) in
-                        DDLogDebug("progress = \(progress) dict  = \(dict)")
+                    }else {
+                        DispatchQueue.main.async {
+                            self.showSuccess(title: "上传成功")
+                            Timer.after(0.8, {
+                                self.tableView.mj_header.beginRefreshing()
+                            })
+
+                        }
                     }
-                    PHImageManager.default().requestAVAsset(forVideo: asset, options: options, resultHandler: { (avAsset, avAudioMx, dict) in
-                        
-                    })
-                case .unknown:
-                    DDLogDebug("Unknown")
-                    
                 }
             }
-        }, completion: nil)
+        }
+         
     }
     
     func createFolder(){

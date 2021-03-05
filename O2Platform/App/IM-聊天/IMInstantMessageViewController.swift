@@ -93,6 +93,7 @@ extension IMInstantMessageViewController : IMChatMessageDelegate {
         if storyboard == "mind" {
             let flutterViewController = O2FlutterViewController()
             flutterViewController.setInitialRoute("mindMap")
+            flutterViewController.modalPresentationStyle = .fullScreen
             self.present(flutterViewController, animated: false, completion: nil)
         }else {
             let storyBoard = UIStoryboard(name: storyboard, bundle: nil)

@@ -31,8 +31,13 @@ class OOCalendarEditRemarkViewController: ZSSRichTextEditor {
         self.dismiss(animated: true) {
             ()-> Void in
             print("save.....")
-             let dataDict = ["contentHtml" : self.getHTML()]
-            NotificationCenter.default.post(name:Notification.Name(rawValue: "RegisterCompletionNotification"),object:nil,userInfo:dataDict)
+            self.getHTML { (c, err) in
+                    if let html = c as? NSString {
+//                        entity.content = String(c as! NSString)
+                        let dataDict = ["contentHtml" : String(html)]
+                        NotificationCenter.default.post(name:Notification.Name(rawValue: "RegisterCompletionNotification"),object:nil,userInfo:dataDict)
+                    }
+                }
         }
     }
     

@@ -854,85 +854,26 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
 
     //上传附件
     private func uploadAttachment(_ site: String) {
-        let vc = FileBSImagePickerViewController().bsImagePicker()
-        presentImagePicker(vc, select: { (asset: PHAsset) -> Void in
-            // User selected an asset.
-            // Do something with it, start upload perhaps?
-        }, deselect: { (asset: PHAsset) -> Void in
-                // User deselected an assets.
-                // Do something, cancel upload?
-            }, cancel: { (assets: [PHAsset]) -> Void in
-                // User cancelled. And this where the assets currently selected.
-            }, finish: { (assets: [PHAsset]) -> Void in
-                for asset in assets {
-                    switch asset.mediaType {
-                    case .audio:
-                        DDLogDebug("Audio")
-                    case .image:
-                        let options = PHImageRequestOptions()
-                        options.isSynchronous = true
-                        options.deliveryMode = .fastFormat
-                        options.resizeMode = .none
-                        //获取文件名
-                        let fileName = (asset.value(forKey: "filename") as? String) ?? "untitle.png"
-                        PHImageManager.default().requestImageData(for: asset, options: options, resultHandler: { (imageData, result, imageOrientation, dict) in
-                            DispatchQueue.main.async {
-                                self.showLoading(title: "上传中...")
-                            }
-                            var newData = imageData
-                            //处理图片旋转的问题
-                            if imageOrientation != UIImage.Orientation.up && imageData != nil {
-                                let newImage = UIImage(data: imageData!)?.fixOrientation()
-                                if newImage != nil {
-                                    newData = newImage?.pngData()
-                                }
-                            }
-                            self.viewModel.uploadAttachment(workId: self.workId!, site: site, fileName: fileName, fileData: newData!).then { (idData)  in
-                                DispatchQueue.main.async {
-                                    //ProgressHUD.showSuccess("上传成功")
-                                    let callJS = "layout.appForm.uploadedAttachment(\"\(site)\", \"\(idData.id ?? "")\")"
-                                    self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
-                                        
-                                    })
-                                    self.showSuccess(title: "上传成功")
-                                }
-                            }.catch { (err) in
-                                DDLogError(err.localizedDescription)
-                                self.showError(title: "上传失败")
-                            }
-//                            AF.upload(multipartFormData: { (mData) in
-//                                mData.append(newData!, withName: "file", fileName: fileName, mimeType: "application/octet-stream")
-//                                let siteData = site.data(using: String.Encoding.utf8, allowLossyConversion: false)
-//                                mData.append(siteData!, withName: "site")
-//                            }, to: url).responseJSON { (response) in
-//                                print(response)
-//                                if let err = response.error {
-//                                    DispatchQueue.main.async {
-//                                        DDLogError(err.localizedDescription)
-//                                        self.showError(title: "上传失败")
-//                                    }
-//                                }else {
-//                                    let attachId = JSON(response.data)["data"]["id"].string!
-//                                    DispatchQueue.main.async {
-//                                        //ProgressHUD.showSuccess("上传成功")
-//                                        let callJS = "layout.appForm.uploadedAttachment(\"\(site)\", \"\(attachId)\")"
-//                                        self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
-//                                            self.showSuccess(title: "上传成功")
-//                                        })
-//                                    }
-//                                }
-//                            }
-                        })
-                    case .video:
-                        DDLogDebug("Unknown")
-                    case .unknown:
-                        DDLogDebug("Unknown")
-
-                    @unknown default:
-                        DDLogDebug("Unknown")
-                    }
+        
+        self.choosePhotoWithImagePicker { (fileName, imageData) in
+            DispatchQueue.main.async {
+                self.showLoading(title: "上传中...")
+            }
+            self.viewModel.uploadAttachment(workId: self.workId!, site: site, fileName: fileName, fileData: imageData).then { (idData)  in
+                DispatchQueue.main.async {
+                    //ProgressHUD.showSuccess("上传成功")
+                    let callJS = "layout.appForm.uploadedAttachment(\"\(site)\", \"\(idData.id ?? "")\")"
+                    self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
+                        
+                    })
+                    self.showSuccess(title: "上传成功")
                 }
-            }, completion: nil)
+            }.catch { (err) in
+                DDLogError(err.localizedDescription)
+                self.showError(title: "上传失败")
+            }
+        }
+         
     }
 
     //下载预览附件
@@ -998,94 +939,27 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
     
     /// 替换附件
     private func replaceAttachment(_ attachmentId: String, _ site: String) {
-        let vc = FileBSImagePickerViewController().bsImagePicker()
-        presentImagePicker(vc, select: { (asset: PHAsset) -> Void in
-            // User selected an asset.
-            // Do something with it, start upload perhaps?
-        }, deselect: { (asset: PHAsset) -> Void in
-                // User deselected an assets.
-                // Do something, cancel upload?
-            }, cancel: { (assets: [PHAsset]) -> Void in
-                // User cancelled. And this where the assets currently selected.
-            }, finish: { (assets: [PHAsset]) -> Void in
-                for asset in assets {
-                    switch asset.mediaType {
-                    case .audio:
-                        DDLogDebug("Audio")
-                    case .image:
-                        let options = PHImageRequestOptions()
-                        options.isSynchronous = true
-                        options.deliveryMode = .fastFormat
-                        options.resizeMode = .none
-                        //获取文件名
-                        let fileName = (asset.value(forKey: "filename") as? String) ?? "untitle.png"
-                        PHImageManager.default().requestImageData(for: asset, options: options, resultHandler: { (imageData, result, imageOrientation, dict) in
- 
-                            DispatchQueue.main.async {
-                                self.showLoading(title: "上传中...")
-                            }
-                            var newData = imageData
-                            //处理图片旋转的问题
-                            if imageOrientation != UIImage.Orientation.up && imageData != nil {
-                                let newImage = UIImage(data: imageData!)?.fixOrientation()
-                                if newImage != nil {
-                                    newData = newImage?.pngData()
-                                }
-                            }
-                            
-                            self.viewModel.replaceAttachment(id: attachmentId, workId: self.workId!, site: site, fileName: fileName, fileData: newData!).then { (idData) in
-                                DispatchQueue.main.async {
-                                    let callJS = "layout.appForm.replacedAttachment(\"\(site)\", \"\(attachmentId)\")"
-                                    self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
-                                        
-                                    })
-                                    self.showSuccess(title: "替换成功")
-                                }
-                            }.catch { (err) in
-                                DispatchQueue.main.async {
-                                    DDLogError(err.localizedDescription)
-                                    self.showError(title: "替换失败")
-                                }
-                            }
-
-//                                AF.upload(multipartFormData: { (mData) in
-//                                    mData.append(imageData!, withName: "file", fileName: fileName, mimeType: "application/octet-stream")
-//                                    let siteData = site.data(using: String.Encoding.utf8, allowLossyConversion: false)
-//                                    mData.append(siteData!, withName: "site")
-//                                }, to: url, method: .put).responseJSON { (response) in
-//                                    if let err = response.error {
-//                                        DispatchQueue.main.async {
-//                                            DDLogError(err.localizedDescription)
-//                                            self.showError(title: "替换失败")
-//                                        }
-//                                    }else {
-//                                        DispatchQueue.main.async {
-//                                            let callJS = "layout.appForm.replacedAttachment(\"\(site)\", \"\(attachmentId)\")"
-//                                            self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
-//                                                self.showSuccess(title: "替换成功")
-//                                            })
-//                                        }
-//                                    }
-//                                }
-                        })
-                    case .video:
-                        let options = PHVideoRequestOptions()
-                        options.deliveryMode = .fastFormat
-                        options.isNetworkAccessAllowed = true
-                        options.progressHandler = { (progress, err, stop, dict) in
-                            DDLogDebug("progress = \(progress) dict  = \(String(describing: dict))")
-                        }
-                        PHImageManager.default().requestAVAsset(forVideo: asset, options: options, resultHandler: { (avAsset, avAudioMx, dict) in
-
-                        })
-                    case .unknown:
-                        DDLogDebug("Unknown")
-
-                    @unknown default:
-                        DDLogDebug("Unknown")
-                    }
+        
+        self.choosePhotoWithImagePicker { (fileName, imageData) in
+            DispatchQueue.main.async {
+                self.showLoading(title: "上传中...")
+            }
+            self.viewModel.replaceAttachment(id: attachmentId, workId: self.workId!, site: site, fileName: fileName, fileData: imageData).then { (idData) in
+                DispatchQueue.main.async {
+                    let callJS = "layout.appForm.replacedAttachment(\"\(site)\", \"\(attachmentId)\")"
+                    self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
+                        
+                    })
+                    self.showSuccess(title: "替换成功")
                 }
-            }, completion: nil)
+            }.catch { (err) in
+                DispatchQueue.main.async {
+                    DDLogError(err.localizedDescription)
+                    self.showError(title: "替换失败")
+                }
+            }
+        }
+        
     }
 
 

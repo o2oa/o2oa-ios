@@ -104,6 +104,7 @@ class O2AppViewController: UIViewController{
         let flutterViewController = O2FlutterViewController()
         DDLogDebug("init route:\(routeName)")
         flutterViewController.setInitialRoute(routeName)
+        flutterViewController.modalPresentationStyle = .fullScreen
         self.present(flutterViewController, animated: false, completion: nil)
     }
     

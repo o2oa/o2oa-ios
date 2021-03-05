@@ -309,17 +309,14 @@ extension UIViewController {
     //照片选择器
     func choosePhotoWithImagePicker(callback: @escaping (String, Data)-> Void) {
         let vc = FileBSImagePickerViewController().bsImagePicker()
-//        vc.settings.fetch.assets.supportedMediaTypes = [.image]
+        vc.settings.fetch.assets.supportedMediaTypes = [.image]
         presentImagePicker(vc, select: { (asset: PHAsset) -> Void in
-                // User selected an asset.
-                // Do something with it, start upload perhaps?
+            //选中一个
             }, deselect: { (asset: PHAsset) -> Void in
-                // User deselected an assets.
-                // Do something, cancel upload?
+                //取消选中一个
             }, cancel: { (assets: [PHAsset]) -> Void in
-                // User cancelled. And this where the assets currently selected.
-            }, finish: {
-            (arr) in
+                //取消
+            }, finish: { (arr) in
             let count = arr.count
             print("选择了照片数量：\(count)")
             if count > 0 {
@@ -331,12 +328,34 @@ extension UIViewController {
                     options.isSynchronous = true
                     options.deliveryMode = .fastFormat
                     options.resizeMode = .none
-                    let fName = (asset.value(forKey: "filename") as? String) ?? "untitle.png"
+                    var fName = (asset.value(forKey: "filename") as? String) ?? "untitle.png"
+                    // 判断是否是heif
+                    var isHEIF = false
+                    if #available(iOS 9.0, *) {
+                        let resList = PHAssetResource.assetResources(for: asset)
+                        resList.forEachEnumerated { (idx, res) in
+                            let uti = res.uniformTypeIdentifier
+                            if uti == "public.heif" || uti == "public.heic" {
+                                isHEIF = true
+                            }
+                        }
+                    } else {
+                        if let uti = asset.value(forKey: "uniformTypeIdentifier") as? String {
+                            if uti == "public.heif" || uti == "public.heic" {
+                                isHEIF = true
+                            }
+                        }
+                    }
                     PHImageManager.default().requestImageData(for: asset, options: options) { (imageData, result, imageOrientation, dict) in
                         guard let data = imageData else {
                             return
                         }
                         var newData = data
+                        if isHEIF {
+                            let image: UIImage = UIImage(data: data)!
+                            newData = image.jpegData(compressionQuality: 1.0)!
+                            fName += ".jpg"
+                        }
                         //处理图片旋转的问题
                         if imageOrientation != UIImage.Orientation.up {
                             let newImage = UIImage(data: data)?.fixOrientation()
@@ -344,13 +363,13 @@ extension UIViewController {
                                 newData = newImage!.pngData()!
                             }
                         }
-//                        var fileName = ""
-//                        if dict?["PHImageFileURLKey"] != nil {
-//                            let fileURL = dict?["PHImageFileURLKey"] as! URL
-//                            fileName = fileURL.lastPathComponent
-//                        } else {
-//                            fileName = "\(UUID().uuidString).png"
-//                        }
+                        //处理图片旋转的问题
+                        if imageOrientation != UIImage.Orientation.up {
+                            let newImage = UIImage(data: data)?.fixOrientation()
+                            if newImage != nil {
+                                newData = newImage!.pngData()!
+                            }
+                        }
                         callback(fName, newData)
                     }
                      
