@@ -308,8 +308,11 @@ class TodoTaskViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TodoTaskTableViewCell", for: indexPath) as! TodoTaskTableViewCell
-        let model = self.models[indexPath.row]
-        cell.setData(cellModel: model)
+        let model = self.models[safe: indexPath.row]
+        if model == nil {
+            return UITableViewCell()
+        }
+        cell.setData(cellModel: model!)
         return cell
     }
     

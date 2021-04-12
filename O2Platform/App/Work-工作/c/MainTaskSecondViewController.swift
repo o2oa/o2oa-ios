@@ -384,18 +384,17 @@ extension MainTaskSecondViewController:UITableViewDataSource,UITableViewDelegate
             //第1段返回数据列表
             let cell = tableView.dequeueReusableCell(withIdentifier: "NewMainItemTableViewCell", for: indexPath) as! NewMainItemTableViewCell
             if self.seguementControl.selectedIndex == 0 {
-                if !self.newPublishInfos.isEmpty {
-                    let obj = self.newPublishInfos[indexPath.row]
+                let obj = self.newPublishInfos[safe: indexPath.row]
+                if obj != nil {
                     cell.model = obj
                 }
                 
             }else if self.seguementControl.selectedIndex == 1 {
-                if !self.todoTasks.isEmpty {
-                    let obj = self.todoTasks[indexPath.row]
+                let obj = self.todoTasks[safe: indexPath.row]
+                if obj != nil {
                     cell.model = obj
                 }
             }
-            
             return cell
         }else{
             return UITableViewCell()

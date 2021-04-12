@@ -58,7 +58,7 @@ class AppDelegate: FlutterAppDelegate, JPUSHRegisterDelegate, UNUserNotification
         //启动日志管理器
         O2Logger.startLogManager()
         //日志文件
-        _ = O2Logger.getLogFiles()
+//        _ = O2Logger.getLogFiles()
         O2Logger.debug("设置运行版本==========,\(PROJECTMODE)")
         //网络检查
         o2ReachabilityManager.startListening()
