@@ -406,6 +406,7 @@ open class O2LoginAccountModel: NSObject, DataModel, NSCoding, IO2LoginAccountMo
     @objc open var unique : String?
     @objc open var updateTime : String?
     @objc open var weixin : String?
+    @objc open var signature: String?
     
     public func encode(with aCoder: NSCoder) {
         if changePasswordTime != nil{
@@ -480,7 +481,9 @@ open class O2LoginAccountModel: NSObject, DataModel, NSCoding, IO2LoginAccountMo
         if weixin != nil{
             aCoder.encode(weixin, forKey: "weixin")
         }
-        
+        if signature != nil {
+            aCoder.encode(signature, forKey: "signature")
+        }
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -508,6 +511,7 @@ open class O2LoginAccountModel: NSObject, DataModel, NSCoding, IO2LoginAccountMo
         unique = aDecoder.decodeObject(forKey: "unique") as? String
         updateTime = aDecoder.decodeObject(forKey: "updateTime") as? String
         weixin = aDecoder.decodeObject(forKey: "weixin") as? String
+        signature = aDecoder.decodeObject(forKey: "signature") as? String
     }
     
     required public override init() {}
