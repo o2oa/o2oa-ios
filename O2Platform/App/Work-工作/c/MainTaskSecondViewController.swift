@@ -131,7 +131,7 @@ class MainTaskSecondViewController: UIViewController {
         let outView = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_WIDTH / 2))
         let height = (SCREEN_WIDTH - 30) / 2
         let width = SCREEN_WIDTH - 30
-        let frame = CGRect(x: 15, y: 15, width: width, height: height)
+        let frame = CGRect(x: 15, y: 15, width: width, height: height)  
         let imageShowView = ImageSlidesShowView(frame: frame)
         imageShowView.delegate = self
         imageShowView.setCornerRadius(radius: 10)

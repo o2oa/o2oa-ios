@@ -1,22 +1,23 @@
 {
   "images" : [
     {
+      "filename" : "icon_logo_setup.png",
       "idiom" : "iphone",
       "scale" : "1x"
     },
     {
+      "filename" : "icon_logo_setup@2x.png",
       "idiom" : "iphone",
-      "filename" : "关于智合.png",
       "scale" : "2x"
     },
     {
+      "filename" : "icon_logo_setup@3x.png",
       "idiom" : "iphone",
-      "filename" : "关于智合-1.png",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

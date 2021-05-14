@@ -16,18 +16,44 @@ class SettingHomeCell: UITableViewCell {
     
     @IBOutlet weak var statusLabel: UILabel!
     
+    @IBOutlet weak var bottomLineView: UIView!
+//    
+//    var cellModel:SettingHomeCellModel?{
+//        didSet {
+//            //设置
+//            self.iconImageView.image = UIImage(named: (cellModel?.iconName)!)
+//            self.titleLabel.text = cellModel?.title
+//            
+//            if let text = cellModel?.status {
+//                self.statusLabel.text = text
+//            }else{
+//                self.statusLabel.text = ""
+//            }
+//        }
+//    }
     
-    var cellModel:SettingHomeCellModel?{
+    override var frame: CGRect {
         didSet {
-            //设置
-            self.iconImageView.image = UIImage(named: (cellModel?.iconName)!)
-            self.titleLabel.text = cellModel?.title
-            
-            if let text = cellModel?.status {
-                self.statusLabel.text = text
-            }else{
-                self.statusLabel.text = ""
-            }
+            var newFrame = frame
+            newFrame.origin.x += 10
+            newFrame.size.width -= 20
+            super.frame = newFrame
+        }
+    }
+    
+    func setModel(model: SettingHomeCellModel, isShowBottom: Bool)  {
+        //设置
+        self.iconImageView.image = UIImage(named: (model.iconName)!)
+        self.titleLabel.text = model.title
+        if let text = model.status {
+            self.statusLabel.text = text
+        }else{
+            self.statusLabel.text = ""
+        }
+        if isShowBottom {
+            self.bottomLineView.isHidden = false
+        } else {
+            self.bottomLineView.isHidden = true
         }
     }
     
