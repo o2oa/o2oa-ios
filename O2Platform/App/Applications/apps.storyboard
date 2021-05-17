@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Ll3-s1-0Ow">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Ll3-s1-0Ow">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -43,7 +40,7 @@
                         <viewControllerLayoutGuide type="bottom" id="a5l-1c-w3r"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Y8w-4L-9Ks">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -89,7 +86,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="dZM-AW-bmQ">
-                                <rect key="frame" x="0.0" y="160" width="375" height="507"/>
+                                <rect key="frame" x="0.0" y="180" width="375" height="487"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="1F1-DE-IkG">
                                     <size key="itemSize" width="80" height="100"/>
@@ -117,18 +114,28 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_daiban" highlightedImage="apps_selected" translatesAutoresizingMaskIntoConstraints="NO" id="3Zl-R7-De9">
                                                     <rect key="frame" x="21" y="8" width="38" height="38"/>
                                                 </imageView>
+                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon__ok2_yx" translatesAutoresizingMaskIntoConstraints="NO" id="bUc-Wt-8FT">
+                                                    <rect key="frame" x="60" y="0.0" width="20" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="20" id="bMu-UA-3uw"/>
+                                                        <constraint firstAttribute="height" constant="20" id="uWh-k4-Gvk"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                         </view>
                                         <constraints>
                                             <constraint firstItem="R2n-3i-RZ5" firstAttribute="trailing" secondItem="lYT-yw-S0m" secondAttribute="trailingMargin" id="I2X-s9-oUS"/>
                                             <constraint firstItem="R2n-3i-RZ5" firstAttribute="bottom" secondItem="lYT-yw-S0m" secondAttribute="bottomMargin" id="JBM-B7-bvc"/>
                                             <constraint firstItem="3Zl-R7-De9" firstAttribute="centerX" secondItem="R2n-3i-RZ5" secondAttribute="centerX" id="JrO-2C-N9h"/>
+                                            <constraint firstAttribute="trailing" secondItem="bUc-Wt-8FT" secondAttribute="trailing" id="Myq-Vv-QJT"/>
                                             <constraint firstItem="3Zl-R7-De9" firstAttribute="top" secondItem="lYT-yw-S0m" secondAttribute="topMargin" id="q9H-7d-ZbV"/>
+                                            <constraint firstItem="bUc-Wt-8FT" firstAttribute="top" secondItem="lYT-yw-S0m" secondAttribute="top" id="w7H-dA-dvC"/>
                                             <constraint firstItem="R2n-3i-RZ5" firstAttribute="leading" secondItem="lYT-yw-S0m" secondAttribute="leadingMargin" id="yXr-6Q-ofM"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="appIconImageView" destination="3Zl-R7-De9" id="87V-iQ-OFH"/>
                                             <outlet property="appTitle" destination="R2n-3i-RZ5" id="zPM-IK-CPl"/>
+                                            <outlet property="opIconImageView" destination="bUc-Wt-8FT" id="weU-8P-UiM"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -137,7 +144,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的应用" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ggJ-m8-JWM">
-                                            <rect key="frame" x="8" y="15" width="359" height="21"/>
+                                            <rect key="frame" x="8" y="14.5" width="359" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="nfM-p8-fGr"/>
                                             </constraints>
@@ -162,13 +169,13 @@
                                 </collectionReusableView>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2bH-cU-oJB" customClass="OOAppMainCollectionHeaderView" customModule="O2Platform" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
+                                <rect key="frame" x="10" y="10" width="355" height="160"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pic-lunbo-1" translatesAutoresizingMaskIntoConstraints="NO" id="mvY-AE-dEb">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="355" height="160"/>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="mvY-AE-dEb" secondAttribute="trailing" id="EHD-3h-fFL"/>
                                     <constraint firstAttribute="height" constant="160" id="QZJ-gy-Qt2"/>
@@ -178,15 +185,15 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.96070033311843872" green="0.96083813905715942" blue="0.96067017316818237" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="dZM-AW-bmQ" firstAttribute="top" secondItem="ayu-LR-Rrl" secondAttribute="top" constant="160" id="FHw-To-zaC"/>
-                            <constraint firstAttribute="trailing" secondItem="2bH-cU-oJB" secondAttribute="trailing" id="a0o-wO-8V1"/>
-                            <constraint firstItem="2bH-cU-oJB" firstAttribute="leading" secondItem="ayu-LR-Rrl" secondAttribute="leading" id="lMX-SJ-SQF"/>
+                            <constraint firstAttribute="trailing" secondItem="2bH-cU-oJB" secondAttribute="trailing" constant="10" id="a0o-wO-8V1"/>
+                            <constraint firstItem="2bH-cU-oJB" firstAttribute="leading" secondItem="ayu-LR-Rrl" secondAttribute="leading" constant="10" id="lMX-SJ-SQF"/>
+                            <constraint firstItem="dZM-AW-bmQ" firstAttribute="top" secondItem="2bH-cU-oJB" secondAttribute="bottom" constant="10" id="nEa-9G-P1C"/>
                             <constraint firstItem="dZM-AW-bmQ" firstAttribute="leading" secondItem="ayu-LR-Rrl" secondAttribute="leading" id="nVe-BQ-GbX"/>
                             <constraint firstItem="dZM-AW-bmQ" firstAttribute="bottom" secondItem="pEw-MG-X6y" secondAttribute="top" id="q1P-LT-Zvb"/>
                             <constraint firstAttribute="trailing" secondItem="dZM-AW-bmQ" secondAttribute="trailing" id="v1D-ka-0TE"/>
-                            <constraint firstItem="2bH-cU-oJB" firstAttribute="top" secondItem="ayu-LR-Rrl" secondAttribute="top" id="zLh-4L-pxe"/>
+                            <constraint firstItem="2bH-cU-oJB" firstAttribute="top" secondItem="ayu-LR-Rrl" secondAttribute="top" constant="10" id="zLh-4L-pxe"/>
                         </constraints>
                     </view>
                     <connections>
@@ -234,7 +241,7 @@
             <objects>
                 <tableViewController id="mBS-n2-AYn" customClass="OOAppEditController" customModule="O2Platform" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="7hM-B4-uS0">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="separatorColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -244,18 +251,18 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aQ3-y4-hh4" id="7OI-2t-O0e">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OpQ-Ij-f1h">
-                                            <rect key="frame" x="16" y="4" width="40" height="40"/>
+                                            <rect key="frame" x="16" y="5" width="40" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40" id="iXl-Sv-1bN"/>
                                                 <constraint firstAttribute="width" constant="40" id="trS-po-cdb"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="应用名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ACY-Xq-I9a">
-                                            <rect key="frame" x="64" y="14" width="256" height="21"/>
+                                            <rect key="frame" x="64" y="14.5" width="256" height="21"/>
                                             <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="15"/>
                                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -291,7 +298,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="L3r-Ht-ax9" customClass="ZLNavigationController" customModule="O2Platform" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="nED-oU-0Oa">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -306,7 +313,8 @@
     </scenes>
     <resources>
         <image name="apps_selected" width="21" height="21"/>
+        <image name="icon__ok2_yx" width="20" height="20"/>
         <image name="icon_daiban" width="38" height="38"/>
-        <image name="pic-lunbo-1" width="375" height="160"/>
+        <image name="pic-lunbo-1" width="365" height="195"/>
     </resources>
 </document>

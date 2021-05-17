@@ -21,30 +21,22 @@ class O2AppViewController: UIViewController{
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    
     private let reuseIdentifier = "myCell"
-    
-
-//    let loadUrl1 = AppDelegate.o2Collect.genrateURLWithWebContextKey2(ApplicationContext.applicationListQuery2,parameter: nil)
-//
-//    let loadUrl2 = AppDelegate.o2Collect.generateURLWithAppContextKey(ApplicationContext.applicationContextKey2, query: ApplicationContext.applicationListQueryForPortal, parameter: nil)
-    
+       
     fileprivate let collectionViewDelegate = ZLCollectionView()
     
-    var o2apps:[O2App] = []
-    var apps2:[[O2App]] = [[],[]]
+    var o2ALLApps:[O2App] = []
+    var apps2:[[O2App]] = [[], [], []]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "应用"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "编辑", style: .plain, target: self, action: #selector(_forwardEditSegue))
-        //self.collectionView.contentInset = UIEdgeInsetsMake(160, 0, 0, 0)
         self.collectionViewDelegate.delegate = self
-        //self.collectionViewDelegate.cellHeight = Float(self.collectionViewDelegate.ItemWithSize) * 2
         self.collectionView.dataSource = self.collectionViewDelegate
         self.collectionView.delegate = self.collectionViewDelegate
-        self.o2apps = []
-        self.apps2 = []
+        self.o2ALLApps = []
+        self.apps2 = [[], [], []]
         //self.loadAppConfigDb()
     }
     
@@ -54,18 +46,62 @@ class O2AppViewController: UIViewController{
     }
     
     func loadAppConfigDb() {
-        let mainApps = DBManager.shared.queryMainData()
-        o2apps = mainApps
         let allApps = DBManager.shared.queryData()
-        apps2 = [mainApps,allApps]
+        var nativeApps:[O2App] = []
+        var portalApps:[O2App] = []
+        allApps.forEach { (app) in
+            if app.storyBoard == "webview" {
+                portalApps.append(app)
+            } else  {
+                nativeApps.append(app)
+            }
+        }
+        o2ALLApps = allApps
+        
+        let mainApps = DBManager.shared.queryMainData()
+        apps2 = [mainApps, nativeApps, portalApps]
         self.collectionViewDelegate.apps = apps2
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
     }
     
+    
+    
     @objc private func _forwardEditSegue() {
-        self.performSegue(withIdentifier: "showAppEditSegue", sender: nil)
+//        self.performSegue(withIdentifier: "showAppEditSegue", sender: nil)
+        if self.collectionViewDelegate.isEdit {
+            self.collectionViewDelegate.isEdit = false
+            self.navigationItem.rightBarButtonItem?.title = "编辑"
+            self._saveUpdate()
+            self.collectionView.reloadData()
+        } else {
+            self.collectionViewDelegate.isEdit = true
+            self.navigationItem.rightBarButtonItem?.title = "完成"
+            self.collectionView.reloadData()
+        }
+        
+    }
+    
+    @objc private func _saveUpdate() {
+        let mainApps = self.apps2[0]
+        mainApps.forEachEnumerated { (i, app) in
+            app.mainOrder = i
+            DBManager.shared.updateData(app, 1)
+        }
+        var noMainApps: [O2App] = []
+        o2ALLApps.forEach { (app) in
+            if !mainApps.contains(where: { (a) -> Bool in
+                return a.appId == app.appId
+            }) {
+                noMainApps.append(app)
+            }
+        }
+        noMainApps.forEachEnumerated { (i, app) in
+            app.order = i
+            DBManager.shared.updateData(app, 0)
+        }
+        self.showMessage(msg: "更新成功")
     }
     
 
@@ -112,7 +148,30 @@ class O2AppViewController: UIViewController{
 }
 
 extension O2AppViewController:ZLCollectionViewDelegate{
-    func clickWithApp(_ app: O2App) {
+    func clickWithApp(_ app: O2App, section: Int) {
+        if self.collectionViewDelegate.isEdit {
+            if section == 0 {
+                var main = self.apps2[0]
+                main.removeAll { (a) -> Bool in
+                    return a.appId == app.appId
+                }
+                self.apps2[0] = main
+            } else {
+                if !self.collectionViewDelegate.isAdd2Main(app: app) {
+                    var main = self.apps2[0]
+                    main.append(app)
+                    self.apps2[0] = main
+                }
+            }
+            self.collectionViewDelegate.apps = self.apps2
+            self.collectionView.reloadData()
+        } else {
+            self.openApp(app: app)
+        }
+        
+    }
+    
+    private func openApp(app: O2App) {
         if let flutter = app.storyBoard, flutter == "flutter" {
             openFlutterApp(routeName: app.appId!)
         }else {
@@ -120,7 +179,7 @@ extension O2AppViewController:ZLCollectionViewDelegate{
             AppConfigSettings.shared.appBackType = 2
             if let segueIdentifier = app.segueIdentifier,segueIdentifier != "" { // portal 门户 走这边
                 if app.storyBoard! == "webview" { // 打开MailViewController
-                    DDLogDebug("open webview for : "+app.title!+" url: "+app.vcName!)
+                    DDLogDebug("open webview for 22222: "+app.title!+" url: "+app.vcName!)
                     self.performSegue(withIdentifier: segueIdentifier, sender: app)
                 }else {
                     self.performSegue(withIdentifier: segueIdentifier, sender: nil)

@@ -1,22 +1,23 @@
 {
   "images" : [
     {
+      "filename" : "pic-lunbo-1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "pic-lunbo-1@2x.png",
       "idiom" : "universal",
-      "filename" : "pic_lunbo_1@2x.png",
       "scale" : "2x"
     },
     {
+      "filename" : "pic-lunbo-1@3x.png",
       "idiom" : "universal",
-      "filename" : "pic_lunbo_1@3x.png",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

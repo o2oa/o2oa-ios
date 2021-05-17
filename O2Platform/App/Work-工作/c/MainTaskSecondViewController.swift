@@ -253,7 +253,15 @@ class MainTaskSecondViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showMailSegue" {
-            if let mail = segue.destination as? MailViewController {
+            segue.destination.modalPresentationStyle = .fullScreen
+            if let nav = segue.destination as? ZLNavigationController {
+                nav.viewControllers.forEach { (vc) in
+                    if vc is MailViewController {
+                        DDLogDebug("显示门户。。。。")
+                        (vc as! MailViewController).app = sender as? O2App
+                    }
+                }
+            }else if let mail = segue.destination as? MailViewController {
                 mail.app = sender as? O2App
             }
         }
@@ -544,7 +552,7 @@ extension MainTaskSecondViewController:NewMainAppTableViewCellDelegate{
         AppConfigSettings.shared.appBackType = 1
         if let segueIdentifier = app.segueIdentifier,segueIdentifier != "" {
             if app.storyBoard! == "webview" {
-                DDLogDebug("open webview for : "+app.title!+" url: "+app.vcName!)
+                DDLogDebug("open webview for 11111 : "+app.title!+" url: "+app.vcName!)
                 self.performSegue(withIdentifier: segueIdentifier, sender: app)
             }else {
                 self.performSegue(withIdentifier: segueIdentifier, sender: nil)
