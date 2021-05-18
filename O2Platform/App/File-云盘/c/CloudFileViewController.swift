@@ -46,10 +46,10 @@ class CloudFileViewController: CloudFileBaseVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = Languager.standardLanguager().string(key: "Cloud Files")
+        self.title = L10n.cloudFiles // Languager.standardLanguager().string(key: "Cloud Files")
         self.navigationItem.rightBarButtonItems = [UIBarButtonItem(image: UIImage(named: "add"), style: .plain, target: self, action: #selector(addEvent))]
         
-        self.superiorTitle = Languager.standardLanguager().string(key: "All File")
+        self.superiorTitle = L10n.allFile // Languager.standardLanguager().string(key: "All File")
         self.setUI()
         //toolbar 初始化底部工具栏 先放在屏幕下面
         self.toolbarView = UIToolbar(frame: CGRect(x: 0, y: self.view.height - 44, width: self.view.width, height: 44))
@@ -158,10 +158,14 @@ class CloudFileViewController: CloudFileBaseVC {
         DDLogDebug("startx = \(startX),starty = \(startY)")
         let startPoint = CGPoint(x: startX, y: startY)
         let menu = [
-        Languager.standardLanguager().string(key: "Rename"),
-        Languager.standardLanguager().string(key: "Move"),
-        Languager.standardLanguager().string(key: "Delete"),
-        Languager.standardLanguager().string(key: "Share")
+            L10n.rename,
+            L10n.move,
+            L10n.delete,
+            L10n.share
+//        Languager.standardLanguager().string(key: "Rename"),
+//        Languager.standardLanguager().string(key: "Move"),
+//        Languager.standardLanguager().string(key: "Delete"),
+//        Languager.standardLanguager().string(key: "Share")
         ]
         let color = [
             UIColor.gray,
@@ -176,32 +180,32 @@ class CloudFileViewController: CloudFileBaseVC {
     //点击新建按钮
     @objc private func addEvent() {
         var actions: [UIAlertAction] = []
-        let uploadFile = Languager.standardLanguager().string(key: "Upload File")
+        let uploadFile = L10n.uploadFile // Languager.standardLanguager().string(key: "Upload File")
         let newFile = UIAlertAction(title: uploadFile, style: .default) { (action) in
             DDLogInfo("选择文件 上传")
             self.choosePhotoAndUpload()
         }
-        let newFolderTitle = Languager.standardLanguager().string(key: "New Folder")
+        let newFolderTitle = L10n.newFolder // Languager.standardLanguager().string(key: "New Folder")
         let newFolder = UIAlertAction(title: newFolderTitle, style: .default) { (action) in
             DDLogInfo("新建文件夹")
             self.createFolder()
         }
         actions.append(newFile)
         actions.append(newFolder)
-        let newMsg = Languager.standardLanguager().string(key: "New")
+        let newMsg = L10n.new // Languager.standardLanguager().string(key: "New")
         self.showSheetAction(title: "", message: newMsg, actions: actions)
     }
 
     //新建文件夹
     private func createFolder() {
-        let newFolderTitle = Languager.standardLanguager().string(key: "New Folder")
+        let newFolderTitle = L10n.newFolder // Languager.standardLanguager().string(key: "New Folder")
         self.showPromptAlert(title: newFolderTitle, message: "", inputText: "") { (ok, result) in
             if result != "" {
                 self.cFileVM.createFolder(name: result).then({ (id) in
                     self.loadListData()
                 }).catch({ (error) in
                     DDLogError("创建文件失败,\(error.localizedDescription)")
-                    let errTitle = Languager.standardLanguager().string(key: "Create Folder Error Message")
+                    let errTitle = L10n.createFolderErrorMessage // Languager.standardLanguager().string(key: "Create Folder Error Message")
                     self.showError(title: errTitle)
                 })
             }
@@ -253,21 +257,21 @@ class CloudFileViewController: CloudFileBaseVC {
         if totalCount > 0 {
             var items: [UIBarButtonItem] = []
             if totalCount == 1 {
-                let reName = Languager.standardLanguager().string(key: "Rename")
+                let reName = L10n.rename // Languager.standardLanguager().string(key: "Rename")
                 generateBottomButton(&items, name: reName, tapCall: {
                     self.renameOp()
                 })
             }
             //其他按钮 删除 移动 分享
-            let deleteName = Languager.standardLanguager().string(key: "Delete")
+            let deleteName = L10n.delete // Languager.standardLanguager().string(key: "Delete")
             self.generateBottomButton(&items, name: deleteName) {
                 self.deleteOp()
             }
-            let moveName = Languager.standardLanguager().string(key: "Move")
+            let moveName = L10n.move // Languager.standardLanguager().string(key: "Move")
             self.generateBottomButton(&items, name: moveName) {
                 self.moveOp()
             }
-            let shareName = Languager.standardLanguager().string(key: "Share")
+            let shareName = L10n.share // Languager.standardLanguager().string(key: "Share")
             self.generateBottomButton(&items, name: shareName) {
                 self.shareOp()
             }

@@ -30,8 +30,8 @@ class O2AppViewController: UIViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "应用"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "编辑", style: .plain, target: self, action: #selector(_forwardEditSegue))
+        self.title = L10n.app
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: L10n.edit, style: .plain, target: self, action: #selector(_forwardEditSegue))
         self.collectionViewDelegate.delegate = self
         self.collectionView.dataSource = self.collectionViewDelegate
         self.collectionView.delegate = self.collectionViewDelegate
@@ -72,12 +72,12 @@ class O2AppViewController: UIViewController{
 //        self.performSegue(withIdentifier: "showAppEditSegue", sender: nil)
         if self.collectionViewDelegate.isEdit {
             self.collectionViewDelegate.isEdit = false
-            self.navigationItem.rightBarButtonItem?.title = "编辑"
+            self.navigationItem.rightBarButtonItem?.title = L10n.edit
             self._saveUpdate()
             self.collectionView.reloadData()
         } else {
             self.collectionViewDelegate.isEdit = true
-            self.navigationItem.rightBarButtonItem?.title = "完成"
+            self.navigationItem.rightBarButtonItem?.title = L10n.done
             self.collectionView.reloadData()
         }
         
@@ -101,7 +101,7 @@ class O2AppViewController: UIViewController{
             app.order = i
             DBManager.shared.updateData(app, 0)
         }
-        self.showMessage(msg: "更新成功")
+        self.showMessage(msg: L10n.applicationsUpdateSuccess)
     }
     
 

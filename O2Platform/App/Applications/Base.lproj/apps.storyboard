@@ -204,7 +204,6 @@
                         <segue destination="OPj-li-Ezs" kind="show" identifier="showBBSSegue" id="wEk-ur-kdn"/>
                         <segue destination="JdH-pW-Xx3" kind="show" identifier="showCMSSegue" id="ajm-JI-Do9"/>
                         <segue destination="L3r-Ht-ax9" kind="show" identifier="showMailSegue" id="WWN-Ek-icz"/>
-                        <segue destination="mBS-n2-AYn" kind="show" identifier="showAppEditSegue" id="cVF-XG-TkK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RUn-fd-IXV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -241,7 +240,7 @@
             <objects>
                 <tableViewController id="mBS-n2-AYn" customClass="OOAppEditController" customModule="O2Platform" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="7hM-B4-uS0">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="separatorColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>

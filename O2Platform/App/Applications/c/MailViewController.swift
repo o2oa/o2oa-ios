@@ -98,10 +98,10 @@ class MailViewController: BaseWebViewUIViewController {
                 let req = URLRequest(url: urlR)
                 self.webView?.load(req)
             }else {
-                self.showError(title: "URL请求异常")
+                self.showError(title: L10n.applicationsUrlRequestError)
             }
         }else {
-            self.showError(title: "没有获取到URL")
+            self.showError(title: L10n.applicationsUrlIsEmpty)
         }
     }
     

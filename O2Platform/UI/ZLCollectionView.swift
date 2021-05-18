@@ -113,11 +113,11 @@ extension ZLCollectionView:UICollectionViewDelegate{
             reusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "OOAppMainheaderView", for: indexPath)
             let headerView = reusableView as! OOAppMainCollectionReusableView
             if indexPath.section == 0 {
-                headerView.titleLabel.text = "主页应用"
+                headerView.titleLabel.text = L10n.applicationsMainApp
             } else if indexPath.section == 1  {
-                headerView.titleLabel.text = "原生应用"
+                headerView.titleLabel.text = L10n.applicationsNativeApp
             } else {
-                headerView.titleLabel.text = "门户应用"
+                headerView.titleLabel.text = L10n.applicationsPortalApp
             }
         }else if kind == UICollectionView.elementKindSectionFooter {
             reusableView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "OOAppMainCollectionFooterView", for: indexPath)

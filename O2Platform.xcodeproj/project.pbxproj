@@ -168,6 +168,9 @@
 		B15F812D21102BC000B81F35 /* DatePickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15F812B21102BBF00B81F35 /* DatePickerView.xib */; };
 		B162F28924AB0E7300A6BF06 /* O2StringPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B162F28824AB0E7300A6BF06 /* O2StringPicker.swift */; };
 		B162F28B24AB0E9900A6BF06 /* O2StringPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = B162F28A24AB0E9900A6BF06 /* O2StringPicker.xib */; };
+		B1649D682653578D00593504 /* apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1649D6A2653578D00593504 /* apps.storyboard */; };
+		B1649D9C265358A800593504 /* BartyCrouch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1649D9B265358A700593504 /* BartyCrouch.swift */; };
+		B1649D9E265359A700593504 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1649D9D265359A700593504 /* Strings.swift */; };
 		B165CD582242093500373B66 /* CoverVerticalAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165CD412242093500373B66 /* CoverVerticalAnimation.swift */; };
 		B165CD592242093500373B66 /* PresentrController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165CD422242093500373B66 /* PresentrController.swift */; };
 		B165CD5A2242093500373B66 /* Presentr.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165CD432242093500373B66 /* Presentr.swift */; };
@@ -761,7 +764,6 @@
 		E4B888DD1D9D48F1002E1A46 /* SettingHomeCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B8882E1D9D48F1002E1A46 /* SettingHomeCellModel.swift */; };
 		E4B888DE1D9D48F1002E1A46 /* SettingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B888301D9D48F1002E1A46 /* SettingHeaderView.swift */; };
 		E4B888DF1D9D48F1002E1A46 /* SettingHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B888311D9D48F1002E1A46 /* SettingHomeCell.swift */; };
-		E4B888E01D9D48F1002E1A46 /* apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4B888331D9D48F1002E1A46 /* apps.storyboard */; };
 		E4B888E11D9D48F1002E1A46 /* contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4B888341D9D48F1002E1A46 /* contacts.storyboard */; };
 		E4B888E21D9D48F1002E1A46 /* cloudStorage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4B888351D9D48F1002E1A46 /* cloudStorage.storyboard */; };
 		E4B888E41D9D48F1002E1A46 /* login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4B888371D9D48F1002E1A46 /* login.storyboard */; };
@@ -1352,6 +1354,11 @@
 		B15F812B21102BBF00B81F35 /* DatePickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DatePickerView.xib; sourceTree = "<group>"; };
 		B162F28824AB0E7300A6BF06 /* O2StringPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2StringPicker.swift; sourceTree = "<group>"; };
 		B162F28A24AB0E9900A6BF06 /* O2StringPicker.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = O2StringPicker.xib; sourceTree = "<group>"; };
+		B1649D992653579400593504 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/apps.strings; sourceTree = "<group>"; };
+		B1649D9B265358A700593504 /* BartyCrouch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BartyCrouch.swift; sourceTree = "<group>"; };
+		B1649D9D265359A700593504 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		B1649DA026535B4100593504 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/apps.storyboard; sourceTree = "<group>"; };
+		B1649DA126535B4F00593504 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/apps.strings"; sourceTree = "<group>"; };
 		B165CD412242093500373B66 /* CoverVerticalAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverVerticalAnimation.swift; sourceTree = "<group>"; };
 		B165CD422242093500373B66 /* PresentrController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentrController.swift; sourceTree = "<group>"; };
 		B165CD432242093500373B66 /* Presentr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Presentr.swift; sourceTree = "<group>"; };
@@ -1506,11 +1513,7 @@
 		B1DE8563236030E2003C36E2 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		B1DE856523603408003C36E2 /* DispatchQueue+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extension.swift"; sourceTree = "<group>"; };
 		B1DFFA81235E9CF400FEF9D6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		B1DFFAAD235E9D4C00FEF9D6 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		B1DFFAAE235E9D6100FEF9D6 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		B1DFFAB3235EB20500FEF9D6 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/CloudFile.strings"; sourceTree = "<group>"; };
-		B1DFFAB5235EB2B100FEF9D6 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/CloudFile.strings"; sourceTree = "<group>"; };
-		B1DFFAB7235EB2B200FEF9D6 /* zh-HK */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-HK"; path = "zh-HK.lproj/CloudFile.strings"; sourceTree = "<group>"; };
 		B1E0BA9E2378FA05001D741F /* JPushDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JPushDevice.swift; sourceTree = "<group>"; };
 		B1E0BAA02378FC01001D741F /* O2JPushManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2JPushManager.swift; sourceTree = "<group>"; };
 		B1E95F4D2373DDC4004876B7 /* ZoomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomImageView.swift; sourceTree = "<group>"; };
@@ -2007,7 +2010,6 @@
 		E4B8882E1D9D48F1002E1A46 /* SettingHomeCellModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingHomeCellModel.swift; sourceTree = "<group>"; };
 		E4B888301D9D48F1002E1A46 /* SettingHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingHeaderView.swift; sourceTree = "<group>"; };
 		E4B888311D9D48F1002E1A46 /* SettingHomeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingHomeCell.swift; sourceTree = "<group>"; };
-		E4B888331D9D48F1002E1A46 /* apps.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = apps.storyboard; sourceTree = "<group>"; };
 		E4B888341D9D48F1002E1A46 /* contacts.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = contacts.storyboard; sourceTree = "<group>"; };
 		E4B888351D9D48F1002E1A46 /* cloudStorage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = cloudStorage.storyboard; sourceTree = "<group>"; };
 		E4B888371D9D48F1002E1A46 /* login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = login.storyboard; sourceTree = "<group>"; };
@@ -3703,6 +3705,8 @@
 				E484C00E1DA8ED7C003413DF /* O2Platform.entitlements */,
 				B1908E4E22687B1A00D75632 /* Localizable.strings */,
 				B15D26EB235EF7480092F8B8 /* genstrings.sh */,
+				B1649D9B265358A700593504 /* BartyCrouch.swift */,
+				B1649D9D265359A700593504 /* Strings.swift */,
 			);
 			path = O2Platform;
 			sourceTree = "<group>";
@@ -3710,7 +3714,7 @@
 		E4B887461D9D48F1002E1A46 /* Applications */ = {
 			isa = PBXGroup;
 			children = (
-				E4B888331D9D48F1002E1A46 /* apps.storyboard */,
+				B1649D6A2653578D00593504 /* apps.storyboard */,
 				E4B887471D9D48F1002E1A46 /* c */,
 				E4B887491D9D48F1002E1A46 /* m */,
 				E4B8874B1D9D48F1002E1A46 /* v */,
@@ -4955,7 +4959,7 @@
 				E46E6C971DD41F5D00AB7561 /* ZSSparagraph.png in Resources */,
 				B1ACCC652574C38E00949F8C /* MeetingFormAttachmentItemCell.xib in Resources */,
 				B1489CAE2491FF13009EE9FD /* IMChatEmojiBarView.xib in Resources */,
-				E4B888E01D9D48F1002E1A46 /* apps.storyboard in Resources */,
+				B1649D682653578D00593504 /* apps.storyboard in Resources */,
 				E428AF6120AD4DCE00D964B9 /* OOAttanceCheckInController.xib in Resources */,
 				B165CD5D2242093500373B66 /* SourceSansPro-Regular.ttf in Resources */,
 				B168BF4324F797F40070329F /* BDSClientResources in Resources */,
@@ -5577,6 +5581,7 @@
 				E4B697B120764A2D0062F6E8 /* O2AppAPI.swift in Sources */,
 				E46E6CC41DD41F5D00AB7561 /* ZSSRichTextEditor.m in Sources */,
 				E428AF5920ABD95700D964B9 /* OOAttendanceAPI.swift in Sources */,
+				B1649D9E265359A700593504 /* Strings.swift in Sources */,
 				B165CD582242093500373B66 /* CoverVerticalAnimation.swift in Sources */,
 				B13A010F236924BE00025F3B /* UIImageView+Extension.swift in Sources */,
 				B165CD672242093500373B66 /* CrossDissolveAnimation.swift in Sources */,
@@ -5654,6 +5659,7 @@
 				B12FD1E22283D5B700E636BA /* NSObject+Theme.swift in Sources */,
 				B167F7632362BFC200F182B8 /* CloudFileMoveFolderController.swift in Sources */,
 				B162F28924AB0E7300A6BF06 /* O2StringPicker.swift in Sources */,
+				B1649D9C265358A800593504 /* BartyCrouch.swift in Sources */,
 				B1E0BAA12378FC01001D741F /* O2JPushManager.swift in Sources */,
 				E4B7819D1DFA9181007B58A9 /* CMSCategoryItemData.swift in Sources */,
 				B15F80F3210EB93000B81F35 /* OOCalendarMainMonthViewController.swift in Sources */,
@@ -5826,13 +5832,21 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		B1649D6A2653578D00593504 /* apps.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B1649D992653579400593504 /* en */,
+				B1649DA026535B4100593504 /* Base */,
+				B1649DA126535B4F00593504 /* zh-Hans */,
+			);
+			name = apps.storyboard;
+			sourceTree = "<group>";
+		};
 		B1908E4E22687B1A00D75632 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				B1908E4D22687B1A00D75632 /* zh-Hans */,
 				B1DFFA81235E9CF400FEF9D6 /* en */,
-				B1DFFAAD235E9D4C00FEF9D6 /* zh-Hant */,
-				B1DFFAAE235E9D6100FEF9D6 /* zh-HK */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -5841,8 +5855,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				B1DFFAB3235EB20500FEF9D6 /* zh-Hans */,
-				B1DFFAB5235EB2B100FEF9D6 /* zh-Hant */,
-				B1DFFAB7235EB2B200FEF9D6 /* zh-HK */,
 				B15D26BF235EF0850092F8B8 /* Base */,
 				B15D26EA235EF0940092F8B8 /* en */,
 			);

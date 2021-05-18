@@ -1,3 +1,47 @@
+"Alert" = "Alert";
+
+"All File" = "All File";
+
+/* No comment provided by engineer. */
+"Alt" = "提示";
+
+/* No comment provided by engineer. */
+"BG Color" = "BG Color";
+
+/* No comment provided by engineer. */
+"Cancel" = "Cancel";
+
+"Choose" = "Choose";
+
+"Choose Move Position" = "Move To";
+
+/* No comment provided by engineer. */
+"Clear Photo" = "Clear Photo";
+
+"Cloud File My Share Files" = "My Share Files";
+
+"Cloud File Share To Me" = "Share To Me";
+
+"Cloud File Type Document" = "Document";
+
+"Cloud File Type Image" = "Image";
+
+"Cloud File Type Music" = "Music";
+
+"Cloud File Type Other" = "Other";
+
+"Cloud File Type Video" = "Video";
+
+"Cloud Files" = "Cloud File";
+
+"Create Folder Error Message" = "Create Folder Error Message !";
+
+"Delete" = "Delete";
+
+"Delete Items Confirm Message" = "Delete these items , are you sure ?";
+
+"Delete My Share File Confirm Message" = "Cancel these share items, are you sure ?";
+
 /* 
   Localizable.strings
   O2Platform
@@ -6,35 +50,95 @@
   Copyright © 2019 zoneland. All rights reserved.
 */
 "Done" = "Done";
-"OK" = "OK";
-"Cancel" = "Cancel";
-"Title" = "Title";
-"Update" = "Update";
-"Clear Photo" = "Clear Photo";
-"Share" = "Share";
-"Delete" = "Delete";
-"Alert" = "Alert";
-"Choose" = "Choose";
 
-"Cloud Files" = "Cloud File";
-"All File" = "All File";
-"Upload File" = "Upload File";
-"New Folder" = "New Folder";
-"New" = "New";
-"Create Folder Error Message" = "Create Folder Error Message !";
-"Rename" = "Rename";
-"Move" = "Move";
-"Share Delete" = "Take Back";
-"Shield Share" = "Shield Share";
+"Edit" = "Edit";
+
+"App" = "App";
+
+/* No comment provided by engineer. */
+"Title" = "Title";
+
 "Empty name Error Message" = "name is not empty !";
-"Delete Items Confirm Message" = "Delete these items , are you sure ?";
-"Choose Move Position" = "Move To";
-"Cloud File Type Image" = "Image";
-"Cloud File Type Video" = "Video";
-"Cloud File Type Music" = "Music";
-"Cloud File Type Document" = "Document";
-"Cloud File Type Other" = "Other";
-"Cloud File Share To Me" = "Share To Me";
-"Cloud File My Share Files" = "My Share Files";
-"Delete My Share File Confirm Message" = "Cancel these share items, are you sure ?";
+
+/* Error description */
+"Failed to convert value from data at path %@" = "Failed to convert value from data at path %@";
+
+/* Error description */
+"Failed to convert value from data at URL %@" = "Failed to convert value from data at URL %@";
+
+/* Error description */
+"Format %@ not found" = "Format %@ not found";
+
+/* Identify failed */
+"Identify failed" = "Identify failed";
+
+/* No comment provided by engineer. */
+"Image scale, 0.5 by default" = "Image scale, 0.5 by default";
+
+/* No comment provided by engineer. */
+"Insert" = "Insert";
+
+/* No comment provided by engineer. */
+"Insert Image" = "Insert Image";
+
+/* No comment provided by engineer. */
+"Insert Image From Device" = "Insert Image From Device";
+
+/* No comment provided by engineer. */
+"Insert Link" = "Insert Link";
+
+"Move" = "Move";
+
+"New" = "New";
+
+"New Folder" = "New Folder";
+
+/* Error description */
+"Object not found for key %@" = "Object not found for key %@";
+
+/* OK */
+"OK" = "OK";
+
+/* No comment provided by engineer. */
+"Pick Image" = "Pick Image";
+
+/* No comment provided by engineer. */
+"Pick New Image" = "Pick New Image";
+
+"Rename" = "Rename";
+
+/* Error description */
+"Request expected %ld bytes and received %ld bytes" = "Request expected %ld bytes and received %ld bytes";
+
+"Share" = "Share";
+
+"Share Delete" = "Take Back";
+
+"Shield Share" = "Shield Share";
+
 "Shield Share File Confirm Message" = "Dismiss these share items, are you sure ?";
+
+/* No comment provided by engineer. */
+"Text Color" = "Text Color";
+
+/* No comment provided by engineer. */
+"Update" = "Update";
+
+"Upload File" = "Upload File";
+
+/* No comment provided by engineer. */
+"URL (required)" = "URL (required)";
+
+/* No comment provided by engineer. */
+"取消" = "Cancel";
+
+/* No comment provided by engineer. */
+"Applications update success" = "Update Success";
+
+"Applications Url request error" = "URL Request Error";
+
+"Applications Url is empty" = "URL Is Empty";
+
+"Applications Main App" = "Main App";
+"Applications Native App" = "Native App";
+"Applications Portal App" = "Portal App";

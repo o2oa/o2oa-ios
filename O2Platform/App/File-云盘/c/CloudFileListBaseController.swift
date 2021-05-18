@@ -39,22 +39,22 @@ class CloudFileListBaseController: CloudFileBaseVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        var title = Languager.standardLanguager().string(key: "Cloud File Type Image")
+        var title = L10n.cloudFileTypeImage //Languager.standardLanguager().string(key: "Cloud File Type Image")
         switch self.fileType {
         case .image:
-            title = Languager.standardLanguager().string(key: "Cloud File Type Image")
+            title = L10n.cloudFileTypeImage // Languager.standardLanguager().string(key: "Cloud File Type Image")
             break
         case .office:
-            title = Languager.standardLanguager().string(key: "Cloud File Type Document")
+            title = L10n.cloudFileTypeDocument // Languager.standardLanguager().string(key: "Cloud File Type Document")
             break
         case .movie:
-            title = Languager.standardLanguager().string(key: "Cloud File Type Video")
+            title = L10n.cloudFileTypeVideo // Languager.standardLanguager().string(key: "Cloud File Type Video")
             break
         case .music:
-            title = Languager.standardLanguager().string(key: "Cloud File Type Music")
+            title = L10n.cloudFileTypeMusic // Languager.standardLanguager().string(key: "Cloud File Type Music")
             break
         case .other:
-            title = Languager.standardLanguager().string(key: "Cloud File Type Other")
+            title = L10n.cloudFileTypeOther // Languager.standardLanguager().string(key: "Cloud File Type Other")
             break
         }
         self.title = title
@@ -122,21 +122,21 @@ class CloudFileListBaseController: CloudFileBaseVC {
         if totalCount > 0 {
             var items: [UIBarButtonItem] = []
             if totalCount == 1 {
-                let reName = Languager.standardLanguager().string(key: "Rename")
+                let reName = L10n.rename // Languager.standardLanguager().string(key: "Rename")
                 generateBottomButton(&items, name: reName, tapCall: {
                     self.renameOp()
                 })
             }
             //其他按钮 删除 移动 分享
-            let deleteName = Languager.standardLanguager().string(key: "Delete")
+            let deleteName = L10n.delete // Languager.standardLanguager().string(key: "Delete")
             self.generateBottomButton(&items, name: deleteName) {
                 self.deleteOp()
             }
-            let moveName = Languager.standardLanguager().string(key: "Move")
+            let moveName = L10n.move // Languager.standardLanguager().string(key: "Move")
             self.generateBottomButton(&items, name: moveName) {
                 self.moveOp()
             }
-            let shareName = Languager.standardLanguager().string(key: "Share")
+            let shareName = L10n.share // Languager.standardLanguager().string(key: "Share")
             self.generateBottomButton(&items, name: shareName) {
                 self.shareOp()
             }

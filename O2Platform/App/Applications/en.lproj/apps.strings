@@ -1,0 +1,14 @@
+/* Class = "UIBarButtonItem"; title = "关闭"; ObjectID = "8CV-xg-fhr"; */
+"8CV-xg-fhr.title" = "Close";
+
+/* Class = "UILabel"; text = "应用名称"; ObjectID = "ACY-Xq-I9a"; */
+"ACY-Xq-I9a.text" = "App Name";
+
+/* Class = "UINavigationItem"; title = "邮箱"; ObjectID = "aVQ-oh-wVG"; */
+"aVQ-oh-wVG.title" = "Email";
+
+/* Class = "UILabel"; text = "我的应用"; ObjectID = "ggJ-m8-JWM"; */
+"ggJ-m8-JWM.text" = "My App";
+
+/* Class = "UILabel"; text = "测试"; ObjectID = "R2n-3i-RZ5"; */
+"R2n-3i-RZ5.text" = "Test";

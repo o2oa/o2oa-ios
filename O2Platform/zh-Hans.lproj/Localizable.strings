@@ -1,3 +1,47 @@
+"Alert" = "提示";
+
+"All File" = "全部文件";
+
+/* No comment provided by engineer. */
+"Alt" = "提示";
+
+/* No comment provided by engineer. */
+"BG Color" = "BG Color";
+
+/* No comment provided by engineer. */
+"Cancel" = "取消";
+
+"Choose" = "选择";
+
+"Choose Move Position" = "选择移动位置";
+
+/* No comment provided by engineer. */
+"Clear Photo" = "清除照片";
+
+"Cloud File My Share Files" = "我分享的文件";
+
+"Cloud File Share To Me" = "分享给我的";
+
+"Cloud File Type Document" = "文档";
+
+"Cloud File Type Image" = "图片";
+
+"Cloud File Type Music" = "音乐";
+
+"Cloud File Type Other" = "其它";
+
+"Cloud File Type Video" = "视频";
+
+"Cloud Files" = "云盘";
+
+"Create Folder Error Message" = "创建文件夹失败！";
+
+"Delete" = "删除";
+
+"Delete Items Confirm Message" = "确定要删除这些数据吗？";
+
+"Delete My Share File Confirm Message" = "确定要取消这些分享的数据吗？";
+
 /* 
   Localizable.strings
   O2Platform
@@ -6,38 +50,97 @@
   Copyright © 2019 zoneland. All rights reserved.
 */
 "Done" = "完成";
-"OK" = "確定";
-"Cancel" = "取消";
-"Title" = "标题";
-"Update" = "更新";
-"Clear Photo" = "清除照片";
-"Share" = "分享";
-"Delete" = "删除";
-"Alert" = "提示";
-"Choose" = "选择";
 
-//云盘
-"Cloud Files" = "云盘";
-"All File" = "全部文件";
-"Upload File" = "上传文件";
-"New Folder" = "新建文件夹";
-"New" = "新建";
-"Create Folder Error Message" = "创建文件夹失败！";
-"Rename" = "重命名";
-"Move" = "移动";
-"Share Delete" = "取消分享";
-"Shield Share" = "屏蔽共享";
+"Edit" = "编辑";
+
+"App" = "应用";
+
+
+/* No comment provided by engineer. */
+"Title" = "标题";
+
 "Empty name Error Message" = "名称不能为空！";
-"Delete Items Confirm Message" = "确定要删除这些数据吗？";
-"Choose Move Position" = "选择移动位置";
-"Cloud File Type Image" = "图片";
-"Cloud File Type Video" = "视频";
-"Cloud File Type Music" = "音乐";
-"Cloud File Type Document" = "文档";
-"Cloud File Type Other" = "其它";
-"Cloud File Share To Me" = "分享给我的";
-"Cloud File My Share Files" = "我分享的文件";
-"Delete My Share File Confirm Message" = "确定要取消这些分享的数据吗？";
+
+/* Error description */
+"Failed to convert value from data at path %@" = "Failed to convert value from data at path %@";
+
+/* Error description */
+"Failed to convert value from data at URL %@" = "Failed to convert value from data at URL %@";
+
+/* Error description */
+"Format %@ not found" = "Format %@ not found";
+
+/* Identify failed */
+"Identify failed" = "Identify failed";
+
+/* No comment provided by engineer. */
+"Image scale, 0.5 by default" = "Image scale, 0.5 by default";
+
+/* No comment provided by engineer. */
+"Insert" = "Insert";
+
+/* No comment provided by engineer. */
+"Insert Image" = "Insert Image";
+
+/* No comment provided by engineer. */
+"Insert Image From Device" = "Insert Image From Device";
+
+/* No comment provided by engineer. */
+"Insert Link" = "Insert Link";
+
+"Move" = "移动";
+
+"New" = "新建";
+
+"New Folder" = "新建文件夹";
+
+/* Error description */
+"Object not found for key %@" = "Object not found for key %@";
+
+/* OK */
+"OK" = "確定";
+
+/* No comment provided by engineer. */
+"Pick Image" = "Pick Image";
+
+/* No comment provided by engineer. */
+"Pick New Image" = "Pick New Image";
+
+"Rename" = "重命名";
+
+/* Error description */
+"Request expected %ld bytes and received %ld bytes" = "Request expected %ld bytes and received %ld bytes";
+
+"Share" = "分享";
+
+"Share Delete" = "取消分享";
+
+"Shield Share" = "屏蔽共享";
+
 "Shield Share File Confirm Message" = "确定要屏蔽这些分享给你的数据吗？";
 
+/* No comment provided by engineer. */
+"Text Color" = "Text Color";
+
+/* No comment provided by engineer. */
+"Update" = "更新";
+
+"Upload File" = "上传文件";
+
+/* No comment provided by engineer. */
+"URL (required)" = "URL (required)";
+
+/* No comment provided by engineer. */
+"取消" = "取消";
+
+/* No comment provided by engineer. */
+"Applications update success" = "更新成功";
+
+"Applications Url request error" = "URL请求出错";
+
+"Applications Url is empty" = "没有获取到URL";
+
+"Applications Main App" = "主页应用";
+"Applications Native App" = "原生应用";
+"Applications Portal App" = "门户应用";
 

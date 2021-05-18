@@ -34,14 +34,14 @@ class CloudFileBaseVC: UIViewController {
     
     func renameOp() {
         DDLogDebug("重命名")
-        let rename = Languager.standardLanguager().string(key: "Rename")
+        let rename = L10n.rename // Languager.standardLanguager().string(key: "Rename")
         if self.checkedFolderList.count > 0 {
             let folder = self.checkedFolderList.first!
             let name = folder.name ?? ""
             
             self.showPromptAlert(title: rename, message: "\(rename) \(name)", inputText: name) { (action, result) in
                 if result.isBlank {
-                    let msg = Languager.standardLanguager().string(key: "Empty name Error Message")
+                    let msg = L10n.emptyNameErrorMessage // Languager.standardLanguager().string(key: "Empty name Error Message")
                     self.showError(title: msg)
                 }else {
                     folder.name = result
@@ -58,7 +58,7 @@ class CloudFileBaseVC: UIViewController {
             let name = file.name ?? ""
             self.showPromptAlert(title: rename, message: "\(rename) \(name)", inputText: name) { (action, result) in
                 if result.isBlank {
-                    let msg = Languager.standardLanguager().string(key: "Empty name Error Message")
+                    let msg = L10n.emptyNameErrorMessage // Languager.standardLanguager().string(key: "Empty name Error Message")
                     self.showError(title: msg)
                 }else {
                     file.name = result
@@ -77,8 +77,8 @@ class CloudFileBaseVC: UIViewController {
         DDLogDebug("删除")
         let totalCount = self.checkedFileList.count + self.checkedFolderList.count
         if totalCount > 0 {
-            let alert = Languager.standardLanguager().string(key: "Alert")
-            let msg = Languager.standardLanguager().string(key: "Delete Items Confirm Message")
+            let alert = L10n.alert // Languager.standardLanguager().string(key: "Alert")
+            let msg = L10n.deleteItemsConfirmMessage // Languager.standardLanguager().string(key: "Delete Items Confirm Message")
             self.showDefaultConfirm(title: alert, message: msg) { (action) in
                 self.cFileVM.deleteCheckedList(folderList: self.checkedFolderList, fileList: self.checkedFileList)
                     .then({ (result) in
