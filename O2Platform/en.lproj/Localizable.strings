@@ -142,3 +142,45 @@
 "Applications Main App" = "Main App";
 "Applications Native App" = "Native App";
 "Applications Portal App" = "Portal App";
+
+/* Main */
+"Main Bar IM" = "Messages";
+"Main Bar Contacts" = "Contacts";
+"Main Bar App" = "Apps";
+"Main Bar Settings" = "Settings";
+
+/* Login */
+"Login Jailbroken alert message" = "The current running environment has been jailbroken, this application will not provide services!";
+"Login Server config info error" = "Abnormal server configuration information!";
+"Login Server config info is empty" = "No server information configured!";
+"Login Unknown error" = "Unknown error!";
+"Login Rebind" = "Rebind";
+"Login Confirm rebind message" ="Error loading, rebind? error：%@";
+"Login Mobile phone validate" = "Mobile phone verification";
+"Login Please enter mobile phone" = "Please input mobile phone number!";
+"Login Please enter validation code" = "Please input verification code!";
+"Login binding" = "Binding...";
+"Login Can not get server list" = "Did not get the server list, please confirm whether the server has been registered!";
+"Login Error with info" = "Error! %@";
+"Login Guide page" = "Guide page";
+"Login Next step" = "Next";
+"Login Select service node" = "Select service node";
+"Login Do not screenshot" = "In order to protect the security of user name and password, please do not take a screenshot!";
+"Login Face recognition login" = "Face recognition login";
+"Login Fingerprint identification login" = "Fingerprint identification login";
+"Login Rebind to the new service node" = "Rebind to the new service node, the original node information will be cleared, are you sure?";
+"Login Password login" = "Password login";
+"Login Verification code login" = "Verification code login";
+"Login Select the following login method" = "Please select the following login method";
+"Login Mobile phone number or password is empty" = "Mobile phone number or password cannot be empty!";
+"Login Login fail error" = "Login failed, %@";
+"Login Send code fail" = "Verification code sending failed!";
+"Login Verify login now" = "Verify login now";
+"Login Login" = "Login";
+"Login Login with user name" = "Login with user name";
+"Login Bio auth locked" = "It has been locked. Please enter the password in the unlocking interface of the mobile phone!";
+"Login Verification failed" = "Verification failed!";
+"Login do not support bio" = "The mobile phone system is not on or does not support the recognition function";
+"Login Login fail use other method" = "Server authentication login failed, please try to login in another way";
+"Login Get verification code" = "Get verification code";
+"Login Recapture" = "Recapture";

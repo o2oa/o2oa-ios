@@ -148,6 +148,8 @@
 		B14E07C523025C6A00AE85A0 /* OOContactExpressAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14E07C423025C6A00AE85A0 /* OOContactExpressAPI.swift */; };
 		B14E0C0C2484F1F0008AF6AE /* O2WebsocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14E0C0B2484F1F0008AF6AE /* O2WebsocketManager.swift */; };
 		B15116042567951B005A1019 /* OOMeetingFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15116032567951B005A1019 /* OOMeetingFormViewController.swift */; };
+		B15310FB2654D50E00B59447 /* login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B15310FD2654D50E00B59447 /* login.storyboard */; };
+		B153112F2654F35C00B59447 /* OORegisterTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15311312654F35C00B59447 /* OORegisterTableView.xib */; };
 		B1534E3F21F712EA00CC8C35 /* O2DemoAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1534E3E21F712EA00CC8C35 /* O2DemoAlertView.swift */; };
 		B158E95E215DD3F500AB2727 /* AIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B158E95D215DD3F500AB2727 /* AIConstants.swift */; };
 		B15BE0BE2499BCEF008CD1DB /* O2RecordVoiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15BE0BD2499BCEF008CD1DB /* O2RecordVoiceManager.swift */; };
@@ -466,7 +468,6 @@
 		E4418C691DDC1AF70066348D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4418C681DDC1AF70066348D /* Foundation.framework */; };
 		E4418C6D1DDD5D6A0066348D /* BBSSubjectCreateTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4418C6C1DDD5D6A0066348D /* BBSSubjectCreateTableViewController.swift */; };
 		E441994A206C8A100050AE0C /* OORegisterTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4419949206C8A100050AE0C /* OORegisterTableView.swift */; };
-		E441994C206C8A1A0050AE0C /* OORegisterTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E441994B206C8A1A0050AE0C /* OORegisterTableView.xib */; };
 		E457558D1E0BA26000EC44F4 /* NewScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E457558C1E0BA26000EC44F4 /* NewScanViewController.swift */; };
 		E457559C1E0BA72E00EC44F4 /* device_scan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E457558E1E0BA72E00EC44F4 /* device_scan@2x.png */; };
 		E457559D1E0BA72E00EC44F4 /* qrcode_scan_btn_flash_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E457558F1E0BA72E00EC44F4 /* qrcode_scan_btn_flash_down@2x.png */; };
@@ -766,7 +767,6 @@
 		E4B888DF1D9D48F1002E1A46 /* SettingHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B888311D9D48F1002E1A46 /* SettingHomeCell.swift */; };
 		E4B888E11D9D48F1002E1A46 /* contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4B888341D9D48F1002E1A46 /* contacts.storyboard */; };
 		E4B888E21D9D48F1002E1A46 /* cloudStorage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4B888351D9D48F1002E1A46 /* cloudStorage.storyboard */; };
-		E4B888E41D9D48F1002E1A46 /* login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4B888371D9D48F1002E1A46 /* login.storyboard */; };
 		E4B888E91D9D48F1002E1A46 /* setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4B8883C1D9D48F1002E1A46 /* setting.storyboard */; };
 		E4B888EA1D9D48F1002E1A46 /* task.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4B8883D1D9D48F1002E1A46 /* task.storyboard */; };
 		E4B888EF1D9D48F1002E1A46 /* TaskCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B888441D9D48F1002E1A46 /* TaskCreateViewController.swift */; };
@@ -859,10 +859,6 @@
 		E4F4544C208F0401002FBC32 /* OOContactPersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F4544A208F0401002FBC32 /* OOContactPersonCell.swift */; };
 		E4F4544D208F0401002FBC32 /* OOContactPersonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4F4544B208F0401002FBC32 /* OOContactPersonCell.xib */; };
 		E4F4544F20902263002FBC32 /* OOConfigInfoModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F4544E20902263002FBC32 /* OOConfigInfoModels.swift */; };
-		E4FF44962061FBFD007C3FC4 /* OOInformViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FF44942061FBFD007C3FC4 /* OOInformViewController.swift */; };
-		E4FF44972061FBFD007C3FC4 /* OOInformViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4FF44952061FBFD007C3FC4 /* OOInformViewController.xib */; };
-		E4FF449A206354B7007C3FC4 /* OONoticationSettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FF4498206354B7007C3FC4 /* OONoticationSettingController.swift */; };
-		E4FF449B206354B7007C3FC4 /* OONoticationSettingController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4FF4499206354B7007C3FC4 /* OONoticationSettingController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1324,6 +1320,12 @@
 		B14E07C423025C6A00AE85A0 /* OOContactExpressAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOContactExpressAPI.swift; sourceTree = "<group>"; };
 		B14E0C0B2484F1F0008AF6AE /* O2WebsocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2WebsocketManager.swift; sourceTree = "<group>"; };
 		B15116032567951B005A1019 /* OOMeetingFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOMeetingFormViewController.swift; sourceTree = "<group>"; };
+		B15310FC2654D50E00B59447 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/login.storyboard; sourceTree = "<group>"; };
+		B153112C2654D51F00B59447 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/login.strings; sourceTree = "<group>"; };
+		B153112E2654D54E00B59447 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/login.strings"; sourceTree = "<group>"; };
+		B15311302654F35C00B59447 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/OORegisterTableView.xib; sourceTree = "<group>"; };
+		B15311332654F36C00B59447 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/OORegisterTableView.strings; sourceTree = "<group>"; };
+		B15311352654F3C100B59447 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/OORegisterTableView.strings"; sourceTree = "<group>"; };
 		B1534E3E21F712EA00CC8C35 /* O2DemoAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2DemoAlertView.swift; sourceTree = "<group>"; };
 		B158E95D215DD3F500AB2727 /* AIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIConstants.swift; sourceTree = "<group>"; };
 		B15BE0BD2499BCEF008CD1DB /* O2RecordVoiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2RecordVoiceManager.swift; sourceTree = "<group>"; };
@@ -1669,7 +1671,6 @@
 		E4418C681DDC1AF70066348D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E4418C6C1DDD5D6A0066348D /* BBSSubjectCreateTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BBSSubjectCreateTableViewController.swift; sourceTree = "<group>"; };
 		E4419949206C8A100050AE0C /* OORegisterTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OORegisterTableView.swift; sourceTree = "<group>"; };
-		E441994B206C8A1A0050AE0C /* OORegisterTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OORegisterTableView.xib; sourceTree = "<group>"; };
 		E457558C1E0BA26000EC44F4 /* NewScanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewScanViewController.swift; sourceTree = "<group>"; };
 		E457558E1E0BA72E00EC44F4 /* device_scan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "device_scan@2x.png"; sourceTree = "<group>"; };
 		E457558F1E0BA72E00EC44F4 /* qrcode_scan_btn_flash_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qrcode_scan_btn_flash_down@2x.png"; sourceTree = "<group>"; };
@@ -2012,7 +2013,6 @@
 		E4B888311D9D48F1002E1A46 /* SettingHomeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingHomeCell.swift; sourceTree = "<group>"; };
 		E4B888341D9D48F1002E1A46 /* contacts.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = contacts.storyboard; sourceTree = "<group>"; };
 		E4B888351D9D48F1002E1A46 /* cloudStorage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = cloudStorage.storyboard; sourceTree = "<group>"; };
-		E4B888371D9D48F1002E1A46 /* login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = login.storyboard; sourceTree = "<group>"; };
 		E4B8883C1D9D48F1002E1A46 /* setting.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = setting.storyboard; sourceTree = "<group>"; };
 		E4B8883D1D9D48F1002E1A46 /* task.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = task.storyboard; sourceTree = "<group>"; };
 		E4B888441D9D48F1002E1A46 /* TaskCreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCreateViewController.swift; sourceTree = "<group>"; };
@@ -2107,10 +2107,6 @@
 		E4F4544A208F0401002FBC32 /* OOContactPersonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOContactPersonCell.swift; sourceTree = "<group>"; };
 		E4F4544B208F0401002FBC32 /* OOContactPersonCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OOContactPersonCell.xib; sourceTree = "<group>"; };
 		E4F4544E20902263002FBC32 /* OOConfigInfoModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOConfigInfoModels.swift; sourceTree = "<group>"; };
-		E4FF44942061FBFD007C3FC4 /* OOInformViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOInformViewController.swift; sourceTree = "<group>"; };
-		E4FF44952061FBFD007C3FC4 /* OOInformViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OOInformViewController.xib; sourceTree = "<group>"; };
-		E4FF4498206354B7007C3FC4 /* OONoticationSettingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OONoticationSettingController.swift; sourceTree = "<group>"; };
-		E4FF4499206354B7007C3FC4 /* OONoticationSettingController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OONoticationSettingController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4027,7 +4023,7 @@
 		E4B887FD1D9D48F1002E1A46 /* Login-绑定登录 */ = {
 			isa = PBXGroup;
 			children = (
-				E4B888371D9D48F1002E1A46 /* login.storyboard */,
+				B15310FD2654D50E00B59447 /* login.storyboard */,
 				E4B6977C2076494D0062F6E8 /* vm */,
 				E4B887FE1D9D48F1002E1A46 /* c */,
 				E4B888041D9D48F1002E1A46 /* m */,
@@ -4041,10 +4037,6 @@
 			children = (
 				E4B888021D9D48F1002E1A46 /* LoginViewController.swift */,
 				E4B6974520761B310062F6E8 /* OOBindRegisterController.swift */,
-				E4FF44942061FBFD007C3FC4 /* OOInformViewController.swift */,
-				E4FF44952061FBFD007C3FC4 /* OOInformViewController.xib */,
-				E4FF4498206354B7007C3FC4 /* OONoticationSettingController.swift */,
-				E4FF4499206354B7007C3FC4 /* OONoticationSettingController.xib */,
 				E4B696FE2075DE5F0062F6E8 /* OOGuidePageController.swift */,
 				E4B696FF2075DE5F0062F6E8 /* OOGuidePageController.xib */,
 				E4B698192079A8BB0062F6E8 /* OOBindNodeViewController.swift */,
@@ -4076,7 +4068,7 @@
 				E4B8880B1D9D48F1002E1A46 /* UnitDataTableViewCell.swift */,
 				E491664D1E03D2C1006133C5 /* O2CountdownButton.swift */,
 				E4419949206C8A100050AE0C /* OORegisterTableView.swift */,
-				E441994B206C8A1A0050AE0C /* OORegisterTableView.xib */,
+				B15311312654F35C00B59447 /* OORegisterTableView.xib */,
 				E4B6981E2079A9D30062F6E8 /* OONodeUnitTableViewCell.swift */,
 			);
 			path = v;
@@ -4883,7 +4875,6 @@
 				E457559F1E0BA72E00EC44F4 /* qrcode_scan_btn_myqrcode_down@2x.png in Resources */,
 				E46E6C731DD41F5D00AB7561 /* ZSSforcejustify.png in Resources */,
 				E4B888D91D9D48F1002E1A46 /* 004.jpg in Resources */,
-				E4FF44972061FBFD007C3FC4 /* OOInformViewController.xib in Resources */,
 				E45755A41E0BA72E00EC44F4 /* qrcode_scan_full_net.png in Resources */,
 				E46E6C961DD41F5D00AB7561 /* ZSSoutdent@2x.png in Resources */,
 				E46E6CAB1DD41F5D00AB7561 /* ZSSunderline.png in Resources */,
@@ -4909,7 +4900,7 @@
 				B1C0A1A8256E552D00C7041E /* MeetingFormAttachmentCell.xib in Resources */,
 				B1908E4C22687B1A00D75632 /* Localizable.strings in Resources */,
 				E4B2321020B2A9F60082F30A /* OOAttandanceWorkPlaceController.xib in Resources */,
-				E441994C206C8A1A0050AE0C /* OORegisterTableView.xib in Resources */,
+				B153112F2654F35C00B59447 /* OORegisterTableView.xib in Resources */,
 				E46E6C9D1DD41F5D00AB7561 /* ZSSredo.png in Resources */,
 				B12FD1ED2283FA2E00E636BA /* blue.plist in Resources */,
 				E45755A01E0BA72E00EC44F4 /* qrcode_scan_btn_myqrcode_nor@2x.png in Resources */,
@@ -4927,9 +4918,8 @@
 				E4B888E91D9D48F1002E1A46 /* setting.storyboard in Resources */,
 				E46E6CA11DD41F5D00AB7561 /* ZSSstrikethrough.png in Resources */,
 				B14CCFAD256DF630003ECC3C /* MeetingFormTimeDuringCell.xib in Resources */,
-				E4B888E41D9D48F1002E1A46 /* login.storyboard in Resources */,
+				B15310FB2654D50E00B59447 /* login.storyboard in Resources */,
 				B15D26EC235EF7480092F8B8 /* genstrings.sh in Resources */,
-				E4FF449B206354B7007C3FC4 /* OONoticationSettingController.xib in Resources */,
 				B168BF2F24F797DF0070329F /* bds_easr_gramm.dat in Resources */,
 				E46E6C711DD41F5D00AB7561 /* ZSSfonts.png in Resources */,
 				B1D14739258C8F610053DB4F /* listener08_anim.gif in Resources */,
@@ -5384,7 +5374,6 @@
 				B1FAE9E12115F95800981A25 /* OOCalendarViewController.swift in Sources */,
 				E4184B201DB4A8CB00FCC907 /* SAccoutSecViewController.swift in Sources */,
 				E4CB27861E793AE6004A7ACB /* ZonePickerModel.swift in Sources */,
-				E4FF44962061FBFD007C3FC4 /* OOInformViewController.swift in Sources */,
 				B12FD1E62283D5B700E636BA /* ThemeActivityIndicatorViewStylePicker.swift in Sources */,
 				E40E246B20B68AEB009F8BE7 /* OOAttandanceTotalHeaderView.swift in Sources */,
 				B13A01162369310E00025F3B /* O2RunUserInfo.swift in Sources */,
@@ -5518,7 +5507,6 @@
 				E40C41E91E7F7C0D00568805 /* ZoneMainCategoryTableViewCell.swift in Sources */,
 				E4B889401D9D6308002E1A46 /* CacheUtil.swift in Sources */,
 				B12FD1D92283D5B700E636BA /* O2ThemeManager+OC.swift in Sources */,
-				E4FF449A206354B7007C3FC4 /* OONoticationSettingController.swift in Sources */,
 				E428AF4520A95FE800D964B9 /* OOAttanceTotalController.swift in Sources */,
 				B1089693210AD8E400F02267 /* CalendarEventTableViewCell.swift in Sources */,
 				09E02E8C1F16319600579887 /* Haneke.swift in Sources */,
@@ -5832,6 +5820,26 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		B15310FD2654D50E00B59447 /* login.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B15310FC2654D50E00B59447 /* Base */,
+				B153112C2654D51F00B59447 /* en */,
+				B153112E2654D54E00B59447 /* zh-Hans */,
+			);
+			name = login.storyboard;
+			sourceTree = "<group>";
+		};
+		B15311312654F35C00B59447 /* OORegisterTableView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B15311302654F35C00B59447 /* Base */,
+				B15311332654F36C00B59447 /* en */,
+				B15311352654F3C100B59447 /* zh-Hans */,
+			);
+			name = OORegisterTableView.xib;
+			sourceTree = "<group>";
+		};
 		B1649D6A2653578D00593504 /* apps.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

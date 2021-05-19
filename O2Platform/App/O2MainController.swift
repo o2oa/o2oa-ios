@@ -34,6 +34,11 @@ class O2MainController: UITabBarController, UITabBarControllerDelegate {
     private lazy var attendanceViewModel: OOAttandanceViewModel = {
         return OOAttandanceViewModel()
     }()
+    
+    private let barIm = L10n.mainBarIm
+    private let barContact = L10n.mainBarContacts
+    private let barApps = L10n.mainBarApps
+    private let barSettings = L10n.mainBarSettings
 
 
     override func viewDidLoad() {
@@ -98,14 +103,14 @@ class O2MainController: UITabBarController, UITabBarControllerDelegate {
     private func _initControllers() {
         //消息
         let conversationVC = IMConversationListViewController()
-        conversationVC.title = "消息"
+        conversationVC.title = barIm
         let messages = ZLNavigationController(rootViewController: conversationVC)
-        messages.tabBarItem = UITabBarItem(title: "消息", image: UIImage(named: "icon_news_nor"), selectedImage: O2ThemeManager.image(for: "Icon.icon_news_pre"))
+        messages.tabBarItem = UITabBarItem(title: barIm, image: UIImage(named: "icon_news_nor"), selectedImage: O2ThemeManager.image(for: "Icon.icon_news_pre"))
 
         //通讯录
         let addressVC = OOTabBarHelper.getVC(storyboardName: "contacts", vcName: nil)
         let address = ZLNavigationController(rootViewController: addressVC)
-        address.tabBarItem = UITabBarItem(title: "通讯录", image: UIImage(named: "icon_address_g"), selectedImage: O2ThemeManager.image(for: "Icon.icon_address_list_pro"))
+        address.tabBarItem = UITabBarItem(title: barContact, image: UIImage(named: "icon_address_g"), selectedImage: O2ThemeManager.image(for: "Icon.icon_address_list_pro"))
 
         // main
         let mainVC = mainController()
@@ -121,12 +126,12 @@ class O2MainController: UITabBarController, UITabBarControllerDelegate {
         //应用
         let appsVC = OOTabBarHelper.getVC(storyboardName: "apps", vcName: nil)
         let apps = ZLNavigationController(rootViewController: appsVC)
-        apps.tabBarItem = UITabBarItem(title: "应用", image: UIImage(named: "icon_yingyong"), selectedImage: O2ThemeManager.image(for: "Icon.icon_yingyong_pro"))
+        apps.tabBarItem = UITabBarItem(title: barApps, image: UIImage(named: "icon_yingyong"), selectedImage: O2ThemeManager.image(for: "Icon.icon_yingyong_pro"))
 
         //设置
         let settingsVC = OOTabBarHelper.getVC(storyboardName: "setting", vcName: nil)
         let settings = ZLNavigationController(rootViewController: settingsVC)
-        settings.tabBarItem = UITabBarItem(title: "设置", image: UIImage(named: "setting_normal"), selectedImage: O2ThemeManager.image(for: "Icon.setting_selected"))
+        settings.tabBarItem = UITabBarItem(title: barSettings, image: UIImage(named: "setting_normal"), selectedImage: O2ThemeManager.image(for: "Icon.setting_selected"))
 
         self.viewControllers = [messages, address, mainVC, apps, settings]
 
@@ -147,7 +152,7 @@ class O2MainController: UITabBarController, UITabBarControllerDelegate {
         //设置
         let settingsVC = OOTabBarHelper.getVC(storyboardName: "setting", vcName: nil)
         let settings = ZLNavigationController(rootViewController: settingsVC)
-        settings.tabBarItem = UITabBarItem(title: "设置", image: UIImage(named: "setting_normal"), selectedImage: O2ThemeManager.image(for: "Icon.setting_selected"))
+        settings.tabBarItem = UITabBarItem(title: barSettings, image: UIImage(named: "setting_normal"), selectedImage: O2ThemeManager.image(for: "Icon.setting_selected"))
 
         self.viewControllers = [mainVC, settings]
     }
@@ -223,7 +228,7 @@ class O2MainController: UITabBarController, UITabBarControllerDelegate {
 
     private func showRedPoint(number: String) {
         self.viewControllers?.forEach({ (vc) in
-            if let zl = vc as? ZLNavigationController, zl.tabBarItem?.title == "消息" {
+            if let zl = vc as? ZLNavigationController, zl.tabBarItem?.title == barIm {
                 zl.tabBarItem.badgeValue = number
             }
         })
@@ -232,7 +237,7 @@ class O2MainController: UITabBarController, UITabBarControllerDelegate {
     //消息模块未读消息数量加1
     private func addUnreadNumber() {
         self.viewControllers?.forEach({ (vc) in
-            if let zl = vc as? ZLNavigationController, zl.tabBarItem?.title == "消息" {
+            if let zl = vc as? ZLNavigationController, zl.tabBarItem?.title == barIm {
                 if let badge = zl.tabBarItem.badgeValue {
                     if badge != "99.." {
                         if let n = Int(string: badge) {

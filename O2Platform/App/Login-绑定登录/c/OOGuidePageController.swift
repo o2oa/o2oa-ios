@@ -27,7 +27,7 @@ class OOGuidePageController: UIViewController,UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "引导页"
+        title = L10n.Login.guidePage
         initPage()
     }
     
@@ -43,12 +43,6 @@ class OOGuidePageController: UIViewController,UIScrollViewDelegate {
         }
         self.pageControl.numberOfPages = pageImageNames.count
         self.pageControl.currentPage = 0
-    }
-    
-    @objc private func buttonClicked(_ sender:Any?){
-        let url = URL(string:UIApplication.openSettingsURLString)!
-        UIApplication.shared.openURL(url)
-        
     }
     
     private func imagesContentSize() -> CGSize {

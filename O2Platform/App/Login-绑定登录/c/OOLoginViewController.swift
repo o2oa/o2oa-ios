@@ -12,6 +12,7 @@ import ReactiveSwift
 import CocoaLumberjack
 import AVFoundation
 
+/// 登录界面
 class OOLoginViewController: OOBaseViewController {
 
     @IBOutlet weak var logoImageView: UIImageView!
@@ -98,7 +99,7 @@ class OOLoginViewController: OOBaseViewController {
     
     //截屏提示
     @objc private func screenshots() {
-        self.showSystemAlert(title: "提示", message: "为了保护用户名密码安全，请不要截图！") { (action) in
+        self.showSystemAlert(title: L10n.alert, message: L10n.Login.donotScreenshot) { (action) in
             DDLogDebug("确定提示。")
         }
     }
@@ -150,10 +151,10 @@ class OOLoginViewController: OOBaseViewController {
         let bioType = O2BioLocalAuth.shared.checkBiometryType()
         switch bioType {
         case O2BiometryType.FaceID:
-            self.bioTypeName = "人脸识别登录"
+            self.bioTypeName = L10n.Login.faceRecognitionLogin
             break
         case O2BiometryType.TouchID:
-             self.bioTypeName = "指纹识别登录"
+            self.bioTypeName = L10n.Login.fingerprintIdentificationLogin
             break
         default:
             break
@@ -172,7 +173,7 @@ class OOLoginViewController: OOBaseViewController {
     }
     
     @IBAction func btnReBindNodeAction(_ sender: UIButton) {
-        self.showDefaultConfirm(title: "重新绑定", message: "重新绑定到新的服务节点，原节点信息将被清空，确认吗？") { (action) in
+        self.showDefaultConfirm(title: L10n.Login.rebind, message: L10n.Login.rebindToNewServiceNode) { (action) in
             O2AuthSDK.shared.clearAllInformationBeforeReBind(callback: { (result, msg) in
                 DDLogInfo("清空登录和绑定信息，result:\(result), msg:\(msg ?? "")")
                 DBManager.shared.removeAll()
@@ -188,12 +189,12 @@ class OOLoginViewController: OOBaseViewController {
         //弹出选择登录方式
         var loginActions: [UIAlertAction] = []
         if self.loginType == 0 { //当前是验证码登录
-            let passwordLogin = UIAlertAction(title: "密码登录", style: .default) { (action) in
+            let passwordLogin = UIAlertAction(title: L10n.Login.passwordLogin, style: .default) { (action) in
                 self.change2PasswordLogin()
             }
             loginActions.append(passwordLogin)
         }else {
-            let phoneCodeLogin = UIAlertAction(title: "验证码登录", style: .default) { (action) in
+            let phoneCodeLogin = UIAlertAction(title: L10n.Login.verificationCodeLogin, style: .default) { (action) in
                 self.change2PhoneCodeLogin()
             }
             loginActions.append(phoneCodeLogin)
@@ -204,7 +205,7 @@ class OOLoginViewController: OOBaseViewController {
             }
             loginActions.append(bioLogin)
         }
-        self.showSheetAction(title: "提示", message: "请选择下列登录方式", actions: loginActions)
+        self.showSheetAction(title: L10n.alert, message: L10n.Login.selectFollowLoginMethod, actions: loginActions)
 //        self.gotoBioAuthLogin()
     }
     
@@ -235,10 +236,10 @@ class OOLoginViewController: OOBaseViewController {
         }
         
         if credential == "" || codeAnswer == "" {
-            self.showError(title: "手机号码或密码不能为空！")
+            self.showError(title: L10n.Login.mobilePhoneNumberPasswordIsEmptry)
             return
         }
-        self.showLoading(title: "登录中...")
+        self.showLoading()
         if O2IsConnect2Collect {
             if self.loginType == 0 {
                 passwordTextField.stopTimerButton()
@@ -251,7 +252,7 @@ class OOLoginViewController: OOBaseViewController {
                             self.hideLoading()
                             self.gotoMain()
                         }else  {
-                            self.showError(title: "登录失败,\(msg ?? "")")
+                            self.showError(title: L10n.Login.loginErrorWith(msg ?? ""))
                         }
                     }
                 } else {
@@ -260,7 +261,7 @@ class OOLoginViewController: OOBaseViewController {
                             self.hideLoading()
                             self.gotoMain()
                         }else  {
-                            self.showError(title: "登录失败,\(msg ?? "")")
+                            self.showError(title: L10n.Login.loginErrorWith(msg ?? ""))
                         }
                     }
                 }
@@ -270,7 +271,7 @@ class OOLoginViewController: OOBaseViewController {
                         self.hideLoading()
                         self.gotoMain()
                     }else  {
-                        self.showError(title: "登录失败,\(msg ?? "")")
+                        self.showError(title: L10n.Login.loginErrorWith(msg ?? ""))
                     }
                 }
             }
@@ -281,7 +282,7 @@ class OOLoginViewController: OOBaseViewController {
                     self.hideLoading()
                     self.gotoMain()
                 }else  {
-                    self.showError(title: "登录失败,\(msg ?? "")")
+                    self.showError(title: L10n.Login.loginErrorWith(msg ?? ""))
                 }
             }
         }
@@ -306,14 +307,14 @@ class OOLoginViewController: OOBaseViewController {
 extension OOLoginViewController:OOUIDownButtonTextFieldDelegate {
     func viewButtonClicked(_ textField: OOUIDownButtonTextField, _ sender: OOTimerButton) {
         guard let credential = userNameTextField.text else {
-            self.showError(title: "请输入手机号码！")
+            self.showError(title: L10n.Login.pleaseEnterMobilePhone)
             sender.stopTiming()
             return
         }
         O2AuthSDK.shared.sendLoginSMS(mobile: credential) { (result, msg) in
             if !result {
                 DDLogError((msg ?? ""))
-                self.showError(title: "验证码发送失败！")
+                self.showError(title: L10n.Login.sendCodeFail)
             }
         }
         

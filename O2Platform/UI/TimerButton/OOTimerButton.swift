@@ -94,7 +94,7 @@ public class OOTimerButton: UIButton {
         self.setAttributedTitle(nil, for: .disabled)
         self.setAttributedTitle(nil, for: .normal)
         timeredLabel.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height)
-        timeredLabel.text = "\(count)s后重新发送"
+        timeredLabel.text = "\(count)s \(L10n.Login.recapture)"
         self.addSubview(timeredLabel)
         if timer != nil {
             timer.invalidate()
@@ -123,7 +123,7 @@ public class OOTimerButton: UIButton {
         if count<=0 {
             self.stopTiming()
         }else{
-            timeredLabel.text = "\(count)s重新发送"
+            timeredLabel.text = "\(count)s \(L10n.Login.recapture)"
             self.layoutIfNeeded()
         }
     }

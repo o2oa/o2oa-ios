@@ -16,7 +16,7 @@ class O2CountdownButton: UIButton {
     //标签
     var labelTimeS:UILabel!
     //默认按钮标题
-    var normalText = "获取验证码" {
+    var normalText = L10n.Login.getVarificationCode {
         didSet {
             self.setTitle(normalText, for: .normal)
             self.layoutIfNeeded()
@@ -65,7 +65,7 @@ class O2CountdownButton: UIButton {
         //把按钮本身标题清空
         self.setTitle("", for: .normal)
         //开始把Label add Button
-        labelTimeS.text = "\(self.count)s重新获取"
+        labelTimeS.text = "\(self.count)s \(L10n.Login.recapture)"
         self.addSubview(labelTimeS)
         //设置按钮背景色
         self.backgroundColor = disableColor
@@ -95,7 +95,7 @@ class O2CountdownButton: UIButton {
         if count <= 0 {
             self.stopCount()
         }else{
-            labelTimeS.text = "\(self.count)s重新获取"
+            labelTimeS.text = "\(self.count)s \(L10n.Login.recapture)"
         }
     }
 

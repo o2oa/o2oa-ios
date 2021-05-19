@@ -144,3 +144,50 @@
 "Applications Native App" = "原生应用";
 "Applications Portal App" = "门户应用";
 
+/* Main */
+"Main Bar IM" = "消息";
+"Main Bar Contacts" = "通讯录";
+"Main Bar App" = "应用";
+"Main Bar Settings" = "设置";
+/* Login */
+"Login Jailbroken alert message" = "当前运行环境已经越狱，本应用将不提供服务！";
+"Login Server config info error" = "服务器配置信息异常！";
+"Login Server config info is empty" = "没有配置服务器信息！";
+"Login Unknown error" = "未知错误！";
+"Login Rebind" = "重新绑定";
+"Login Confirm rebind message" = "加载出错，是否重新绑定？错误：%@";
+"Login Mobile phone validate" = "手机验证";
+"Login Please enter mobile phone" = "请输入手机号码！";
+"Login Please enter validation code" = "请输入验证码！";
+"Login binding" = "绑定中...";
+"Login Can not get server list" = "没有获取到服务器列表，请确认服务器是否已经注册！";
+"Login Error with info" = "错误！ %@";
+"Login Guide page" = "引导页";
+"Login Next step" = "下一步";
+"Login Select service node" = "选择服务节点";
+"Login Do not screenshot" = "为了保护用户名密码安全，请不要截图！";
+"Login Face recognition login" = "人脸识别登录";
+"Login Fingerprint identification login" = "指纹识别登录";
+"Login Rebind to the new service node" = "重新绑定到新的服务节点，原节点信息将被清空，确认吗？";
+"Login Password login" = "密码登录";
+"Login Verification code login" = "验证码登录";
+"Login Select the following login method" = "请选择下列登录方式";
+"Login Mobile phone number or password is empty" = "手机号码或密码不能为空！";
+"Login Login fail error" = "登录失败，%@";
+"Login Send code fail" = "验证码发送失败！";
+"Login Verify login now" = "立即验证登录";
+"Login Login" = "登录";
+"Login Login with user name" = "用户名登录";
+"Login Bio auth locked" = "多次错误，已被锁定，请到手机解锁界面输入密码!";
+"Login Verification failed" = "验证失败！";
+"Login do not support bio" = "手机系统未开启或不支持识别功能";
+"Login Login fail use other method" = "服务器验证登录失败，请尝试使用其它方式登录";
+"Login Get verification code" = "发送验证码";
+"Login Recapture" = "后重新发送";
+
+
+
+
+
+
+

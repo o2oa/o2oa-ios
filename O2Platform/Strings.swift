@@ -123,8 +123,61 @@ internal enum L10n {
     internal static let applicationsMainApp = L10n.tr("Localizable", "Applications Main App")
     internal static let applicationsNativeApp = L10n.tr("Localizable", "Applications Native App")
     internal static let applicationsPortalApp = L10n.tr("Localizable", "Applications Portal App")
+    
+    internal static let mainBarIm = L10n.tr("Localizable", "Main Bar IM")
+    internal static let mainBarContacts = L10n.tr("Localizable", "Main Bar Contacts")
+    internal static let mainBarApps = L10n.tr("Localizable", "Main Bar App")
+    internal static let mainBarSettings = L10n.tr("Localizable", "Main Bar Settings")
+    /// Login
+    internal enum Login {
+        internal static let jailbrokenAlertMessage = L10n.tr("Localizable", "Login Jailbroken alert message")
+        internal static let serverConfigInfoError = L10n.tr("Localizable", "Login Server config info error")
+        internal static let ServerConfigIsEmpty = L10n.tr("Localizable", "Login Server config info is empty")
+        internal static let UnknownError = L10n.tr("Localizable", "Login Unknown error")
+        internal static let rebind = L10n.tr("Localizable", "Login Rebind")
+        internal static let canNotGetServerList = L10n.tr("Localizable", "Login Can not get server list")
+        internal static let binding = L10n.tr("Localizable", "Login binding")
+        internal static let pleaseEnterValidationCode = L10n.tr("Localizable", "Login Please enter validation code")
+        internal static let pleaseEnterMobilePhone = L10n.tr("Localizable", "Login Please enter mobile phone")
+        internal static let mobilePhoneValidate = L10n.tr("Localizable", "Login Mobile phone validate")
+        internal static let guidePage = L10n.tr("Localizable", "Login Guide page")
+        internal static let nextStep = L10n.tr("Localizable", "Login Next step")
+        internal static let selectServiceNode = L10n.tr("Localizable", "Login Select service node")
+        internal static let donotScreenshot = L10n.tr("Localizable", "Login Do not screenshot")
+        internal static let faceRecognitionLogin = L10n.tr("Localizable", "Login Face recognition login")
+        internal static let fingerprintIdentificationLogin = L10n.tr("Localizable", "Login Fingerprint identification login")
+        internal static let rebindToNewServiceNode = L10n.tr("Localizable", "Login Rebind to the new service node")
+        internal static let passwordLogin = L10n.tr("Localizable", "Login Password login")
+        internal static let verificationCodeLogin = L10n.tr("Localizable", "Login Verification code login")
+        internal static let selectFollowLoginMethod = L10n.tr("Localizable", "Login Select the following login method")
+        internal static let mobilePhoneNumberPasswordIsEmptry = L10n.tr("Localizable", "Login Mobile phone number or password is empty")
+        internal static let sendCodeFail = L10n.tr("Localizable", "Login Send code fail")
+        
+        internal static let verifyLoginNow = L10n.tr("Localizable", "Login Verify login now")
+        internal static let login = L10n.tr("Localizable", "Login Login")
+        internal static let loginWithUsername = L10n.tr("Localizable", "Login Login with user name")
+        internal static let bioLocked = L10n.tr("Localizable", "Login Bio auth locked")
+        internal static let verificationFailed = L10n.tr("Localizable", "Login Verification failed")
+        internal static let donotSupportBio = L10n.tr("Localizable", "Login do not support bio")
+        internal static let loginFailUseOtherMethod = L10n.tr("Localizable", "Login Login fail use other method")
+        internal static let getVarificationCode = L10n.tr("Localizable", "Login Get verification code")
+        internal static let recapture = L10n.tr("Localizable", "Login Recapture")
 
-  internal enum ImageScale0 {
+        internal static func loginErrorWith(_ info: String) ->  String {
+            return L10n.tr("Localizable", "Login Login fail error", info)
+        }
+
+        internal static func errorWithInfo(_ info: String) ->  String {
+            return L10n.tr("Localizable", "Login Error with info", info)
+        }
+        internal static func rebindConfirmMessage(_ message: String) -> String {
+          return L10n.tr("Localizable", "Login Confirm rebind message", message)
+        }
+    }
+    
+
+
+    internal enum ImageScale0 {
     /// 
     internal static let _5ByDefault = L10n.tr("Localizable", "Image scale, 0.5 by default")
   }
