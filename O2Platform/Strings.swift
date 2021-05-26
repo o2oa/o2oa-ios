@@ -128,6 +128,16 @@ internal enum L10n {
     internal static let mainBarContacts = L10n.tr("Localizable", "Main Bar Contacts")
     internal static let mainBarApps = L10n.tr("Localizable", "Main Bar App")
     internal static let mainBarSettings = L10n.tr("Localizable", "Main Bar Settings")
+    
+    
+    internal static let copy = L10n.tr("Localizable", "Copy")
+    internal static let copySuccess = L10n.tr("Localizable", "Copy succeeded")
+    
+    internal static let sms = L10n.tr("Localizable", "SMS")
+    internal static let smsFail = L10n.tr("Localizable", "SMS Fail")
+    internal static let call = L10n.tr("Localizable", "CALL")
+    internal static let callFail = L10n.tr("Localizable", "CALL Fail")
+    
     /// Login
     internal enum Login {
         internal static let jailbrokenAlertMessage = L10n.tr("Localizable", "Login Jailbroken alert message")
@@ -175,7 +185,39 @@ internal enum L10n {
         }
     }
     
-
+    internal enum Contacts {
+        internal static let searchPlaceholder = L10n.tr("Localizable", "Contacts Search placeholder")
+        internal static let topContacts = L10n.tr("Localizable", "Contacts Top contacts")
+        internal static let myDepartment = L10n.tr("Localizable", "Contacts My department")
+        internal static let orgStructre = L10n.tr("Localizable", "Contacts Org structure")
+        
+        internal static let enterpriseInformation = L10n.tr("Localizable", "Contacts Enterprise information")
+        internal static let personName = L10n.tr("Localizable", "Contacts Person name")
+        internal static let employeeNumber = L10n.tr("Localizable", "Contacts Employee number")
+        internal static let uniqueCode = L10n.tr("Localizable", "Contacts Unique code")
+        internal static let contactNumber = L10n.tr("Localizable", "Contacts Contact number")
+        
+        internal static let email = L10n.tr("Localizable", "Contacts Email")
+        internal static let dept = L10n.tr("Localizable", "Contacts Dept")
+        internal static let initiateChat = L10n.tr("Localizable", "Contacts Initiate chat")
+        internal static let unableToCreatChat = L10n.tr("Localizable", "Contacts Unable to create chat")
+        internal static let sendEmail = L10n.tr("Localizable", "Contacts Send emails")
+        internal static let sendEmailError = L10n.tr("Localizable", "Contacts Send emails Error")
+    }
+    
+    internal enum Search {
+        internal static let search = L10n.tr("Localizable", "Search")
+        internal static let searchNoResult = L10n.tr("Localizable", "Search No Result")
+        internal static let deleteAllSearchHistory = L10n.tr("Localizable", "Search Delete all search history")
+        internal static let placeholder = L10n.tr("Localizable", "Search Placeholder")
+        internal static let cmsCategory = L10n.tr("Localizable", "Search Cms category")
+        internal static let processName = L10n.tr("Localizable", "Search Process Name")
+    }
+    
+    
+    internal static func errorWithMsg(_ message: String) -> String {
+      return L10n.tr("Localizable", "Error with info", message)
+    }
 
     internal enum ImageScale0 {
     /// 

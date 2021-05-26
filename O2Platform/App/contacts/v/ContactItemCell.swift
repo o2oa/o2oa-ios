@@ -36,6 +36,15 @@ class ContactItemCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
+    override var frame: CGRect {
+        didSet {
+            var newFrame = frame
+            newFrame.origin.x += 10
+            newFrame.size.width -= 20
+            super.frame = newFrame
+        }
+    }
+    
     func configCellViewModel()  {
         let dataType = cellViewModel?.dataType
         switch dataType! {

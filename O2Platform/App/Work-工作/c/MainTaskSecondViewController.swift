@@ -112,7 +112,7 @@ class MainTaskSecondViewController: UIViewController {
         self.scanBtn.addTarget(self, action: #selector(startScanAction(_:)), for: .touchUpInside)
         self.addBtn.addTarget(self, action: #selector(startFlowAction(_:)), for: .touchUpInside)
         self.searchBar.addTapGesture { (tap) in
-            self.openTodoedTask()
+            self.openSearchViewContorller()
         }
 
         self.seguementControl = initSegumentControl()
@@ -213,11 +213,14 @@ class MainTaskSecondViewController: UIViewController {
         self.performSegue(withIdentifier: "showAppCategorySegue", sender: nil)
     }
     
+    
+    private lazy var searchVC: O2SearchController = { return O2SearchController() }()
     // 打开已办页面
-    private func openTodoedTask() {
+    private func openSearchViewContorller() {
         // 打开已办页面
-        AppConfigSettings.shared.taskIndex = 2
-        self.performSegue(withIdentifier: "showTodoTaskSegue", sender: nil)
+//        AppConfigSettings.shared.taskIndex = 2
+//        self.performSegue(withIdentifier: "showTodoTaskSegue", sender: nil)
+        self.pushVC(searchVC)
     }
     
     //读取数据待办数据

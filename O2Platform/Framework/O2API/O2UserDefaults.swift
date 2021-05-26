@@ -45,6 +45,7 @@ extension DefaultsKeys {
     static let myInfo = DefaultsKey<O2LoginAccountModel?>("O2myInfo")
     static let customStyle = DefaultsKey<O2CustomStyleModel?>("O2customStyle")
     static let customStyleHash = DefaultsKey<String?>("O2customStyleHash")
+    static let searchHistory = DefaultsKey<[String]?>("O2SearchHistoryKey")
 
 }
 
@@ -135,6 +136,18 @@ class O2UserDefaults {
         }
         set {
             Defaults[.customStyleHash] = newValue
+        }
+    }
+    
+    var searchHistory: [String] {
+        get {
+            guard let history = Defaults[.searchHistory] else {
+                return []
+            }
+            return history
+        }
+        set {
+            Defaults[.searchHistory] = newValue
         }
     }
     

@@ -70,7 +70,7 @@ class ContactPersonInfoController: FormViewController {
     }
     
     func loadPersonInfo(_ sender: AnyObject?){
-        self.showLoading(title: "加载中...")
+        self.showLoading()
         AF.request(myPersonURL!).responseJSON {
             response in
             switch response.result {
@@ -81,7 +81,7 @@ class ContactPersonInfoController: FormViewController {
                 self.hideLoading()
             case .failure(let err):
                 DDLogError(err.localizedDescription)
-                self.showError(title: "加载失败")
+                self.showError(title: L10n.errorWithMsg(err.localizedDescription))
             }
             
         }

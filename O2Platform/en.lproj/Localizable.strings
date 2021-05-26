@@ -143,6 +143,8 @@
 "Applications Native App" = "Native App";
 "Applications Portal App" = "Portal App";
 
+"Error with info" = "Error！%@";
+
 /* Main */
 "Main Bar IM" = "Messages";
 "Main Bar Contacts" = "Contacts";
@@ -184,3 +186,39 @@
 "Login Login fail use other method" = "Server authentication login failed, please try to login in another way";
 "Login Get verification code" = "Get verification code";
 "Login Recapture" = "Recapture";
+
+/* contactc */
+"Contacts Search placeholder" = "Please enter name or pinyin to search...";
+"Contacts Top contacts" = "Top contacts";
+"Contacts My department" = "My department";
+"Contacts Org structure" = "Org structure";
+
+"Contacts Enterprise information" = "Enterprise information";
+"Contacts Person name" = "Name";
+"Contacts Employee number" = "Employee number";
+"Contacts Unique code" = "Unique code";
+"Contacts Contact number" = "Contact number";
+"Contacts Email" = "Email";
+"Contacts Dept" = "Dept";
+"Contacts Initiate chat" = "Initiate chat";
+"Contacts Unable to create chat" = "Unable to create chat!";
+"Contacts Send emails" = "Send emails";
+"Contacts Send emails Error" = "email is error";
+
+
+"Copy" = "Copy";
+"Copy succeeded" = "Copy succeeded";
+
+"SMS" = "send message";
+"SMS Fail" = "send message fail！";
+
+"CALL" = "call";
+"CALL Fail" = "call fail！";
+
+/* Search */
+"Search" = "Search";
+"Search No Result" = "No relevant results were found";
+"Search Delete all search history" = "Delete all search history";
+"Search Placeholder" = "Please enter search keywords";
+"Search Cms category" = "Category: ";
+"Search Process Name" = "Process: ";

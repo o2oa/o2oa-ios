@@ -1,0 +1,75 @@
+
+/* Class = "UITableViewController"; title = "个人详细信息"; ObjectID = "3YZ-RH-20k"; */
+"3YZ-RH-20k.title" = "Personal details";
+
+/* Class = "UILabel"; text = "名字"; ObjectID = "72T-bv-dCu"; */
+"72T-bv-dCu.text" = "Name";
+
+/* Class = "UIBarButtonItem"; title = "取消"; ObjectID = "9PI-Ux-g7Z"; */
+"9PI-Ux-g7Z.title" = "Cancel";
+
+/* Class = "UITableViewController"; title = "公司部门"; ObjectID = "AmI-yp-X5H"; */
+"AmI-yp-X5H.title" = "Company Department";
+
+/* Class = "UILabel"; text = "名称"; ObjectID = "Ay2-QP-fxz"; */
+"Ay2-QP-fxz.text" = "Name";
+
+/* Class = "UILabel"; text = "无"; ObjectID = "BHk-7x-Azp"; */
+"BHk-7x-Azp.text" = "None";
+
+/* Class = "UILabel"; text = "名字"; ObjectID = "DLo-Rj-8B7"; */
+"DLo-Rj-8B7.text" = "Name";
+
+/* Class = "UILabel"; text = "男"; ObjectID = "Eef-mP-7Bn"; */
+"Eef-mP-7Bn.text" = "Man";
+
+/* Class = "UITableViewController"; title = "我的群组"; ObjectID = "LsC-tt-HCK"; */
+"LsC-tt-HCK.title" = "My Group";
+
+/* Class = "UILabel"; text = "女"; ObjectID = "NFy-zR-tMq"; */
+"NFy-zR-tMq.text" = "Woman";
+
+/* Class = "UILabel"; text = "姓名"; ObjectID = "R7I-SZ-pqB"; */
+"R7I-SZ-pqB.text" = "Name";
+
+/* Class = "UILabel"; text = "名字"; ObjectID = "URv-xi-b9g"; */
+"URv-xi-b9g.text" = "Name";
+
+/* Class = "UILabel"; text = "值"; ObjectID = "Unc-Jp-92I"; */
+"Unc-Jp-92I.text" = "Value";
+
+/* Class = "UILabel"; text = "名字"; ObjectID = "WE9-5h-qP6"; */
+"WE9-5h-qP6.text" = "Name";
+
+/* Class = "UILabel"; text = "无"; ObjectID = "XYB-HG-YIt"; */
+"XYB-HG-YIt.text" = "None";
+
+/* Class = "UILabel"; text = "名字"; ObjectID = "Xm0-I8-vXV"; */
+"Xm0-I8-vXV.text" = "Name";
+
+/* Class = "UILabel"; text = "收藏"; ObjectID = "c20-KV-OIe"; */
+"c20-KV-OIe.text" = "Collect";
+
+/* Class = "UILabel"; text = "名字"; ObjectID = "cvT-LV-lDS"; */
+"cvT-LV-lDS.text" = "Name";
+
+/* Class = "UILabel"; text = "QQ"; ObjectID = "ewS-by-gmo"; */
+"ewS-by-gmo.text" = "QQ";
+
+/* Class = "UIViewController"; title = "个人信息"; ObjectID = "iAx-ux-z5J"; */
+"iAx-ux-z5J.title" = "Personal Info";
+
+/* Class = "UITableViewController"; title = "通讯录"; ObjectID = "iDJ-yD-7GA"; */
+"iDJ-yD-7GA.title" = "Contacts";
+
+/* Class = "UILabel"; text = "无"; ObjectID = "j8q-Jd-iE8"; */
+"j8q-Jd-iE8.text" = "None";
+
+/* Class = "UILabel"; text = "无"; ObjectID = "lvv-dz-lNj"; */
+"lvv-dz-lNj.text" = "None";
+
+/* Class = "UITableViewController"; title = "部门个人"; ObjectID = "rtm-Ih-lnV"; */
+"rtm-Ih-lnV.title" = "Dept";
+
+/* Class = "UILabel"; text = "名字"; ObjectID = "vck-nP-Fy0"; */
+"vck-nP-Fy0.text" = "Name";

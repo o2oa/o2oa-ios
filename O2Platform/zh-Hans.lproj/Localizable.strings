@@ -143,6 +143,7 @@
 "Applications Main App" = "主页应用";
 "Applications Native App" = "原生应用";
 "Applications Portal App" = "门户应用";
+"Error with info" = "错误！ %@";
 
 /* Main */
 "Main Bar IM" = "消息";
@@ -185,9 +186,42 @@
 "Login Get verification code" = "发送验证码";
 "Login Recapture" = "后重新发送";
 
+/* contactc */
+"Contacts Search placeholder" = "请输入姓名、工号或拼音搜索...";
+"Contacts Top contacts" = "常用联系人";
+"Contacts My department" = "我的部门";
+"Contacts Org structure" = "组织架构";
+
+"Contacts Enterprise information" = "企业信息";
+"Contacts Person name" = "姓名";
+"Contacts Employee number" = "员工号";
+"Contacts Unique code" = "唯一编码";
+"Contacts Contact number" = "联系电话";
+"Contacts Email" = "电子邮件";
+"Contacts Dept" = "部门";
+"Contacts Initiate chat" = "发起聊天";
+"Contacts Unable to create chat" = "无法创建聊天！";
+"Contacts Send emails" = "发邮件";
+"Contacts Send emails Error" = "发邮件失败";
+
+
+"Copy" = "复制";
+"Copy succeeded" = "复制成功";
+
+
+"SMS" = "发短信";
+"SMS Fail" = "发短信失败！";
+
+"CALL" = "打电话";
+"CALL Fail" = "打电话失败！";
 
 
 
-
-
+/* Search */
+"Search" = "搜索";
+"Search No Result" = "未搜到相关结果";
+"Search Delete all search history" = "删除全部历史记录";
+"Search Placeholder" = "请输入搜索关键字";
+"Search Cms category" = "栏目: ";
+"Search Process Name" = "流程: ";
 

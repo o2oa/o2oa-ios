@@ -28,6 +28,17 @@ class IMConversationItemCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
+    // 边距
+    override var frame: CGRect {
+        didSet {
+            var newFrame = frame
+            newFrame.origin.x += 10
+            newFrame.size.width -= 20
+            newFrame.origin.y += 10
+            newFrame.size.height -= 20
+            super.frame = newFrame
+        }
+    }
     
     func setInstantContent(item: InstantMessage) {
         self.avatarImg.image = UIImage(named: "icon_email")

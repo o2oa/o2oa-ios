@@ -181,12 +181,21 @@
                                                     <constraint firstAttribute="height" constant="22" id="x99-rJ-bQx"/>
                                                 </constraints>
                                             </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请输入搜索关键字" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LQf-ig-aeu">
+                                                <rect key="frame" x="47" y="5.6666666666666679" width="223" height="17"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <color key="textColor" red="0.39996236562728882" green="0.40002405643463135" blue="0.3999488353729248" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="4h2-Ob-DMO" firstAttribute="leading" secondItem="tng-Po-1rH" secondAttribute="leading" constant="5" id="7nz-gg-gCi"/>
+                                            <constraint firstAttribute="trailing" secondItem="LQf-ig-aeu" secondAttribute="trailing" constant="24" id="EU5-if-QQb"/>
+                                            <constraint firstItem="LQf-ig-aeu" firstAttribute="centerY" secondItem="tng-Po-1rH" secondAttribute="centerY" id="KBg-xb-wdb"/>
                                             <constraint firstAttribute="height" constant="28" id="NNJ-uE-CNa"/>
                                             <constraint firstItem="4h2-Ob-DMO" firstAttribute="centerY" secondItem="tng-Po-1rH" secondAttribute="centerY" id="NvP-WK-OYw"/>
+                                            <constraint firstItem="LQf-ig-aeu" firstAttribute="leading" secondItem="4h2-Ob-DMO" secondAttribute="trailing" constant="20" id="RCO-ZO-cbS"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
