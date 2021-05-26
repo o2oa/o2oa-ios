@@ -18,6 +18,7 @@ class O2CollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var appIconImageView: UIImageView!
     
+    @IBOutlet weak var opIconImageView: UIImageView!
     
     @IBOutlet weak var appTitle: UILabel!
     
@@ -28,8 +29,21 @@ class O2CollectionViewCell: UICollectionViewCell {
         self.appIconImageView.image = nil
     }
     
-    func setAppData(app: O2App) {
+    // editIcon 0 不编辑 1 选中的应用显示删除icon 2 选中的应用显示已选择的icon 3未选中的应用显示可选择的icon
+    func setAppData(app: O2App, editIcon: Int) {
         self.nowData = app
+        if editIcon == 0 {
+            self.opIconImageView.isHidden  = true
+        } else {
+            if editIcon == 1 {
+                self.opIconImageView.image = UIImage(named: "icon_jian_1")
+            } else if editIcon == 2 {
+                self.opIconImageView.image = UIImage(named: "icon__ok2_yx")
+            } else {
+                self.opIconImageView.image = UIImage(named: "icon_add_1")
+            }
+            self.opIconImageView.isHidden  = false
+        }
         if let storeBoard = app.storyBoard, storeBoard == "webview" {
             if let iconUrl = AppDelegate.o2Collect.generateURLWithAppContextKey(ApplicationContext.applicationContextKey2, query: ApplicationContext.applicationIconQuery, parameter: ["##applicationId##":app.appId! as AnyObject])  {
                 let url = URL(string: iconUrl)

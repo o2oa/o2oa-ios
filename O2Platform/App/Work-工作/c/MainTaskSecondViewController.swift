@@ -20,9 +20,13 @@ class MainTaskSecondViewController: UIViewController {
     
     fileprivate static let PAGE_SIZE = 20
     
-    
-    @IBOutlet weak var tableViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var scanBtn: UIButton!
+    @IBOutlet weak var addBtn: UIButton!
+    @IBOutlet weak var searchBar: UIView!
+//
+//    @IBOutlet weak var tableViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var myNavBarHeight: NSLayoutConstraint!
     //相关变量
     //1段分类
     fileprivate var seguementControl:SegmentedControl!
@@ -31,8 +35,8 @@ class MainTaskSecondViewController: UIViewController {
         didSet {
             if taskImageshowEntitys.count > 0 {
                 self.tableView.tableHeaderView = self.initTableHeaderView()
-                let imageShowView = self.tableView.tableHeaderView as! ImageSlidesShowView
-                imageShowView.imageshowEntitys = taskImageshowEntitys
+                let imageShowView = self.tableView.tableHeaderView?.subviews[0] as? ImageSlidesShowView
+                imageShowView?.imageshowEntitys = taskImageshowEntitys
 //                self.tableView.reloadData()
             }else {
                 self.tableView.tableHeaderView = self.initTableHeaderImageView()
@@ -53,17 +57,19 @@ class MainTaskSecondViewController: UIViewController {
     //所有最新公告数据
     fileprivate var newPublishInfos:[CMS_PublishInfo] = []
     
+    private var backgroundColor = UIColor(red: 246.0/255.0, green: 246.0/255.0, blue: 246.0/255.0, alpha: 1.0)
+    
     //顶部导航
-    private lazy var navView: MyView = {
-        let nav = MyView(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: safeAreaTopHeight))
-        nav.backgroundColor = UIColor.clear
-        return nav
-    }()
+//    private lazy var navView: MyView = {
+//        let nav = MyView(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: safeAreaTopHeight))
+//        nav.backgroundColor = UIColor.clear
+//        return nav
+//    }()
     
     //分段视图
     lazy var segmentView: UIView = {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 40))
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = backgroundColor
         view.addSubview(self.seguementControl)
         return view
     }()
@@ -96,39 +102,54 @@ class MainTaskSecondViewController: UIViewController {
         super.viewDidLoad()
         //self.title = "首页"
         self.automaticallyAdjustsScrollViewInsets = false
-        self.navView.tableViews.append(self.tableView)
+//        self.navView.tableViews.append(self.tableView)
         //添加扫描按钮事件
-        self.navView.scanBtn?.addTarget(self, action: #selector(startScanAction(_:)), for: .touchUpInside)
-        //添加发起按钮事件
-        self.navView.addBtn?.addTarget(self, action: #selector(startFlowAction(_:)), for: .touchUpInside)
-        self.view.addSubview(self.navView)
+//        self.navView.scanBtn?.addTarget(self, action: #selector(startScanAction(_:)), for: .touchUpInside)
+//        //添加发起按钮事件
+//        self.navView.addBtn?.addTarget(self, action: #selector(startFlowAction(_:)), for: .touchUpInside)
+//        self.view.addSubview(self.navView)
+        self.myNavBarHeight.constant = safeAreaTopHeight
+        self.scanBtn.addTarget(self, action: #selector(startScanAction(_:)), for: .touchUpInside)
+        self.addBtn.addTarget(self, action: #selector(startFlowAction(_:)), for: .touchUpInside)
+        self.searchBar.addTapGesture { (tap) in
+            self.openSearchViewContorller()
+        }
 
         self.seguementControl = initSegumentControl()
         self.tableView.dataSource = self
         self.tableView.tableHeaderView = self.initTableHeaderImageView()
-        if #available(iOS 11.0, *) {
-            let topConstant = CGFloat(0 - IOS11_TOP_STATUSBAR_HEIGHT)
-            self.tableViewTopConstraint.constant = topConstant
-        }
+        self.tableView.separatorStyle = .none //分割线
+//        if #available(iOS 11.0, *) {
+//            let topConstant = CGFloat(0 - IOS11_TOP_STATUSBAR_HEIGHT)
+//            self.tableViewTopConstraint.constant = topConstant
+//        }
        
     }
     
     //初始化热点新闻显示
     private func initTableHeaderView() -> UIView {
-        let height = SCREEN_WIDTH / 2
-        let frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: height)
+        let outView = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_WIDTH / 2))
+        let height = (SCREEN_WIDTH - 30) / 2
+        let width = SCREEN_WIDTH - 30
+        let frame = CGRect(x: 15, y: 15, width: width, height: height)  
         let imageShowView = ImageSlidesShowView(frame: frame)
         imageShowView.delegate = self
-        return imageShowView
+        imageShowView.setCornerRadius(radius: 10)
+        outView.addSubview(imageShowView)
+        return outView
     }
     //默认新闻热点使用图片 如果服务器有数据 就用ImageSlidesShowView
     private func initTableHeaderImageView() -> UIView {
-        let height = SCREEN_WIDTH / 2
-        let frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: height)
+        let outView = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_WIDTH / 2))
+        let height = (SCREEN_WIDTH - 30) / 2
+        let width = SCREEN_WIDTH - 30
+        let frame = CGRect(x: 15, y: 15, width: width, height: height)
         let imageShowView = UIImageView(image: UIImage(named: "pic_lunbo_1"))
         imageShowView.frame = frame
         imageShowView.contentMode = .scaleAspectFill
-        return imageShowView
+        imageShowView.setCornerRadius(radius: 10)
+        outView.addSubview(imageShowView)
+        return outView
     }
 
     //初始化
@@ -170,7 +191,7 @@ class MainTaskSecondViewController: UIViewController {
         }()
         let segmentedControl = SegmentedControl.initWithTitles(titles, selectedTitles: selectedTitles)
         segmentedControl.delegate = self
-        segmentedControl.backgroundColor = UIColor.white
+        segmentedControl.backgroundColor = backgroundColor //UIColor.white
         segmentedControl.autoresizingMask = [.flexibleRightMargin, .flexibleWidth]
         segmentedControl.selectionIndicatorStyle = .bottom
         segmentedControl.selectionIndicatorColor = base_color
@@ -190,6 +211,16 @@ class MainTaskSecondViewController: UIViewController {
     //开始显示新建页面
     @objc private func startFlowAction(_ sender:AnyObject?){
         self.performSegue(withIdentifier: "showAppCategorySegue", sender: nil)
+    }
+    
+    
+    private lazy var searchVC: O2SearchController = { return O2SearchController() }()
+    // 打开已办页面
+    private func openSearchViewContorller() {
+        // 打开已办页面
+//        AppConfigSettings.shared.taskIndex = 2
+//        self.performSegue(withIdentifier: "showTodoTaskSegue", sender: nil)
+        self.pushVC(searchVC)
     }
     
     //读取数据待办数据
@@ -225,7 +256,15 @@ class MainTaskSecondViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showMailSegue" {
-            if let mail = segue.destination as? MailViewController {
+            segue.destination.modalPresentationStyle = .fullScreen
+            if let nav = segue.destination as? ZLNavigationController {
+                nav.viewControllers.forEach { (vc) in
+                    if vc is MailViewController {
+                        DDLogDebug("显示门户。。。。")
+                        (vc as! MailViewController).app = sender as? O2App
+                    }
+                }
+            }else if let mail = segue.destination as? MailViewController {
                 mail.app = sender as? O2App
             }
         }
@@ -420,7 +459,7 @@ extension MainTaskSecondViewController:UITableViewDataSource,UITableViewDelegate
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if section == 0 {
             let view = UIView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: 10.0))
-            view.backgroundColor  = UIColor(red: 246.0/255.0, green: 246.0/255.0, blue: 246.0/255.0, alpha: 1.0)
+            view.backgroundColor  = backgroundColor
             return view
         }else{
             return nil
@@ -441,7 +480,7 @@ extension MainTaskSecondViewController:UITableViewDataSource,UITableViewDelegate
         case 0:
             return 100
         case 1:
-            return 60
+            return 95
         default:
             return 50
         }
@@ -516,7 +555,7 @@ extension MainTaskSecondViewController:NewMainAppTableViewCellDelegate{
         AppConfigSettings.shared.appBackType = 1
         if let segueIdentifier = app.segueIdentifier,segueIdentifier != "" {
             if app.storyBoard! == "webview" {
-                DDLogDebug("open webview for : "+app.title!+" url: "+app.vcName!)
+                DDLogDebug("open webview for 11111 : "+app.title!+" url: "+app.vcName!)
                 self.performSegue(withIdentifier: segueIdentifier, sender: app)
             }else {
                 self.performSegue(withIdentifier: segueIdentifier, sender: nil)

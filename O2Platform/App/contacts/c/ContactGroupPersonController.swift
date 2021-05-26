@@ -54,7 +54,7 @@ class ContactGroupPersonController: UITableViewController {
         return cell
     }
     
-    func loadMyGroupData(_ sender:AnyObject?){
+    @objc func loadMyGroupData(_ sender:AnyObject?){
         AF.request(myGroupURL!).responseJSON {
             response in
             DDLogDebug(response.description)

@@ -44,6 +44,7 @@ import Foundation
 /// - x_portal_assemble_surface: //门户模块
 /// - x_calendar_assemble_control: //日程
 /// - x_jpush_assemble_control:  //极光推送
+/// - x_query_assemble_surface:  //数据查询
 public enum O2ModuleContext {
     case x_processplatform_assemble_surface_script
     case x_processplatform_assemble_surface_task
@@ -78,6 +79,7 @@ public enum O2ModuleContext {
     case x_portal_assemble_surface
     case x_calendar_assemble_control
     case x_jpush_assemble_control
+    case x_query_assemble_surface
 
 }
 

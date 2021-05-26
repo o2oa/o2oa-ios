@@ -9,6 +9,7 @@
 import UIKit
 import CocoaLumberjack
 
+/// 生物识别登录
 class BioAuthLoginViewController: UIViewController {
 
     @IBOutlet weak var bioImageView: UIImageView!
@@ -16,7 +17,7 @@ class BioAuthLoginViewController: UIViewController {
     
     
     var bioType = O2BiometryType.None
-    var typeTitle = "立即验证登录"
+    var typeTitle = L10n.Login.verifyLoginNow
     
     
     override func viewDidLoad() {
@@ -38,19 +39,19 @@ class BioAuthLoginViewController: UIViewController {
             bioType = O2BioLocalAuth.shared.checkBiometryType()
             switch bioType {
             case O2BiometryType.FaceID:
-                typeTitle = "立即验证登录"
+                typeTitle = L10n.Login.verifyLoginNow
                 bioImageView.image = UIImage(named: "faceid")
                 bioAuthBtn.setTitle(typeTitle, for: .normal)
                 bioAuthBtn.isEnabled = true
                 break
             case O2BiometryType.TouchID:
-                typeTitle = "立即验证登录"
+                typeTitle = L10n.Login.verifyLoginNow
                 bioImageView.image = UIImage(named: "touchid")
                 bioAuthBtn.setTitle(typeTitle, for: .normal)
                 bioAuthBtn.isEnabled = true
                 break
             case O2BiometryType.None:
-                typeTitle = "登录"
+                typeTitle = L10n.Login.login
                 bioImageView.image = UIImage(named: "pic_o2_moren1")
                 bioAuthBtn.setTitle(typeTitle, for: .normal)
                 bioAuthBtn.isEnabled = false
@@ -64,7 +65,7 @@ class BioAuthLoginViewController: UIViewController {
     @IBAction func tapBioAuthLogin(_ sender: OOBaseUIButton) {
         
         if self.bioType != O2BiometryType.None {
-            O2BioLocalAuth.shared.auth(reason: "使用\(typeTitle)", selfAuthTitle: "用户名登录", block: { (result, errorMsg) in
+            O2BioLocalAuth.shared.auth(reason: "\(typeTitle)", selfAuthTitle: L10n.Login.loginWithUsername, block: { (result, errorMsg) in
                 switch result {
                 case O2BioEvaluateResult.SUCCESS:
                    // login
@@ -74,19 +75,19 @@ class BioAuthLoginViewController: UIViewController {
                     self.back2Login()
                     break
                 case O2BioEvaluateResult.LOCKED:
-                    self.showSystemAlert(title: "提示", message: "多次错误，已被锁定，请到手机解锁界面输入密码!", okHandler: { (action) in
+                    self.showSystemAlert(title: L10n.alert, message: L10n.Login.bioLocked, okHandler: { (action) in
                         //
                     })
                     break
                     
                 case O2BioEvaluateResult.FAILURE:
                     DDLogError(errorMsg)
-                    self.showError(title: "验证失败！")
+                    self.showError(title: L10n.Login.verificationFailed)
                     break
                 }
             })
         }else {
-            self.showError(title: "手机系统未开启或不支持识别功能")
+            self.showError(title: L10n.Login.donotSupportBio)
         }
 
     }
@@ -98,7 +99,7 @@ class BioAuthLoginViewController: UIViewController {
     }
     
     private func loginO2OA() {
-        self.showLoading(title: "登录中...")
+        self.showLoading()
         let bioAuthUser = AppConfigSettings.shared.bioAuthUser
         var userId = ""
         if !bioAuthUser.isBlank {
@@ -111,7 +112,7 @@ class BioAuthLoginViewController: UIViewController {
         }
         if userId.isBlank {
             DDLogError("登录失败。。。用户名为空")
-            self.showError(title: "服务器验证登录失败，请尝试使用其它方式登录")
+            self.showError(title: L10n.Login.loginFailUseOtherMethod)
         }else {
             O2AuthSDK.shared.faceRecognizeLogin(userId: userId, callback: { (result, msg) in
                 if result {
@@ -124,7 +125,7 @@ class BioAuthLoginViewController: UIViewController {
                     }
                 }else {
                     DDLogError("登录失败。。。。。。。\(msg ?? "")")
-                    self.showError(title: "服务器验证登录失败，请尝试使用其它方式登录")
+                    self.showError(title: L10n.Login.loginFailUseOtherMethod)
                 }
             })
         }

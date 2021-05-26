@@ -12,6 +12,7 @@ import ReactiveCocoa
 import Promises
 import CocoaLumberjack
 
+/// 绑定页面
 class OOBindRegisterController: OOBaseViewController {
 
     
@@ -33,7 +34,7 @@ class OOBindRegisterController: OOBaseViewController {
         super.viewDidLoad()
         ////
         let headerView = Bundle.main.loadNibNamed("OORegisterTableView", owner: self, options: nil)?.first as! OORegisterTableView
-        headerView.configTitle(title: "手机验证", actionTitle: nil)
+        headerView.configTitle(title: L10n.Login.mobilePhoneValidate, actionTitle: nil)
         headerView.frame = CGRect(x: 0, y: 0, width: kScreenW, height: 66)
         headerView.theme_backgroundColor = ThemeColorPicker(keyPath: "Base.base_color")
         view.addSubview(headerView)
@@ -72,14 +73,14 @@ class OOBindRegisterController: OOBaseViewController {
     @IBAction func nextAction(_ sender: UIButton) {
         codeTextField.stopTimerButton()
         guard let mobile = phoneNumberTextField.text else {
-            self.showError(title: "请输入手机号码！")
+            self.showError(title: L10n.Login.pleaseEnterMobilePhone)
             return
         }
         guard let value = codeTextField.text else {
-            self.showError(title: "请输入验证码！")
+            self.showError(title: L10n.Login.pleaseEnterValidationCode)
             return
         }
-        self.showLoading(title: "绑定中...")
+        self.showLoading(title: L10n.Login.binding)
         //苹果上架用的测试账户 手机号码：13912345678 置顶验证码：5678
         if mobile == "13912345678" && value == "5678" {
             DDLogDebug("sample 服务器进入。。。。。")
@@ -90,13 +91,13 @@ class OOBindRegisterController: OOBaseViewController {
                     self.performSegue(withIdentifier: "nextSelectNodeSegue", sender: unitList)
                     break
                 case .goToLogin:
-                    self.showError(title: "错误！\(msg ?? "")")
+                    self.showError(title: L10n.Login.errorWithInfo(msg ?? ""))
                     break
                 case .noUnitCanBindError:
-                    self.showError(title: "没有获取到服务器列表，请确认服务器是否已经注册！")
+                    self.showError(title: L10n.Login.canNotGetServerList)
                     break
                 case .unknownError:
-                    self.showError(title: "错误！\(msg ?? "")")
+                    self.showError(title: L10n.Login.errorWithInfo(msg ?? ""))
                     break
                 case .success:
                     //处理移动端应用
@@ -123,13 +124,13 @@ class OOBindRegisterController: OOBaseViewController {
                     self.performSegue(withIdentifier: "nextSelectNodeSegue", sender: unitList)
                     break
                 case .goToLogin:
-                    self.showError(title: "错误！\(msg ?? "")")
+                    self.showError(title: L10n.Login.errorWithInfo(msg ?? ""))
                     break
                 case .noUnitCanBindError:
-                    self.showError(title: "没有获取到服务器列表，请确认服务器是否已经注册！")
+                    self.showError(title: L10n.Login.canNotGetServerList)
                     break
                 case .unknownError:
-                    self.showError(title: "错误！\(msg ?? "")")
+                    self.showError(title: L10n.Login.errorWithInfo(msg ?? ""))
                     break
                 case .success:
                     //处理移动端应用
@@ -177,15 +178,15 @@ class OOBindRegisterController: OOBaseViewController {
 extension OOBindRegisterController:OOUIDownButtonTextFieldDelegate {
     func viewButtonClicked(_ textField: OOUIDownButtonTextField, _ sender: OOTimerButton) {
         //发送验证码
-        self.showLoading(title: "发送中...")
+        self.showLoading()
         guard let mobile = phoneNumberTextField.text else {
-            self.showError(title: "请输入手机号码！")
+            self.showError(title: L10n.Login.pleaseEnterMobilePhone)
             return
         }
         O2AuthSDK.shared.sendBindSMS(mobile: mobile) { (result, msg) in
             if !result {
                 DispatchQueue.main.async {
-                    self.showError(title: "发送验证码出错:\(msg ?? "")")
+                    self.showError(title: L10n.Login.errorWithInfo(msg ?? ""))
                     sender.stopTiming()
                 }
             }

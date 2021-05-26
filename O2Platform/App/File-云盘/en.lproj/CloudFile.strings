@@ -1,21 +1,14 @@
+/* Class = "UINavigationItem"; title = "CloudFile"; ObjectID = "hae-9Y-hGS"; */
+"hae-9Y-hGS.title" = "CloudFile";
 
 /* Class = "UILabel"; text = "Share"; ObjectID = "LdN-Iz-R2W"; */
 "LdN-Iz-R2W.text" = "Share";
 
-/* Class = "UILabel"; text = "Other"; ObjectID = "Qzp-9l-DNq"; */
-"Qzp-9l-DNq.text" = "Other";
-
-/* Class = "UILabel"; text = "Music"; ObjectID = "X5O-Qf-7hD"; */
-"X5O-Qf-7hD.text" = "Music";
-
-/* Class = "UILabel"; text = "All File"; ObjectID = "XF2-0D-yb1"; */
-"XF2-0D-yb1.text" = "All File";
-
-/* Class = "UINavigationItem"; title = "CloudFile"; ObjectID = "hae-9Y-hGS"; */
-"hae-9Y-hGS.title" = "CloudFile";
-
 /* Class = "UILabel"; text = "Picture"; ObjectID = "pfT-T1-pf1"; */
 "pfT-T1-pf1.text" = "Picture";
+
+/* Class = "UILabel"; text = "Other"; ObjectID = "Qzp-9l-DNq"; */
+"Qzp-9l-DNq.text" = "Other";
 
 /* Class = "UILabel"; text = "Video"; ObjectID = "sTU-0k-UMA"; */
 "sTU-0k-UMA.text" = "Video";
@@ -23,6 +16,29 @@
 /* Class = "UIBarButtonItem"; title = "Close"; ObjectID = "vHS-Wt-b3q"; */
 "vHS-Wt-b3q.title" = "Close";
 
+/* Class = "UILabel"; text = "Music"; ObjectID = "X5O-Qf-7hD"; */
+"X5O-Qf-7hD.text" = "Music";
+
+/* Class = "UILabel"; text = "All File"; ObjectID = "XF2-0D-yb1"; */
+"XF2-0D-yb1.text" = "All File";
+
 /* Class = "UILabel"; text = "Document"; ObjectID = "zaI-cL-Qsf"; */
 "zaI-cL-Qsf.text" = "Document";
 
+/* Class = "UICollectionViewController"; title = "图片网格VC"; ObjectID = "bew-Pg-Jcf"; */
+"bew-Pg-Jcf.title" = "";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "CWY-nv-b9T"; */
+"CWY-nv-b9T.text" = "";
+
+/* Class = "UIViewController"; title = "分类VC容器"; ObjectID = "euC-t7-1n3"; */
+"euC-t7-1n3.title" = "";
+
+/* Class = "UIViewController"; title = "列表VC"; ObjectID = "nmb-IO-kk7"; */
+"nmb-IO-kk7.title" = "";
+
+/* Class = "UIViewController"; title = "主页"; ObjectID = "SL1-BE-wsG"; */
+"SL1-BE-wsG.title" = "";
+
+/* Class = "UITableViewController"; title = "分类列表VC"; ObjectID = "t8P-Yb-g3f"; */
+"t8P-Yb-g3f.title" = "";

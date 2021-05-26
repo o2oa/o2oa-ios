@@ -47,7 +47,7 @@ extension NewMainCollectionView:UICollectionViewDataSource,UICollectionViewDeleg
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AppCollectionCell", for: indexPath) as! NewMainAppCollectionViewCell
-        cell.app = apps[indexPath.row]
+        cell.setAppData(app: apps[indexPath.row])
         return cell
     }
     

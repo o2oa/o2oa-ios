@@ -9,6 +9,7 @@
 import UIKit
 import Promises
 
+/// 绑定页面 单位选择
 class OOBindNodeViewController:OOBaseViewController,UITableViewDataSource,UITableViewDelegate {
     
     private var viewModel:OOLoginViewModel = {
@@ -33,7 +34,7 @@ class OOBindNodeViewController:OOBaseViewController,UITableViewDataSource,UITabl
         nextButton.theme_backgroundColor = ThemeColorPicker(keyPath: "Base.base_color")
         nextButton.configUI()
         //下一步
-        let attrits = NSAttributedString(string: "下一步", attributes: [NSAttributedString.Key.foregroundColor:UIColor.white,NSAttributedString.Key.font:UIFont(name:"PingFangSC-Regular",size:17)!])
+        let attrits = NSAttributedString(string: L10n.Login.nextStep, attributes: [NSAttributedString.Key.foregroundColor:UIColor.white,NSAttributedString.Key.font:UIFont(name:"PingFangSC-Regular",size:17)!])
         nextButton.setAttributedTitle(attrits, for: .normal)
         nextButton.addTarget(self, action: #selector(nextButtonClick(_:)), for: .touchUpInside)
         containerView.addSubview(nextButton)
@@ -53,7 +54,7 @@ class OOBindNodeViewController:OOBaseViewController,UITableViewDataSource,UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         let headerView1 = Bundle.main.loadNibNamed("OORegisterTableView", owner: self, options: nil)?.first as! OORegisterTableView
-        headerView1.configTitle(title: "选择服务节点", actionTitle: nil)
+        headerView1.configTitle(title: L10n.Login.selectServiceNode, actionTitle: nil)
         headerView1.frame = CGRect(x: 0, y: 0, width: kScreenW, height: 66)
         headerView1.theme_backgroundColor = ThemeColorPicker(keyPath: "Base.base_color")
 //        if #available(iOS 11, *) {
@@ -100,23 +101,23 @@ class OOBindNodeViewController:OOBaseViewController,UITableViewDataSource,UITabl
     
     private func nextAction() {
         if let node = selectedNode {
-            self.showLoading(title: "绑定中...")
+            self.showLoading(title: L10n.Login.binding)
             O2AuthSDK.shared.bindMobileToServer(unit: node, mobile: mobile, code: value) { (state, msg) in
                 switch state {
                 case .goToChooseBindServer(_):
                     //多于一个节点到节点列表
                     //self.performSegue(withIdentifier: "nextSelectNodeSegue", sender: unitList)
-                    self.showError(title: "错误！")
+                    self.showError(title: L10n.Login.UnknownError)
                     break
                 case .goToLogin:
 //                    self.showError(title: "错误！\(msg ?? "")")
                     self.forwardDestVC("login", "loginVC")
                     break
                 case .noUnitCanBindError:
-                    self.showError(title: "没有获取到服务器列表，请确认服务器是否已经注册！")
+                    self.showError(title: L10n.Login.canNotGetServerList)
                     break
                 case .unknownError:
-                    self.showError(title: "错误！\(msg ?? "")")
+                    self.showError(title: L10n.Login.errorWithInfo(msg ?? ""))
                     break
                 case .success:
                     //处理移动端应用
@@ -137,7 +138,7 @@ class OOBindNodeViewController:OOBaseViewController,UITableViewDataSource,UITabl
             }
         }else{
             //请选择指定的目标服务
-            self.showError(title: "请选择服务节点")
+            self.showError(title: L10n.Login.selectServiceNode)
         }
     }
     

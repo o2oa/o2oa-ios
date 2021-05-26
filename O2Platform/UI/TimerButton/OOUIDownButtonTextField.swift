@@ -16,7 +16,7 @@ protocol OOUIDownButtonTextFieldDelegate:class {
 class OOUIDownButtonTextField: OOUITextField {
     
     //按钮文字
-    @IBInspectable open var buttonTitle:String = "发送验证码"
+    @IBInspectable open var buttonTitle:String = L10n.Login.getVarificationCode
     //倒计时时长
     @IBInspectable open var countDown = 60
     

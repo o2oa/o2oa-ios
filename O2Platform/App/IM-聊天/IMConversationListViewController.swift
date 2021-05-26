@@ -222,8 +222,41 @@ extension IMConversationListViewController: UITableViewDelegate, UITableViewData
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 64
+        return 84
     }
+    
+    /// Cell 圆角背景计算
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        //圆率
+        let cornerRadius:CGFloat = 10.0
+        //大小
+        let bounds:CGRect  = cell.bounds
+        //绘制曲线
+//        var bezierPath: UIBezierPath? = nil
+        //一个为一组时,四个角都为圆角
+        let bezierPath: UIBezierPath? = UIBezierPath(roundedRect: bounds, byRoundingCorners: .allCorners, cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
+        //cell的背景色透明
+        cell.backgroundColor = .clear
+        //新建一个图层
+        let layer = CAShapeLayer()
+        //图层边框路径
+        layer.path = bezierPath?.cgPath
+        //图层填充色,也就是cell的底色
+        layer.fillColor = UIColor.white.cgColor
+        //图层边框线条颜色
+        /*
+         如果self.tableView.style = UITableViewStyleGrouped时,每一组的首尾都会有一根分割线,目前我还没找到去掉每组首尾分割线,保留cell分割线的办法。
+         所以这里取巧,用带颜色的图层边框替代分割线。
+         这里为了美观,最好设为和tableView的底色一致。
+         设为透明,好像不起作用。
+         */
+        layer.strokeColor = UIColor.white.cgColor
+        //将图层添加到cell的图层中,并插到最底层
+        cell.layer.insertSublayer(layer, at: 0)
+        
+    }
+    
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         DDLogDebug("点击了 row \(indexPath.row)")
         if self.instantMsgList.count > 0 {

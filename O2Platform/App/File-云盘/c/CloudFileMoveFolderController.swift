@@ -38,12 +38,12 @@ class CloudFileMoveFolderController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //最后一个 设置title
-        self.title = Languager.standardLanguager().string(key: "Choose Move Position")
+        self.title = L10n.chooseMovePosition // Languager.standardLanguager().string(key: "Choose Move Position")
         //初始化数据
         if self.breadcrumbList.isEmpty {
             let all = OOFolder()
             all.id = ""
-            all.name = Languager.standardLanguager().string(key: "All File")
+            all.name = L10n.allFile // Languager.standardLanguager().string(key: "All File")
             self.breadcrumbList.append(all)
         }
        

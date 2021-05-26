@@ -43,7 +43,7 @@ class ContactPersonInfoV2ViewController: UITableViewController {
         
     }
     
-    let nameLabs = ["企业信息","姓名","员工号","唯一编码","联系电话","电子邮件","部门"]
+    let nameLabs = [L10n.Contacts.enterpriseInformation, L10n.Contacts.personName, L10n.Contacts.employeeNumber, L10n.Contacts.uniqueCode, L10n.Contacts.contactNumber, L10n.Contacts.email, L10n.Contacts.dept]
     
     var myPersonURL:String?
     
@@ -79,7 +79,7 @@ class ContactPersonInfoV2ViewController: UITableViewController {
         self.personImg.clipsToBounds = true
         loadPersonInfo(nil)
         let startChatButton = OOBaseUIButton(x: (kScreenW - 260)/2, y: 5, w: 260, h: 30, target: self, action: #selector(_startChat))
-        startChatButton.setTitle("发起聊天", for: .normal)
+        startChatButton.setTitle(L10n.Contacts.initiateChat, for: .normal)
         let btnContainerView = UIView(frame: CGRect(x: 0, y: 0, width: kScreenW, height: 40))
         btnContainerView.addSubview(startChatButton)
         tableView.tableFooterView = btnContainerView
@@ -105,7 +105,7 @@ class ContactPersonInfoV2ViewController: UITableViewController {
             username = self.person?.distinguishedName ?? ""
         }
         if username == "" {
-            self.showError(title: "无法创建聊天！")
+            self.showError(title: L10n.Contacts.unableToCreatChat)
             return
         }
         
@@ -114,7 +114,7 @@ class ContactPersonInfoV2ViewController: UITableViewController {
             chatView.conversation = conv
             self.navigationController?.pushViewController(chatView, animated: true)
         }.catch { (err) in
-            self.showError(title: "创建单聊失败, \(err.localizedDescription)")
+            self.showError(title: L10n.errorWithMsg(err.localizedDescription))
         }
         
         
@@ -131,28 +131,28 @@ class ContactPersonInfoV2ViewController: UITableViewController {
 
         cell.nameLab.text = self.nameLabs[indexPath.row]
         switch self.nameLabs[indexPath.row] {
-        case "企业信息":
+        case L10n.Contacts.enterpriseInformation:
             cell.nameLab.font = UIFont.systemFont(ofSize: 17)
             cell.nameLab.textColor = UIColor.black
             cell.valueLab.isHidden = true
             cell.eventBut.isHidden = true
-        case "姓名":
+        case L10n.Contacts.personName:
             cell.valueLab.text = self.contact?.name
             cell.eventBut.isHidden = true
-        case "员工号":
+        case L10n.Contacts.employeeNumber:
             cell.valueLab.text = self.contact?.employee
             cell.eventBut.isHidden = true
-        case "唯一编码":
+        case L10n.Contacts.uniqueCode:
             cell.valueLab.text = self.contact?.unique
             cell.eventBut.isHidden = true
-        case "联系电话":
+        case L10n.Contacts.contactNumber:
             cell.valueLab.text = self.contact?.mobile
             cell.eventBut.addTarget(self, action: #selector(self.call), for: UIControl.Event.touchUpInside)
-        case "电子邮件":
+        case L10n.Contacts.email:
             cell.valueLab.text = self.contact?.mail
             cell.eventBut.theme_setImage(ThemeImagePicker(keyPath:"Icon.icon_email"), forState: .normal)
             cell.eventBut.addTarget(self, action: #selector(self.sendMail), for: UIControl.Event.touchUpInside)
-        case "部门":
+        case L10n.Contacts.dept:
             var unitName = ""
             if let idenList = self.contact?.woIdentityList {
                 for iden in idenList {
@@ -176,9 +176,9 @@ class ContactPersonInfoV2ViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch self.nameLabs[indexPath.row] {
-        case "联系电话":
+        case L10n.Contacts.contactNumber:
             self.call()
-        case "电子邮件":
+        case L10n.Contacts.email:
             self.sendMail()
         default:
             break
@@ -191,21 +191,21 @@ class ContactPersonInfoV2ViewController: UITableViewController {
     @objc func sendMail() {
         if let mail = self.contact?.mail, mail != "" {
             let alertController = UIAlertController(title: "", message: nil,preferredStyle: .actionSheet)
-            let mailAction = UIAlertAction(title: "发邮件", style: .default, handler: { _ in
+            let mailAction = UIAlertAction(title:L10n.Contacts.sendEmail, style: .default, handler: { _ in
                 let mailURL = URL(string: "mailto://\(mail)")
                 
                 if UIApplication.shared.canOpenURL(mailURL!) {
                     UIApplication.shared.openURL(mailURL!)
                 }else{
-                    self.showError(title: "发邮件失败")
+                    self.showError(title: L10n.Contacts.sendEmailError)
                 }
             })
-            let copyAction = UIAlertAction(title: "复制", style: .default, handler: { _ in
+            let copyAction = UIAlertAction(title:L10n.copy, style: .default, handler: { _ in
                 UIPasteboard.general.string = mail
-                self.showSuccess(title: "复制成功")
+                self.showSuccess(title: L10n.copySuccess)
             })
             
-            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+            let cancelAction = UIAlertAction(title: L10n.cancel, style: .cancel, handler: nil)
             alertController.addAction(mailAction)
             alertController.addAction(copyAction)
             alertController.addAction(cancelAction)
@@ -216,28 +216,28 @@ class ContactPersonInfoV2ViewController: UITableViewController {
     @objc func call(){
         if let phone = self.contact?.mobile, phone != "" {
             let alertController = UIAlertController(title: "", message: nil,preferredStyle: .actionSheet)
-            let smsAction = UIAlertAction(title: "发短信", style: .default, handler: { _ in
+            let smsAction = UIAlertAction(title: L10n.sms, style: .default, handler: { _ in
                 let smsURL = URL(string: "sms://\(phone)")
                 if UIApplication.shared.canOpenURL(smsURL!) {
                     UIApplication.shared.openURL(smsURL!)
                 }else{
-                    self.showError(title: "发短信失败")
+                    self.showError(title: L10n.smsFail)
                 }
             })
-            let phoneAction = UIAlertAction(title: "打电话", style: .default, handler: { _ in
+            let phoneAction = UIAlertAction(title: L10n.call, style: .default, handler: { _ in
                 let phoneURL = URL(string: "tel://\(phone)")
                 if UIApplication.shared.canOpenURL(phoneURL!) {
                     UIApplication.shared.openURL(phoneURL!)
                 }else{
-                    self.showError(title: "打电话失败")
+                    self.showError(title: L10n.callFail)
                 }
             })
-            let copyAction = UIAlertAction(title: "复制", style: .default, handler: { _ in
+            let copyAction = UIAlertAction(title: L10n.copy, style: .default, handler: { _ in
                 UIPasteboard.general.string = phone
-                self.showSuccess(title: "复制成功")
+                self.showSuccess(title: L10n.copySuccess)
             })
             
-            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+            let cancelAction = UIAlertAction(title: L10n.cancel, style: .cancel, handler: nil)
             alertController.addAction(phoneAction)
             alertController.addAction(smsAction)
             alertController.addAction(copyAction)
@@ -247,7 +247,7 @@ class ContactPersonInfoV2ViewController: UITableViewController {
     }
     
     func loadPersonInfo(_ sender: AnyObject?){
-        self.showLoading(title: "加载中...")
+        self.showLoading()
         AF.request(myPersonURL!).responseJSON {
             response in
             switch response.result {
@@ -283,7 +283,7 @@ class ContactPersonInfoV2ViewController: UITableViewController {
             case .failure(let err):
                 DDLogError(err.localizedDescription)
                 DispatchQueue.main.async {
-                    self.showError(title: "加载失败")
+                    self.showError(title: L10n.errorWithMsg(err.localizedDescription))
                 }
             }
             

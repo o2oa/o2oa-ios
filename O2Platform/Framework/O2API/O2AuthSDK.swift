@@ -178,7 +178,13 @@ public class O2AuthSDK: NSObject {
        
         case .x_jpush_assemble_control:
             return dic["x_jpush_assemble_control"]
+            
+        case .x_query_assemble_surface:
+            return dic["x_query_assemble_surface"]
+            
         }
+        
+        
     }
     
     /// 移动端配置信息

@@ -67,7 +67,7 @@ target 'O2Platform' do
     pod 'ImageSlideshow/Alamofire'
     
     pod 'MBProgressHUD', '~> 1.0.0'
-    pod 'SnapKit', '~> 4.0.0'
+    pod 'SnapKit', '~> 4.0'
     
     pod 'SwiftValidator', :git => 'https://github.com/jpotts18/SwiftValidator.git', :branch => 'master'
     pod 'YHPopupView'

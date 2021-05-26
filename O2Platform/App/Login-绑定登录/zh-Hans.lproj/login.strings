@@ -1,0 +1,42 @@
+
+/* Class = "UIViewController"; title = "登录主界面"; ObjectID = "2FW-oB-Z7W"; */
+"2FW-oB-Z7W.title" = "登录主界面";
+
+/* Class = "UILabel"; text = "ANNA组织"; ObjectID = "86p-zE-rWI"; */
+"86p-zE-rWI.text" = "ANNA组织";
+
+/* Class = "UILabel"; text = "Copyright © 2017  All Rights Reserved"; ObjectID = "A52-E8-znd"; */
+"A52-E8-znd.text" = "Copyright © 2017  All Rights Reserved";
+
+/* Class = "UITextField"; placeholder = "请输入密码"; ObjectID = "Nr9-8F-s20"; */
+"Nr9-8F-s20.placeholder" = "请输入密码";
+
+/* Class = "UITextField"; placeholder = "请输入手机号"; ObjectID = "ObS-rR-SV6"; */
+"ObS-rR-SV6.placeholder" = "请输入手机号";
+
+/* Class = "UIButton"; normalTitle = "生物识别登录"; ObjectID = "Q9Q-4z-Rfe"; */
+"Q9Q-4z-Rfe.normalTitle" = "生物识别登录";
+
+/* Class = "UIButton"; normalTitle = "下一步"; ObjectID = "RFi-UF-mda"; */
+"RFi-UF-mda.normalTitle" = "下一步";
+
+/* Class = "UIButton"; normalTitle = "其他登录方式"; ObjectID = "VU6-Hu-1I4"; */
+"VU6-Hu-1I4.normalTitle" = "其他登录方式";
+
+/* Class = "UIButton"; normalTitle = "登录"; ObjectID = "bkV-iJ-Vkd"; */
+"bkV-iJ-Vkd.normalTitle" = "登录";
+
+/* Class = "UITextField"; placeholder = "请输入验证码"; ObjectID = "f1x-qE-7k6"; */
+"f1x-qE-7k6.placeholder" = "请输入验证码";
+
+/* Class = "UIButton"; normalTitle = "其它方式登录"; ObjectID = "kLj-hW-IW3"; */
+"kLj-hW-IW3.normalTitle" = "其它方式登录";
+
+/* Class = "UITextField"; placeholder = "请输入用户名"; ObjectID = "lEi-tc-UYF"; */
+"lEi-tc-UYF.placeholder" = "请输入用户名";
+
+/* Class = "UIButton"; normalTitle = "重新绑定"; ObjectID = "sdH-Rd-Uu5"; */
+"sdH-Rd-Uu5.normalTitle" = "重新绑定";
+
+/* Class = "UITextField"; placeholder = "请输入动态密码"; ObjectID = "uXf-3e-9Bs"; */
+"uXf-3e-9Bs.placeholder" = "请输入动态密码";

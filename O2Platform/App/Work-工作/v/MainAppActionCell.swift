@@ -44,7 +44,7 @@ class MainAppActionCell: UITableViewCell{
 }
 
 extension MainAppActionCell:ZLCollectionViewDelegate{
-    func clickWithApp(_ app: O2App) {
+    func clickWithApp(_ app: O2App, section: Int) {
         self.delegate?.clickWithApp(app)
     }
 }

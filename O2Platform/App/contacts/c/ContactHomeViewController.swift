@@ -61,7 +61,8 @@ class ContactHomeViewController: UITableViewController {
         
         self.initSearch()
         self.definesPresentationContext = true
-        self.automaticallyAdjustsScrollViewInsets = false
+//        self.automaticallyAdjustsScrollViewInsets = false
+        self.tableView.separatorStyle = .none
         
         self.loadMyData(nil)
         
@@ -85,14 +86,14 @@ class ContactHomeViewController: UITableViewController {
         searchController.dimsBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
         
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = "取消"
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = L10n.cancel
         let attrs =  [NSAttributedString.Key.font: UIFont.init(name: "PingFangTC-Light", size: 14) ?? UIFont.systemFont(ofSize: 14),
          NSAttributedString.Key.foregroundColor: O2ThemeManager.color(for: "Base.base_color") ?? UIColor.red]
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes(attrs, for: .normal)
         
         searchController.searchBar.searchBarStyle = UISearchBar.Style.minimal
         searchController.searchBar.sizeToFit()
-        searchController.searchBar.placeholder = "请输入姓名、工号或拼音搜索..."
+        searchController.searchBar.placeholder = L10n.Contacts.searchPlaceholder
         
         self.tableView.tableHeaderView = searchController.searchBar
     }
@@ -152,6 +153,50 @@ class ContactHomeViewController: UITableViewController {
         }
         
         return cell
+    }
+    
+    /// Cell 圆角背景计算
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        //圆率
+        let cornerRadius:CGFloat = 10.0
+        //大小
+        let bounds:CGRect  = cell.bounds
+        //行数
+        let numberOfRows = tableView.numberOfRows(inSection: indexPath.section)
+        //绘制曲线
+        var bezierPath: UIBezierPath? = nil
+        if (indexPath.row == 0 && numberOfRows == 1) {
+            //一个为一组时,四个角都为圆角
+            bezierPath = UIBezierPath(roundedRect: bounds, byRoundingCorners: .allCorners, cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
+        } else if (indexPath.row == 0) {
+            //为组的第一行时,左上、右上角为圆角
+            bezierPath = UIBezierPath(roundedRect: bounds, byRoundingCorners:  [.topLeft, .topRight], cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
+        } else if (indexPath.row == numberOfRows - 1) {
+            //为组的最后一行,左下、右下角为圆角
+            bezierPath = UIBezierPath(roundedRect: bounds, byRoundingCorners:  [.bottomLeft, .bottomRight], cornerRadii: CGSize(width: cornerRadius, height: cornerRadius))
+        } else {
+            //中间的都为矩形
+            bezierPath = UIBezierPath(rect: bounds)
+        }
+        //cell的背景色透明
+        cell.backgroundColor = .clear
+        //新建一个图层
+        let layer = CAShapeLayer()
+        //图层边框路径
+        layer.path = bezierPath?.cgPath
+        //图层填充色,也就是cell的底色
+        layer.fillColor = UIColor.white.cgColor
+        //图层边框线条颜色
+        /*
+         如果self.tableView.style = UITableViewStyleGrouped时,每一组的首尾都会有一根分割线,目前我还没找到去掉每组首尾分割线,保留cell分割线的办法。
+         所以这里取巧,用带颜色的图层边框替代分割线。
+         这里为了美观,最好设为和tableView的底色一致。
+         设为透明,好像不起作用。
+         */
+        layer.strokeColor = UIColor.white.cgColor
+        //将图层添加到cell的图层中,并插到最底层
+        cell.layer.insertSublayer(layer, at: 0)
+        
     }
     
     /*override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -251,7 +296,7 @@ class ContactHomeViewController: UITableViewController {
         var count = 0
         //增加常用联系人
         self.contacts[2]?.removeAll()
-        let collectTitle = HeadTitle(name:"常用联系人", icon: O2ThemeManager.string(for: "Icon.icon_linkman")!)
+        let collectTitle = HeadTitle(name: L10n.Contacts.topContacts, icon: O2ThemeManager.string(for: "Icon.icon_linkman")!)
         let collectVMT = CellViewModel(name: collectTitle.name, sourceObject: collectTitle)
         self.contacts[2]?.append(collectVMT)
         let collectPersons = DBManager.shared.queryContactData((O2AuthSDK.shared.myInfo()?.id)!)
@@ -259,7 +304,7 @@ class ContactHomeViewController: UITableViewController {
             let vm = CellViewModel(name: p.name!, sourceObject: p)
             self.contacts[2]?.append(vm)
         }
-        self.showLoading(title: "加载中...")
+        self.showLoading()
         for (order,url) in urls {
             if order == 0 {
                 AF.request(url!, method: .get, parameters: nil, encoding:URLEncoding.default, headers: ["X-ORDER":String(order)]).validate().responseJSON {
@@ -269,7 +314,7 @@ class ContactHomeViewController: UITableViewController {
                         let objects = JSON(val)["data"]
                         print(objects.description)
                         self.contacts[order]?.removeAll()
-                        let tile = HeadTitle(name: "我的部门", icon: O2ThemeManager.string(for: "Icon.icon_company")!)
+                        let tile = HeadTitle(name: L10n.Contacts.myDepartment, icon: O2ThemeManager.string(for: "Icon.icon_company")!)
                         let vmt = CellViewModel(name: tile.name, sourceObject: tile)
                         self.contacts[order]?.append(vmt)
                         if let person = Mapper<PersonV2>().map(JSONString:objects.description) {
@@ -320,7 +365,7 @@ class ContactHomeViewController: UITableViewController {
                                     self.contacts[order]?.removeAll()
                                     if let unit = Mapper<OrgUnit>().map(JSONString:objects.description) {
                                         unit.subDirectUnitCount = 1 //这个接口查询出来的组织没有下级组织的数量，假设是有下级组织的
-                                        let tile = HeadTitle(name: "组织架构", icon: O2ThemeManager.string(for: "Icon.icon_bumen")!)
+                                        let tile = HeadTitle(name: L10n.Contacts.orgStructre, icon: O2ThemeManager.string(for: "Icon.icon_bumen")!)
                                         let vmt = CellViewModel(name: tile.name, sourceObject: tile)
                                         self.contacts[order]?.append(vmt)
                                         // 顶级组织

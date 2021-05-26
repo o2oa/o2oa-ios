@@ -106,7 +106,7 @@ DEPENDENCIES:
   - ReactiveSwift (~> 6.1)
   - RxCocoa (~> 5.1.1)
   - SDWebImage (~> 4.0)
-  - SnapKit (~> 4.0.0)
+  - SnapKit (~> 4.0)
   - Starscream (~> 4.0.0)
   - SwiftValidator (from `https://github.com/jpotts18/SwiftValidator.git`, branch `master`)
   - SwiftyJSON (~> 3.1)
@@ -216,6 +216,6 @@ SPEC CHECKSUMS:
   YHPhotoKit: e88368af1fca0a110d41b88417088f7e49876981
   YHPopupView: 96d9c05c79a2a17cf69c3def09e5305cfae9e8e8
 
-PODFILE CHECKSUM: 292de7f09fee7d8de97ec5bfbd037764be2ae67c
+PODFILE CHECKSUM: daa01ebc2967f3be399ed29ce154d33540707b8a
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.10.1

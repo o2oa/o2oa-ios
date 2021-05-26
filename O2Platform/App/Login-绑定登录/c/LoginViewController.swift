@@ -16,6 +16,8 @@ import ObjectMapper
 import CocoaLumberjack
 import Promises
 
+
+/// 启动页面
 class LoginViewController: UIViewController {
     
     @IBOutlet weak var iconImageView: UIImageView!
@@ -69,7 +71,7 @@ class LoginViewController: UIViewController {
     func startFlowForPromise() {
         //越狱检查
         if SecurityCheckManager.shared.isJailBroken() {
-            self.showSystemAlert(title: "提示", message: "当前运行环境已经越狱，本应用将不提供服务！") { (action) in
+            self.showSystemAlert(title: L10n.alert, message: L10n.Login.jailbrokenAlertMessage) { (action) in
                 DDLogError("已经越狱的机器，不进入app！")
             }
         }else {
@@ -85,7 +87,7 @@ class LoginViewController: UIViewController {
                     let httpProtocol = o2Server?["httpProtocol"] as? String
                     DDLogDebug("连接服务器：\(String(describing: name)) , host:\(String(describing: centerHost)) , context:\(String(describing: centerContext)), port:\(centerPort ?? 0), portocal:\(String(describing: httpProtocol)) ")
                     if name == nil || centerHost == nil || centerContext == nil {
-                        self.showError(title:  "服务器配置信息异常！")
+                        self.showError(title:  L10n.Login.serverConfigInfoError)
                         return
                     }
                     unit.id = id
@@ -95,7 +97,7 @@ class LoginViewController: UIViewController {
                     unit.httpProtocol = httpProtocol
                     unit.name = name
                 }else {
-                    self.showError(title:  "没有配置服务器信息！")
+                    self.showError(title:  L10n.Login.ServerConfigIsEmpty)
                     return
                 }
                 
@@ -103,14 +105,14 @@ class LoginViewController: UIViewController {
                     switch state {
                     case .bindError:
                         //校验绑定结点信息错误
-                       self.showError(title: msg ?? "未知错误！")
+                        self.showError(title: msg ?? L10n.Login.UnknownError)
                         break
                     case .loginError:
                         self.forwardToSegue("loginSystemSegue")
                         //自动登录出错
                         break
                     case .unknownError:
-                        self.showError(title: msg ?? "未知错误！")
+                        self.showError(title: msg ?? L10n.Login.UnknownError)
                         break
                     case .success:
                         //处理移动端应用
@@ -136,7 +138,7 @@ class LoginViewController: UIViewController {
                         break
                     case .unknownError:
     //                    self.showError(title: msg ?? "未知错误！")
-                        self.needReBind(msg ?? "未知错误！")
+                        self.needReBind(msg ?? L10n.Login.UnknownError)
                         break
                     case .success:
                         //处理移动端应用
@@ -168,11 +170,12 @@ class LoginViewController: UIViewController {
     
     private func needReBind(_ error: String) {
         DispatchQueue.main.async {
-            let alertController = UIAlertController(title: "提示", message: "加载出错，是否重新绑定？错误：\(error)", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "重新绑定", style: .default, handler: {(action) in
+            let confirmMessage = L10n.Login.rebindConfirmMessage(error)
+            let alertController = UIAlertController(title: L10n.alert, message: confirmMessage, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: L10n.Login.rebind, style: .default, handler: {(action) in
                 self.rebind()
             })
-            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: {(action) in
+            let cancelAction = UIAlertAction(title: L10n.cancel, style: .cancel, handler: {(action) in
                 
             })
             alertController.addAction(okAction)
