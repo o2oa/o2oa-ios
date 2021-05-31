@@ -101,7 +101,7 @@
                                                     <rect key="frame" x="20" y="10" width="374" height="75"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="标题" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rha-lt-HOh">
-                                                            <rect key="frame" x="12" y="13" width="34" height="24"/>
+                                                            <rect key="frame" x="12" y="13" width="350" height="24"/>
                                                             <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="17"/>
                                                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -122,6 +122,7 @@
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstItem="QhZ-Xf-tlg" firstAttribute="top" secondItem="Rha-lt-HOh" secondAttribute="bottom" constant="5" id="2lv-tx-pbv"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Rha-lt-HOh" secondAttribute="trailing" constant="12" id="8RC-Xu-1Kl"/>
                                                         <constraint firstAttribute="trailing" secondItem="bkg-uv-uMv" secondAttribute="trailing" constant="10" id="FPg-2b-ayR"/>
                                                         <constraint firstItem="QhZ-Xf-tlg" firstAttribute="leading" secondItem="l73-sM-Q6a" secondAttribute="leading" constant="12" id="b2Y-Fq-KzL"/>
                                                         <constraint firstItem="Rha-lt-HOh" firstAttribute="top" secondItem="l73-sM-Q6a" secondAttribute="top" constant="13" id="jFO-d7-nop"/>

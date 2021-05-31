@@ -6064,7 +6064,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 87;
+				CURRENT_PROJECT_VERSION = 91;
 				DEVELOPMENT_TEAM = C79YTQHHFY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6093,7 +6093,7 @@
 					"$(PROJECT_DIR)/O2Platform/Framework/lame/opencore-amr/lib",
 					"$(PROJECT_DIR)/O2Platform/Framework/BaiDuASR/BDSClientLib",
 				);
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 6.0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -6172,7 +6172,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 87;
+				CURRENT_PROJECT_VERSION = 91;
 				DEVELOPMENT_TEAM = C79YTQHHFY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6201,7 +6201,7 @@
 					"$(PROJECT_DIR)/O2Platform/Framework/lame/opencore-amr/lib",
 					"$(PROJECT_DIR)/O2Platform/Framework/BaiDuASR/BDSClientLib",
 				);
-				MARKETING_VERSION = 5.2.7;
+				MARKETING_VERSION = 6.0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
