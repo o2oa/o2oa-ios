@@ -9,6 +9,7 @@
 import Foundation
 import HandyJSON
 import Moya
+import CocoaLumberjack
 
 
 public final class OOResult<T:BaseModel> {
@@ -22,13 +23,20 @@ public final class OOResult<T:BaseModel> {
     init(_ result:Result<Response,MoyaError>) {
         switch result {
         case .success(let resp):
-            self.model = resp.mapObject(T.self)
-            if let _ = model {
-                if model?.isSuccess() == false {
-                    self.error = OOAppError.common(type: "APPError", message: model?.message ?? "", statusCode: 10001)
+            if resp.statusCode == 200 {
+                self.model = resp.mapObject(T.self)
+                if let _ = model {
+                    if model?.isSuccess() == false {
+                        self.error = OOAppError.common(type: "APPError", message: model?.message ?? "", statusCode: 10001)
+                    }
+                }else{
+                    self.error = OOAppError.common(type: "systemError", message: "转换出错", statusCode: 10001)
+                    DDLogError("API接口转换出错")
+                    DDLogError(resp.debugDescription)
                 }
-            }else{
-                self.error = OOAppError.common(type: "systemError", message: "转换出错", statusCode: 10001)
+            } else {
+                DDLogError(resp.debugDescription)
+                self.error = OOAppError.common(type: "networkError", message: "请求出错，status Code \(resp.statusCode) ", statusCode: resp.statusCode)
             }
             break
         case .failure(let err):

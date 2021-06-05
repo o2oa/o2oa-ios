@@ -194,7 +194,7 @@ extension WorkViewModel {
     /// work的附件
     func getWorkAttachment(workId: String, id: String) -> Promise<String> {
         return Promise { fulfill, reject in
-            self.getAttachmentWithworkOrWorkcompleted(workOrWorkcompleted: workId, id: id).then { (info) -> Promise<URL> in
+            self.getAttachmentWithWork(workId:workId, id: id).then { (info) -> Promise<URL> in
                 return self.downloadAttachmentWithWorkId(id: id, workId: workId, info: info)
             }.then { (url)  in
                 fulfill(url.path)
@@ -207,7 +207,7 @@ extension WorkViewModel {
     /// workcompleted的附件
     func getWorkcompletedAttachment(workcompleted: String, id: String) -> Promise<String> {
         return Promise { fulfill, reject in
-            self.getAttachmentWithworkOrWorkcompleted(workOrWorkcompleted: workcompleted, id: id).then { (info) -> Promise<URL> in
+            self.getAttachmentWithWorkCompleted(workCompletedId: workcompleted, id: id).then { (info) -> Promise<URL> in
                 return self.downloadAttachmentWithWorkcompleted(id: id, workcompleted: workcompleted, info: info)
             }.then { (url)  in
                 fulfill(url.path)
@@ -217,10 +217,45 @@ extension WorkViewModel {
         }
     }
     
-    /// 获取附件对象
-    func getAttachmentWithworkOrWorkcompleted(workOrWorkcompleted: String, id: String) -> Promise<O2WorkAttachmentInfo> {
+    /// 获取附件对象 新api 老版本的系统不支持 换回老的api @Date 2021-06-05
+//    func getAttachmentWithworkOrWorkcompleted(workOrWorkcompleted: String, id: String) -> Promise<O2WorkAttachmentInfo> {
+//        return Promise { fulfill, reject in
+//            self.api.request(.attachmentGetWithWorkOrWorkCompleted(workOrWorkcompleted, id), completion: { result in
+//                let response = OOResult<BaseModelClass<O2WorkAttachmentInfo>>(result)
+//                if response.isResultSuccess() {
+//                    if let atta = response.model?.data {
+//                        fulfill(atta)
+//                    }else {
+//                        reject(OOAppError.apiEmptyResultError)
+//                    }
+//                } else {
+//                    reject(response.error!)
+//                }
+//            })
+//        }
+//    }
+    
+    // 工作的附件对象
+    private func getAttachmentWithWork(workId: String, id: String) -> Promise<O2WorkAttachmentInfo> {
         return Promise { fulfill, reject in
-            self.api.request(.attachmentGetWithWorkOrWorkCompleted(workOrWorkcompleted, id), completion: { result in
+            self.api.request(.attachmentGetWithWork(workId, id), completion: { result in
+                let response = OOResult<BaseModelClass<O2WorkAttachmentInfo>>(result)
+                if response.isResultSuccess() {
+                    if let atta = response.model?.data {
+                        fulfill(atta)
+                    }else {
+                        reject(OOAppError.apiEmptyResultError)
+                    }
+                } else {
+                    reject(response.error!)
+                }
+            })
+        }
+    }
+    // 已完成工作的附件对象
+    private func getAttachmentWithWorkCompleted(workCompletedId: String, id: String) -> Promise<O2WorkAttachmentInfo> {
+        return Promise { fulfill, reject in
+            self.api.request(.attachmentGetWithWorkCompleted(workCompletedId, id), completion: { result in
                 let response = OOResult<BaseModelClass<O2WorkAttachmentInfo>>(result)
                 if response.isResultSuccess() {
                     if let atta = response.model?.data {

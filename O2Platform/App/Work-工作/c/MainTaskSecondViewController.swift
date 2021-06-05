@@ -295,7 +295,7 @@ class MainTaskSecondViewController: UIViewController {
             self.newPublishInfos.removeAll()
         }
         AF.request(npURL!, method: .put, parameters:[String:Any](), encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
-            DDLogDebug(response.debugDescription)
+//            DDLogDebug(response.debugDescription)
             switch response.result {
             case .success(let val):
                 let json = JSON(val)["data"]

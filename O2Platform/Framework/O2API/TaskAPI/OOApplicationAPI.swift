@@ -22,6 +22,8 @@ enum OOApplicationAPI {
     case workDelete(String)
     case dataUpdateWithWork(String,[String:AnyObject])
     case attachmentGetWithWorkOrWorkCompleted(String, String) // workOrWorkcompleted id
+    case attachmentGetWithWork(String, String)
+    case attachmentGetWithWorkCompleted(String, String)
     case attachmentDownloadWithWorkCompleted(String, String, URL) // id workcompleted path
     case attachmentDownloadWithWorkId(String, String, URL) // id workId path
     case attachmentUpload(String, String, String, Data) // 上传附件 workId site fileName fileData
@@ -77,6 +79,10 @@ extension OOApplicationAPI:TargetType {
             return "/jaxrs/data/work/\(workId)"
         case .attachmentGetWithWorkOrWorkCompleted(let workOrWorkcompleted, let id):
             return "/jaxrs/attachment/\(id)/workorworkcompleted/\(workOrWorkcompleted)"
+        case .attachmentGetWithWork(let work, let id):
+            return "/jaxrs/attachment/\(id)/work/\(work)"
+        case .attachmentGetWithWorkCompleted(let workCompletedId, let id):
+            return "/jaxrs/attachment/\(id)/workcompleted/\(workCompletedId)"
         case .attachmentDownloadWithWorkCompleted(let id, let workcompleted, _):
             return "/jaxrs/attachment/download/\(id)/workcompleted/\(workcompleted)"
         case .attachmentDownloadWithWorkId(let id, let workId, _):
