@@ -156,7 +156,7 @@ class TodoTaskViewController: UITableViewController {
         tv.emptyTitle = self.emptyTexts[taskIndex]
         switch taskIndex {
         case 0:
-            self.viewModel.taskV2ListNext(lastId: self.lastId, key: self.searchText).then { (list) in
+            self.viewModel.taskListNext(lastId: self.lastId).then { (list) in
                 if self.isRefresh {
                     self.models.removeAll()
                 }
@@ -180,7 +180,7 @@ class TodoTaskViewController: UITableViewController {
             }
             break
         case 1:
-            self.viewModel.taskcompletedV2ListNext(lastId: self.lastId, key: self.searchText).then { (list) in
+            self.viewModel.readListNext(lastId: self.lastId).then { (list) in
                 if self.isRefresh {
                     self.models.removeAll()
                 }
@@ -204,7 +204,7 @@ class TodoTaskViewController: UITableViewController {
             }
             break
         case 2:
-            self.viewModel.taskcompletedV2ListNext(lastId: self.lastId, key: self.searchText).then { (list) in
+            self.viewModel.taskcompletedListNext(lastId: self.lastId, key: self.searchText).then { (list) in
                 if self.isRefresh {
                     self.models.removeAll()
                 }
@@ -228,7 +228,7 @@ class TodoTaskViewController: UITableViewController {
             }
             break
         case 3:
-            self.viewModel.taskcompletedV2ListNext(lastId: self.lastId, key: self.searchText).then { (list) in
+            self.viewModel.readcompletedListNext(lastId: self.lastId).then { (list) in
                 if self.isRefresh {
                     self.models.removeAll()
                 }

@@ -28,9 +28,13 @@ enum OOApplicationAPI {
     case attachmentDownloadWithWorkId(String, String, URL) // id workId path
     case attachmentUpload(String, String, String, Data) // 上传附件 workId site fileName fileData
     case attachmentReplace(String, String, String, String, Data) // 替换附件 attachmentId workId site  fileName fileData
+    case taskListNext(String, Int) //分页查询待办列表
     case taskV2ListNext(String, Int, String) //分页查询待办列表
+    case taskcompletedListNext(String, Int, String) //分页查询已办列表
     case taskcompletedV2ListNext(String, Int, String) //分页查询已办列表
+    case readListNext(String, Int) //分页查询待阅列表
     case readV2ListNext(String, Int, String) //分页查询待阅列表
+    case readcompletedListNext(String, Int) //分页查询已阅列表
     case readcompletedV2ListNext(String, Int, String) //分页查询已阅列表
     case taskcompletedGetReference(String) //已办的所有的相关的待办已办列表数据
 }
@@ -91,12 +95,20 @@ extension OOApplicationAPI:TargetType {
             return "/jaxrs/attachment/upload/work/\(workId)"
         case .attachmentReplace(let id, let workId, _, _, _):
             return "/jaxrs/attachment/update/\(id)/work/\(workId)"
+        case .taskListNext(let lastId, let count):
+            return "/jaxrs/task/list/\(lastId)/next/\(count)"
         case .taskV2ListNext(let lastId, let count, _):
             return "/jaxrs/task/v2/list/\(lastId)/next/\(count)"
+        case .taskcompletedListNext(let lastId, let count, _):
+            return "/jaxrs/taskcompleted/list/\(lastId)/next/\(count)/filter"
         case .taskcompletedV2ListNext(let lastId, let count, _):
             return "/jaxrs/taskcompleted/v2/list/\(lastId)/next/\(count)"
+        case .readListNext(let lastId, let count):
+            return "/jaxrs/read/list/\(lastId)/next/\(count)"
         case .readV2ListNext(let lastId, let count, _):
             return "/jaxrs/read/v2/list/\(lastId)/next/\(count)"
+        case .readcompletedListNext(let lastId, let count):
+            return "/jaxrs/readcompleted/list/\(lastId)/next/\(count)"
         case .readcompletedV2ListNext(let lastId, let count, _):
             return "/jaxrs/readcompleted/v2/list/\(lastId)/next/\(count)"
         case .taskcompletedGetReference(let id):
@@ -107,7 +119,7 @@ extension OOApplicationAPI:TargetType {
     var method: Moya.Method {
         switch self {
         case .startProcess(_, _, _), .applicationItemWithFilter(_), .attachmentUpload(_, _, _, _), .attachmentReplace(_, _, _, _, _),
-             .taskV2ListNext(_, _, _), .taskcompletedV2ListNext(_, _, _), .readV2ListNext(_, _, _), .readcompletedV2ListNext(_, _, _):
+             .taskV2ListNext(_, _, _), .taskcompletedV2ListNext(_, _, _), .readV2ListNext(_, _, _), .readcompletedV2ListNext(_, _, _), .taskcompletedListNext(_,_,_):
             return .post
         case .workDelete(_):
             return .delete
@@ -167,6 +179,8 @@ extension OOApplicationAPI:TargetType {
         case .taskV2ListNext(_, _, let key):
             return .requestParameters(parameters: ["key": key], encoding: JSONEncoding.default)
         case .taskcompletedV2ListNext(_, _, let key):
+            return .requestParameters(parameters: ["key": key], encoding: JSONEncoding.default)
+        case .taskcompletedListNext(_, _, let key):
             return .requestParameters(parameters: ["key": key], encoding: JSONEncoding.default)
         case .readV2ListNext(_, _, let key):
             return .requestParameters(parameters: ["key": key], encoding: JSONEncoding.default)

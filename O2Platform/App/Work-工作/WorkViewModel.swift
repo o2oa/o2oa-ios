@@ -21,9 +21,9 @@ extension WorkViewModel {
     
     
     /// 分页查询待办列表
-    func taskV2ListNext(lastId: String, key: String) -> Promise<[TodoCellModel<TodoTaskData>]> {
+    func taskListNext(lastId: String) -> Promise<[TodoCellModel<TodoTaskData>]> {
         return Promise{ fulfill, reject in
-            self.api.request(.taskV2ListNext(lastId, self.pageCount, key), completion: {result in
+            self.api.request(.taskListNext(lastId, self.pageCount), completion: {result in
                 let response = OOResult<BaseModelClass<[TodoTaskData]>>(result)
                 if response.isResultSuccess() {
                     if let list = response.model?.data {
@@ -43,9 +43,9 @@ extension WorkViewModel {
         }
     }
     /// 分页查询已办列表
-    func taskcompletedV2ListNext(lastId: String, key: String) -> Promise<[TodoCellModel<TodoTaskData>]> {
+    func taskcompletedListNext(lastId: String, key: String) -> Promise<[TodoCellModel<TodoTaskData>]> {
         return Promise{ fulfill, reject in
-            self.api.request(.taskcompletedV2ListNext(lastId, self.pageCount, key), completion: {result in
+            self.api.request(.taskcompletedListNext(lastId, self.pageCount, key), completion: {result in
                 let response = OOResult<BaseModelClass<[TodoTaskData]>>(result)
                 if response.isResultSuccess() {
                     if let list = response.model?.data {
@@ -65,9 +65,9 @@ extension WorkViewModel {
         }
     }
     /// 待阅
-    func readV2ListNext(lastId: String, key: String) -> Promise<[TodoCellModel<TodoTaskData>]> {
+    func readListNext(lastId: String) -> Promise<[TodoCellModel<TodoTaskData>]> {
         return Promise{ fulfill, reject in
-            self.api.request(.readV2ListNext(lastId, self.pageCount, key), completion: {result in
+            self.api.request(.readListNext(lastId, self.pageCount), completion: {result in
                 let response = OOResult<BaseModelClass<[TodoTaskData]>>(result)
                 if response.isResultSuccess() {
                     if let list = response.model?.data {
@@ -87,9 +87,9 @@ extension WorkViewModel {
         }
     }
     /// 已阅
-    func readcompletedV2ListNext(lastId: String, key: String) -> Promise<[TodoCellModel<TodoTaskData>]> {
+    func readcompletedListNext(lastId: String) -> Promise<[TodoCellModel<TodoTaskData>]> {
         return Promise{ fulfill, reject in
-            self.api.request(.readcompletedV2ListNext(lastId, self.pageCount, key), completion: {result in
+            self.api.request(.readcompletedListNext(lastId, self.pageCount), completion: {result in
                 let response = OOResult<BaseModelClass<[TodoTaskData]>>(result)
                 if response.isResultSuccess() {
                     if let list = response.model?.data {
