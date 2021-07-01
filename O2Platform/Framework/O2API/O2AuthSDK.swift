@@ -71,6 +71,17 @@ public class O2AuthSDK: NSObject {
         return O2UserDefaults.shared.centerServer
     }
     
+    /// 获取O2OA服务端的tokenName
+    ///
+    public func tokenName() -> String {
+        if let center  = O2UserDefaults.shared.centerServer {
+            if let tokenName = center.tokenName {
+                return tokenName
+            }
+        }
+        return "x-token"
+    }
+    
     /// O2OA 服务器 各个微服务信息
     ///
     /// - Parameter context: 微服务

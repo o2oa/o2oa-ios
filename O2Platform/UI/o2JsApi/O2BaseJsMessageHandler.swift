@@ -324,7 +324,8 @@ class O2BaseJsMessageHandler: O2WKScriptMessageHandlerImplement {
                                 ],
                                 coverted: true)!
                         DDLogDebug(fileUploadURL)
-                        let headers:HTTPHeaders = ["x-token":(O2AuthSDK.shared.myInfo()?.token!)!]
+                        let tokenName = O2AuthSDK.shared.tokenName()
+                        let headers:HTTPHeaders = [tokenName:(O2AuthSDK.shared.myInfo()?.token!)!]
 //                        let fileURL = dict?["PHImageFileURLKey"] as! URL
                         
                         DispatchQueue.global(qos: .userInitiated).async {

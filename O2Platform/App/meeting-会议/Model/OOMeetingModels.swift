@@ -22,7 +22,7 @@ class OOMeetingConfigProcess: NSObject, DataModel {
 }
 
 class OOMeetingConfigInfo: NSObject, DataModel {
-    var process: OOMeetingConfigProcess?
+    @objc var process: OOMeetingConfigProcess?
     var mobileCreateEnable:  Bool?
     var weekBegin: Int?
     

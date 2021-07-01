@@ -45,7 +45,8 @@ public class O2AccessTokenPlugin:PluginType {
             return request
         }
         //加上token
-        request.addValue(tokenVal, forHTTPHeaderField: "x-token")
+        let tokenName = O2AuthSDK.shared.tokenName()
+        request.addValue(tokenVal, forHTTPHeaderField: tokenName)
         return request
     }
     

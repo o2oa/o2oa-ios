@@ -69,10 +69,18 @@ class OOMeetingDetailViewController: FormViewController {
                 row.title = "参会人员"
                 row.value = self.meetingInfo
             }
-            <<< LabelRow(){ row in
+            <<< LabelRow("meeting_desc"){ row in
                 row.title = "会议描述"
                 row.value = self.meetingInfo?.summary
-            }
+            }.onCellSelection({ (cell, row) in
+                if let v = row.value {
+                    if v != "" {
+                        self.showSystemAlert(title: "会议描述", message: v) { (action) in
+                            //
+                        }
+                    }
+                }
+            })
             <<< MeetingFormAttachmentCellRow("attachmentList") { row in
                 row.cell.openFileAction = { atta in
                     self.downloadFile(atta: atta)

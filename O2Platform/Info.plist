@@ -178,9 +178,9 @@
 		<key>centerContext</key>
 		<string>/x_program_center</string>
 		<key>centerHost</key>
-		<string>123.125.39.51</string>
+		<string>dd.o2oa.net</string>
 		<key>centerPort</key>
-		<integer>20030</integer>
+		<real>20030</real>
 		<key>httpProtocol</key>
 		<string>http</string>
 		<key>id</key>

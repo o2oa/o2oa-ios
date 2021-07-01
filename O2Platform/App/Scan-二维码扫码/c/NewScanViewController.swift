@@ -65,7 +65,8 @@ class NewScanViewController: LBXScanViewController {
                 if meta != "" {//登录O2OA
                     let account = O2AuthSDK.shared.myInfo()
                     let loginURL = AppDelegate.o2Collect.generateURLWithAppContextKey(LoginContext.loginContextKey, query: LoginContext.scanCodeAuthActionQuery, parameter: ["##meta##":meta as AnyObject])
-                    AF.request(loginURL!, method: .post, parameters: nil, encoding: JSONEncoding.default, headers: ["x-token":(account?.token)!]).responseJSON(completionHandler: { (response) in
+                    let tokenName = O2AuthSDK.shared.tokenName()
+                    AF.request(loginURL!, method: .post, parameters: nil, encoding: JSONEncoding.default, headers: [tokenName:(account?.token)!]).responseJSON(completionHandler: { (response) in
                         switch response.result {
                         case .success(let val):
                             DispatchQueue.main.async {
@@ -109,7 +110,8 @@ class NewScanViewController: LBXScanViewController {
     //会议签到
     func meetingCheck(url: String) {
         let account = O2AuthSDK.shared.myInfo()
-        AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: ["x-token":(account?.token)!]).responseJSON(completionHandler: {(response) in
+        let tokenName = O2AuthSDK.shared.tokenName()
+        AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: [tokenName:(account?.token)!]).responseJSON(completionHandler: {(response) in
             switch response.result {
             case .success(let val):
                 DispatchQueue.main.async {

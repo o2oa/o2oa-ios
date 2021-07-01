@@ -53,7 +53,8 @@ class QRCodeResultViewController: UIViewController {
         if let login = self.loginURL {
             self.showLoading()
             let account = O2AuthSDK.shared.myInfo()
-            AF.request(login, method: .post, parameters: nil, encoding: JSONEncoding.default, headers: ["x-token":(account?.token)!]).responseJSON(completionHandler: { (response) in
+            let tokenName = O2AuthSDK.shared.tokenName()
+            AF.request(login, method: .post, parameters: nil, encoding: JSONEncoding.default, headers: [tokenName:(account?.token)!]).responseJSON(completionHandler: { (response) in
                 switch response.result {
                 case .success(let val):
                     DispatchQueue.main.async {
@@ -131,7 +132,8 @@ class QRCodeResultViewController: UIViewController {
     private func meetingCheck(url: String) {
         self.title = "会议签到"
         let account = O2AuthSDK.shared.myInfo()
-        AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: ["x-token":(account?.token)!]).responseJSON(completionHandler: {(response) in
+        let tokenName = O2AuthSDK.shared.tokenName()
+        AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: [tokenName:(account?.token)!]).responseJSON(completionHandler: {(response) in
             switch response.result {
             case .success(let val):
                 DispatchQueue.main.async {

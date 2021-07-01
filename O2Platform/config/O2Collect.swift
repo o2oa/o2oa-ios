@@ -92,7 +92,8 @@ class O2Collect{
             if webServer.httpProtocol == "https" {
                 wsProtocol = "wss://"
             }
-            return "\(wsProtocol)\(communicateNode.host ?? ""):\(communicateNode.port ?? 20020)\(communicateNode.context ?? "/x_message_assemble_communicate")/ws/collaboration?x-token=\(O2AuthSDK.shared.myInfo()?.token ?? "")"
+            let tokenName = O2AuthSDK.shared.tokenName()
+            return "\(wsProtocol)\(communicateNode.host ?? ""):\(communicateNode.port ?? 20020)\(communicateNode.context ?? "/x_message_assemble_communicate")/ws/collaboration?\(tokenName)=\(O2AuthSDK.shared.myInfo()?.token ?? "")"
         }
         return ""
     }
