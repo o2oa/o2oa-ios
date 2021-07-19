@@ -35,7 +35,7 @@ target 'O2Platform' do
     # 下拉刷新
     pod 'MJRefresh'
     # 键盘管理
-    pod 'IQKeyboardManagerSwift'
+#    pod 'IQKeyboardManagerSwift', '~> 6.5.0'
     #网络请求
     pod 'Alamofire', '~> 5.0'
 #    pod 'AlamofireImage', '~> 3.3'

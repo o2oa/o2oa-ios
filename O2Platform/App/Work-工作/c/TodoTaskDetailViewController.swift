@@ -16,6 +16,7 @@ import ObjectMapper
 import CocoaLumberjack
 import Photos
 import QuickLook
+//import IQKeyboardManagerSwift
 
 
 struct TodoTaskJS {
@@ -115,6 +116,7 @@ class TodoTaskDetailViewController: BaseWebViewUIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+//        NotificationCenter.default.addObserver(self, selector: #selector(showKey), name: UIResponder.keyboardDidShowNotification, object: nil)
         // 返回按钮重新定义
         self.navigationItem.hidesBackButton = true
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon_fanhui"), style: .plain, target: self, action: #selector(closeForBackBtn))
@@ -151,9 +153,80 @@ class TodoTaskDetailViewController: BaseWebViewUIViewController {
         self.theWebView()
 
     }
+    
+    @objc private func showKey() {
+//        if let contr = self.webView.inputAccessoryViewController, let views = contr.view.subviews {
+//            for v in views {
+//                DDLogDebug("view : \(v.description)")
+//                let toolbar = findToolbar(myview: v)
+//                if toolbar != nil && toolbar!.isKind(of: UIToolbar.self){
+//                    DDLogDebug("找到uitoolbar")
+//                    let bar = toolbar as! UIToolbar
+//                    for item in bar.items ?? [] {
+//                        DDLogDebug("设置颜色。。。。。")
+//                        item.tintColor = base_color
+//                    }
+//                }
+//            }
+//        } else {
+//            DDLogDebug("没有找到 inputAccessoryViewController")
+//        }
+        
+        
+        for window in UIApplication.shared.windows {
+            DDLogDebug("window:\(window.description)")
+            if window.isKind(of: UIWindow.self) {
+                DDLogDebug("enter.........")
+                for v in window.subviews {
+                    DDLogDebug("view : \(v.description)")
+                    if v.description.hasPrefix("<UIInputSetContainerView") {
+                        let toolbar = findToolbar(myview: v)
+                        if toolbar != nil && toolbar!.isKind(of: UIToolbar.self){
+                            DDLogDebug("找到uitoolbar")
+                            let bar = toolbar as! UIToolbar
+                            for item in bar.items ?? [] {
+                                DDLogDebug("设置颜色。。。。。")
+                                item.tintColor = base_color
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    private func findToolbar(myview: UIView) -> UIView? {
+        for v in myview.subviews {
+            DDLogDebug("找了：\(v.description)")
+            if let ac = v.inputAccessoryViewController {
+                DDLogDebug("input accessory view.........\(ac.view.description)")
+                if ac.view.isKind(of: UIToolbar.self) {
+                    return ac.view
+                } else {
+                    return findToolbar(myview: ac.view)
+                }
+            } else if let c =  v.inputViewController {
+                DDLogDebug("input view.........\(c.view.description)")
+                if c.view.isKind(of: UIToolbar.self) {
+                    return c.view
+                } else {
+                    return findToolbar(myview: c.view)
+                }
+            } else {
+                if v.isKind(of: UIToolbar.self) {
+                    return v
+                } else {
+                    return findToolbar(myview: v)
+                }
+            }
+            
+        }
+        return nil
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+//        IQKeyboardManager.shared.enable = false
         //监控进度
         webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
         if #available(iOS 13.0, *) {
@@ -166,6 +239,7 @@ class TodoTaskDetailViewController: BaseWebViewUIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         webView.removeObserver(self, forKeyPath: "estimatedProgress")
+//        IQKeyboardManager.shared.enable = true
     }
 
 

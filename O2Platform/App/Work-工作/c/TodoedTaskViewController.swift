@@ -134,13 +134,14 @@ class TodoedTaskViewController: UITableViewController {
             if task.fromActivityType == "begin" {
                 continue
             }
+            if (task.taskCompletedList == nil || task.taskCompletedList!.count == 0) && (task.taskList == nil || task.taskList!.count == 0) {
+                continue
+            }
             let activity = task.arrivedActivityName == nil ? task.fromActivityName : "\(task.fromActivityName ?? "") -> \(task.arrivedActivityName ?? "")"
             var identity = ""
             if (task.taskCompletedList ==  nil || task.taskCompletedList!.count == 0) {
                 if (task.taskList!.count > 0 ) {
                     identity = task.taskList![0].identity!;
-                }else{
-                    identity = "当前处理人";
                 }
             }else{
                 identity = (task.taskCompletedList![0] as! NSDictionary)["identity"]! as! String;

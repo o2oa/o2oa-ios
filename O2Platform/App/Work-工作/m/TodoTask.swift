@@ -300,6 +300,25 @@ class WorkData: NSObject,DataModel {
 }
 
 /// 活动任务
+///
+/** fromActivityType 、 arrivedActivityType
+ * 流程节点枚举类型
+ * agent：脚本节点
+ * begin：开始节点
+ * cancel：取消节点
+ * choice：选择活动节点
+ * delay：定时活动节点
+ * end：结束节点
+ * embed：流程调用节点
+ * invoke：服务调用节点
+ * manual：人工节点
+ * merge：合并活动节点
+ * message：
+ * parallel：并行活动节点
+ * service：服务节点
+ * split：拆分节点
+ */
+///
 class ActivityTaskData: NSObject,DataModel {
     @objc var job:String?
     @objc var work:String?

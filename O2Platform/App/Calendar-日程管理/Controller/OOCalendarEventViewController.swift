@@ -434,6 +434,10 @@ class OOCalendarEventViewController: UITableViewController {
                 showError(title: "日程标题不能为空！")
                 return
             }
+            if title == "" {
+                showError(title: "日程标题不能为空！")
+                return
+            }
             if calendarId == "" {
                 showError(title: "没有选择日历！")
                 return
