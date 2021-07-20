@@ -1087,13 +1087,6 @@
 			remoteGlobalIDString = 891B2270823847ED23F2ECFC28F935EC;
 			remoteInfo = Starscream;
 		};
-		B14A2292224CBC2E00745E0A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E4E7755421017DB4006ED7FC /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 808EAD2733F720B367C1A793B51F3DCB;
-			remoteInfo = IQKeyboardManagerSwift;
-		};
 		B1573CB8213E51A9007333C6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E4E7755421017DB4006ED7FC /* Pods.xcodeproj */;
@@ -1561,7 +1554,7 @@
 		B1FFF885223A23B200C170FD /* O2FlutterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2FlutterViewController.swift; sourceTree = "<group>"; };
 		B1FFF890223A4DA700C170FD /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
 		B1FFF891223A4DA700C170FD /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
-		C33461DCBCEEAF5B8597D54E /* Pods______.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods______.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C33461DCBCEEAF5B8597D54E /* Pods______.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods______.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E40502C220722208009A8D30 /* ImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
 		E40502C320722208009A8D30 /* ImageRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageRow.swift; sourceTree = "<group>"; };
 		E40502C420722208009A8D30 /* ImageCheckRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCheckRow.swift; sourceTree = "<group>"; };
@@ -2297,7 +2290,6 @@
 				B108968D210AC61B00F02267 /* FSCalendar.framework */,
 				B10AC5AF21058DAE00179587 /* HandyJSON.framework */,
 				B10AC5B321058DAE00179587 /* ImageSlideshow.framework */,
-				B14A2293224CBC2E00745E0A /* IQKeyboardManagerSwift.framework */,
 				B1573CB9213E51A9007333C6 /* JTCalendar.framework */,
 				B10AC5BD21058DAE00179587 /* MBProgressHUD.framework */,
 				B1F79C7C233B5F9B004D0AEE /* MJRefresh.framework */,
@@ -4801,13 +4793,6 @@
 			remoteRef = B1173A582488C3DD005075F0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B14A2293224CBC2E00745E0A /* IQKeyboardManagerSwift.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = IQKeyboardManagerSwift.framework;
-			remoteRef = B14A2292224CBC2E00745E0A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		B1573CB9213E51A9007333C6 /* JTCalendar.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -6062,7 +6047,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 93;
+				CURRENT_PROJECT_VERSION = 94;
 				DEVELOPMENT_TEAM = C79YTQHHFY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6091,7 +6076,7 @@
 					"$(PROJECT_DIR)/O2Platform/Framework/lame/opencore-amr/lib",
 					"$(PROJECT_DIR)/O2Platform/Framework/BaiDuASR/BDSClientLib",
 				);
-				MARKETING_VERSION = 6.0.3;
+				MARKETING_VERSION = 6.0.4;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -6170,7 +6155,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 93;
+				CURRENT_PROJECT_VERSION = 94;
 				DEVELOPMENT_TEAM = C79YTQHHFY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6199,7 +6184,7 @@
 					"$(PROJECT_DIR)/O2Platform/Framework/lame/opencore-amr/lib",
 					"$(PROJECT_DIR)/O2Platform/Framework/BaiDuASR/BDSClientLib",
 				);
-				MARKETING_VERSION = 6.0.3;
+				MARKETING_VERSION = 6.0.4;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
