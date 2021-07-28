@@ -7,6 +7,7 @@
 //
 
 import AVFoundation
+import CocoaLumberjack
 
 protocol AudioPlayerManagerDelegate {
     func didAudioPlayerBeginPlay(_ AudioPlayer: AVAudioPlayer)
@@ -19,10 +20,19 @@ class AudioPlayerManager: NSObject {
         return AudioPlayerManager()
     }()
     
-    private override init() {super.init()}
+    
+    
+    private override init() {
+        super.init()
+        DDLogDebug("初始化播放工具类")
+        self.stopFloatingBtn = O2AudioPlayFloatingWindow(frame: CGRect(x: kScreenW - 60, y: 120, width: 60, height: 60 ))
+        self.stopFloatingBtn?.hideFloatingBtn()
+    }
     
     var delegate: AudioPlayerManagerDelegate?
     var player: AVAudioPlayer!
+    // 悬浮的关闭音频按钮
+    var stopFloatingBtn: O2AudioPlayFloatingWindow?
     
     
     
@@ -56,6 +66,9 @@ class AudioPlayerManager: NSObject {
         }
         
         UIDevice.current.isProximityMonitoringEnabled = true
+        
+        //显示关闭按钮
+        self.stopFloatingBtn?.showFloatingBtn()
     }
     
     func pausePlayingAudio() {
@@ -68,6 +81,8 @@ class AudioPlayerManager: NSObject {
         }
         UIDevice.current.isProximityMonitoringEnabled = false
         delegate?.didAudioPlayerStopPlay(player)
+        // 隐藏关闭按钮
+        self.stopFloatingBtn?.hideFloatingBtn()
     }
 }
 

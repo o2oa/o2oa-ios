@@ -44,7 +44,7 @@ class ContactHomeViewController: UITableViewController {
     
     let searchUrl = AppDelegate.o2Collect.generateURLWithAppContextKey(ContactContext.contactsContextKeyV2, query: ContactContext.personSearchByKeyQueryV2, parameter: nil)
     
-    var searchController : UISearchController!
+    var searchController : UISearchController? = nil
     
     var searchResult : [CellViewModel] = []
     
@@ -53,15 +53,14 @@ class ContactHomeViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //let rightItem = UIBarButtonItem(image: UIImage(named: "contact_search"), style: .plain, target: self, action:#selector(ContactHomeViewController.rightItemAction(_:)))
-        //self.navigationItem.rightBarButtonItem = rightItem
-        
         self.tableView.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(ContactHomeViewController.loadMyData(_:)))
+        DDLogDebug("通讯录权限判断")
+        if !OrganizationPermissionManager.shared.isCurrentPersonCannotQueryAll() && !OrganizationPermissionManager.shared.isCurrentPersonCannotQueryOuter() {
+            DDLogDebug("不能查询其他")
+            self.initSearch()
+        }
         
-        
-        self.initSearch()
         self.definesPresentationContext = true
-//        self.automaticallyAdjustsScrollViewInsets = false
         self.tableView.separatorStyle = .none
         
         self.loadMyData(nil)
@@ -79,27 +78,27 @@ class ContactHomeViewController: UITableViewController {
     private func initSearch(){
         
         searchController = UISearchController(searchResultsController: nil)
-        searchController.delegate = self
-        searchController.searchBar.delegate = self
-        searchController.searchResultsUpdater = self
+        searchController?.delegate = self
+        searchController?.searchBar.delegate = self
+        searchController?.searchResultsUpdater = self
         
-        searchController.dimsBackgroundDuringPresentation = false
-        searchController.hidesNavigationBarDuringPresentation = false
+        searchController?.dimsBackgroundDuringPresentation = false
+        searchController?.hidesNavigationBarDuringPresentation = false
         
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = L10n.cancel
         let attrs =  [NSAttributedString.Key.font: UIFont.init(name: "PingFangTC-Light", size: 14) ?? UIFont.systemFont(ofSize: 14),
          NSAttributedString.Key.foregroundColor: O2ThemeManager.color(for: "Base.base_color") ?? UIColor.red]
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes(attrs, for: .normal)
         
-        searchController.searchBar.searchBarStyle = UISearchBar.Style.minimal
-        searchController.searchBar.sizeToFit()
-        searchController.searchBar.placeholder = L10n.Contacts.searchPlaceholder
+        searchController?.searchBar.searchBarStyle = UISearchBar.Style.minimal
+        searchController?.searchBar.sizeToFit()
+        searchController?.searchBar.placeholder = L10n.Contacts.searchPlaceholder
         
-        self.tableView.tableHeaderView = searchController.searchBar
+        self.tableView.tableHeaderView = searchController?.searchBar
     }
     
     private func isSearchRealActive() -> Bool {
-        return self.searchController.isActive && self.searchFilter != ""
+        return self.searchController?.isActive == true && self.searchFilter != ""
     }
 
     override func didReceiveMemoryWarning() {
@@ -293,7 +292,7 @@ class ContactHomeViewController: UITableViewController {
     
     @objc func loadMyData(_ sender:AnyObject?){
         let urls = [0:myDepartmentURL,1:myCompanyURL]
-        var count = 0
+//        var count = 0
         //增加常用联系人
         self.contacts[2]?.removeAll()
         let collectTitle = HeadTitle(name: L10n.Contacts.topContacts, icon: O2ThemeManager.string(for: "Icon.icon_linkman")!)
@@ -304,9 +303,14 @@ class ContactHomeViewController: UITableViewController {
             let vm = CellViewModel(name: p.name!, sourceObject: p)
             self.contacts[2]?.append(vm)
         }
-        self.showLoading()
+       
         for (order,url) in urls {
             if order == 0 {
+                if OrganizationPermissionManager.shared.isCurrentPersonCannotQueryAll() {
+                   continue
+                }
+                self.showLoading()
+                DDLogDebug("查询了我的部门数据")
                 AF.request(url!, method: .get, parameters: nil, encoding:URLEncoding.default, headers: ["X-ORDER":String(order)]).validate().responseJSON {
                     response in
                     switch response.result {
@@ -332,18 +336,18 @@ class ContactHomeViewController: UITableViewController {
                         DDLogError(err.localizedDescription)
                     }
                     
-                    count += 1
-                    if count == urls.count {
-                        self.hideLoading()
-                        if self.tableView.mj_header.isRefreshing() == true {
-                            self.tableView.mj_header.endRefreshing()
-                        }
+                    self.hideLoading()
+                    if self.tableView.mj_header.isRefreshing() == true {
+                        self.tableView.mj_header.endRefreshing()
                     }
                     self.tableView.reloadData()
                     
                 }
             } else if order == 1 {
-                
+                if OrganizationPermissionManager.shared.isCurrentPersonCannotQueryAll() || OrganizationPermissionManager.shared.isCurrentPersonCannotQueryOuter() {
+                   continue
+                }
+                DDLogDebug("查询了公司组织架构")
                 AF.request(myPersonURL!, method: .get, parameters: nil, encoding:URLEncoding.default, headers: ["X-ORDER":String(order)]).validate().responseJSON {
                     response in
                     switch response.result {
@@ -376,34 +380,25 @@ class ContactHomeViewController: UITableViewController {
                                 case .failure(let err):
                                     DDLogError(err.localizedDescription)
                                 }
-                                count += 1
-                                if count == urls.count {
-                                    self.hideLoading()
-                                    if self.tableView.mj_header.isRefreshing() == true {
-                                        self.tableView.mj_header.endRefreshing()
-                                    }
-                                }
-                                self.tableView.reloadData()
-                            })
-                        }else {
-                            count += 1
-                            if count == urls.count {
                                 self.hideLoading()
                                 if self.tableView.mj_header.isRefreshing() == true {
                                     self.tableView.mj_header.endRefreshing()
                                 }
+                                self.tableView.reloadData()
+                            })
+                        }else {
+                            self.hideLoading()
+                            if self.tableView.mj_header.isRefreshing() == true {
+                                self.tableView.mj_header.endRefreshing()
                             }
                             self.tableView.reloadData()
                         }
                         
                     case .failure(let err):
                         DDLogError(err.localizedDescription)
-                        count += 1
-                        if count == urls.count {
-                            self.hideLoading()
-                            if self.tableView.mj_header.isRefreshing() == true {
-                                self.tableView.mj_header.endRefreshing()
-                            }
+                        self.hideLoading()
+                        if self.tableView.mj_header.isRefreshing() == true {
+                            self.tableView.mj_header.endRefreshing()
                         }
                         self.tableView.reloadData()
                     }

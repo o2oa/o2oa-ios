@@ -80,6 +80,7 @@ public enum O2ModuleContext {
     case x_calendar_assemble_control
     case x_jpush_assemble_control
     case x_query_assemble_surface
+    case x_organizationPermission // custom模块 通讯录 需要到应用市场下载安装
 
 }
 

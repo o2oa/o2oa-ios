@@ -752,6 +752,7 @@ open class O2CustomStyleModel: NSObject, DataModel, NSCoding, IO2CustomStyleMode
     @objc open var images : [O2CustomImageModel]?
     @objc open var indexPortal : String?
     @objc open var indexType : String?
+    @objc open var contactPermissionView: String? = O2.CUSTOM_STYLE_CONTACT_PERMISSION_DEFAULT
     @objc open var nativeAppList : [O2CustomNativeAppModel]?
     @objc open var portalList : [O2CustomPortalAppModel]?
     open var simpleMode: Bool?
@@ -765,6 +766,9 @@ open class O2CustomStyleModel: NSObject, DataModel, NSCoding, IO2CustomStyleMode
         }
         if indexType != nil {
             aCoder.encode(indexType, forKey: "indexType")
+        }
+        if contactPermissionView != nil {
+            aCoder.encode(contactPermissionView, forKey: "contactPermissionView")
         }
         if nativeAppList != nil {
             aCoder.encode(nativeAppList, forKey: "nativeAppList")
@@ -781,6 +785,7 @@ open class O2CustomStyleModel: NSObject, DataModel, NSCoding, IO2CustomStyleMode
         images = aDecoder.decodeObject(forKey: "images") as? [O2CustomImageModel]
         indexPortal = aDecoder.decodeObject(forKey: "indexPortal") as? String
         indexType = aDecoder.decodeObject(forKey: "indexType") as? String
+        contactPermissionView = aDecoder.decodeObject(forKey: "contactPermissionView") as? String
         nativeAppList = aDecoder.decodeObject(forKey: "nativeAppList") as? [O2CustomNativeAppModel]
         portalList = aDecoder.decodeObject(forKey: "portalList") as? [O2CustomPortalAppModel]
         simpleMode = aDecoder.decodeObject(forKey: "simpleMode") as? Bool

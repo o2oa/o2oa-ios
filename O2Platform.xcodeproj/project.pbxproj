@@ -219,6 +219,12 @@
 		B168BF4524F798430070329F /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B168BF4424F798430070329F /* GLKit.framework */; };
 		B168BF4724F798790070329F /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B168BF4624F7986C0070329F /* libz.1.2.5.tbd */; };
 		B169E3D421095EC9007156B3 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B169E3D321095EC9007156B3 /* Date+Extension.swift */; };
+		B16CA75426B1210D0009B24C /* O2AudioPlayFloatingWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16CA75326B1210D0009B24C /* O2AudioPlayFloatingWindow.swift */; };
+		B16CA78226B131CD0009B24C /* OrganizationPermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16CA78126B131CD0009B24C /* OrganizationPermissionManager.swift */; };
+		B16CA78426B132A80009B24C /* OrganizationPermissionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16CA78326B132A80009B24C /* OrganizationPermissionData.swift */; };
+		B16CA78726B13C390009B24C /* OrganizationPermissionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16CA78626B13C390009B24C /* OrganizationPermissionAPI.swift */; };
+		B16CA7B526B13D420009B24C /* O2MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16CA7B426B13D420009B24C /* O2MainViewModel.swift */; };
+		B16CA7B726B1437D0009B24C /* PersonIdentityListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16CA7B626B1437D0009B24C /* PersonIdentityListData.swift */; };
 		B17126C121084A2F00369F15 /* calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B17126C021084A2F00369F15 /* calendar.storyboard */; };
 		B1750078233C6908003DA7B9 /* BlockPan.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1750072233C6907003DA7B9 /* BlockPan.swift */; };
 		B1750079233C6908003DA7B9 /* BlockSwipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1750073233C6907003DA7B9 /* BlockSwipe.swift */; };
@@ -1420,6 +1426,12 @@
 		B168BF4424F798430070329F /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		B168BF4624F7986C0070329F /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		B169E3D321095EC9007156B3 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		B16CA75326B1210D0009B24C /* O2AudioPlayFloatingWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2AudioPlayFloatingWindow.swift; sourceTree = "<group>"; };
+		B16CA78126B131CD0009B24C /* OrganizationPermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationPermissionManager.swift; sourceTree = "<group>"; };
+		B16CA78326B132A80009B24C /* OrganizationPermissionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationPermissionData.swift; sourceTree = "<group>"; };
+		B16CA78626B13C390009B24C /* OrganizationPermissionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationPermissionAPI.swift; sourceTree = "<group>"; };
+		B16CA7B426B13D420009B24C /* O2MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2MainViewModel.swift; sourceTree = "<group>"; };
+		B16CA7B626B1437D0009B24C /* PersonIdentityListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonIdentityListData.swift; sourceTree = "<group>"; };
 		B17126C021084A2F00369F15 /* calendar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = calendar.storyboard; sourceTree = "<group>"; };
 		B1750072233C6907003DA7B9 /* BlockPan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockPan.swift; sourceTree = "<group>"; };
 		B1750073233C6907003DA7B9 /* BlockSwipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockSwipe.swift; sourceTree = "<group>"; };
@@ -1554,7 +1566,7 @@
 		B1FFF885223A23B200C170FD /* O2FlutterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2FlutterViewController.swift; sourceTree = "<group>"; };
 		B1FFF890223A4DA700C170FD /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
 		B1FFF891223A4DA700C170FD /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
-		C33461DCBCEEAF5B8597D54E /* Pods______.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods______.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C33461DCBCEEAF5B8597D54E /* Pods______.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods______.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E40502C220722208009A8D30 /* ImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
 		E40502C320722208009A8D30 /* ImageRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageRow.swift; sourceTree = "<group>"; };
 		E40502C420722208009A8D30 /* ImageCheckRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCheckRow.swift; sourceTree = "<group>"; };
@@ -2846,6 +2858,7 @@
 				B1298EB323682C21006E9236 /* O2SlideImageAFSource.swift */,
 				B1E95F4D2373DDC4004876B7 /* ZoomImageView.swift */,
 				B168BDCE24F62BA60070329F /* O2CanCopyUILabel.swift */,
+				B16CA75326B1210D0009B24C /* O2AudioPlayFloatingWindow.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -2912,6 +2925,7 @@
 				B15BE0BD2499BCEF008CD1DB /* O2RecordVoiceManager.swift */,
 				B15BE110249A6002008CD1DB /* AudioPlayerManager.swift */,
 				B1DB0842252314F400EE6673 /* SecurityCheckManager.swift */,
+				B16CA78126B131CD0009B24C /* OrganizationPermissionManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -2927,6 +2941,8 @@
 				E4B697082075FA550062F6E8 /* OOCommonRules.swift */,
 				B13A011D2369319300025F3B /* O2RunTrackFullData.swift */,
 				B1DB6EA4237E6F2C00D7BA94 /* O2VersionInfoModel.swift */,
+				B16CA78326B132A80009B24C /* OrganizationPermissionData.swift */,
+				B16CA7B626B1437D0009B24C /* PersonIdentityListData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2951,6 +2967,7 @@
 				E40E246E20B7DA3C009F8BE7 /* meeting-会议 */,
 				B19091FD2107145F009A7906 /* Calendar-日程管理 */,
 				E4A0790920CF5CC600B8AA84 /* VoiceAI-语音处理 */,
+				B16CA7B426B13D420009B24C /* O2MainViewModel.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -3533,6 +3550,7 @@
 				E4B69724207602A30062F6E8 /* Response+HandyJSON.swift */,
 				B1B214902160A69E00D9CA7E /* Tuling123API.swift */,
 				B1A91663265C9980004EE9E2 /* O2QuerySurfaceAPI.swift */,
+				B16CA78626B13C390009B24C /* OrganizationPermissionAPI.swift */,
 			);
 			path = O2API;
 			sourceTree = "<group>";
@@ -5129,6 +5147,7 @@
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
 				"${BUILT_PRODUCTS_DIR}/FSCalendar/FSCalendar.framework",
 				"${BUILT_PRODUCTS_DIR}/HandyJSON/HandyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/ImageSlideshow/ImageSlideshow.framework",
 				"${BUILT_PRODUCTS_DIR}/JTCalendar/JTCalendar.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
@@ -5168,6 +5187,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FMDB.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FSCalendar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HandyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImageSlideshow.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JTCalendar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
@@ -5330,6 +5350,7 @@
 				E41441DF1DCB233A00E3DDA3 /* BSSMainViewController.swift in Sources */,
 				B1B0102B23586831002BF874 /* CFFolderTableViewCell.swift in Sources */,
 				E45DA9081DAF509C00E0735D /* SFeedbackViewController.swift in Sources */,
+				B16CA78726B13C390009B24C /* OrganizationPermissionAPI.swift in Sources */,
 				E40E24B120B7DA3C009F8BE7 /* OOMeetingInforController.swift in Sources */,
 				E4B888711D9D48F1002E1A46 /* ContactSearchViewController.swift in Sources */,
 				B130A7852281597000282AD1 /* DeviceManagerViewModel.swift in Sources */,
@@ -5340,6 +5361,7 @@
 				E4B8885E1D9D48F1002E1A46 /* O2CollectionView.swift in Sources */,
 				B13A011123692A8B00025F3B /* O2CloudFileManager.swift in Sources */,
 				E4B888651D9D48F1002E1A46 /* config.swift in Sources */,
+				B16CA7B526B13D420009B24C /* O2MainViewModel.swift in Sources */,
 				E4D2310F209C40F600837868 /* OOPersonCollectionViewCell.swift in Sources */,
 				B1173A672488CD5B005075F0 /* IMConversationItemCell.swift in Sources */,
 				B1534E3F21F712EA00CC8C35 /* O2DemoAlertView.swift in Sources */,
@@ -5494,6 +5516,7 @@
 				E4B888A61D9D48F1002E1A46 /* MJRefreshGifHeader.m in Sources */,
 				E4B8886B1D9D48F1002E1A46 /* ContactCompanyDeptController.swift in Sources */,
 				E4B8888F1D9D48F1002E1A46 /* InputView.m in Sources */,
+				B16CA7B726B1437D0009B24C /* PersonIdentityListData.swift in Sources */,
 				E428AF3E20A95E1600D964B9 /* OONewAttanceController.swift in Sources */,
 				E4B8886A1D9D48F1002E1A46 /* O2URLContext.swift in Sources */,
 				B1750083233C86D6003DA7B9 /* UITextViewExtensions.swift in Sources */,
@@ -5548,6 +5571,7 @@
 				09E02E8C1F16319600579887 /* Haneke.swift in Sources */,
 				B1E95F7B23750CC2004876B7 /* CloudFilePreviewController.swift in Sources */,
 				E4C24C52208D7EDE00E426B0 /* OOContactUnitHeader.swift in Sources */,
+				B16CA75426B1210D0009B24C /* O2AudioPlayFloatingWindow.swift in Sources */,
 				B1B1303025021EAC003B99DF /* WorkInfoResData.swift in Sources */,
 				B165CD662242093500373B66 /* OOAlertViewController.swift in Sources */,
 				E428AF5D20AC1CD100D964B9 /* OOAttandanceViewModel.swift in Sources */,
@@ -5717,6 +5741,7 @@
 				E428AF5B20ABDCB400D964B9 /* OOAttandanceModels.swift in Sources */,
 				E486D99F1DB07BCE005BF545 /* SMessageNotiViewController.swift in Sources */,
 				E4184B1E1DB4A33500FCC907 /* SInfoAndSecurityViewController.swift in Sources */,
+				B16CA78226B131CD0009B24C /* OrganizationPermissionManager.swift in Sources */,
 				E45DA9061DAF4A2A00E0735D /* SAboutViewController.swift in Sources */,
 				E40E24AF20B7DA3C009F8BE7 /* OOMeetingRoomDetailViewController.swift in Sources */,
 				B12FD1D82283D5B700E636BA /* UIColorExtension.swift in Sources */,
@@ -5742,6 +5767,7 @@
 				E4740ABF1DCC267100686780 /* BBSHeaderCollectionReusableView.swift in Sources */,
 				E40E24CE20B7DA3C009F8BE7 /* OOFormBaseView.swift in Sources */,
 				E40E24AB20B7DA3C009F8BE7 /* OOMeetingRoomDetailViewModel.swift in Sources */,
+				B16CA78426B132A80009B24C /* OrganizationPermissionData.swift in Sources */,
 				E4B888841D9D48F1002E1A46 /* FileTableViewCell.swift in Sources */,
 				B169E3D421095EC9007156B3 /* Date+Extension.swift in Sources */,
 				E4F4544C208F0401002FBC32 /* OOContactPersonCell.swift in Sources */,

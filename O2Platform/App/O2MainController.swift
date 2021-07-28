@@ -26,6 +26,9 @@ class O2MainController: UITabBarController, UITabBarControllerDelegate {
     private let viewModel: OOLoginViewModel = {
         return OOLoginViewModel()
     }()
+    private lazy var mainViewModel: O2MainViewModel = {
+        return O2MainViewModel()
+    }()
     //获取消息数量
     private lazy var imViewModel: IMViewModel = {
         return IMViewModel()
@@ -46,7 +49,9 @@ class O2MainController: UITabBarController, UITabBarControllerDelegate {
         if UIDevice.deviceModelReadable() != "Simulator" {
             self.checkAppVersion()
         }
-        //
+        //查询通讯录权限
+        self.mainViewModel.loadOrgContactPermission()
+        
         self.tabBar.tintColor = O2ThemeManager.color(for: "Base.base_color")!
         self.delegate = self
         // 配置是否简易模式

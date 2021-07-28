@@ -9,6 +9,7 @@
 import UIKit
 import QuickLook
 import CocoaLumberjack
+import AVKit
 
 class CloudFileBaseVC: UIViewController {
     
@@ -160,10 +161,12 @@ class CloudFileBaseVC: UIViewController {
                 self.previewFile(fileId: file.id!)
                 break
             case "music":
-                self.showMessage(msg: "音频类型还未支持！")
+//                self.showMessage(msg: "音频类型还未支持！")
+                self.playAudio(fileId: file.id!)
                 break
             case "movie":
-                self.showMessage(msg: "视频类型还未支持！")
+//                self.showMessage(msg: "视频类型还未支持！")
+                self.playMovie(fileId: file.id!)
                 break
             case "other":
                 self.previewFile(fileId: file.id!)
@@ -177,6 +180,44 @@ class CloudFileBaseVC: UIViewController {
         }
     }
     
+    /// 播放音频
+    func playAudio(fileId: String) {
+        self.showLoading()
+        O2CloudFileManager.shared
+            .getFileUrl(fileId: fileId)
+            .always {
+                self.hideLoading()
+            }.then { (path) in
+                let currentURL = URL(fileURLWithPath: path.path)
+                do {
+                    let data = try Data(contentsOf: currentURL)
+                    AudioPlayerManager.shared.managerAudioWithData(data, toplay: true)
+                } catch {
+                    DDLogError(error.localizedDescription)
+                }
+            }
+    }
+    
+    
+    /// 播放视频
+    func playMovie(fileId: String) {
+        self.showLoading()
+        O2CloudFileManager.shared
+            .getFileUrl(fileId: fileId)
+            .always {
+                self.hideLoading()
+            }.then { (path) in
+                let currentURL = URL(fileURLWithPath: path.path)
+                DDLogDebug(currentURL.description)
+                DDLogDebug(path.path)
+                let avPlayer = AVPlayer(url: currentURL)
+                let avVC = AVPlayerViewController()
+                avVC.player = avPlayer
+                self.presentVC(avVC)
+            }
+    }
+    
+    /// 预览文件
     func previewFile(fileId: String) {
         self.showLoading()
         O2CloudFileManager.shared

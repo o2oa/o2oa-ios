@@ -246,16 +246,22 @@ class ContactDeptPersonController: UITableViewController, UITextViewDelegate {
                     case 1:
                         if let units = Mapper<OrgUnit>().mapArray(JSONString:objects.description) {
                             for unit in units{
-                                let name = "\(unit.name!)(" + String(unit.subDirectIdentityCount+unit.subDirectUnitCount) + ")"
-                                let vm = CellViewModel(name: name,sourceObject: unit)
-                                self.contacts[tag]?.append(vm)
+                                // 权限排除
+                                if !OrganizationPermissionManager.shared.isExcludeUnit(unit: unit.distinguishedName ?? "") {
+                                    let name = "\(unit.name!)(" + String(unit.subDirectIdentityCount+unit.subDirectUnitCount) + ")"
+                                    let vm = CellViewModel(name: name,sourceObject: unit)
+                                    self.contacts[tag]?.append(vm)
+                                }
                             }
                         }
                     case 2:
                         if let identitys = Mapper<IdentityV2>().mapArray(JSONString:objects.description) {
                             for identity in identitys{
-                                let vm = CellViewModel(name: identity.name,sourceObject: identity)
-                                self.contacts[tag]?.append(vm)
+                                // 权限排除
+                                if !OrganizationPermissionManager.shared.isExcludePerson(person: identity.distinguishedName ?? "") {
+                                    let vm = CellViewModel(name: identity.name,sourceObject: identity)
+                                    self.contacts[tag]?.append(vm)
+                                }
                             }
                         }
                     default:

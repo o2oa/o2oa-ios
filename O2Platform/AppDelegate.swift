@@ -12,7 +12,7 @@ import AlamofireNetworkActivityIndicator
 import UserNotifications
 
 import Flutter
-//import IQKeyboardManagerSwift
+import IQKeyboardManagerSwift
 
 
 
@@ -121,9 +121,8 @@ class AppDelegate: FlutterAppDelegate, JPUSHRegisterDelegate, UNUserNotification
 //        OOPlusButtonSubclass.register()
         OOTabBarHelper.initTabBarStyle()
         
-        //
-//        IQKeyboardManager.shared.enable = false
-//        IQKeyboardManager.shared.enableAutoToolbar = false
+        
+        IQKeyboardManager.shared.enable = false
         
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }

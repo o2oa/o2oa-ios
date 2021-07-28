@@ -193,6 +193,9 @@ public class O2AuthSDK: NSObject {
         case .x_query_assemble_surface:
             return dic["x_query_assemble_surface"]
             
+        case .x_organizationPermission:
+            return dic["x_organizationPermission"]
+            
         }
         
         

@@ -32,6 +32,7 @@ PODS:
     - AlamofireImage (~> 4.0)
     - ImageSlideshow/Core
   - ImageSlideshow/Core (1.9.1)
+  - IQKeyboardManagerSwift (6.5.6)
   - JCore (2.1.2)
   - JMessage (3.9.1):
     - JCore (< 3.0.0, >= 2.0.0)
@@ -91,6 +92,7 @@ DEPENDENCIES:
   - HandyJSON (~> 5.0.2-beta)
   - ImageSlideshow (~> 1.9)
   - ImageSlideshow/Alamofire
+  - IQKeyboardManagerSwift (~> 6.5.0)
   - JCore (= 2.1.2)
   - JMessage
   - JPush (= 3.2.4)
@@ -132,6 +134,7 @@ SPEC REPOS:
     - FSCalendar
     - HandyJSON
     - ImageSlideshow
+    - IQKeyboardManagerSwift
     - JCore
     - JMessage
     - JPush
@@ -187,6 +190,7 @@ SPEC CHECKSUMS:
   FSCalendar: 3a5ed3636e2ba1b83ebebfcf0c2603105a6f5efe
   HandyJSON: e18b035d60cb4847c609a59bb831c5db8c549663
   ImageSlideshow: 67184be896a28472bd3b906c33ce4e0734aa3d22
+  IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
   JCore: 1a426120b510cdebfd67b82bfb9483238ee09413
   JMessage: 43dfcd5348573b2f4f24357b12e9b19076322606
   JPush: 29466e5f30dbd703f640d70540e411e829cac1fa
@@ -212,6 +216,6 @@ SPEC CHECKSUMS:
   YHPhotoKit: e88368af1fca0a110d41b88417088f7e49876981
   YHPopupView: 96d9c05c79a2a17cf69c3def09e5305cfae9e8e8
 
-PODFILE CHECKSUM: c20b7098923bc1fd3d4af8adefd2b0ada4b76a9e
+PODFILE CHECKSUM: 53fb07c16a5b9e5a81082fa14a7da99b34fd0d89
 
 COCOAPODS: 1.10.1

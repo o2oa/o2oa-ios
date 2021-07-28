@@ -146,8 +146,12 @@ class ContactPersonInfoV2ViewController: UITableViewController {
             cell.valueLab.text = self.contact?.unique
             cell.eventBut.isHidden = true
         case L10n.Contacts.contactNumber:
-            cell.valueLab.text = self.contact?.mobile
-            cell.eventBut.addTarget(self, action: #selector(self.call), for: UIControl.Event.touchUpInside)
+            if OrganizationPermissionManager.shared.isHiddenMobile(person: self.contact?.distinguishedName ?? "") {
+                cell.valueLab.text = "***********"
+            } else {
+                cell.valueLab.text = self.contact?.mobile
+//                cell.eventBut.addTarget(self, action: #selector(self.call), for: UIControl.Event.touchUpInside)
+            }
         case L10n.Contacts.email:
             cell.valueLab.text = self.contact?.mail
             cell.eventBut.theme_setImage(ThemeImagePicker(keyPath:"Icon.icon_email"), forState: .normal)
@@ -177,7 +181,9 @@ class ContactPersonInfoV2ViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch self.nameLabs[indexPath.row] {
         case L10n.Contacts.contactNumber:
-            self.call()
+            if !OrganizationPermissionManager.shared.isHiddenMobile(person: self.contact?.distinguishedName ?? "") {
+                self.call()
+            }
         case L10n.Contacts.email:
             self.sendMail()
         default:

@@ -16,6 +16,8 @@ enum OOContactExpressAPI {
     case identityListByUnitAndDuty([String], String)
     //查询人员person的dn
     case personListDN([String])
+    // 人员转身份
+    case personIdentityByPersonList([String])
 }
 
 
@@ -44,12 +46,14 @@ extension OOContactExpressAPI: TargetType {
             return "/jaxrs/unitduty/list/identity/unit/name/object"
         case .personListDN(_):
             return "/jaxrs/person/list"
+        case .personIdentityByPersonList(_):
+            return "/jaxrs/identity/list/person"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .identityListByUnitAndDuty(_, _), .personListDN(_):
+        case .identityListByUnitAndDuty(_, _), .personListDN(_), .personIdentityByPersonList(_):
             return .post
         }
     }
@@ -64,6 +68,8 @@ extension OOContactExpressAPI: TargetType {
             return .requestParameters(parameters: ["nameList": dutyList, "unit": unit], encoding: JSONEncoding.default)
         case .personListDN(let idList):
             return.requestParameters(parameters: ["personList": idList], encoding: JSONEncoding.default)
+        case .personIdentityByPersonList(let personList):
+            return.requestParameters(parameters: ["personList": personList], encoding: JSONEncoding.default)
         }
     }
     
