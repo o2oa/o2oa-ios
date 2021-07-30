@@ -175,7 +175,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tng-Po-1rH">
                                         <rect key="frame" x="60" y="21" width="294" height="28"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_sousuo1" translatesAutoresizingMaskIntoConstraints="NO" id="4h2-Ob-DMO">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_sousuo" translatesAutoresizingMaskIntoConstraints="NO" id="4h2-Ob-DMO">
                                                 <rect key="frame" x="5" y="3" width="22" height="22"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="22" id="gW0-I4-W2l"/>
@@ -235,7 +235,9 @@
                         <outlet property="myNavBarHeight" destination="hDa-ZV-5Bs" id="rqg-6l-w1r"/>
                         <outlet property="scanBtn" destination="bWD-EE-ZVD" id="PlJ-PW-bZu"/>
                         <outlet property="searchBar" destination="tng-Po-1rH" id="sht-tK-iTw"/>
+                        <outlet property="searchBarIcon" destination="4h2-Ob-DMO" id="QHR-Sv-OcO"/>
                         <outlet property="tableView" destination="vbb-IJ-YEQ" id="Ov2-c9-jlM"/>
+                        <outlet property="topHeaderBar" destination="JJt-Vr-ujH" id="v8j-Pd-8UO"/>
                         <segue destination="1VT-mT-wvg" kind="show" identifier="showTodoTaskSegue" id="SwG-Rc-UPd"/>
                         <segue destination="Lit-tA-usI" kind="show" identifier="showAppCategorySegue" animates="NO" id="V8m-f4-bAt"/>
                         <segue destination="g80-nM-0Sh" kind="show" identifier="showMailSegue" id="97y-zw-SwJ"/>
@@ -745,7 +747,7 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="icon_daiban" width="38" height="38"/>
-        <image name="icon_sousuo1" width="22" height="22"/>
+        <image name="icon_sousuo" width="22" height="22"/>
         <image name="menu_scan_qrcode" width="16" height="16"/>
         <image name="todoedStatusIcon" width="32" height="32"/>
         <systemColor name="darkTextColor">
