@@ -97,7 +97,7 @@ class O2SearchController: UIViewController {
         self.searchBar?.layer.masksToBounds = true
         self.searchBar?.backgroundColor = .white
         self.searchBar?.delegate = self
-        self.searchBar?.setImage(UIImage(named: "icon_sousuo"), for: .search, state: .normal)
+        self.searchBar?.setImage(O2ThemeManager.image(for: "Icon.icon_sousuo"), for: .search, state: .normal)
         view.addSubview(self.searchBar!)
         self.navigationItem.titleView = view
     }

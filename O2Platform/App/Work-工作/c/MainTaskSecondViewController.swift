@@ -20,6 +20,8 @@ class MainTaskSecondViewController: UIViewController {
     
     fileprivate static let PAGE_SIZE = 20
     
+    @IBOutlet weak var searchBarIcon: UIImageView!
+    @IBOutlet weak var topHeaderBar: UIView!
     @IBOutlet weak var scanBtn: UIButton!
     @IBOutlet weak var addBtn: UIButton!
     @IBOutlet weak var searchBar: UIView!
@@ -76,6 +78,7 @@ class MainTaskSecondViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.topHeaderBar.backgroundColor = base_color
         self.navigationController?.navigationBar.isHidden = true
         self.tableView.delegate = self
         loadHomeApps()
@@ -109,6 +112,7 @@ class MainTaskSecondViewController: UIViewController {
 //        self.navView.addBtn?.addTarget(self, action: #selector(startFlowAction(_:)), for: .touchUpInside)
 //        self.view.addSubview(self.navView)
         self.myNavBarHeight.constant = safeAreaTopHeight
+        self.searchBarIcon.image = O2ThemeManager.image(for: "Icon.icon_sousuo")
         self.scanBtn.addTarget(self, action: #selector(startScanAction(_:)), for: .touchUpInside)
         self.addBtn.addTarget(self, action: #selector(startFlowAction(_:)), for: .touchUpInside)
         self.searchBar.addTapGesture { (tap) in
