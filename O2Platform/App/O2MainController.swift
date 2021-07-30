@@ -88,15 +88,16 @@ class O2MainController: UITabBarController, UITabBarControllerDelegate {
 
     override func viewDidAppear(_ animated: Bool) {
         // 判断是否 第一次安装 是否是连接的demo服务器
-        if let unit = O2AuthSDK.shared.bindUnit() {
-            if "demo.o2oa.net" == unit.centerHost || "demo.o2oa.io" == unit.centerHost || "demo.o2server.io" == unit.centerHost || "sample.o2oa.net" == unit.centerHost {
-                let tag = AppConfigSettings.shared.demoAlertTag
-                if !tag {
-                    demoAlertView.showFallDown()
-                    AppConfigSettings.shared.demoAlertTag = true
-                }
-            }
-        }
+        // 演示版不需要
+//        if let unit = O2AuthSDK.shared.bindUnit() {
+//            if "demo.o2oa.net" == unit.centerHost || "demo.o2oa.io" == unit.centerHost || "demo.o2server.io" == unit.centerHost || "sample.o2oa.net" == unit.centerHost {
+//                let tag = AppConfigSettings.shared.demoAlertTag
+//                if !tag {
+//                    demoAlertView.showFallDown()
+//                    AppConfigSettings.shared.demoAlertTag = true
+//                }
+//            }
+//        }
     }
 
     //MARK: -- delegate

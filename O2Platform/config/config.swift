@@ -10,13 +10,13 @@ import Foundation
 
 
 //是否连接到collect服务器 直连版本false 需要在Info.plist配置服务器信息
-let O2IsConnect2Collect = true
+let O2IsConnect2Collect = false
 
 //一些常量
 //bugly
 let BUGLY_ID = "0bc87f457b"
 //极光
-let JPUSH_APP_KEY = "9aca7cc20fe0cc987cd913ca"
+let JPUSH_APP_KEY = "566a3097b17c7d081630c5b6"
 let JPUSH_channel = "Publish channel"
 //百度
 let BAIDU_MAP_KEY = "5puNDSnNjRTOFyHB2YbLsxg7NzdwKLzi"

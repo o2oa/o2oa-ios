@@ -398,13 +398,21 @@
                                     <action selector="bioAuthLoginBtnAction:" destination="a0S-mR-qpd" eventType="touchUpInside" id="Ul1-Ln-gkh"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MNj-5L-R8L">
+                                <rect key="frame" x="359" y="24" width="0.0" height="0.0"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="MNj-5L-R8L" firstAttribute="top" secondItem="5mI-Py-vbm" secondAttribute="topMargin" constant="24" id="3A1-nH-Z86"/>
                             <constraint firstItem="A52-E8-znd" firstAttribute="trailing" secondItem="5mI-Py-vbm" secondAttribute="trailingMargin" id="8Dk-wa-Ccx"/>
                             <constraint firstItem="VU6-Hu-1I4" firstAttribute="leading" secondItem="5mI-Py-vbm" secondAttribute="leadingMargin" constant="16" id="Hv5-AB-8oh"/>
                             <constraint firstAttribute="trailingMargin" secondItem="sdH-Rd-Uu5" secondAttribute="trailing" constant="16" id="TtL-jY-jKL"/>
                             <constraint firstItem="wxO-Qg-4fw" firstAttribute="top" secondItem="gLp-Ql-ZqA" secondAttribute="bottom" constant="60" id="fPU-OV-aGc"/>
+                            <constraint firstItem="MNj-5L-R8L" firstAttribute="trailing" secondItem="5mI-Py-vbm" secondAttribute="trailingMargin" id="gCg-Sb-kVk"/>
                             <constraint firstAttribute="trailingMargin" secondItem="VlL-pa-xtW" secondAttribute="trailing" id="gvX-Ce-MAk"/>
                             <constraint firstItem="VlL-pa-xtW" firstAttribute="leading" secondItem="5mI-Py-vbm" secondAttribute="leadingMargin" id="j3r-BR-mFm"/>
                             <constraint firstItem="T98-3m-c1C" firstAttribute="top" secondItem="A52-E8-znd" secondAttribute="bottom" constant="20" id="jBT-eo-ZAy"/>
@@ -419,6 +427,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="bindingServerName" destination="MNj-5L-R8L" id="Rfx-wW-M2X"/>
                         <outlet property="bioAuthLoginBtn" destination="VU6-Hu-1I4" id="RDQ-Zu-A9j"/>
                         <outlet property="copyrightLabel" destination="A52-E8-znd" id="Ybu-EC-cUV"/>
                         <outlet property="logoImageView" destination="wxO-Qg-4fw" id="Hh7-Oe-gAu"/>

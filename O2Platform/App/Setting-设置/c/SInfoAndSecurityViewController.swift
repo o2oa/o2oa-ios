@@ -8,6 +8,7 @@
 
 import UIKit
 import Eureka
+import CocoaLumberjack
 
 
 class SInfoAndSecurityViewController: FormViewController {
@@ -29,17 +30,18 @@ class SInfoAndSecurityViewController: FormViewController {
             cell.accessoryType = .disclosureIndicator
         }
         
-        
-        if O2IsConnect2Collect {
-            let unit =  O2AuthSDK.shared.bindUnit()
-            form +++ Section()
-                <<< LabelRow(){
-                    $0.title = "绑定服务器"
-                    $0.value = unit?.name
-                    }.cellUpdate({ (cell, row) in
-                        cell.accessoryType = .none
-                    })
-        }
+        //演示版本 显示绑定的服务器
+//        if O2IsConnect2Collect {
+//
+//        }
+        let unit =  SampleEditionManger.shared.getCurrentUnit()
+        form +++ Section()
+            <<< LabelRow(){
+                $0.title = "绑定服务器"
+                $0.value = unit.name
+            }.onCellSelection({ (cell, row) in
+                self.chooseBindSampleServer()
+            })
         
        form +++ Section()
             <<< LabelRow(){
@@ -97,6 +99,35 @@ class SInfoAndSecurityViewController: FormViewController {
         authRow?.title = typeTitle
         authRow?.value = typeValue
         authRow?.updateCell()
+    }
+    
+    /// 选择绑定的演示服务器
+    private func chooseBindSampleServer() {
+        let unitList = SampleEditionManger.shared.unitList
+        var actions: [UIAlertAction] = []
+        for item in unitList {
+            let action = UIAlertAction(title: item.name, style: .default) { (action) in
+                self.change2Unit(unit: item)
+            }
+            actions.append(action)
+        }
+        self.showSheetAction(title: "提示", message: "切换访问环境", actions: actions)
+    }
+    
+    private func change2Unit(unit: O2BindUnitModel) {
+        self.showDefaultConfirm(title: "提示", message: "确定要切换访问环境吗，会重启应用并且需要新环境的用户密码进行登录？") { (action) in
+            SampleEditionManger.shared.setCurrent(unit: unit)
+            O2AuthSDK.shared.logout { (result, msg) in
+                DDLogInfo("O2 登出 \(result), msg：\(msg ?? "")")
+            }
+            O2AuthSDK.shared.clearAllInformationBeforeReBind(callback: { (result, msg) in
+                DDLogInfo("清空登录和绑定信息，result:\(result), msg:\(msg ?? "")")
+                DBManager.shared.removeAll()
+                DispatchQueue.main.async {
+                    self.forwardDestVC("login", "startFlowVC")
+                }
+            })
+        }
     }
     
     private func checkBioType() {

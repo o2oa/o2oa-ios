@@ -226,6 +226,7 @@
 		B16CA7B526B13D420009B24C /* O2MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16CA7B426B13D420009B24C /* O2MainViewModel.swift */; };
 		B16CA7B726B1437D0009B24C /* PersonIdentityListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16CA7B626B1437D0009B24C /* PersonIdentityListData.swift */; };
 		B17126C121084A2F00369F15 /* calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B17126C021084A2F00369F15 /* calendar.storyboard */; };
+		B174DDBE26B39C0800A3B503 /* SampleEditionManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B174DDBD26B39C0800A3B503 /* SampleEditionManger.swift */; };
 		B1750078233C6908003DA7B9 /* BlockPan.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1750072233C6907003DA7B9 /* BlockPan.swift */; };
 		B1750079233C6908003DA7B9 /* BlockSwipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1750073233C6907003DA7B9 /* BlockSwipe.swift */; };
 		B175007A233C6908003DA7B9 /* BlockLongPress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1750074233C6908003DA7B9 /* BlockLongPress.swift */; };
@@ -1440,6 +1441,7 @@
 		B16CA7B426B13D420009B24C /* O2MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2MainViewModel.swift; sourceTree = "<group>"; };
 		B16CA7B626B1437D0009B24C /* PersonIdentityListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonIdentityListData.swift; sourceTree = "<group>"; };
 		B17126C021084A2F00369F15 /* calendar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = calendar.storyboard; sourceTree = "<group>"; };
+		B174DDBD26B39C0800A3B503 /* SampleEditionManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleEditionManger.swift; sourceTree = "<group>"; };
 		B1750072233C6907003DA7B9 /* BlockPan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockPan.swift; sourceTree = "<group>"; };
 		B1750073233C6907003DA7B9 /* BlockSwipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockSwipe.swift; sourceTree = "<group>"; };
 		B1750074233C6908003DA7B9 /* BlockLongPress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockLongPress.swift; sourceTree = "<group>"; };
@@ -2934,6 +2936,7 @@
 				B15BE110249A6002008CD1DB /* AudioPlayerManager.swift */,
 				B1DB0842252314F400EE6673 /* SecurityCheckManager.swift */,
 				B16CA78126B131CD0009B24C /* OrganizationPermissionManager.swift */,
+				B174DDBD26B39C0800A3B503 /* SampleEditionManger.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -5354,6 +5357,7 @@
 				B12FD1DB2283D5B700E636BA /* ThemeDictionaryPicker.swift in Sources */,
 				E4B888C01D9D48F1002E1A46 /* LoginViewController.swift in Sources */,
 				B1750085233C8736003DA7B9 /* UIFontExtensions.swift in Sources */,
+				B174DDBE26B39C0800A3B503 /* SampleEditionManger.swift in Sources */,
 				E4B888C71D9D48F1002E1A46 /* UnitDataTableViewCell.swift in Sources */,
 				B1A91668265C9DEB004EE9E2 /* O2SearchEntry.swift in Sources */,
 				09E02E931F16319600579887 /* NSURLResponse+Haneke.swift in Sources */,
@@ -6088,7 +6092,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 95;
+				CURRENT_PROJECT_VERSION = 60;
 				DEVELOPMENT_TEAM = C79YTQHHFY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6117,7 +6121,7 @@
 					"$(PROJECT_DIR)/O2Platform/Framework/lame/opencore-amr/lib",
 					"$(PROJECT_DIR)/O2Platform/Framework/BaiDuASR/BDSClientLib",
 				);
-				MARKETING_VERSION = 6.0.5;
+				MARKETING_VERSION = 6.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -6169,10 +6173,10 @@
 					"\"SwiftyUserDefaults\"",
 					"-w",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.o2oa.app.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = "net.o2oa.app.ios.sample-edition";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "9ebefd7c-6117-4bee-a96c-7ddb06ad4c6f";
-				PROVISIONING_PROFILE_SPECIFIER = "Company Developer profile";
+				PROVISIONING_PROFILE_SPECIFIER = "O2演示版-dev";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = none;
 				SWIFT_OBJC_BRIDGING_HEADER = "O2Platform/O2Platform-Bridging-Header.h";
@@ -6196,7 +6200,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 95;
+				CURRENT_PROJECT_VERSION = 60;
 				DEVELOPMENT_TEAM = C79YTQHHFY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6225,7 +6229,7 @@
 					"$(PROJECT_DIR)/O2Platform/Framework/lame/opencore-amr/lib",
 					"$(PROJECT_DIR)/O2Platform/Framework/BaiDuASR/BDSClientLib",
 				);
-				MARKETING_VERSION = 6.0.5;
+				MARKETING_VERSION = 6.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -6277,10 +6281,10 @@
 					"\"SwiftyUserDefaults\"",
 					"-w",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.o2oa.app.ios;
+				PRODUCT_BUNDLE_IDENTIFIER = "net.o2oa.app.ios.sample-edition";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "b23067fd-fb08-4b85-8255-d8f3d25abc8a";
-				PROVISIONING_PROFILE_SPECIFIER = "Company Distribute profile";
+				PROVISIONING_PROFILE_SPECIFIER = "O2演示版-打包发布";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = none;
 				SWIFT_OBJC_BRIDGING_HEADER = "O2Platform/O2Platform-Bridging-Header.h";

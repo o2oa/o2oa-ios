@@ -185,6 +185,7 @@
 "Login Login fail use other method" = "服务器验证登录失败，请尝试使用其它方式登录";
 "Login Get verification code" = "发送验证码";
 "Login Recapture" = "后重新发送";
+"Login Current Bind Server" = "当前绑定: ";
 
 /* contactc */
 "Contacts Search placeholder" = "请输入姓名、工号或拼音搜索...";

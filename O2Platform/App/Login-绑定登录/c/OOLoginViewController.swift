@@ -15,6 +15,9 @@ import AVFoundation
 /// 登录界面
 class OOLoginViewController: OOBaseViewController {
 
+    
+    @IBOutlet weak var bindingServerName: UILabel!
+    
     @IBOutlet weak var logoImageView: UIImageView!
     
     @IBOutlet weak var userNameTextField: OOUITextField!
@@ -29,6 +32,7 @@ class OOLoginViewController: OOBaseViewController {
     
     @IBOutlet weak var rebindBtn: UIButton!
     //修改成 其他登录方式按钮
+   
     @IBOutlet weak var bioAuthLoginBtn: UIButton!
     //生物识别登录是否开启
     private var bioIsOpen: Bool = false
@@ -58,6 +62,7 @@ class OOLoginViewController: OOBaseViewController {
         passwordTextField.buttonDelegate = self
         setupUI()
         
+        self.bindingServerName.text = L10n.Login.currentBindServer + (SampleEditionManger.shared.getCurrentUnit().name ?? "")
     }
     
     deinit {

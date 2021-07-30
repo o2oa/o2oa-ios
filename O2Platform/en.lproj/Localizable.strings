@@ -186,6 +186,7 @@
 "Login Login fail use other method" = "Server authentication login failed, please try to login in another way";
 "Login Get verification code" = "Get verification code";
 "Login Recapture" = "Recapture";
+"Login Current Bind Server" = "Current binding: ";
 
 /* contactc */
 "Contacts Search placeholder" = "Please enter name or pinyin to search...";

@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>zh_CN</string>
 	<key>CFBundleDisplayName</key>
-	<string>O2OA</string>
+	<string>O2演示版</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -188,5 +188,36 @@
 		<key>name</key>
 		<string>sample</string>
 	</dict>
+	<key>o2SampleServerList</key>
+	<array>
+		<dict>
+			<key>centerContext</key>
+			<string>/x_program_center</string>
+			<key>centerHost</key>
+			<string>sample.o2oa.net</string>
+			<key>centerPort</key>
+			<integer>40030</integer>
+			<key>httpProtocol</key>
+			<string>https</string>
+			<key>id</key>
+			<string>sample</string>
+			<key>name</key>
+			<string>演示环境</string>
+		</dict>
+		<dict>
+			<key>centerContext</key>
+			<string>/x_program_center</string>
+			<key>centerHost</key>
+			<string>case1.o2oa.net</string>
+			<key>centerPort</key>
+			<real>20030</real>
+			<key>httpProtocol</key>
+			<string>http</string>
+			<key>id</key>
+			<string>case1</string>
+			<key>name</key>
+			<string>政务环境</string>
+		</dict>
+	</array>
 </dict>
 </plist>

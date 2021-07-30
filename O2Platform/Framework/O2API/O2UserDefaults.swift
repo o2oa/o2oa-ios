@@ -39,6 +39,7 @@ extension UserDefaults {
 // MARK:- 扩展定义的键
 extension DefaultsKeys {
     static let unit = DefaultsKey<O2BindUnitModel?>("O2unit")
+    static let sampleUnit = DefaultsKey<O2BindUnitModel?>("sampleUnit")
     static let device = DefaultsKey<O2BindDeviceModel?>("O2device")
     static let deviceToken = DefaultsKey<String?>("deviceToken")
     static let centerServer = DefaultsKey<O2CenterServerModel?>("O2centerServer")
@@ -77,6 +78,17 @@ class O2UserDefaults {
         }
         set {
             Defaults[.unit] =  newValue
+        }
+    }
+    var sampleUnit: O2BindUnitModel? {
+        get {
+            guard  let unit = Defaults[.sampleUnit] else {
+                return nil
+            }
+            return unit
+        }
+        set {
+            Defaults[.sampleUnit] = newValue
         }
     }
     var device: O2BindDeviceModel? {

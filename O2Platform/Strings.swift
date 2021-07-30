@@ -172,6 +172,7 @@ internal enum L10n {
         internal static let loginFailUseOtherMethod = L10n.tr("Localizable", "Login Login fail use other method")
         internal static let getVarificationCode = L10n.tr("Localizable", "Login Get verification code")
         internal static let recapture = L10n.tr("Localizable", "Login Recapture")
+        internal static let currentBindServer = L10n.tr("Localizable", "Login Current Bind Server")
 
         internal static func loginErrorWith(_ info: String) ->  String {
             return L10n.tr("Localizable", "Login Login fail error", info)
