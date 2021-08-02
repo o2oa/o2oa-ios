@@ -43,7 +43,9 @@ class ContactPersonInfoV2ViewController: UITableViewController {
         
     }
     
-    let nameLabs = [L10n.Contacts.enterpriseInformation, L10n.Contacts.personName, L10n.Contacts.employeeNumber, L10n.Contacts.uniqueCode, L10n.Contacts.contactNumber, L10n.Contacts.email, L10n.Contacts.dept]
+    let nameLabs = [L10n.Contacts.enterpriseInformation, L10n.Contacts.personName, L10n.Contacts.employeeNumber,
+                    L10n.Contacts.uniqueCode, L10n.Contacts.contactNumber, L10n.Contacts.email, L10n.Contacts.dept
+                    , L10n.Contacts.officePhone, L10n.Contacts.superior, L10n.Contacts.boardDate, L10n.Contacts.description]
     
     var myPersonURL:String?
     
@@ -61,12 +63,16 @@ class ContactPersonInfoV2ViewController: UITableViewController {
     }
     
     var isLoadPerson:Bool = true
-    
+    // 个人信息
     var contact:PersonV2? {
         didSet {
             isLoadPerson = false
         }
     }
+    // 个人属性
+    var attributes: [PersonAttribute] = []
+    // 包含用户信息 和 个人属性的列表 展现
+    var personInfoList: [PersonInfoWithAttributes] = []
     //im 聊天
     private lazy var viewModel: IMViewModel = {
         return IMViewModel()
@@ -122,58 +128,87 @@ class ContactPersonInfoV2ViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return nameLabs.count
+        return personInfoList.count
     }
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "personInfoCell", for: indexPath) as! ContactPersonInfoCell
 
-        cell.nameLab.text = self.nameLabs[indexPath.row]
-        switch self.nameLabs[indexPath.row] {
-        case L10n.Contacts.enterpriseInformation:
-            cell.nameLab.font = UIFont.systemFont(ofSize: 17)
-            cell.nameLab.textColor = UIColor.black
-            cell.valueLab.isHidden = true
-            cell.eventBut.isHidden = true
-        case L10n.Contacts.personName:
-            cell.valueLab.text = self.contact?.name
-            cell.eventBut.isHidden = true
-        case L10n.Contacts.employeeNumber:
-            cell.valueLab.text = self.contact?.employee
-            cell.eventBut.isHidden = true
-        case L10n.Contacts.uniqueCode:
-            cell.valueLab.text = self.contact?.unique
-            cell.eventBut.isHidden = true
-        case L10n.Contacts.contactNumber:
-            if OrganizationPermissionManager.shared.isHiddenMobile(person: self.contact?.distinguishedName ?? "") {
-                cell.valueLab.text = "***********"
-            } else {
-                cell.valueLab.text = self.contact?.mobile
-//                cell.eventBut.addTarget(self, action: #selector(self.call), for: UIControl.Event.touchUpInside)
-            }
-        case L10n.Contacts.email:
-            cell.valueLab.text = self.contact?.mail
-            cell.eventBut.theme_setImage(ThemeImagePicker(keyPath:"Icon.icon_email"), forState: .normal)
-            cell.eventBut.addTarget(self, action: #selector(self.sendMail), for: UIControl.Event.touchUpInside)
-        case L10n.Contacts.dept:
-            var unitName = ""
-            if let idenList = self.contact?.woIdentityList {
-                for iden in idenList {
-                    if let unit = iden.woUnit {
-                        if unitName != "" {
-                            unitName.append(";")
+        //
+        let data = self.personInfoList[indexPath.row]
+        if data.infoType == 0 {
+            cell.nameLab.text = data.name
+            switch data.name {
+            case L10n.Contacts.enterpriseInformation:
+                cell.nameLab.font = UIFont.systemFont(ofSize: 17)
+                cell.nameLab.textColor = UIColor.black
+                cell.valueLab.isHidden = true
+                cell.eventBut.isHidden = true
+            case L10n.Contacts.personName:
+                cell.valueLab.text = self.contact?.name
+                cell.eventBut.isHidden = true
+            case L10n.Contacts.employeeNumber:
+                cell.valueLab.text = self.contact?.employee
+                cell.eventBut.isHidden = true
+            case L10n.Contacts.uniqueCode:
+                cell.valueLab.text = self.contact?.unique
+                cell.eventBut.isHidden = true
+            case L10n.Contacts.contactNumber:
+                if OrganizationPermissionManager.shared.isHiddenMobile(person: self.contact?.distinguishedName ?? "") {
+                    cell.valueLab.text = "***********"
+                } else {
+                    cell.valueLab.text = self.contact?.mobile
+    //                cell.eventBut.addTarget(self, action: #selector(self.call), for: UIControl.Event.touchUpInside)
+                }
+            case L10n.Contacts.email:
+                cell.valueLab.text = self.contact?.mail
+                cell.eventBut.theme_setImage(ThemeImagePicker(keyPath:"Icon.icon_email"), forState: .normal)
+                cell.eventBut.addTarget(self, action: #selector(self.sendMail), for: UIControl.Event.touchUpInside)
+            case L10n.Contacts.dept:
+                var unitName = ""
+                if let idenList = self.contact?.woIdentityList {
+                    for iden in idenList {
+                        if let unit = iden.woUnit {
+                            if unitName != "" {
+                                unitName.append(";")
+                            }
+                            unitName.append(unit.name ?? "")
                         }
-                        unitName.append(unit.name ?? "")
                     }
                 }
+                cell.valueLab.text = unitName
+                cell.eventBut.isHidden = true
+            case L10n.Contacts.officePhone:
+                cell.valueLab.text = self.contact?.officePhone
+                cell.eventBut.isHidden = true
+            case L10n.Contacts.superior:
+                cell.valueLab.text = self.contact?.superior
+                cell.eventBut.isHidden = true
+            case L10n.Contacts.boardDate:
+                cell.valueLab.text = self.contact?.boardDate
+                cell.eventBut.isHidden = true
+            case L10n.Contacts.description:
+                cell.valueLab.text = self.contact?.desc
+                cell.eventBut.isHidden = true
+            case L10n.Contacts.personAttributes:
+                cell.nameLab.font = UIFont.systemFont(ofSize: 17)
+                cell.nameLab.textColor = UIColor.black
+                cell.nameLab.text = L10n.Contacts.personAttributes
+                cell.valueLab.isHidden = true
+                cell.eventBut.isHidden = true
+            default:
+                break
             }
-            cell.valueLab.text = unitName
-            cell.eventBut.isHidden = true
-        default:
-            break
+        } else if data.infoType == 1 {
+            if let attr = data.attr {
+                cell.nameLab.text = attr.name
+//                cell.nameLab.font = UIFont.systemFont(ofSize: 17)
+//                cell.nameLab.textColor = UIColor.black
+                cell.valueLab.text = attr.attributeList?.joined(separator: ", ")
+                cell.eventBut.isHidden = true
+            }
         }
-        
 
         return cell
     }
@@ -260,6 +295,24 @@ class ContactPersonInfoV2ViewController: UITableViewController {
             case .success( let val):
                 let json = JSON(val)["data"]
                 self.contact = Mapper<PersonV2>().map(JSONString:json.description)!
+                self.attributes = self.contact?.woPersonAttributeList ?? []
+                // 默认的用户信息
+                self.nameLabs.forEach { (label) in
+                    let attr = PersonInfoWithAttributes(infoType: 0, name: label, attr: nil)
+                    self.personInfoList.append(attr)
+                }
+                // 个人属性
+                if !self.attributes.isEmpty {
+                    let attr = PersonInfoWithAttributes(infoType: 0, name: L10n.Contacts.personAttributes, attr: nil)
+                    self.personInfoList.append(attr)
+                    self.attributes.forEach { (pAttr) in
+                        if pAttr.name != "appBindDeviceList" {
+                            let p = PersonInfoWithAttributes(infoType: 1, name: pAttr.name, attr: pAttr)
+                            self.personInfoList.append(p)
+                        }
+                    }
+                }
+                
                 //OOCon
                 let me = O2AuthSDK.shared.myInfo()
                 self.isCollect = DBManager.shared.isCollect(self.contact!, (me?.id)!)

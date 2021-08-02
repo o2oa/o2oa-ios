@@ -227,6 +227,7 @@
 		B16CA7B726B1437D0009B24C /* PersonIdentityListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16CA7B626B1437D0009B24C /* PersonIdentityListData.swift */; };
 		B17126C121084A2F00369F15 /* calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B17126C021084A2F00369F15 /* calendar.storyboard */; };
 		B174DDBE26B39C0800A3B503 /* SampleEditionManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B174DDBD26B39C0800A3B503 /* SampleEditionManger.swift */; };
+		B174DDF026B7D33D00A3B503 /* PersonAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = B174DDEF26B7D33D00A3B503 /* PersonAttribute.swift */; };
 		B1750078233C6908003DA7B9 /* BlockPan.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1750072233C6907003DA7B9 /* BlockPan.swift */; };
 		B1750079233C6908003DA7B9 /* BlockSwipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1750073233C6907003DA7B9 /* BlockSwipe.swift */; };
 		B175007A233C6908003DA7B9 /* BlockLongPress.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1750074233C6908003DA7B9 /* BlockLongPress.swift */; };
@@ -1442,6 +1443,7 @@
 		B16CA7B626B1437D0009B24C /* PersonIdentityListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonIdentityListData.swift; sourceTree = "<group>"; };
 		B17126C021084A2F00369F15 /* calendar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = calendar.storyboard; sourceTree = "<group>"; };
 		B174DDBD26B39C0800A3B503 /* SampleEditionManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleEditionManger.swift; sourceTree = "<group>"; };
+		B174DDEF26B7D33D00A3B503 /* PersonAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonAttribute.swift; sourceTree = "<group>"; };
 		B1750072233C6907003DA7B9 /* BlockPan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockPan.swift; sourceTree = "<group>"; };
 		B1750073233C6907003DA7B9 /* BlockSwipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockSwipe.swift; sourceTree = "<group>"; };
 		B1750074233C6908003DA7B9 /* BlockLongPress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockLongPress.swift; sourceTree = "<group>"; };
@@ -3872,6 +3874,7 @@
 				09E02E071F131F1800579887 /* OrgUnit.swift */,
 				09E02E0D1F16001B00579887 /* Head.swift */,
 				0952CF211F192D5700322552 /* SearchFilter.swift */,
+				B174DDEF26B7D33D00A3B503 /* PersonAttribute.swift */,
 			);
 			path = m;
 			sourceTree = "<group>";
@@ -5653,6 +5656,7 @@
 				B165CD582242093500373B66 /* CoverVerticalAnimation.swift in Sources */,
 				B13A010F236924BE00025F3B /* UIImageView+Extension.swift in Sources */,
 				B165CD672242093500373B66 /* CrossDissolveAnimation.swift in Sources */,
+				B174DDF026B7D33D00A3B503 /* PersonAttribute.swift in Sources */,
 				E4B7816B1DF8F2B2007B58A9 /* CMSApplication.swift in Sources */,
 				E4C24C51208D7EDE00E426B0 /* OOLinkManInfoCell.swift in Sources */,
 				E4C24C44208D7EDE00E426B0 /* OOUISearchController.swift in Sources */,
