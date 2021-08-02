@@ -196,9 +196,16 @@ internal enum L10n {
         internal static let employeeNumber = L10n.tr("Localizable", "Contacts Employee number")
         internal static let uniqueCode = L10n.tr("Localizable", "Contacts Unique code")
         internal static let contactNumber = L10n.tr("Localizable", "Contacts Contact number")
-        
         internal static let email = L10n.tr("Localizable", "Contacts Email")
         internal static let dept = L10n.tr("Localizable", "Contacts Dept")
+        
+        internal static let officePhone = L10n.tr("Localizable", "Contacts officePhone")
+        internal static let superior = L10n.tr("Localizable", "Contacts superior")
+        internal static let boardDate = L10n.tr("Localizable", "Contacts board date")
+        internal static let description = L10n.tr("Localizable", "Contacts desc")
+        internal static let personAttributes = L10n.tr("Localizable", "Contacts Person Attributes")
+        
+        
         internal static let initiateChat = L10n.tr("Localizable", "Contacts Initiate chat")
         internal static let unableToCreatChat = L10n.tr("Localizable", "Contacts Unable to create chat")
         internal static let sendEmail = L10n.tr("Localizable", "Contacts Send emails")
