@@ -35,11 +35,12 @@ class PersonV2:Mappable {
     var weixin : String?
     var officePhone : String?
     var boardDate : String?
+    var desc : String?
     var birthday : String?
     var ownerid: String?
     var woGroupList : [AnyObject]?
     var woIdentityList : [IdentityV2]?
-    var woPersonAttributeList : [AnyObject]?
+    var woPersonAttributeList : [PersonAttribute]?
     var woRoleList : [AnyObject]?
     
     required init?(map: Map){}
@@ -74,6 +75,7 @@ class PersonV2:Mappable {
         weixin <- map["weixin"]
         officePhone <- map["officePhone"]
         boardDate <- map["boardDate"]
+        desc <- map["description"]
         birthday <- map["birthday"]
         woGroupList <- map["woGroupList"]
         woIdentityList <- map["woIdentityList"]
@@ -83,4 +85,11 @@ class PersonV2:Mappable {
     }
     
     
+}
+
+
+struct PersonInfoWithAttributes {
+    var infoType: Int // 0 默认属性 1个人属性
+    var name: String? // infoType=0 显示的属性名称
+    var attr: PersonAttribute? // infoType=1 对应的个人属性
 }

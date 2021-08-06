@@ -199,6 +199,14 @@
 "Contacts Contact number" = "联系电话";
 "Contacts Email" = "电子邮件";
 "Contacts Dept" = "部门";
+
+"Contacts officePhone" = "办公电话";
+"Contacts superior" = "汇报对象";
+"Contacts board date" = "入职时间";
+"Contacts desc" = "描述";
+
+"Contacts Person Attributes" = "个人属性";
+
 "Contacts Initiate chat" = "发起聊天";
 "Contacts Unable to create chat" = "无法创建聊天！";
 "Contacts Send emails" = "发邮件";

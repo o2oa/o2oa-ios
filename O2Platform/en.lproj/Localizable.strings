@@ -206,6 +206,14 @@
 "Contacts Send emails Error" = "email is error";
 
 
+"Contacts officePhone" = "Office telephone";
+"Contacts superior" = "Superior";
+"Contacts board date" = "Entry time";
+"Contacts desc" = "Describe";
+
+"Contacts Person Attributes" = "个人属性";
+
+
 "Copy" = "Copy";
 "Copy succeeded" = "Copy succeeded";
 
