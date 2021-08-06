@@ -74,6 +74,12 @@ class OOAttendanceCheckInNewController: UIViewController {
     ///打卡
     private func postCheckinButton(_ scheduleInfo: OOAttandanceMobileScheduleInfo?) {
         
+        if self.bmkResult == nil {
+            DDLogError("没有获取到当前位置信息，无法打卡。。。。。")
+            self.showError(title: "无法获取到当前位置信息，请稍后再试！")
+            return
+        }
+        
         if let info = scheduleInfo, info.recordId != nil { //更新打卡
             self.showDefaultConfirm(title: "更新打卡", message: "确定要更新这条打卡数据吗？") { (action) in
                 self.showLoading()
@@ -351,7 +357,8 @@ extension OOAttendanceCheckInNewController: BMKLocationManagerDelegate {
             //搜索到指定的地点
             let re = BMKReverseGeoCodeSearchOption()
             re.location = CLLocationCoordinate2D(latitude: loc.coordinate.latitude, longitude: loc.coordinate.longitude)
-            let _ = searchAddress.reverseGeoCode(re)
+            let s = searchAddress.reverseGeoCode(re)
+            DDLogDebug("查询地址结果: \(s)")
         } else {
             DDLogError("没有获取到定位信息！！！！！")
         }
