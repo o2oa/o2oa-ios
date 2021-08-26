@@ -88,8 +88,8 @@ class OOAttendanceCheckInNewController: UIViewController {
                 self.checkinForm.desc = self.bmkResult?.sematicDescription
                 self.checkinForm.longitude = String(self.bmkResult?.location.longitude ?? 0.0)
                 self.checkinForm.latitude = String(self.bmkResult?.location.latitude ?? 0.0)
-                self.checkinForm.empNo = O2AuthSDK.shared.myInfo()?.employee
-                self.checkinForm.empName = O2AuthSDK.shared.myInfo()?.name
+                self.checkinForm.empNo = "" //O2AuthSDK.shared.myInfo()?.employee
+                self.checkinForm.empName = ""// O2AuthSDK.shared.myInfo()?.name
                 let currenDate = Date()
                 self.checkinForm.recordDateString = currenDate.toString("yyyy-MM-dd")
                 self.checkinForm.signTime = currenDate.toString("HH:mm:ss")
@@ -128,14 +128,13 @@ class OOAttendanceCheckInNewController: UIViewController {
                 }
             }
             let checkType = newList.count > 0 ? newList.last!.checkinType : ""
-            self.showLoading()
             checkinForm.id = nil
             checkinForm.recordAddress = self.bmkResult?.address
             checkinForm.desc = self.bmkResult?.sematicDescription
             checkinForm.longitude = String(self.bmkResult?.location.longitude ?? 0.0)
             checkinForm.latitude = String(self.bmkResult?.location.latitude ?? 0.0)
-            checkinForm.empNo = O2AuthSDK.shared.myInfo()?.employee
-            checkinForm.empName = O2AuthSDK.shared.myInfo()?.name
+            checkinForm.empNo = "" //O2AuthSDK.shared.myInfo()?.employee
+            checkinForm.empName = ""// O2AuthSDK.shared.myInfo()?.name 
             let currenDate = Date()
             checkinForm.recordDateString = currenDate.toString("yyyy-MM-dd")
             checkinForm.signTime = currenDate.toString("HH:mm:ss")
@@ -158,6 +157,7 @@ class OOAttendanceCheckInNewController: UIViewController {
     }
     
     private func postMyCheckin(checkinForm: OOAttandanceMobileCheckinForm) {
+        self.showLoading()
         viewModel.postMyCheckin(checkinForm) { (result) in
             DispatchQueue.main.async {
                 self.hideLoading()
