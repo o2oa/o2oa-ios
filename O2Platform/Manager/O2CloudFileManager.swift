@@ -44,14 +44,20 @@ class O2CloudFileManager {
     //获取图片地址 根据传入的大小进行比例缩放
     func scaleImageUrl(id: String, width: Int = 200, height: Int = 200) -> String {
         let model = O2AuthSDK.shared.o2APIServer(context: .x_file_assemble_control)
-        let baseURLString = "\(model?.httpProtocol ?? "http")://\(model?.host ?? ""):\(model?.port ?? 0)\(model?.context ?? "")"
+        var baseURLString = "\(model?.httpProtocol ?? "http")://\(model?.host ?? ""):\(model?.port ?? 80)\(model?.context ?? "")"
+        if let trueUrl = O2AuthSDK.shared.bindUnitTransferUrl2Mapping(url: baseURLString) {
+            baseURLString = trueUrl
+        }
         return baseURLString + "/jaxrs/attachment2/\(id)/download/image/width/\(width)/height/\(height)"
     }
     
     //获取源文件下载地址
     func originFileUrl(id: String) -> String {
         let model = O2AuthSDK.shared.o2APIServer(context: .x_file_assemble_control)
-        let baseURLString = "\(model?.httpProtocol ?? "http")://\(model?.host ?? ""):\(model?.port ?? 0)\(model?.context ?? "")"
+        var baseURLString = "\(model?.httpProtocol ?? "http")://\(model?.host ?? ""):\(model?.port ?? 80)\(model?.context ?? "")"
+        if let trueUrl = O2AuthSDK.shared.bindUnitTransferUrl2Mapping(url: baseURLString) {
+            baseURLString = trueUrl
+        }
         return baseURLString + "/jaxrs/attachment2/\(id)/download"
     }
     

@@ -59,6 +59,9 @@ extension O2RegisterAPI: TargetType {
         switch self {
         case .downloadNodeAPI(let node),.verConfigInfo(let node),.downloadConfigInfo(let node):
             let urlString = "\(node.httpProtocol ?? "http")://\(node.centerHost!):\(node.centerPort!)"
+            if let trueUrl = node.transUrl2Mapping(url: urlString) {
+                return URL(string: trueUrl)!
+            }
             return URL(string:urlString)!
         default:
             return URL(string: O2ConfigInfo.COLLECT_SERVER_URL)!

@@ -42,7 +42,10 @@ extension O2InformationAPI:OOAccessTokenAuthorizable {
 extension O2InformationAPI:TargetType {
     var baseURL: URL {
         let model = O2AuthSDK.shared.o2APIServer(context: .x_cms_assemble_control)
-        let baseURLString = "\(model?.httpProtocol ?? "http")://\(model?.host ?? ""):\(model?.port ?? 0)\(model?.context ?? "")"
+        let baseURLString = "\(model?.httpProtocol ?? "http")://\(model?.host ?? ""):\(model?.port ?? 80)\(model?.context ?? "")"
+        if let trueUrl = O2AuthSDK.shared.bindUnitTransferUrl2Mapping(url: baseURLString) {
+            return URL(string: trueUrl)!
+        }
         return URL(string: baseURLString)!
     }
     

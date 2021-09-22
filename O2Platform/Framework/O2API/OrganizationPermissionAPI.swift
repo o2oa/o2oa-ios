@@ -29,7 +29,10 @@ extension OrganizationPermissionAPI: OOAccessTokenAuthorizable {
 extension OrganizationPermissionAPI: TargetType {
     var baseURL: URL {
         let model  = O2AuthSDK.shared.centerServerInfo()?.assembles?["x_organizationPermission"]
-        let baseURLString = "\(model?.httpProtocol ?? "http")://\(model?.host ?? ""):\(model?.port ?? 0)\(model?.context ?? "")"
+        let baseURLString = "\(model?.httpProtocol ?? "http")://\(model?.host ?? ""):\(model?.port ?? 80)\(model?.context ?? "")"
+        if let trueUrl = O2AuthSDK.shared.bindUnitTransferUrl2Mapping(url: baseURLString) {
+            return URL(string: trueUrl)!
+        }
         return URL(string: baseURLString)!
     }
     

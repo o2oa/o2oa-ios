@@ -46,6 +46,9 @@ class O2Collect{
     func generateURLWithAppContextKey(_ appContextKey:String,scheme:String,query:String,parameter:[String:AnyObject]?,coverted:Bool=true,generateTime:Bool=true) -> String?{
         let nodeAPI = O2AuthSDK.shared.centerServerInfo()?.assembles![appContextKey]
         var baseURL = "".appendingFormat("%@://%@:%@%@/%@", nodeAPI?.httpProtocol ?? "http",(nodeAPI?.host)!,String((nodeAPI?.port)!),(nodeAPI?.context)!,query)
+        if let trueUrl = O2AuthSDK.shared.bindUnitTransferUrl2Mapping(url: baseURL) {
+            baseURL = trueUrl
+        }
         if let t_parameter = parameter {
             for  (key,value) in t_parameter {
                 baseURL = baseURL.replacingOccurrences(of: key, with:value as! String)
@@ -112,6 +115,9 @@ class O2Collect{
 
         let webAPI = O2AuthSDK.shared.centerServerInfo()?.webServer
         var baseURL = "".appendingFormat("%@://%@:%@/%@/%@", webAPI?.httpProtocol ?? "http",(webAPI?.host)!,String((webAPI?.port)!),webAppContextkey,query)
+        if let trueUrl = O2AuthSDK.shared.bindUnitTransferUrl2Mapping(url: baseURL) {
+            baseURL = trueUrl
+        }
         if let param = parameter {
             for (key,value) in param {
                 baseURL = baseURL.replacingOccurrences(of: key, with:value as! String)
@@ -127,6 +133,9 @@ class O2Collect{
     func genrateURLWithWebContextKey2(_ query:String,parameter:[String:AnyObject]?,covertd:Bool=true) -> String?{
         let webAPI = O2AuthSDK.shared.centerServerInfo()?.webServer
         var baseURL = "".appendingFormat("%@://%@:%@/%@", webAPI?.httpProtocol ?? "http",(webAPI?.host)!,String((webAPI?.port)!),query)
+        if let trueUrl = O2AuthSDK.shared.bindUnitTransferUrl2Mapping(url: baseURL) {
+            baseURL = trueUrl
+        }
         if let param = parameter {
             for (key,value) in param {
                 baseURL = baseURL.replacingOccurrences(of: key, with:value as! String)

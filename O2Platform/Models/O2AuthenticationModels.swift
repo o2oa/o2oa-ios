@@ -84,6 +84,8 @@ public protocol IO2BindUnitModel: HandyJSON, CustomStringConvertible {
     var centerContext:String? { get set }
     
     var centerPort:Int? { get set }
+    
+    var urlMapping: String? { get set }
 }
 
 open class O2BindUnitModel: NSObject, DataModel, NSCoding, IO2BindUnitModel {
@@ -102,6 +104,47 @@ open class O2BindUnitModel: NSObject, DataModel, NSCoding, IO2BindUnitModel {
     @objc open var centerContext:String?
     
     open var centerPort:Int?
+    
+    @objc open var urlMapping: String?
+    
+    
+    /// 代理地址配置
+    /// 如： {"qywx.o2oa.net:80":"qywx.o2oa.net/dev/web", "qywx.o2oa.net:20020":"qywx.o2oa.net/dev/app", "qywx.o2oa.net:20030":"qywx.o2oa.net/dev/center"}
+    public func urlMappingDecode() -> Dictionary<String, Any>? {
+        if urlMapping != nil {
+            if let jsonData = urlMapping?.data(using: .utf8) {
+                do {
+                    let dc = try JSONSerialization.jsonObject(with: jsonData, options: .mutableContainers)
+                    return dc as? Dictionary<String, Any>
+                } catch _ {
+                    print("json 转化 出错")
+                }
+            }
+        }
+        return nil
+    }
+    
+    ///
+    /// 将服务器地址替换成 urlMapping地址
+    public func transUrl2Mapping(url: String) -> String? {
+        var result: String? = nil
+        if url.isEmpty {
+            return result
+        }
+        if let d = urlMappingDecode() {
+            if !d.isEmpty {
+                d.keys.forEach { (key) in
+                    if url.contains(key) {
+                        if let v = d[key] as? String {
+                            result = url.replacingOccurrences(of: key, with: v)
+                        }
+                    }
+                }
+            }
+        }
+        return result
+    }
+    
     
     public func encode(with aCoder: NSCoder) {
         if id != nil {
@@ -135,6 +178,9 @@ open class O2BindUnitModel: NSObject, DataModel, NSCoding, IO2BindUnitModel {
         if centerPort != nil {
             aCoder.encode(centerPort, forKey: "centerPort")
         }
+        if urlMapping != nil {
+            aCoder.encode(urlMapping, forKey: "urlMapping")
+        }
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -146,6 +192,7 @@ open class O2BindUnitModel: NSObject, DataModel, NSCoding, IO2BindUnitModel {
         centerHost = aDecoder.decodeObject(forKey: "centerHost") as? String
         centerContext = aDecoder.decodeObject(forKey: "centerContext") as? String
         centerPort = aDecoder.decodeObject(forKey: "centerPort") as?  Int
+        urlMapping = aDecoder.decodeObject(forKey: "urlMapping") as? String
     }
     
     required public override init() {}

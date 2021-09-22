@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -75,92 +76,121 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pic_yzsj_bj" translatesAutoresizingMaskIntoConstraints="NO" id="4ge-aX-o7i">
-                                <rect key="frame" x="0.0" y="64" width="375" height="147"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="147" id="QCY-1s-PDy"/>
-                                </constraints>
-                            </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="HIL-F0-SqA">
-                                <rect key="frame" x="16" y="243" width="343" height="180"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8rd-ac-htW">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入手机号" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ObS-rR-SV6" customClass="OOUITextField" customModule="O2Platform" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="50"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pWr-x2-fXN">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="460"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pic_yzsj_bj" translatesAutoresizingMaskIntoConstraints="NO" id="4ge-aX-o7i">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="147"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="147" id="QCY-1s-PDy"/>
+                                                </constraints>
+                                            </imageView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="HIL-F0-SqA">
+                                                <rect key="frame" x="16" y="179" width="343" height="180"/>
+                                                <subviews>
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入手机号" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ObS-rR-SV6" customClass="OOUITextField" customModule="O2Platform" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="343" height="50"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50" id="41I-dW-fmr"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="icon_phone_nor"/>
+                                                            <userDefinedRuntimeAttribute type="image" keyPath="leftLightImage" value="icon_phone_sel"/>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                                <color key="value" red="0.98431372549999996" green="0.2784313725" blue="0.2784313725" alpha="0.39894584760000001" colorSpace="calibratedRGB"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="lineLightColor">
+                                                                <color key="value" red="0.98431372549999996" green="0.2784313725" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </textField>
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入验证码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f1x-qE-7k6" customClass="OOUIDownButtonTextField" customModule="O2Platform" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="70" width="343" height="50"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50" id="xvt-De-9D4"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="buttonTitle" value="发送验证码"/>
+                                                            <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="icon_verification_code_nor"/>
+                                                            <userDefinedRuntimeAttribute type="image" keyPath="leftLightImage" value="icon_verification_code_sel"/>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                                <color key="value" red="0.98431372549999996" green="0.2784313725" blue="0.2784313725" alpha="0.39894584760000001" colorSpace="calibratedRGB"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="lineLightColor">
+                                                                <color key="value" red="0.85262101889999997" green="0.42218321559999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </textField>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RFi-UF-mda" customClass="OOBaseUIButton" customModule="O2Platform" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="140" width="343" height="40"/>
+                                                        <color key="backgroundColor" red="0.98431372549999996" green="0.2784313725" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="40" id="COC-uY-wDR"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="15"/>
+                                                        <state key="normal" title="下一步">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
+                                                                <integer key="value" value="20"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="nextAction:" destination="Yh7-G2-VLg" eventType="touchUpInside" id="KL0-p5-GTp"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="180" id="AHz-Nh-462"/>
+                                                </constraints>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="41I-dW-fmr"/>
+                                            <constraint firstItem="HIL-F0-SqA" firstAttribute="leading" secondItem="pWr-x2-fXN" secondAttribute="leading" constant="16" id="JFr-Oo-FxD"/>
+                                            <constraint firstItem="HIL-F0-SqA" firstAttribute="top" secondItem="4ge-aX-o7i" secondAttribute="bottom" constant="32" id="cWa-ED-zRr"/>
+                                            <constraint firstAttribute="trailing" secondItem="HIL-F0-SqA" secondAttribute="trailing" constant="16" id="fXk-fh-IgX"/>
+                                            <constraint firstItem="4ge-aX-o7i" firstAttribute="top" secondItem="pWr-x2-fXN" secondAttribute="top" id="gpD-Kx-WiT"/>
+                                            <constraint firstAttribute="bottom" secondItem="HIL-F0-SqA" secondAttribute="bottom" constant="101" id="lQo-b8-te5"/>
+                                            <constraint firstItem="4ge-aX-o7i" firstAttribute="leading" secondItem="pWr-x2-fXN" secondAttribute="leading" id="uur-wC-ZOD"/>
+                                            <constraint firstAttribute="trailing" secondItem="4ge-aX-o7i" secondAttribute="trailing" id="uwK-NR-NRG"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="icon_phone_nor"/>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="leftLightImage" value="icon_phone_sel"/>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
-                                                <color key="value" red="0.98431372549999996" green="0.2784313725" blue="0.2784313725" alpha="0.39894584760000001" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="lineLightColor">
-                                                <color key="value" red="0.98431372549999996" green="0.2784313725" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入验证码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f1x-qE-7k6" customClass="OOUIDownButtonTextField" customModule="O2Platform" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="70" width="343" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="xvt-De-9D4"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="buttonTitle" value="发送验证码"/>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="icon_verification_code_nor"/>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="leftLightImage" value="icon_verification_code_sel"/>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
-                                                <color key="value" red="0.98431372549999996" green="0.2784313725" blue="0.2784313725" alpha="0.39894584760000001" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="lineLightColor">
-                                                <color key="value" red="0.85262101889999997" green="0.42218321559999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RFi-UF-mda" customClass="OOBaseUIButton" customModule="O2Platform" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="140" width="343" height="40"/>
-                                        <color key="backgroundColor" red="0.98431372549999996" green="0.2784313725" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="COC-uY-wDR"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="15"/>
-                                        <state key="normal" title="下一步">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layerCornerRadius">
-                                                <integer key="value" value="20"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="nextAction:" destination="Yh7-G2-VLg" eventType="touchUpInside" id="KL0-p5-GTp"/>
-                                        </connections>
-                                    </button>
+                                    </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="180" id="AHz-Nh-462"/>
+                                    <constraint firstItem="pWr-x2-fXN" firstAttribute="width" secondItem="UHM-Ap-oEq" secondAttribute="width" id="2Kv-jd-fHL"/>
+                                    <constraint firstItem="pWr-x2-fXN" firstAttribute="bottom" secondItem="Ih8-ws-Col" secondAttribute="bottom" id="Lt8-DU-eHv"/>
+                                    <constraint firstItem="pWr-x2-fXN" firstAttribute="leading" secondItem="Ih8-ws-Col" secondAttribute="leading" id="kLm-n9-cYo"/>
+                                    <constraint firstItem="pWr-x2-fXN" firstAttribute="top" secondItem="Ih8-ws-Col" secondAttribute="top" id="md4-Zx-E66"/>
+                                    <constraint firstItem="pWr-x2-fXN" firstAttribute="trailing" secondItem="Ih8-ws-Col" secondAttribute="trailing" id="wWk-TA-rMw"/>
                                 </constraints>
-                            </stackView>
+                                <viewLayoutGuide key="contentLayoutGuide" id="Ih8-ws-Col"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="UHM-Ap-oEq"/>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="HIL-F0-SqA" firstAttribute="leading" secondItem="ABT-PI-PrG" secondAttribute="leadingMargin" id="2Cx-SG-Ix9"/>
-                            <constraint firstItem="4ge-aX-o7i" firstAttribute="leading" secondItem="ABT-PI-PrG" secondAttribute="leading" id="dvU-ra-Fmg"/>
-                            <constraint firstItem="HIL-F0-SqA" firstAttribute="top" secondItem="4ge-aX-o7i" secondAttribute="bottom" constant="32" id="nVb-Ei-Dvp"/>
-                            <constraint firstItem="4ge-aX-o7i" firstAttribute="top" secondItem="ABT-PI-PrG" secondAttribute="top" constant="64" id="oNl-Mu-3pl"/>
-                            <constraint firstAttribute="trailing" secondItem="4ge-aX-o7i" secondAttribute="trailing" id="piY-o5-Bov"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="HIL-F0-SqA" secondAttribute="trailing" id="rdA-er-aLr"/>
+                            <constraint firstItem="8rd-ac-htW" firstAttribute="leading" secondItem="ABT-PI-PrG" secondAttribute="leading" id="B4K-2H-XFZ"/>
+                            <constraint firstItem="7gm-wr-Vo0" firstAttribute="top" secondItem="8rd-ac-htW" secondAttribute="bottom" id="Y24-Jw-BaB"/>
+                            <constraint firstItem="8rd-ac-htW" firstAttribute="top" secondItem="6T5-Oe-E63" secondAttribute="bottom" constant="64" id="hym-m8-CWI"/>
+                            <constraint firstAttribute="trailing" secondItem="8rd-ac-htW" secondAttribute="trailing" id="nkh-Je-Z69"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="codeTextField" destination="f1x-qE-7k6" id="Chu-HT-XON"/>
+                        <outlet property="contentViewBottomConstraint" destination="lQo-b8-te5" id="7va-HL-2Ll"/>
                         <outlet property="navBackgroundImg" destination="4ge-aX-o7i" id="F1R-01-g9q"/>
                         <outlet property="nextButton" destination="RFi-UF-mda" id="88V-wJ-QQy"/>
                         <outlet property="phoneNumberTextField" destination="ObS-rR-SV6" id="Qqu-Lw-bal"/>
+                        <outlet property="topGapConstraint" destination="hym-m8-CWI" id="FpS-kG-kDR"/>
                         <segue destination="ijN-Lx-ufq" kind="show" identifier="nextSelectNodeSegue" id="auB-XD-Zao"/>
                         <segue destination="vZ4-uk-11h" kind="unwind" identifier="backStartSegue" unwindAction="unBindComplete:" id="uEu-Bh-AwH"/>
                     </connections>
@@ -168,7 +198,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t9c-bh-cYL" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="vZ4-uk-11h" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1015" y="-795"/>
+            <point key="canvasLocation" x="1013.6" y="-795.6521739130435"/>
         </scene>
         <!--Bind Node View Controller-->
         <scene sceneID="8NX-J9-U8P">
@@ -542,5 +572,8 @@
         <image name="pic_o2_moren1" width="87" height="87"/>
         <image name="pic_yzsj_bj" width="375" height="147"/>
         <image name="startImage" width="375" height="667"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

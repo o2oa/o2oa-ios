@@ -16,6 +16,9 @@ import CocoaLumberjack
 class OOBindRegisterController: OOBaseViewController {
 
     
+    @IBOutlet weak var topGapConstraint: NSLayoutConstraint!
+    // 内容底部约束
+    @IBOutlet weak var contentViewBottomConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var navBackgroundImg: UIImageView!
     
@@ -32,13 +35,38 @@ class OOBindRegisterController: OOBaseViewController {
    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupKeyboardNotification()
         ////
         let headerView = Bundle.main.loadNibNamed("OORegisterTableView", owner: self, options: nil)?.first as! OORegisterTableView
         headerView.configTitle(title: L10n.Login.mobilePhoneValidate, actionTitle: nil)
         headerView.frame = CGRect(x: 0, y: 0, width: kScreenW, height: 66)
         headerView.theme_backgroundColor = ThemeColorPicker(keyPath: "Base.base_color")
         view.addSubview(headerView)
+        self.topGapConstraint.constant = CGFloat(66 - IOS11_TOP_STATUSBAR_HEIGHT)
         setupUI()
+    }
+    
+    private func setupKeyboardNotification () {
+        NotificationCenter.default.addObserver(self, selector: #selector(openKeyboard), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(closeKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc private func openKeyboard(_ notification: Notification) {
+        DDLogDebug("打开键盘。。。。。")
+        let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+        DDLogDebug("键盘 frame \(String(describing: keyboardFrame))")
+        self.contentViewBottomConstraint.constant = keyboardFrame?.height ?? 0
+        UIView.animate(withDuration: 1, delay: 0, options: UIView.AnimationOptions.curveEaseInOut, animations: {
+          self.view.layoutIfNeeded()
+        })
+    }
+    
+    @objc private func closeKeyboard() {
+        DDLogDebug("关闭键盘。。。。。。")
+        self.contentViewBottomConstraint.constant = 0
+        UIView.animate(withDuration: 1, delay: 0, options: UIView.AnimationOptions.curveEaseInOut, animations: {
+          self.view.layoutIfNeeded()
+        })
     }
     
     private  func setupUI() {
