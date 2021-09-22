@@ -14,6 +14,7 @@ class JPushDevice: NSObject,DataModel {
     
     @objc var deviceName : String?
     @objc var deviceType : String? = "ios"
+    @objc var pushType : String? = "jpush"
     override required init() {
         
     }
@@ -21,3 +22,13 @@ class JPushDevice: NSObject,DataModel {
     
 }
 
+
+class JPushConfig: NSObject,DataModel {
+    
+    @objc var pushType : String? = "jpush"
+    override required init() {
+        
+    }
+    
+    
+}

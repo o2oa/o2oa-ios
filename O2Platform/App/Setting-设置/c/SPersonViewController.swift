@@ -221,10 +221,11 @@ class SPersonViewController: FormViewController {
         O2AuthSDK.shared.logout { (result, msg) in
             DDLogInfo("O2 登出 \(result), msg：\(msg ?? "")")
         }
-        if O2IsConnect2Collect == false {
-            //解除绑定 设备号 内网直连版本
-            O2JPushManager.shared.O2JPushUnBind()
-        }
+        O2JPushManager.shared.O2JPushUnBind()
+//        if O2IsConnect2Collect == false {
+//            //解除绑定 设备号 内网直连版本
+//            
+//        }
         
         self.forwardDestVC("login", "loginVC")
     }
