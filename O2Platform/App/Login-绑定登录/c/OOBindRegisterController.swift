@@ -56,17 +56,13 @@ class OOBindRegisterController: OOBaseViewController {
         let keyboardFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
         DDLogDebug("键盘 frame \(String(describing: keyboardFrame))")
         self.contentViewBottomConstraint.constant = keyboardFrame?.height ?? 0
-        UIView.animate(withDuration: 1, delay: 0, options: UIView.AnimationOptions.curveEaseInOut, animations: {
-          self.view.layoutIfNeeded()
-        })
+        self.view.layoutIfNeeded()
     }
     
     @objc private func closeKeyboard() {
         DDLogDebug("关闭键盘。。。。。。")
         self.contentViewBottomConstraint.constant = 0
-        UIView.animate(withDuration: 1, delay: 0, options: UIView.AnimationOptions.curveEaseInOut, animations: {
-          self.view.layoutIfNeeded()
-        })
+        self.view.layoutIfNeeded()
     }
     
     private  func setupUI() {
