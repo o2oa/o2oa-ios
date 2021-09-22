@@ -142,6 +142,9 @@ class AppDelegate: FlutterAppDelegate, JPUSHRegisterDelegate, UNUserNotification
     //注册 APNs 获得device token
     override func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         super.application(application, didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)
+        let deviceTokenStr = deviceToken.map { String(format: "%02.2hhx", arguments: [$0]) }.joined()
+        DDLogDebug("获取到APNs deviceToken \(deviceTokenStr)")
+        O2AuthSDK.shared.setApnsToken(token: deviceTokenStr)
         NotificationCenter.default.post(name: Notification.Name(rawValue: "DidRegisterRemoteNotification"), object: deviceToken)
         JPUSHService.registerDeviceToken(deviceToken)
     }
@@ -180,7 +183,7 @@ class AppDelegate: FlutterAppDelegate, JPUSHRegisterDelegate, UNUserNotification
     
     override func applicationWillEnterForeground(_ application: UIApplication) {
         application.applicationIconBadgeNumber = 0
-        application.cancelAllLocalNotifications()
+//        application.cancelAllLocalNotifications()
     }
     
     override func applicationDidBecomeActive(_ application: UIApplication) {
@@ -188,7 +191,7 @@ class AppDelegate: FlutterAppDelegate, JPUSHRegisterDelegate, UNUserNotification
    
     override func applicationDidEnterBackground(_ application: UIApplication) {
         application.applicationIconBadgeNumber = 0
-        application.cancelAllLocalNotifications()
+//        application.cancelAllLocalNotifications()
     }
     
     

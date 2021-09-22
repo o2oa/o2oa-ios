@@ -41,6 +41,8 @@ extension DefaultsKeys {
     static let unit = DefaultsKey<O2BindUnitModel?>("O2unit")
     static let device = DefaultsKey<O2BindDeviceModel?>("O2device")
     static let deviceToken = DefaultsKey<String?>("deviceToken")
+    static let apnsToken = DefaultsKey<String?>("apnsToken")
+    static let pushType = DefaultsKey<String?>("pushType")
     static let centerServer = DefaultsKey<O2CenterServerModel?>("O2centerServer")
     static let myInfo = DefaultsKey<O2LoginAccountModel?>("O2myInfo")
     static let customStyle = DefaultsKey<O2CustomStyleModel?>("O2customStyle")
@@ -103,6 +105,28 @@ class O2UserDefaults {
                 device.name = newValue
                 Defaults[.device] = device
             }
+        }
+    }
+    var pushType: String? {
+        get {
+            guard let token = Defaults[.pushType] else {
+                return ""
+            }
+            return token
+        }
+        set {
+            Defaults[.pushType] = newValue
+        }
+    }
+    var apnsToken: String? {
+        get {
+            guard let token = Defaults[.apnsToken] else {
+                return ""
+            }
+            return token
+        }
+        set {
+            Defaults[.apnsToken] = newValue
         }
     }
     var centerServer: O2CenterServerModel? {
