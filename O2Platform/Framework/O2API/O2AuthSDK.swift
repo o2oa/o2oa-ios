@@ -64,6 +64,28 @@ public class O2AuthSDK: NSObject {
         return O2UserDefaults.shared.deviceToken ?? ""
     }
     
+    /// 设置推送通道
+    ///
+    /// - Parameter type:  jpush|huawei
+    public func setPushType(type: String) {
+        O2UserDefaults.shared.pushType = type
+    }
+    
+    public func getPushType() -> String {
+        return O2UserDefaults.shared.pushType ?? "jpush"
+    }
+    
+    /// 设置 苹果推送的设备token
+    ///
+    /// - Parameter token:  设备token
+    public func setApnsToken(token: String) {
+        O2UserDefaults.shared.apnsToken = token
+    }
+    
+    public func getApnsToken() -> String {
+        return O2UserDefaults.shared.apnsToken ?? ""
+    }
+    
     /// O2OA服务器信息
     ///
     /// - Returns:
