@@ -175,6 +175,8 @@
 	<string>https://app.o2oa.net/download/app.json</string>
 	<key>o2 server</key>
 	<dict>
+		<key>urlMapping</key>
+		<string></string>
 		<key>centerContext</key>
 		<string>/x_program_center</string>
 		<key>centerHost</key>

@@ -85,17 +85,19 @@ class LoginViewController: UIViewController {
                     let centerContext = o2Server?["centerContext"] as? String
                     let centerPort = o2Server?["centerPort"] as? Int
                     let httpProtocol = o2Server?["httpProtocol"] as? String
-                    DDLogDebug("连接服务器：\(String(describing: name)) , host:\(String(describing: centerHost)) , context:\(String(describing: centerContext)), port:\(centerPort ?? 0), portocal:\(String(describing: httpProtocol)) ")
+                    DDLogDebug("连接服务器：\(String(describing: name)) , host:\(String(describing: centerHost)) , context:\(String(describing: centerContext)), port:\(centerPort ?? 80), portocal:\(String(describing: httpProtocol)) ")
                     if name == nil || centerHost == nil || centerContext == nil {
                         self.showError(title:  L10n.Login.serverConfigInfoError)
                         return
                     }
+                    let urlMapping = o2Server?["urlMapping"] as? String
                     unit.id = id
                     unit.centerContext = centerContext
                     unit.centerHost = centerHost
                     unit.centerPort = centerPort
                     unit.httpProtocol = httpProtocol
                     unit.name = name
+                    unit.urlMapping = urlMapping
                 }else {
                     self.showError(title:  L10n.Login.ServerConfigIsEmpty)
                     return

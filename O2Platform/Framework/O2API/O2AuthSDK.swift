@@ -43,6 +43,16 @@ public class O2AuthSDK: NSObject {
         return O2UserDefaults.shared.unit
     }
     
+    /// 如果有代理地址 替换成代理地址
+    ///
+    public func bindUnitTransferUrl2Mapping(url: String) -> String? {
+        var result: String? = nil
+        if let unit = bindUnit() {
+            result = unit.transUrl2Mapping(url: url)
+        }
+        return result
+    }
+    
     /// 当前绑定的设备信息
     ///
     /// - Returns:
@@ -260,7 +270,11 @@ public class O2AuthSDK: NSObject {
                 app.id = portal.id
                 app.name = portal.name
                 if let webserver = O2UserDefaults.shared.centerServer?.webServer {
-                    app.portalUrl = "\(webserver.httpProtocol ?? "http")://\(webserver.host ?? ""):\(webserver.port ?? 80)/\(O2ConfigInfo.O2_DESKTOP_CONTEXT)/appMobile.html?app=portal.Portal&status={\"portalId\":\"\(portal.id ?? "")\"}"
+                    var baseURLString = "\(webserver.httpProtocol ?? "http")://\(webserver.host ?? ""):\(webserver.port ?? 80)/\(O2ConfigInfo.O2_DESKTOP_CONTEXT)/appMobile.html?app=portal.Portal&status={\"portalId\":\"\(portal.id ?? "")\"}"
+                    if let trueUrl = O2AuthSDK.shared.bindUnitTransferUrl2Mapping(url: baseURLString) {
+                        baseURLString = trueUrl
+                    }
+                    app.portalUrl = baseURLString
                 }
                 app.portalCategory = portal.portalCategory
                 app.type = O2ConfigInfo.O2_APP_TYPE_PORTAL
