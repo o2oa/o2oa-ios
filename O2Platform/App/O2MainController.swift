@@ -68,11 +68,11 @@ class O2MainController: UITabBarController, UITabBarControllerDelegate {
             selectedIndex = 2
             currentIndex = 2
         }
-
-        if O2IsConnect2Collect == false {
-            //处理内部直连的时候推送的设备绑定
-            O2JPushManager.shared.o2JPushBind()
-        }
+        O2JPushManager.shared.o2JPushBind()
+//        if O2IsConnect2Collect == false {
+//            //处理内部直连的时候推送的设备绑定
+//            
+//        }
         //连接websocket
         self._startWebsocket()
         //读取消息

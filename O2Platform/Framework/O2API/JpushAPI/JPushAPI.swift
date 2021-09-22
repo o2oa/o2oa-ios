@@ -13,8 +13,10 @@ import Moya
 // x_jpush_assemble_control 极光推送模块
 
 enum JPushAPI {
+    case pushConfig
     case bindDevice(JPushDevice)
     case unBindDevice(String)
+    case unBindDeviceNew(String, String)
     
 }
 // 上下文根
@@ -42,19 +44,27 @@ extension JPushAPI: TargetType {
     
     var path: String {
         switch self {
+        case .pushConfig:
+            return "/jaxrs/device/config/push/type"
         case .bindDevice(_):
             return "/jaxrs/device/bind"
         case .unBindDevice(let deviceName):
             return "/jaxrs/device/unbind/\(deviceName)/ios"
+        case .unBindDeviceNew(let deviceToken, let pushType):
+            return "/jaxrs/device/unbind/new/\(deviceToken)/ios/\(pushType)"
         }
     }
     
     var method: Moya.Method {
         switch self {
+        case .pushConfig:
+            return .get
         case .bindDevice(_):
             return .post
         case .unBindDevice(_):
              return .delete
+        case .unBindDeviceNew(_, _):
+            return .get
         }
     }
     
@@ -64,9 +74,13 @@ extension JPushAPI: TargetType {
     
     var task: Task {
         switch self {
+        case .pushConfig:
+            return .requestPlain
         case .bindDevice(let device):
             return .requestParameters(parameters: device.toJSON()!, encoding: JSONEncoding.default)
         case .unBindDevice:
+            return .requestPlain
+        case .unBindDeviceNew(_, _):
             return .requestPlain
         }
     }
