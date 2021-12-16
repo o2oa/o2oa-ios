@@ -56,7 +56,7 @@ class ImageSlidesShowTableViewCell: UITableViewCell {
         
     }
     
-    public func imageSlideshowClick(sender:ImageSlideshow?){
+    @objc public func imageSlideshowClick(sender:ImageSlideshow?){
       //print(self.imageSlideshow.currentPage)
         if delegate != nil{
             let entity = self.imageshowEntitys[self.imageSlideshow.currentPage]

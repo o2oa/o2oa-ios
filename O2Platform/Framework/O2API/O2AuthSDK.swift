@@ -228,6 +228,8 @@ public class O2AuthSDK: NSObject {
         case .x_organizationPermission:
             return dic["x_organizationPermission"]
             
+        case .x_mind_assemble_control:
+            return dic["x_mind_assemble_control"]
         }
         
         
@@ -1111,6 +1113,20 @@ public class O2AuthSDK: NSObject {
                 callback(false, message)
             }, onCompleted: nil, onDisposed: nil)
     }
+    
+    ///
+    /// 文件下载地址
+    ///  - fileId 文件id
+    public func getFileDownloadUrl(fileId: String)-> String {
+        //http://dev.o2oa.net:20020/x_file_assemble_control/jaxrs/file/b871a896-93f7-4245-8e5a-100fd4a67d9d/download/stream
+        let model = O2AuthSDK.shared.o2APIServer(context: .x_file_assemble_control)
+        var baseURLString = "\(model?.httpProtocol ?? "http")://\(model?.host ?? ""):\(model?.port ?? 80)\(model?.context ?? "")"
+        if let trueUrl = O2AuthSDK.shared.bindUnitTransferUrl2Mapping(url: baseURLString) {
+            baseURLString = trueUrl
+        }
+        return  "\(baseURLString)/jaxrs/file/\(fileId)/download/stream"
+    }
+    
     
     
     //MARK: - private

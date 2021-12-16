@@ -44,7 +44,7 @@
 #import <Bugly/Bugly.h>
 
 // flutter
-#import "GeneratedPluginRegistrant.h"
+//#import "GeneratedPluginRegistrant.h"
 
 //lame mp3转码
 #import "ConvertMp3.h"

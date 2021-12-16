@@ -12,7 +12,7 @@ import SwiftyJSON
 import Alamofire
 import ObjectMapper
 import AlamofireObjectMapper
-import Flutter
+//import Flutter
 
 import CocoaLumberjack
 
@@ -137,11 +137,11 @@ class O2AppViewController: UIViewController{
      @param routeName flutter的路由 打开不同的页面
     **/
     func openFlutterApp(routeName: String) {
-        let flutterViewController = O2FlutterViewController()
-        DDLogDebug("init route:\(routeName)")
-        flutterViewController.setInitialRoute(routeName)
-        flutterViewController.modalPresentationStyle = .fullScreen
-        self.present(flutterViewController, animated: false, completion: nil)
+//        let flutterViewController = O2FlutterViewController()
+//        DDLogDebug("init route:\(routeName)")
+//        flutterViewController.setInitialRoute(routeName)
+//        flutterViewController.modalPresentationStyle = .fullScreen
+//        self.present(flutterViewController, animated: false, completion: nil)
     }
     
 
@@ -173,7 +173,17 @@ extension O2AppViewController:ZLCollectionViewDelegate{
     
     private func openApp(app: O2App) {
         if let flutter = app.storyBoard, flutter == "flutter" {
-            openFlutterApp(routeName: app.appId!)
+//            openFlutterApp(routeName: app.appId!)
+            // flutter 去除 改成原生
+            if app.appId == "mindMap" {
+                let storyBoard = UIStoryboard(name: "mindMap", bundle: nil)
+                if let destVC = storyBoard.instantiateInitialViewController() {
+                    destVC.modalPresentationStyle = .fullScreen
+                    self.show(destVC, sender: nil)
+                } else {
+                    DDLogError("没有找到view controller。。。。")
+                }
+            }
         }else {
             //设置返回标志，其它应用根据此返回标志调用返回unwindSegue
             AppConfigSettings.shared.appBackType = 2

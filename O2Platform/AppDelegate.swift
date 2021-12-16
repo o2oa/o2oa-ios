@@ -11,7 +11,7 @@ import CocoaLumberjack
 import AlamofireNetworkActivityIndicator
 import UserNotifications
 
-import Flutter
+//import Flutter
 import IQKeyboardManagerSwift
 
 
@@ -24,21 +24,22 @@ import IQKeyboardManagerSwift
 let isProduction = true
 
 @UIApplicationMain
-class AppDelegate: FlutterAppDelegate, JPUSHRegisterDelegate, UNUserNotificationCenterDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, JPUSHRegisterDelegate, UNUserNotificationCenterDelegate {
   
     var _mapManager: BMKMapManager?
+    var window: UIWindow?
     
     //中心服务器节点类
     public static let o2Collect = O2Collect()
     //网络监听
     public let o2ReachabilityManager = O2ReachabilityManager.sharedInstance
     // flutter engine
-    var flutterEngine : FlutterEngine?
+//    var flutterEngine : FlutterEngine?
     
-    override func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         if #available(iOS 13.0, *) {
-            window.overrideUserInterfaceStyle = .light
+            window?.overrideUserInterfaceStyle = .light
         }
         
         let themeName = AppConfigSettings.shared.themeName
@@ -124,7 +125,7 @@ class AppDelegate: FlutterAppDelegate, JPUSHRegisterDelegate, UNUserNotification
         
         IQKeyboardManager.shared.enable = false
         
-        return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+        return true
     }
     
     
@@ -140,8 +141,8 @@ class AppDelegate: FlutterAppDelegate, JPUSHRegisterDelegate, UNUserNotification
  
     
     //注册 APNs 获得device token
-    override func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        super.application(application, didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        //super.application(application, didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)
         let deviceTokenStr = deviceToken.map { String(format: "%02.2hhx", arguments: [$0]) }.joined()
         DDLogDebug("获取到APNs deviceToken \(deviceTokenStr)")
         O2AuthSDK.shared.setApnsToken(token: deviceTokenStr)
@@ -151,13 +152,13 @@ class AppDelegate: FlutterAppDelegate, JPUSHRegisterDelegate, UNUserNotification
     
    
     
-    override func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         DDLogDebug("open url :\(url.absoluteString)")
         return true
     }
     
     
-    override func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
+    func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
         if notificationSettings.types.rawValue == 0 {
             AppConfigSettings.shared.notificationGranted = false
             AppConfigSettings.shared.firstGranted = true
@@ -170,26 +171,26 @@ class AppDelegate: FlutterAppDelegate, JPUSHRegisterDelegate, UNUserNotification
     }
     
     //实现注册 APNs 失败接口
-    override func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         DDLogError("didFailToRegisterForRemoteNotificationsWithError: \(error.localizedDescription)")
     }
     
-    override func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
         JPUSHService.handleRemoteNotification(userInfo)
         DDLogDebug("收到通知,\(userInfo)")
         NotificationCenter.default.post(name: Notification.Name(rawValue: "AddNotificationCount"), object: nil)
     }
     
     
-    override func applicationWillEnterForeground(_ application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         application.applicationIconBadgeNumber = 0
 //        application.cancelAllLocalNotifications()
     }
     
-    override func applicationDidBecomeActive(_ application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
     }
    
-    override func applicationDidEnterBackground(_ application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         application.applicationIconBadgeNumber = 0
 //        application.cancelAllLocalNotifications()
     }

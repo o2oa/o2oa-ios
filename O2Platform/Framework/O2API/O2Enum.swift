@@ -45,6 +45,7 @@ import Foundation
 /// - x_calendar_assemble_control: //日程
 /// - x_jpush_assemble_control:  //极光推送
 /// - x_query_assemble_surface:  //数据查询
+/// - x_mind_assemble_control:  //脑图
 public enum O2ModuleContext {
     case x_processplatform_assemble_surface_script
     case x_processplatform_assemble_surface_task
@@ -81,6 +82,7 @@ public enum O2ModuleContext {
     case x_jpush_assemble_control
     case x_query_assemble_surface
     case x_organizationPermission // custom模块 通讯录 需要到应用市场下载安装
+    case x_mind_assemble_control // 脑图
 
 }
 

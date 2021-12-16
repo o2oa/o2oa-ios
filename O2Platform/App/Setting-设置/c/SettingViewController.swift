@@ -14,7 +14,7 @@ import SwiftyJSON
 
 import SDWebImage
 import CocoaLumberjack
-import Flutter
+//import Flutter
 
 class SettingViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     

@@ -106,14 +106,6 @@
 		B130A74F2281559900282AD1 /* DeviceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B130A74E2281559900282AD1 /* DeviceListViewController.swift */; };
 		B130A7832281565F00282AD1 /* DeviceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B130A7822281565F00282AD1 /* DeviceTableViewCell.swift */; };
 		B130A7852281597000282AD1 /* DeviceManagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B130A7842281597000282AD1 /* DeviceManagerViewModel.swift */; };
-		B130E644223B774400B68354 /* Flutter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B130E60D223B774400B68354 /* Flutter.framework */; };
-		B130E648223B774D00B68354 /* image_picker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B130E645223B774D00B68354 /* image_picker.framework */; };
-		B130E649223B774D00B68354 /* path_provider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B130E646223B774D00B68354 /* path_provider.framework */; };
-		B130E64A223B774D00B68354 /* shared_preferences.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B130E647223B774D00B68354 /* shared_preferences.framework */; };
-		B130E64B223B778000B68354 /* image_picker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B130E645223B774D00B68354 /* image_picker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B130E64C223B778000B68354 /* path_provider.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B130E646223B774D00B68354 /* path_provider.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B130E64D223B778000B68354 /* shared_preferences.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B130E647223B774D00B68354 /* shared_preferences.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B130E64E223B778000B68354 /* Flutter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B130E60D223B774400B68354 /* Flutter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B13707DD212D3F19002113F1 /* CMSCategoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13707DC212D3F19002113F1 /* CMSCategoryData.swift */; };
 		B13A010F236924BE00025F3B /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13A010E236924BE00025F3B /* UIImageView+Extension.swift */; };
 		B13A011123692A8B00025F3B /* O2CloudFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13A011023692A8B00025F3B /* O2CloudFileManager.swift */; };
@@ -196,9 +188,13 @@
 		B165CD682242093500373B66 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B165CD522242093500373B66 /* Montserrat-Regular.ttf */; };
 		B165CD692242093500373B66 /* ModalCenterPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165CD532242093500373B66 /* ModalCenterPosition.swift */; };
 		B165CD6A2242093500373B66 /* CoverVerticalFromTopAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165CD542242093500373B66 /* CoverVerticalFromTopAnimation.swift */; };
-		B165CD6B2242093500373B66 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B165CD552242093500373B66 /* Info.plist */; };
 		B165CD6C2242093500373B66 /* Presentr+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165CD562242093500373B66 /* Presentr+Equatable.swift */; };
 		B165CD6D2242093500373B66 /* ModalSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B165CD572242093500373B66 /* ModalSize.swift */; };
+		B1670A3C276AD756009A41BC /* MindMapAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1670A3B276AD756009A41BC /* MindMapAPI.swift */; };
+		B1670A3F276AD98B009A41BC /* O2MindMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1670A3E276AD98B009A41BC /* O2MindMapViewModel.swift */; };
+		B1670A41276B09CC009A41BC /* MindMapItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1670A40276B09CC009A41BC /* MindMapItem.swift */; };
+		B1670A43276B0C2C009A41BC /* MindMapFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1670A42276B0C2C009A41BC /* MindMapFilter.swift */; };
+		B1670A45276B1AF4009A41BC /* MindMapItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1670A44276B1AF4009A41BC /* MindMapItemTableViewCell.swift */; };
 		B167F7632362BFC200F182B8 /* CloudFileMoveFolderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B167F7622362BFC200F182B8 /* CloudFileMoveFolderController.swift */; };
 		B167F7662362C60200F182B8 /* CloudFileMoveFolderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B167F7642362C60200F182B8 /* CloudFileMoveFolderCell.swift */; };
 		B167F7672362C60200F182B8 /* CloudFileMoveFolderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B167F7652362C60200F182B8 /* CloudFileMoveFolderCell.xib */; };
@@ -225,6 +221,11 @@
 		B16CA78726B13C390009B24C /* OrganizationPermissionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16CA78626B13C390009B24C /* OrganizationPermissionAPI.swift */; };
 		B16CA7B526B13D420009B24C /* O2MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16CA7B426B13D420009B24C /* O2MainViewModel.swift */; };
 		B16CA7B726B1437D0009B24C /* PersonIdentityListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16CA7B626B1437D0009B24C /* PersonIdentityListData.swift */; };
+		B16E5F352769C60200891970 /* mindMap.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B16E5F342769C60200891970 /* mindMap.storyboard */; };
+		B16E5F382769C82500891970 /* O2MindMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16E5F372769C82500891970 /* O2MindMapViewController.swift */; };
+		B16E5F3A2769D10500891970 /* O2MindSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16E5F392769D10500891970 /* O2MindSelectViewController.swift */; };
+		B16E5F3D2769E7A600891970 /* FolderTreeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16E5F3C2769E7A600891970 /* FolderTreeTableViewCell.swift */; };
+		B16E5F402769E8DF00891970 /* MindFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16E5F3F2769E8DF00891970 /* MindFolder.swift */; };
 		B17126C121084A2F00369F15 /* calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B17126C021084A2F00369F15 /* calendar.storyboard */; };
 		B174DDF026B7D33D00A3B503 /* PersonAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = B174DDEF26B7D33D00A3B503 /* PersonAttribute.swift */; };
 		B1750078233C6908003DA7B9 /* BlockPan.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1750072233C6907003DA7B9 /* BlockPan.swift */; };
@@ -255,9 +256,6 @@
 		B190923A21072AF3009A7906 /* OOCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B190923921072AF3009A7906 /* OOCalendarViewModel.swift */; };
 		B1912BE72146154700AB36E6 /* OOAIViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1912BE62146154700AB36E6 /* OOAIViewModel.swift */; };
 		B197771D217D9D810019F3A8 /* beep.wav in Resources */ = {isa = PBXBuildFile; fileRef = B19776E7217D9D810019F3A8 /* beep.wav */; };
-		B19BCE8A2228272500BD454C /* App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B19BCE462228272500BD454C /* App.framework */; };
-		B19BCE94222827DA00BD454C /* flutter_assets in Resources */ = {isa = PBXBuildFile; fileRef = B19BCE93222827DA00BD454C /* flutter_assets */; };
-		B19BCE9D22282C6300BD454C /* App.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B19BCE462228272500BD454C /* App.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B19D55A925358AC200CE3B22 /* O2AuthenticationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19D55A725358AC200CE3B22 /* O2AuthenticationModels.swift */; };
 		B19D55AA25358AC200CE3B22 /* O2MoyaResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19D55A825358AC200CE3B22 /* O2MoyaResult.swift */; };
 		B19D55AD25358B2700CE3B22 /* O2LoginAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19D55AB25358B2700CE3B22 /* O2LoginAPI.swift */; };
@@ -355,8 +353,6 @@
 		B1FDBE8D22952F0C00BB434E /* O2WorkMoreActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FDBE8C22952F0C00BB434E /* O2WorkMoreActionSheet.swift */; };
 		B1FEDA9B22D305C90002ECF4 /* CMSSingleApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FEDA9A22D305C90002ECF4 /* CMSSingleApplication.swift */; };
 		B1FEDACE22D314F90002ECF4 /* CMSCreateDocViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FEDACD22D314F90002ECF4 /* CMSCreateDocViewController.swift */; };
-		B1FFF886223A23B200C170FD /* O2FlutterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FFF885223A23B200C170FD /* O2FlutterViewController.swift */; };
-		B1FFF892223A4DA700C170FD /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FFF890223A4DA700C170FD /* GeneratedPluginRegistrant.m */; };
 		E40502C520722208009A8D30 /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40502C220722208009A8D30 /* ImagePickerController.swift */; };
 		E40502C920722208009A8D30 /* ImageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40502C320722208009A8D30 /* ImageRow.swift */; };
 		E40502CD20722208009A8D30 /* ImageCheckRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40502C420722208009A8D30 /* ImageCheckRow.swift */; };
@@ -504,7 +500,6 @@
 		E45DA8F21DACD7CA00E0735D /* SCScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45DA8EC1DACD7CA00E0735D /* SCScrollView.swift */; };
 		E45DA8F31DACD7CA00E0735D /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45DA8ED1DACD7CA00E0735D /* SegmentedControl.swift */; };
 		E45DA8F41DACD7CA00E0735D /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45DA8EE1DACD7CA00E0735D /* Style.swift */; };
-		E45DA8F51DACD7CA00E0735D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E45DA8F01DACD7CA00E0735D /* Info.plist */; };
 		E45DA8F71DADC04E00E0735D /* TaskUIToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45DA8F61DADC04E00E0735D /* TaskUIToolbar.swift */; };
 		E45DA8F91DADC06400E0735D /* TaskBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45DA8F81DADC06400E0735D /* TaskBarButtonItem.swift */; };
 		E45DA9061DAF4A2A00E0735D /* SAboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45DA9051DAF4A2A00E0735D /* SAboutViewController.swift */; };
@@ -1167,17 +1162,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		B1AE4E2821A3DCC200183FCD /* Embed Frameworks */ = {
+		B17131882755EC5C00FD3E22 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B130E64B223B778000B68354 /* image_picker.framework in Embed Frameworks */,
-				B130E64C223B778000B68354 /* path_provider.framework in Embed Frameworks */,
-				B130E64D223B778000B68354 /* shared_preferences.framework in Embed Frameworks */,
-				B130E64E223B778000B68354 /* Flutter.framework in Embed Frameworks */,
-				B19BCE9D22282C6300BD454C /* App.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1297,10 +1287,6 @@
 		B130A74E2281559900282AD1 /* DeviceListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceListViewController.swift; sourceTree = "<group>"; };
 		B130A7822281565F00282AD1 /* DeviceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTableViewCell.swift; sourceTree = "<group>"; };
 		B130A7842281597000282AD1 /* DeviceManagerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManagerViewModel.swift; sourceTree = "<group>"; };
-		B130E60D223B774400B68354 /* Flutter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Flutter.framework; path = engine/Flutter.framework; sourceTree = "<group>"; };
-		B130E645223B774D00B68354 /* image_picker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = image_picker.framework; path = plugins/image_picker.framework; sourceTree = "<group>"; };
-		B130E646223B774D00B68354 /* path_provider.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = path_provider.framework; path = plugins/path_provider.framework; sourceTree = "<group>"; };
-		B130E647223B774D00B68354 /* shared_preferences.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = shared_preferences.framework; path = plugins/shared_preferences.framework; sourceTree = "<group>"; };
 		B13707DC212D3F19002113F1 /* CMSCategoryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSCategoryData.swift; sourceTree = "<group>"; };
 		B13A010E236924BE00025F3B /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		B13A011023692A8B00025F3B /* O2CloudFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2CloudFileManager.swift; sourceTree = "<group>"; };
@@ -1403,6 +1389,11 @@
 		B165CD552242093500373B66 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B165CD562242093500373B66 /* Presentr+Equatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Presentr+Equatable.swift"; sourceTree = "<group>"; };
 		B165CD572242093500373B66 /* ModalSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalSize.swift; sourceTree = "<group>"; };
+		B1670A3B276AD756009A41BC /* MindMapAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindMapAPI.swift; sourceTree = "<group>"; };
+		B1670A3E276AD98B009A41BC /* O2MindMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2MindMapViewModel.swift; sourceTree = "<group>"; };
+		B1670A40276B09CC009A41BC /* MindMapItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindMapItem.swift; sourceTree = "<group>"; };
+		B1670A42276B0C2C009A41BC /* MindMapFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindMapFilter.swift; sourceTree = "<group>"; };
+		B1670A44276B1AF4009A41BC /* MindMapItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindMapItemTableViewCell.swift; sourceTree = "<group>"; };
 		B167F7622362BFC200F182B8 /* CloudFileMoveFolderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFileMoveFolderController.swift; sourceTree = "<group>"; };
 		B167F7642362C60200F182B8 /* CloudFileMoveFolderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFileMoveFolderCell.swift; sourceTree = "<group>"; };
 		B167F7652362C60200F182B8 /* CloudFileMoveFolderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CloudFileMoveFolderCell.xib; sourceTree = "<group>"; };
@@ -1440,6 +1431,11 @@
 		B16CA78626B13C390009B24C /* OrganizationPermissionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationPermissionAPI.swift; sourceTree = "<group>"; };
 		B16CA7B426B13D420009B24C /* O2MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2MainViewModel.swift; sourceTree = "<group>"; };
 		B16CA7B626B1437D0009B24C /* PersonIdentityListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonIdentityListData.swift; sourceTree = "<group>"; };
+		B16E5F342769C60200891970 /* mindMap.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = mindMap.storyboard; sourceTree = "<group>"; };
+		B16E5F372769C82500891970 /* O2MindMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2MindMapViewController.swift; sourceTree = "<group>"; };
+		B16E5F392769D10500891970 /* O2MindSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2MindSelectViewController.swift; sourceTree = "<group>"; };
+		B16E5F3C2769E7A600891970 /* FolderTreeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderTreeTableViewCell.swift; sourceTree = "<group>"; };
+		B16E5F3F2769E8DF00891970 /* MindFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindFolder.swift; sourceTree = "<group>"; };
 		B17126C021084A2F00369F15 /* calendar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = calendar.storyboard; sourceTree = "<group>"; };
 		B174DDEF26B7D33D00A3B503 /* PersonAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonAttribute.swift; sourceTree = "<group>"; };
 		B1750072233C6907003DA7B9 /* BlockPan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockPan.swift; sourceTree = "<group>"; };
@@ -1470,8 +1466,6 @@
 		B190923921072AF3009A7906 /* OOCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOCalendarViewModel.swift; sourceTree = "<group>"; };
 		B1912BE62146154700AB36E6 /* OOAIViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOAIViewModel.swift; sourceTree = "<group>"; };
 		B19776E7217D9D810019F3A8 /* beep.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = beep.wav; sourceTree = "<group>"; };
-		B19BCE462228272500BD454C /* App.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = App.framework; sourceTree = "<group>"; };
-		B19BCE93222827DA00BD454C /* flutter_assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = flutter_assets; sourceTree = "<group>"; };
 		B19D55A725358AC200CE3B22 /* O2AuthenticationModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = O2AuthenticationModels.swift; sourceTree = "<group>"; };
 		B19D55A825358AC200CE3B22 /* O2MoyaResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = O2MoyaResult.swift; sourceTree = "<group>"; };
 		B19D55AB25358B2700CE3B22 /* O2LoginAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = O2LoginAPI.swift; sourceTree = "<group>"; };
@@ -1572,9 +1566,6 @@
 		B1FDBE8C22952F0C00BB434E /* O2WorkMoreActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2WorkMoreActionSheet.swift; sourceTree = "<group>"; };
 		B1FEDA9A22D305C90002ECF4 /* CMSSingleApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSSingleApplication.swift; sourceTree = "<group>"; };
 		B1FEDACD22D314F90002ECF4 /* CMSCreateDocViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSCreateDocViewController.swift; sourceTree = "<group>"; };
-		B1FFF885223A23B200C170FD /* O2FlutterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2FlutterViewController.swift; sourceTree = "<group>"; };
-		B1FFF890223A4DA700C170FD /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
-		B1FFF891223A4DA700C170FD /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		C33461DCBCEEAF5B8597D54E /* Pods______.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods______.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E40502C220722208009A8D30 /* ImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
 		E40502C320722208009A8D30 /* ImageRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageRow.swift; sourceTree = "<group>"; };
@@ -2151,21 +2142,16 @@
 				B10A2F56233DDA990011CE3D /* AdSupport.framework in Frameworks */,
 				B1B6A8E92175C20000C10F3C /* CoreMedia.framework in Frameworks */,
 				B1BC8CDA216B3D5F00AF571F /* libc++.tbd in Frameworks */,
-				B130E648223B774D00B68354 /* image_picker.framework in Frameworks */,
 				E4D23119209EF74D00837868 /* libssl.a in Frameworks */,
 				B15BE106249A06BF008CD1DB /* libvo-amrwbenc.a in Frameworks */,
 				E4C24A222080A44300E426B0 /* CFNetwork.framework in Frameworks */,
-				B130E64A223B774D00B68354 /* shared_preferences.framework in Frameworks */,
 				E40958C920805211000FECC3 /* AVFoundation.framework in Frameworks */,
-				B130E644223B774400B68354 /* Flutter.framework in Frameworks */,
 				E4375B1C207CABF00065A880 /* MobileCoreServices.framework in Frameworks */,
 				E4375B1E207CAC020065A880 /* ImageIO.framework in Frameworks */,
 				E40958C7208051DE000FECC3 /* CoreTelephony.framework in Frameworks */,
 				E4418C5F1DDC1AC80066348D /* CoreGraphics.framework in Frameworks */,
 				E4375B12207CABAB0065A880 /* SystemConfiguration.framework in Frameworks */,
 				B15BE108249A06BF008CD1DB /* libmp3lame.a in Frameworks */,
-				B19BCE8A2228272500BD454C /* App.framework in Frameworks */,
-				B130E649223B774D00B68354 /* path_provider.framework in Frameworks */,
 				E4375B1A207CABE90065A880 /* AudioToolbox.framework in Frameworks */,
 				B15BE10A249A06BF008CD1DB /* libopencore-amrnb.a in Frameworks */,
 				E4375B14207CABB30065A880 /* AddressBook.framework in Frameworks */,
@@ -2583,6 +2569,22 @@
 			path = Presentr;
 			sourceTree = "<group>";
 		};
+		B1670A0D276AD749009A41BC /* MindMap */ = {
+			isa = PBXGroup;
+			children = (
+				B1670A3B276AD756009A41BC /* MindMapAPI.swift */,
+			);
+			path = MindMap;
+			sourceTree = "<group>";
+		};
+		B1670A3D276AD97A009A41BC /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B1670A3E276AD98B009A41BC /* O2MindMapViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		B168BD9724F5FF410070329F /* m */ = {
 			isa = PBXGroup;
 			children = (
@@ -2674,6 +2676,46 @@
 			path = BDSClientLib;
 			sourceTree = "<group>";
 		};
+		B16E5F062769BD6700891970 /* MindMap-脑图 */ = {
+			isa = PBXGroup;
+			children = (
+				B1670A3D276AD97A009A41BC /* ViewModel */,
+				B16E5F3E2769E89100891970 /* Model */,
+				B16E5F3B2769E77900891970 /* View */,
+				B16E5F362769C7C900891970 /* controller */,
+				B16E5F342769C60200891970 /* mindMap.storyboard */,
+			);
+			path = "MindMap-脑图";
+			sourceTree = "<group>";
+		};
+		B16E5F362769C7C900891970 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				B16E5F372769C82500891970 /* O2MindMapViewController.swift */,
+				B16E5F392769D10500891970 /* O2MindSelectViewController.swift */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		B16E5F3B2769E77900891970 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B16E5F3C2769E7A600891970 /* FolderTreeTableViewCell.swift */,
+				B1670A44276B1AF4009A41BC /* MindMapItemTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B16E5F3E2769E89100891970 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B16E5F3F2769E8DF00891970 /* MindFolder.swift */,
+				B1670A40276B09CC009A41BC /* MindMapItem.swift */,
+				B1670A42276B0C2C009A41BC /* MindMapFilter.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		B18FFF3323756B24001B2887 /* JpushAPI */ = {
 			isa = PBXGroup;
 			children = (
@@ -2758,20 +2800,6 @@
 				B1B214922160A8A300D9CA7E /* TulingPostModel.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		B19BCE442228272500BD454C /* O2OA_Flutter_SDK */ = {
-			isa = PBXGroup;
-			children = (
-				B1FFF84E223A234600C170FD /* flutter */,
-				B130E645223B774D00B68354 /* image_picker.framework */,
-				B130E646223B774D00B68354 /* path_provider.framework */,
-				B130E647223B774D00B68354 /* shared_preferences.framework */,
-				B130E60D223B774400B68354 /* Flutter.framework */,
-				B19BCE93222827DA00BD454C /* flutter_assets */,
-				B19BCE462228272500BD454C /* App.framework */,
-			);
-			path = O2OA_Flutter_SDK;
 			sourceTree = "<group>";
 		};
 		B19FF868226DBB2200FA0B76 /* o2JsApi */ = {
@@ -2960,6 +2988,7 @@
 		B1F79C80233B618B004D0AEE /* App */ = {
 			isa = PBXGroup;
 			children = (
+				B16E5F062769BD6700891970 /* MindMap-脑图 */,
 				B1A91633265C9833004EE9E2 /* Search */,
 				B1FD026F21FAE00E000E9817 /* O2MainController.swift */,
 				E4B887FD1D9D48F1002E1A46 /* Login-绑定登录 */,
@@ -2980,14 +3009,6 @@
 				B16CA7B426B13D420009B24C /* O2MainViewModel.swift */,
 			);
 			path = App;
-			sourceTree = "<group>";
-		};
-		B1FFF84E223A234600C170FD /* flutter */ = {
-			isa = PBXGroup;
-			children = (
-				B1FFF885223A23B200C170FD /* O2FlutterViewController.swift */,
-			);
-			path = flutter;
 			sourceTree = "<group>";
 		};
 		E034A62CD4B3425CCABD0B19 /* Frameworks */ = {
@@ -3529,6 +3550,7 @@
 		E4B69721207602840062F6E8 /* O2API */ = {
 			isa = PBXGroup;
 			children = (
+				B1670A0D276AD749009A41BC /* MindMap */,
 				B19D55B925358E8A00CE3B22 /* O2Enum.swift */,
 				B19D55B225358CBB00CE3B22 /* O2AccessTokenAuthorizable.swift */,
 				B19D55B125358CBB00CE3B22 /* O2AuthSDK.swift */,
@@ -3766,8 +3788,6 @@
 				E4B887451D9D48F1002E1A46 /* AppDelegate.swift */,
 				E4B887221D9D477A002E1A46 /* Info.plist */,
 				E4B887441D9D48EF002E1A46 /* O2Platform-Bridging-Header.h */,
-				B1FFF891223A4DA700C170FD /* GeneratedPluginRegistrant.h */,
-				B1FFF890223A4DA700C170FD /* GeneratedPluginRegistrant.m */,
 				E484C00E1DA8ED7C003413DF /* O2Platform.entitlements */,
 				B1908E4E22687B1A00D75632 /* Localizable.strings */,
 				B15D26EB235EF7480092F8B8 /* genstrings.sh */,
@@ -3962,7 +3982,6 @@
 				B108F3C3229E34B700778050 /* scan */,
 				B12FD1892283D5B700E636BA /* SwiftTheme */,
 				B165CD402242093500373B66 /* Presentr */,
-				B19BCE442228272500BD454C /* O2OA_Flutter_SDK */,
 				E4D23115209EF74C00837868 /* thirdlibs */,
 				E40502C120722208009A8D30 /* ImageRow */,
 				E4CB277F1E793AE6004A7ACB /* ZonePickerView */,
@@ -4485,9 +4504,9 @@
 				E4B887111D9D477A002E1A46 /* Resources */,
 				50A3AB6E115C21464BEE9779 /* [CP] Embed Pods Frameworks */,
 				E4C24A322081AFD500E426B0 /* Embed App Extensions */,
-				B1AE4E2821A3DCC200183FCD /* Embed Frameworks */,
 				B144D7B222B76E71000AAD8F /* Run Script */,
 				1B32B645931F2C29F159EFD7 /* [CP] Copy Pods Resources */,
+				B17131882755EC5C00FD3E22 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -5015,7 +5034,6 @@
 				E45755A11E0BA72E00EC44F4 /* qrcode_scan_btn_photo_down@2x.png in Resources */,
 				E46E6CB61DD41F5D00AB7561 /* JSBeautifier.js in Resources */,
 				E4B697B520764A2D0062F6E8 /* yearmonth.json in Resources */,
-				B19BCE94222827DA00BD454C /* flutter_assets in Resources */,
 				E46E6CB51DD41F5D00AB7561 /* jQuery.js in Resources */,
 				E46E6C801DD41F5D00AB7561 /* ZSSh6@2x.png in Resources */,
 				E46E6C971DD41F5D00AB7561 /* ZSSparagraph.png in Resources */,
@@ -5055,12 +5073,12 @@
 				E46E6C7F1DD41F5D00AB7561 /* ZSSh6.png in Resources */,
 				E46E6C9C1DD41F5D00AB7561 /* ZSSquicklink@2x.png in Resources */,
 				E46E6C901DD41F5D00AB7561 /* ZSSleftjustify@2x.png in Resources */,
+				B16E5F352769C60200891970 /* mindMap.storyboard in Resources */,
 				B1B0103023586B34002BF874 /* CFFileTableViewCell.xib in Resources */,
 				E428AF4C20A9643500D964B9 /* checkin.storyboard in Resources */,
 				E46E6C911DD41F5D00AB7561 /* ZSSlink.png in Resources */,
 				E40E24BD20B7DA3C009F8BE7 /* OOMeetingRoomMainCell.xib in Resources */,
 				E46E6C751DD41F5D00AB7561 /* ZSSh1.png in Resources */,
-				E45DA8F51DACD7CA00E0735D /* Info.plist in Resources */,
 				E46E6C8D1DD41F5D00AB7561 /* ZSSkeyboard.png in Resources */,
 				B1C0A172256E2AF800C7041E /* MeetingFormRoomPickerCell.xib in Resources */,
 				E40E24B920B7DA3C009F8BE7 /* OOMeetingConfirmHeaderView.xib in Resources */,
@@ -5097,7 +5115,6 @@
 				E46E6C691DD41F5D00AB7561 /* ZSSbgcolor.png in Resources */,
 				E428AF4620A95FE800D964B9 /* OOAttanceTotalController.xib in Resources */,
 				B15BE10C249A0EFE008CD1DB /* IMAudioView.xib in Resources */,
-				B165CD6B2242093500373B66 /* Info.plist in Resources */,
 				E4C24C48208D7EDE00E426B0 /* OOContactGroupHeaderView.xib in Resources */,
 				E4B888DB1D9D48F1002E1A46 /* 隶变体.ttf in Resources */,
 				E4B888D61D9D48F1002E1A46 /* 001.jpg in Resources */,
@@ -5294,6 +5311,7 @@
 				E40E24D520B7DA3C009F8BE7 /* OMeetingPersonActionCell.swift in Sources */,
 				B1C0A1A2256E3EEA00C7041E /* MeetingFormChoosePersonCell.swift in Sources */,
 				B14E07862301418400AE85A0 /* ContactUnitPickerViewController.swift in Sources */,
+				B16E5F402769E8DF00891970 /* MindFolder.swift in Sources */,
 				B107453F21A533E70015F1B2 /* O2PersonalViewModel.swift in Sources */,
 				E4B888A11D9D48F1002E1A46 /* MJRefreshAutoNormalFooter.m in Sources */,
 				E4B698242079AA0D0062F6E8 /* OOTableViewController.swift in Sources */,
@@ -5343,6 +5361,7 @@
 				E457558D1E0BA26000EC44F4 /* NewScanViewController.swift in Sources */,
 				E40502CD20722208009A8D30 /* ImageCheckRow.swift in Sources */,
 				E4B781A01DFA9B23007B58A9 /* CMSItemDetailViewController.swift in Sources */,
+				B16E5F3A2769D10500891970 /* O2MindSelectViewController.swift in Sources */,
 				E4B8887F1D9D48F1002E1A46 /* MainFileViewController.swift in Sources */,
 				E4B888DC1D9D48F1002E1A46 /* SettingViewController.swift in Sources */,
 				B1BB678024C6D1DD0020BD7D /* OOAttendanceCheckInNewController.swift in Sources */,
@@ -5529,7 +5548,6 @@
 				E4B888C51D9D48F1002E1A46 /* CollectUnitData.swift in Sources */,
 				E4BF45DD1E751399008B52F0 /* NewMainAppTableViewCell.swift in Sources */,
 				09E02E831F16319600579887 /* Cache.swift in Sources */,
-				B1FFF886223A23B200C170FD /* O2FlutterViewController.swift in Sources */,
 				B14CCF7B256DEE66003ECC3C /* MeetingFormDatePickerCell.swift in Sources */,
 				E4B888A61D9D48F1002E1A46 /* MJRefreshGifHeader.m in Sources */,
 				E4B8886B1D9D48F1002E1A46 /* ContactCompanyDeptController.swift in Sources */,
@@ -5629,6 +5647,7 @@
 				E4B888C61D9D48F1002E1A46 /* Login.swift in Sources */,
 				E4B697E520764A2D0062F6E8 /* OOApplicationAPI.swift in Sources */,
 				E4C24C4B208D7EDE00E426B0 /* OOLinkManCell.swift in Sources */,
+				B1670A45276B1AF4009A41BC /* MindMapItemTableViewCell.swift in Sources */,
 				E4B888A81D9D48F1002E1A46 /* MJRefreshStateHeader.m in Sources */,
 				E4B888851D9D48F1002E1A46 /* FolderHeaderView.swift in Sources */,
 				B104303A214657840011B08E /* OOVoiceView.swift in Sources */,
@@ -5649,6 +5668,7 @@
 				E46E6CC41DD41F5D00AB7561 /* ZSSRichTextEditor.m in Sources */,
 				E428AF5920ABD95700D964B9 /* OOAttendanceAPI.swift in Sources */,
 				B1649D9E265359A700593504 /* Strings.swift in Sources */,
+				B16E5F382769C82500891970 /* O2MindMapViewController.swift in Sources */,
 				B165CD582242093500373B66 /* CoverVerticalAnimation.swift in Sources */,
 				B13A010F236924BE00025F3B /* UIImageView+Extension.swift in Sources */,
 				B165CD672242093500373B66 /* CrossDissolveAnimation.swift in Sources */,
@@ -5690,6 +5710,7 @@
 				E4CB27871E793AE6004A7ACB /* ZonePickerView.swift in Sources */,
 				E4B69728207602A40062F6E8 /* OOMoyaProvider.swift in Sources */,
 				E428AF6720AEA5E300D964B9 /* OOAttandanceSettingDataView.swift in Sources */,
+				B16E5F3D2769E7A600891970 /* FolderTreeTableViewCell.swift in Sources */,
 				E40502C520722208009A8D30 /* ImagePickerController.swift in Sources */,
 				B168BDC924F5FFA80070329F /* ScanRecoObj.swift in Sources */,
 				8840A992248CDC9D005970A5 /* OOCalendarEditRemarkViewController.swift in Sources */,
@@ -5723,6 +5744,7 @@
 				B13A01172369310E00025F3B /* O2RunTrackInfo.swift in Sources */,
 				B108F3FD229E34D400778050 /* LBXScanViewStyle.swift in Sources */,
 				E4B8887C1D9D48F1002E1A46 /* FileFolderSelectViewController.swift in Sources */,
+				B1670A3C276AD756009A41BC /* MindMapAPI.swift in Sources */,
 				B108F3FC229E34D400778050 /* LBXScanNetAnimation.swift in Sources */,
 				E4B888C21D9D48F1002E1A46 /* Account.swift in Sources */,
 				B12FD1E22283D5B700E636BA /* NSObject+Theme.swift in Sources */,
@@ -5738,11 +5760,11 @@
 				E4B697152075FA560062F6E8 /* OOBaseUIButton.swift in Sources */,
 				E4B6974620761B310062F6E8 /* OOBindRegisterController.swift in Sources */,
 				E4B8885C1D9D48F1002E1A46 /* O2AppViewController.swift in Sources */,
-				B1FFF892223A4DA700C170FD /* GeneratedPluginRegistrant.m in Sources */,
 				B1B214912160A69E00D9CA7E /* Tuling123API.swift in Sources */,
 				B19D55AD25358B2700CE3B22 /* O2LoginAPI.swift in Sources */,
 				E4B888F71D9D48F1002E1A46 /* AppProcess.swift in Sources */,
 				E4B7815C1DF5032C007B58A9 /* ImageSlidesShowTableViewCell.swift in Sources */,
+				B1670A41276B09CC009A41BC /* MindMapItem.swift in Sources */,
 				E4AA12631DB0B1A600AEE5B0 /* SPersonViewController.swift in Sources */,
 				B12FD1D72283D5B700E636BA /* ThemeColorPicker.swift in Sources */,
 				B1C0A1A7256E552D00C7041E /* MeetingFormAttachmentCell.swift in Sources */,
@@ -5784,6 +5806,7 @@
 				E4F45449208F00A7002FBC32 /* OOPersonListViewModel.swift in Sources */,
 				B12FD1E92283D5B700E636BA /* NSAttributedString+Merge.swift in Sources */,
 				E4740ABF1DCC267100686780 /* BBSHeaderCollectionReusableView.swift in Sources */,
+				B1670A3F276AD98B009A41BC /* O2MindMapViewModel.swift in Sources */,
 				E40E24CE20B7DA3C009F8BE7 /* OOFormBaseView.swift in Sources */,
 				E40E24AB20B7DA3C009F8BE7 /* OOMeetingRoomDetailViewModel.swift in Sources */,
 				B16CA78426B132A80009B24C /* OrganizationPermissionData.swift in Sources */,
@@ -5792,6 +5815,7 @@
 				E4F4544C208F0401002FBC32 /* OOContactPersonCell.swift in Sources */,
 				B1023EFF265CDD1E007D5161 /* O2SearchResultCell.swift in Sources */,
 				B13A011B2369315100025F3B /* DBManager.swift in Sources */,
+				B1670A43276B0C2C009A41BC /* MindMapFilter.swift in Sources */,
 				B165CD632242093500373B66 /* TransitionType.swift in Sources */,
 				E4CB27841E793AE6004A7ACB /* ZoneFileListCell.swift in Sources */,
 				E4418C6D1DDD5D6A0066348D /* BBSSubjectCreateTableViewController.swift in Sources */,
@@ -6089,18 +6113,15 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = O2Platform/O2Platform.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 96;
+				CURRENT_PROJECT_VERSION = 97;
 				DEVELOPMENT_TEAM = C79YTQHHFY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/O2Platform/framework",
-					"$(PROJECT_DIR)/O2Platform/framework/O2OA_Flutter_SDK",
-					"$(PROJECT_DIR)/O2Platform/framework/O2OA_Flutter_SDK/plugins",
-					"$(PROJECT_DIR)/O2Platform/framework/O2OA_Flutter_SDK/engine",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -6115,13 +6136,12 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/O2Platform/framework/thirdlibs",
 					"$(PROJECT_DIR)/O2Platform/framework/MegviiLicMgr-iOS-SDK",
-					"$(PROJECT_DIR)/O2Platform/framework/O2OA_Flutter_SDK",
 					"$(PROJECT_DIR)/O2Platform/Framework/lame/vo-amrwbenc/lib",
 					"$(PROJECT_DIR)/O2Platform/Framework/lame",
 					"$(PROJECT_DIR)/O2Platform/Framework/lame/opencore-amr/lib",
 					"$(PROJECT_DIR)/O2Platform/Framework/BaiDuASR/BDSClientLib",
 				);
-				MARKETING_VERSION = 6.0.6;
+				MARKETING_VERSION = 6.0.7;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -6176,7 +6196,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.o2oa.app.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "9ebefd7c-6117-4bee-a96c-7ddb06ad4c6f";
-				PROVISIONING_PROFILE_SPECIFIER = "Company Developer profile";
+				PROVISIONING_PROFILE_SPECIFIER = "开发证书O2OA";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = none;
 				SWIFT_OBJC_BRIDGING_HEADER = "O2Platform/O2Platform-Bridging-Header.h";
@@ -6200,15 +6220,12 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 96;
+				CURRENT_PROJECT_VERSION = 97;
 				DEVELOPMENT_TEAM = C79YTQHHFY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/O2Platform/framework",
-					"$(PROJECT_DIR)/O2Platform/framework/O2OA_Flutter_SDK",
-					"$(PROJECT_DIR)/O2Platform/framework/O2OA_Flutter_SDK/plugins",
-					"$(PROJECT_DIR)/O2Platform/framework/O2OA_Flutter_SDK/engine",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -6223,13 +6240,12 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/O2Platform/framework/thirdlibs",
 					"$(PROJECT_DIR)/O2Platform/framework/MegviiLicMgr-iOS-SDK",
-					"$(PROJECT_DIR)/O2Platform/framework/O2OA_Flutter_SDK",
 					"$(PROJECT_DIR)/O2Platform/Framework/lame/vo-amrwbenc/lib",
 					"$(PROJECT_DIR)/O2Platform/Framework/lame",
 					"$(PROJECT_DIR)/O2Platform/Framework/lame/opencore-amr/lib",
 					"$(PROJECT_DIR)/O2Platform/Framework/BaiDuASR/BDSClientLib",
 				);
-				MARKETING_VERSION = 6.0.6;
+				MARKETING_VERSION = 6.0.7;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -6284,7 +6300,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.o2oa.app.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "b23067fd-fb08-4b85-8255-d8f3d25abc8a";
-				PROVISIONING_PROFILE_SPECIFIER = "Company Distribute profile";
+				PROVISIONING_PROFILE_SPECIFIER = O2OA_Official_Distribution;
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = none;
 				SWIFT_OBJC_BRIDGING_HEADER = "O2Platform/O2Platform-Bridging-Header.h";

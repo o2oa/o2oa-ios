@@ -37,7 +37,7 @@ class SCustomerServiceViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func btnAction(sender:UIButton){
+    @objc func btnAction(sender:UIButton){
         let alertController = UIAlertController(title: "", message: "客服电话：0571-88480860", preferredStyle: .actionSheet)
         let telAction = UIAlertAction(title: "呼叫", style: .destructive) { (action) in
             
