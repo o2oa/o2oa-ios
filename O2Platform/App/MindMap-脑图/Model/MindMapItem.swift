@@ -42,6 +42,8 @@ class MindMapItem : NSObject, DataModel {
     @objc var  desc: String?
     @objc var  creator: String?
     @objc var  creatorUnit: String?
+    @objc var content: String? // 脑图的具体内容 json格式
+    var editable: Bool? // 是否可编辑
     var shared: Bool?
     var cooperative: Bool?
     var fileVersion:Int?

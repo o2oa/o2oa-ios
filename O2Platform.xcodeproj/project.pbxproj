@@ -243,6 +243,10 @@
 		B17BF43022B23758009E36E0 /* SkinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17BF42F22B23758009E36E0 /* SkinViewController.swift */; };
 		B17DCCB32519A31900E9EE37 /* OOCalendarStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17DCCB22519A31900E9EE37 /* OOCalendarStoreViewController.swift */; };
 		B17DCCE32519BCC100E9EE37 /* CalendarStoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17DCCE22519BCC100E9EE37 /* CalendarStoreTableViewCell.swift */; };
+		B17EFC3B276C1D2800D7B18F /* MindMapNodeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17EFC3A276C1D2800D7B18F /* MindMapNodeData.swift */; };
+		B17EFC6A276C1DBF00D7B18F /* MindMapNodeDraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17EFC69276C1DBF00D7B18F /* MindMapNodeDraw.swift */; };
+		B17EFC6E276C2E5100D7B18F /* O2MindMapCanvasController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17EFC6D276C2E5100D7B18F /* O2MindMapCanvasController.swift */; };
+		B17EFC70276C331800D7B18F /* O2MindMapCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17EFC6F276C331800D7B18F /* O2MindMapCanvasView.swift */; };
 		B183987D249AFF64001C6FAA /* IMLocationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B183987C249AFF64001C6FAA /* IMLocationView.xib */; };
 		B18398AD249B00AA001C6FAA /* IMLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18398AC249B00AA001C6FAA /* IMLocationView.swift */; };
 		B18398B0249B079B001C6FAA /* IMLocationChooseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18398AE249B079B001C6FAA /* IMLocationChooseController.swift */; };
@@ -1453,6 +1457,10 @@
 		B17BF42F22B23758009E36E0 /* SkinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkinViewController.swift; sourceTree = "<group>"; };
 		B17DCCB22519A31900E9EE37 /* OOCalendarStoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOCalendarStoreViewController.swift; sourceTree = "<group>"; };
 		B17DCCE22519BCC100E9EE37 /* CalendarStoreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarStoreTableViewCell.swift; sourceTree = "<group>"; };
+		B17EFC3A276C1D2800D7B18F /* MindMapNodeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindMapNodeData.swift; sourceTree = "<group>"; };
+		B17EFC69276C1DBF00D7B18F /* MindMapNodeDraw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindMapNodeDraw.swift; sourceTree = "<group>"; };
+		B17EFC6D276C2E5100D7B18F /* O2MindMapCanvasController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2MindMapCanvasController.swift; sourceTree = "<group>"; };
+		B17EFC6F276C331800D7B18F /* O2MindMapCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2MindMapCanvasView.swift; sourceTree = "<group>"; };
 		B183987C249AFF64001C6FAA /* IMLocationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IMLocationView.xib; sourceTree = "<group>"; };
 		B18398AC249B00AA001C6FAA /* IMLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMLocationView.swift; sourceTree = "<group>"; };
 		B18398AE249B079B001C6FAA /* IMLocationChooseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMLocationChooseController.swift; sourceTree = "<group>"; };
@@ -2693,6 +2701,7 @@
 			children = (
 				B16E5F372769C82500891970 /* O2MindMapViewController.swift */,
 				B16E5F392769D10500891970 /* O2MindSelectViewController.swift */,
+				B17EFC6D276C2E5100D7B18F /* O2MindMapCanvasController.swift */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -2702,6 +2711,7 @@
 			children = (
 				B16E5F3C2769E7A600891970 /* FolderTreeTableViewCell.swift */,
 				B1670A44276B1AF4009A41BC /* MindMapItemTableViewCell.swift */,
+				B17EFC6F276C331800D7B18F /* O2MindMapCanvasView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2712,6 +2722,8 @@
 				B16E5F3F2769E8DF00891970 /* MindFolder.swift */,
 				B1670A40276B09CC009A41BC /* MindMapItem.swift */,
 				B1670A42276B0C2C009A41BC /* MindMapFilter.swift */,
+				B17EFC3A276C1D2800D7B18F /* MindMapNodeData.swift */,
+				B17EFC69276C1DBF00D7B18F /* MindMapNodeDraw.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -3550,7 +3562,6 @@
 		E4B69721207602840062F6E8 /* O2API */ = {
 			isa = PBXGroup;
 			children = (
-				B1670A0D276AD749009A41BC /* MindMap */,
 				B19D55B925358E8A00CE3B22 /* O2Enum.swift */,
 				B19D55B225358CBB00CE3B22 /* O2AccessTokenAuthorizable.swift */,
 				B19D55B125358CBB00CE3B22 /* O2AuthSDK.swift */,
@@ -3572,6 +3583,7 @@
 				E4B6978D20764A2B0062F6E8 /* DesktopAPI */,
 				E4B6979B20764A2C0062F6E8 /* HotpicAPI */,
 				E4B6978F20764A2C0062F6E8 /* InformationAPI */,
+				B1670A0D276AD749009A41BC /* MindMap */,
 				E4B6978820764A2B0062F6E8 /* MeetingAPI */,
 				E4B6979D20764A2C0062F6E8 /* TaskAPI */,
 				E4B69726207602A40062F6E8 /* OOAccessTokenAuthorizable.swift */,
@@ -5344,6 +5356,7 @@
 				E40E24BC20B7DA3C009F8BE7 /* OOMeetingRoomMainCell.swift in Sources */,
 				E4B888721D9D48F1002E1A46 /* CellViewModel.swift in Sources */,
 				E46E6CB81DD41F5D00AB7561 /* CYRTextStorage.m in Sources */,
+				B17EFC3B276C1D2800D7B18F /* MindMapNodeData.swift in Sources */,
 				0952CF221F192D5700322552 /* SearchFilter.swift in Sources */,
 				B1AE4E6621A3F60200183FCD /* Data+Extension.swift in Sources */,
 				E4CB27711E78D5B1004A7ACB /* UIFont+ExampleFonts.swift in Sources */,
@@ -5372,6 +5385,7 @@
 				E4B6977E207649F50062F6E8 /* OOLoginViewModel.swift in Sources */,
 				B107450021A523340015F1B2 /* UIImage+Extension.swift in Sources */,
 				B190923A21072AF3009A7906 /* OOCalendarViewModel.swift in Sources */,
+				B17EFC6A276C1DBF00D7B18F /* MindMapNodeDraw.swift in Sources */,
 				E4BF45DF1E7514A9008B52F0 /* NewMainItemTableViewCell.swift in Sources */,
 				B12FD1DB2283D5B700E636BA /* ThemeDictionaryPicker.swift in Sources */,
 				E4B888C01D9D48F1002E1A46 /* LoginViewController.swift in Sources */,
@@ -5747,6 +5761,7 @@
 				B1670A3C276AD756009A41BC /* MindMapAPI.swift in Sources */,
 				B108F3FC229E34D400778050 /* LBXScanNetAnimation.swift in Sources */,
 				E4B888C21D9D48F1002E1A46 /* Account.swift in Sources */,
+				B17EFC6E276C2E5100D7B18F /* O2MindMapCanvasController.swift in Sources */,
 				B12FD1E22283D5B700E636BA /* NSObject+Theme.swift in Sources */,
 				B167F7632362BFC200F182B8 /* CloudFileMoveFolderController.swift in Sources */,
 				B162F28924AB0E7300A6BF06 /* O2StringPicker.swift in Sources */,
@@ -5829,6 +5844,7 @@
 				E4B888A21D9D48F1002E1A46 /* MJRefreshAutoStateFooter.m in Sources */,
 				B12FD1DF2283D5B700E636BA /* ThemePicker.swift in Sources */,
 				B17DCCE32519BCC100E9EE37 /* CalendarStoreTableViewCell.swift in Sources */,
+				B17EFC70276C331800D7B18F /* O2MindMapCanvasView.swift in Sources */,
 				B1D2091226578C200058F1EA /* O2SearchController.swift in Sources */,
 				B165CD622242093500373B66 /* BackgroundView.swift in Sources */,
 				B1912BE72146154700AB36E6 /* OOAIViewModel.swift in Sources */,

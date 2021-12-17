@@ -111,7 +111,7 @@ open class O2BindUnitModel: NSObject, DataModel, NSCoding, IO2BindUnitModel {
     /// 代理地址配置
     /// 如： {"qywx.o2oa.net:80":"qywx.o2oa.net/dev/web", "qywx.o2oa.net:20020":"qywx.o2oa.net/dev/app", "qywx.o2oa.net:20030":"qywx.o2oa.net/dev/center"}
     public func urlMappingDecode() -> Dictionary<String, Any>? {
-        if urlMapping != nil {
+        if urlMapping != nil && !urlMapping!.isBlank {
             if let jsonData = urlMapping?.data(using: .utf8) {
                 do {
                     let dc = try JSONSerialization.jsonObject(with: jsonData, options: .mutableContainers)

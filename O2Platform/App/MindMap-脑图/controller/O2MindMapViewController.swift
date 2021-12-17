@@ -70,6 +70,10 @@ class O2MindMapViewController: UIViewController {
                     self.loadMindMapList()
                 }
             }
+        } else if segue.identifier == "showMindMapCanvas" {
+            if let id = sender as? String, let vc = segue.destination as? O2MindMapCanvasController {
+                vc.id = id // 设置脑图id
+            }
         }
     }
     
@@ -113,7 +117,14 @@ class O2MindMapViewController: UIViewController {
     }
     // 选择目录
     @objc func openFolderSelector() {
+        DDLogDebug("打开目录选择")
         self.performSegue(withIdentifier: "showSelectFolder", sender: nil)
+    }
+    
+    // 打开脑图
+    @objc func openMindMapView(id: String) {
+        DDLogDebug("打开脑图， id: \(id)")
+        self.performSegue(withIdentifier: "showMindMapCanvas", sender: id)
     }
 
 }
@@ -133,4 +144,12 @@ extension O2MindMapViewController: UITableViewDelegate, UITableViewDataSource {
         return UITableViewCell()
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        if let id = mindMapList[indexPath.row].id {
+            self.openMindMapView(id: id)
+        } else {
+            DDLogError("mind map item id 为空。。。。。")
+        }
+    }
 }

@@ -34,6 +34,30 @@ class O2MindMapViewModel  {
         }
     }
     
+    ///
+    ///  根据id查询脑图对象
+    func loadMindMapView(id: String)-> Promise<(MindMapItem, MindRootNode?)> {
+        return Promise {fulfill, reject in
+            self.mindMapAPI.request(.viewMindWithId(id)) { result in
+                let response = OOResult<BaseModelClass<MindMapItem>>(result)
+                if response.isResultSuccess() {
+                    if let item = response.model?.data {
+                        // 脑图json转对象
+                        if let content = item.content, let node = MindRootNode.deserialize(from: content) {
+                            fulfill((item, node))
+                        } else {
+                            fulfill((item, nil))
+                        }
+                    } else {
+                        reject(OOAppError.apiEmptyResultError)
+                    }
+                } else {
+                    reject(response.error!)
+                }
+            }
+        }
+    }
+    
     
     //查询 目录 list
     func myFolderTree()-> Promise<[MindFolder]> {

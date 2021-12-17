@@ -132,11 +132,28 @@
                         <outlet property="folderLabel" destination="9A3-Kx-rmV" id="ASA-bt-nEb"/>
                         <outlet property="tableView" destination="4aZ-I6-eij" id="9sc-bY-q1B"/>
                         <segue destination="P7V-wk-9j8" kind="show" identifier="showSelectFolder" id="y80-sF-J6J"/>
+                        <segue destination="Ebp-E1-Arp" kind="show" identifier="showMindMapCanvas" id="0sG-DY-fkw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1042.0289855072465" y="115.84821428571428"/>
+        </scene>
+        <!--Mind Map Canvas Controller-->
+        <scene sceneID="3wW-ej-jaE">
+            <objects>
+                <viewController id="Ebp-E1-Arp" customClass="O2MindMapCanvasController" customModule="O2Platform" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="v6F-RP-ec5">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="0kn-Hu-EyP"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="HHR-F3-IYZ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Pf2-Z2-EGF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2012" y="116"/>
         </scene>
         <!--Mind Select View Controller-->
         <scene sceneID="MEg-5i-9hH">
@@ -165,7 +182,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gB4-Sf-lmM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2128" y="217"/>
+            <point key="canvasLocation" x="1952" y="871"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Xij-Dp-a7b">

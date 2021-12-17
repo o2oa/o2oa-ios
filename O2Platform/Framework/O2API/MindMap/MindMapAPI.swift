@@ -13,6 +13,7 @@ import Moya
 enum MindMapAPI {
     case myFolderTree
     case listNextWithFilter(String, MindMapFilter)
+    case viewMindWithId(String)
 }
 
 
@@ -45,12 +46,14 @@ extension MindMapAPI: TargetType {
             return "/jaxrs/folder/tree/my"
         case .listNextWithFilter(let id, _):
             return "/jaxrs/mind/filter/list/\(id)/next/\(O2.defaultPageSize)"
+        case .viewMindWithId(let id):
+            return "/jaxrs/mind/view/\(id)"
         }
     }
     
     var method: Moya.Method  {
         switch self {
-        case .myFolderTree:
+        case .myFolderTree, .viewMindWithId(_):
             return .get
         case .listNextWithFilter(_, _):
             return .put
@@ -63,7 +66,7 @@ extension MindMapAPI: TargetType {
     
     var task: Task {
         switch self {
-        case .myFolderTree:
+        case .myFolderTree, .viewMindWithId(_):
             return .requestPlain
         case .listNextWithFilter(_, let filter):
             return .requestParameters(parameters: filter.toJSON() ?? [:], encoding: JSONEncoding.default)
