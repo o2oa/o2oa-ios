@@ -278,6 +278,7 @@ struct DesktopContext {
     static let todoDraftQuery = "workmobilewithaction.html?draft=##draft##" //draft 对象 ProcessDraftBean
     static let bbsItemDetailQuery  = "forumdocMobile.html?id=##subjectId##"
     static let cmsItemDetailQuery = "cmsdocMobile.html?id=##documentId##"
+    static let cmsItemDetailEditHtml = "cmsdocmobilewithaction.html?id=##documentId##&readonly=false"
     static let appDetailQuery = "appMobile.html?app=portal.Portal&status=##status##"
     static let portalMobileQuery = "portalmobile.html?id=##portalId##"
 }

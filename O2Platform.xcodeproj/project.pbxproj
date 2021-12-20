@@ -195,6 +195,9 @@
 		B1670A41276B09CC009A41BC /* MindMapItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1670A40276B09CC009A41BC /* MindMapItem.swift */; };
 		B1670A43276B0C2C009A41BC /* MindMapFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1670A42276B0C2C009A41BC /* MindMapFilter.swift */; };
 		B1670A45276B1AF4009A41BC /* MindMapItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1670A44276B1AF4009A41BC /* MindMapItemTableViewCell.swift */; };
+		B1675EDB27705F8B006CD43A /* PortalAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1675EDA27705F8B006CD43A /* PortalAPI.swift */; };
+		B1675EDD27706078006CD43A /* PortalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1675EDC27706078006CD43A /* PortalViewModel.swift */; };
+		B1675EDF27706122006CD43A /* O2PortalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1675EDE27706122006CD43A /* O2PortalInfo.swift */; };
 		B167F7632362BFC200F182B8 /* CloudFileMoveFolderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B167F7622362BFC200F182B8 /* CloudFileMoveFolderController.swift */; };
 		B167F7662362C60200F182B8 /* CloudFileMoveFolderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B167F7642362C60200F182B8 /* CloudFileMoveFolderCell.swift */; };
 		B167F7672362C60200F182B8 /* CloudFileMoveFolderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B167F7652362C60200F182B8 /* CloudFileMoveFolderCell.xib */; };
@@ -784,7 +787,6 @@
 		E4B888E91D9D48F1002E1A46 /* setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4B8883C1D9D48F1002E1A46 /* setting.storyboard */; };
 		E4B888EA1D9D48F1002E1A46 /* task.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4B8883D1D9D48F1002E1A46 /* task.storyboard */; };
 		E4B888EF1D9D48F1002E1A46 /* TaskCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B888441D9D48F1002E1A46 /* TaskCreateViewController.swift */; };
-		E4B888F01D9D48F1002E1A46 /* TaskFlowCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B888451D9D48F1002E1A46 /* TaskFlowCategoryViewController.swift */; };
 		E4B888F21D9D48F1002E1A46 /* TodoedTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B888471D9D48F1002E1A46 /* TodoedTaskViewController.swift */; };
 		E4B888F31D9D48F1002E1A46 /* TodoTaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B888481D9D48F1002E1A46 /* TodoTaskDetailViewController.swift */; };
 		E4B888F41D9D48F1002E1A46 /* TodoTaskProcessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B888491D9D48F1002E1A46 /* TodoTaskProcessViewController.swift */; };
@@ -1398,6 +1400,9 @@
 		B1670A40276B09CC009A41BC /* MindMapItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindMapItem.swift; sourceTree = "<group>"; };
 		B1670A42276B0C2C009A41BC /* MindMapFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindMapFilter.swift; sourceTree = "<group>"; };
 		B1670A44276B1AF4009A41BC /* MindMapItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindMapItemTableViewCell.swift; sourceTree = "<group>"; };
+		B1675EDA27705F8B006CD43A /* PortalAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortalAPI.swift; sourceTree = "<group>"; };
+		B1675EDC27706078006CD43A /* PortalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortalViewModel.swift; sourceTree = "<group>"; };
+		B1675EDE27706122006CD43A /* O2PortalInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2PortalInfo.swift; sourceTree = "<group>"; };
 		B167F7622362BFC200F182B8 /* CloudFileMoveFolderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFileMoveFolderController.swift; sourceTree = "<group>"; };
 		B167F7642362C60200F182B8 /* CloudFileMoveFolderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFileMoveFolderCell.swift; sourceTree = "<group>"; };
 		B167F7652362C60200F182B8 /* CloudFileMoveFolderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CloudFileMoveFolderCell.xib; sourceTree = "<group>"; };
@@ -2047,7 +2052,6 @@
 		E4B8883C1D9D48F1002E1A46 /* setting.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = setting.storyboard; sourceTree = "<group>"; };
 		E4B8883D1D9D48F1002E1A46 /* task.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = task.storyboard; sourceTree = "<group>"; };
 		E4B888441D9D48F1002E1A46 /* TaskCreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCreateViewController.swift; sourceTree = "<group>"; };
-		E4B888451D9D48F1002E1A46 /* TaskFlowCategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskFlowCategoryViewController.swift; sourceTree = "<group>"; };
 		E4B888471D9D48F1002E1A46 /* TodoedTaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoedTaskViewController.swift; sourceTree = "<group>"; };
 		E4B888481D9D48F1002E1A46 /* TodoTaskDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoTaskDetailViewController.swift; sourceTree = "<group>"; };
 		E4B888491D9D48F1002E1A46 /* TodoTaskProcessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoTaskProcessViewController.swift; sourceTree = "<group>"; };
@@ -2591,6 +2595,14 @@
 				B1670A3E276AD98B009A41BC /* O2MindMapViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B1675EAC27705F75006CD43A /* PortalAPI */ = {
+			isa = PBXGroup;
+			children = (
+				B1675EDA27705F8B006CD43A /* PortalAPI.swift */,
+			);
+			path = PortalAPI;
 			sourceTree = "<group>";
 		};
 		B168BD9724F5FF410070329F /* m */ = {
@@ -3571,6 +3583,7 @@
 				B19D55AB25358B2700CE3B22 /* O2LoginAPI.swift */,
 				B19D55AC25358B2700CE3B22 /* O2RegisterAPI.swift */,
 				B1173A5C2488C568005075F0 /* Communicate */,
+				B1675EAC27705F75006CD43A /* PortalAPI */,
 				B18FFF3323756B24001B2887 /* JpushAPI */,
 				B107453721A52B9A0015F1B2 /* PersonalAPI */,
 				B1B6A8F7217710A400C10F3C /* FaceRecognizeAPI */,
@@ -3816,6 +3829,7 @@
 				E4B887471D9D48F1002E1A46 /* c */,
 				E4B887491D9D48F1002E1A46 /* m */,
 				E4B8874B1D9D48F1002E1A46 /* v */,
+				B1675EDC27706078006CD43A /* PortalViewModel.swift */,
 			);
 			path = Applications;
 			sourceTree = "<group>";
@@ -3834,6 +3848,7 @@
 			isa = PBXGroup;
 			children = (
 				E4B8874A1D9D48F1002E1A46 /* O2App.swift */,
+				B1675EDE27706122006CD43A /* O2PortalInfo.swift */,
 			);
 			path = m;
 			sourceTree = "<group>";
@@ -4273,7 +4288,6 @@
 			children = (
 				E40C41E31E7F7C0D00568805 /* category */,
 				E4B888441D9D48F1002E1A46 /* TaskCreateViewController.swift */,
-				E4B888451D9D48F1002E1A46 /* TaskFlowCategoryViewController.swift */,
 				E4B888471D9D48F1002E1A46 /* TodoedTaskViewController.swift */,
 				E4B888481D9D48F1002E1A46 /* TodoTaskDetailViewController.swift */,
 				E4B888491D9D48F1002E1A46 /* TodoTaskProcessViewController.swift */,
@@ -5422,7 +5436,6 @@
 				E40E24A920B7DA3C009F8BE7 /* OOMeetingCreateViewModel.swift in Sources */,
 				E40C41ED1E7F7C0D00568805 /* ZoneSubCategoryViewController.swift in Sources */,
 				E4B889431D9D6308002E1A46 /* FileUtil.swift in Sources */,
-				E4B888F01D9D48F1002E1A46 /* TaskFlowCategoryViewController.swift in Sources */,
 				E4CB27721E78D5B1004A7ACB /* UINavigationBar+Flat.swift in Sources */,
 				E45DA90C1DAF76C800E0735D /* SCommonViewController.swift in Sources */,
 				B108F401229E34D400778050 /* LBXScanWrapper.swift in Sources */,
@@ -5465,6 +5478,7 @@
 				B19D55B625358CBB00CE3B22 /* O2AuthSDK.swift in Sources */,
 				E40E24D320B7DA3C009F8BE7 /* OOMeetingPersonSelectHeaderView.swift in Sources */,
 				B15BE0BE2499BCEF008CD1DB /* O2RecordVoiceManager.swift in Sources */,
+				B1675EDF27706122006CD43A /* O2PortalInfo.swift in Sources */,
 				B1DB6EA5237E6F2C00D7BA94 /* O2VersionInfoModel.swift in Sources */,
 				09E02E9A1F1745E700579887 /* ZLTextView.swift in Sources */,
 				E4C24C43208D7EDE00E426B0 /* OOContactMainViewController.swift in Sources */,
@@ -5509,6 +5523,7 @@
 				E4B6981A2079A8BB0062F6E8 /* OOBindNodeViewController.swift in Sources */,
 				E4F4544F20902263002FBC32 /* OOConfigInfoModels.swift in Sources */,
 				B1489CB12492045D009EE9FD /* IMChatEmojiItemCell.swift in Sources */,
+				B1675EDD27706078006CD43A /* PortalViewModel.swift in Sources */,
 				E4B2321A20B3E9440082F30A /* OOAttanceCheckinPromptView.swift in Sources */,
 				E4B69810207652960062F6E8 /* OOTaskModels.swift in Sources */,
 				E4B888761D9D48F1002E1A46 /* DepartmentDuty.swift in Sources */,
@@ -5645,6 +5660,7 @@
 				E40E24D620B7DA3C009F8BE7 /* OOMeetingPersonTableViewCell.swift in Sources */,
 				09E02E081F131F1800579887 /* OrgUnit.swift in Sources */,
 				E4B2321320B2AA1D0082F30A /* OOAttandanceWorkPlaceCell.swift in Sources */,
+				B1675EDB27705F8B006CD43A /* PortalAPI.swift in Sources */,
 				E40E24D920B7DA3C009F8BE7 /* OOMeetingInforHeaderView.swift in Sources */,
 				E4B8886E1D9D48F1002E1A46 /* ContactGroupPersonController.swift in Sources */,
 				B1FEDA9B22D305C90002ECF4 /* CMSSingleApplication.swift in Sources */,

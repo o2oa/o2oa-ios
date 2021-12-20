@@ -91,7 +91,15 @@ class O2BaseJsMessageHandler: O2WKScriptMessageHandlerImplement {
                 let appBody = message.body as! NSDictionary
                 let docId = appBody["docId"] as? String
                 let docTitle = appBody["docTitle"] as? String
-                self.openCmsDocument(docId: (docId ?? "" ), docTitle: (docTitle ?? ""))
+                var readonly = true
+                if let options = appBody["options"] as? String {
+                    DDLogDebug("options json: \(options)")
+                    let optionJson = JSON(parseJSON: options)
+                    if let re = optionJson["readonly"].bool {
+                        readonly = re
+                    }
+                }
+                self.openCmsDocument(docId: (docId ?? "" ), docTitle: (docTitle ?? ""), readonly: readonly)
             }else {
                 DDLogError("打开cms文档失败， 参数不存在！！！！！")
             }
@@ -219,12 +227,12 @@ class O2BaseJsMessageHandler: O2WKScriptMessageHandlerImplement {
         
     }
     
-    private func openCmsDocument(docId: String, docTitle: String) {
-        DDLogInfo("打开文档， docId：\(docId) , docTitle:\(docTitle)")
+    private func openCmsDocument(docId: String, docTitle: String, readonly: Bool) {
+        DDLogInfo("打开文档， docId：\(docId) , docTitle:\(docTitle) , readonly: \(readonly)")
         let storyBoard = UIStoryboard(name: "information", bundle: nil)
         let destVC = storyBoard.instantiateViewController(withIdentifier: "CMSSubjectDetailVC") as! CMSItemDetailViewController
         let json = """
-        {"title":"\(docTitle)", "id":"\(docId)"}
+        {"title":"\(docTitle)", "id":"\(docId)", "readonly": \(readonly)}
         """
         destVC.itemData =  CMSCategoryItemData(JSONString: json)
         self.viewController.show(destVC, sender: nil)

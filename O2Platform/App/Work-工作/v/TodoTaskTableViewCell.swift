@@ -42,7 +42,7 @@ class TodoTaskTableViewCell: UITableViewCell {
                 self.todoIconImageView?.image = UIImage(named: "todo_8")
             }
         }
-        self.titleLabel.text = "[\((cellModel.applicationName)!)] \((cellModel.title)!)"
+        self.titleLabel.text = "[\((cellModel.applicationName) ?? "")] \((cellModel.title) ?? "")"
         self.statusLabel.text = cellModel.status
         self.timeLabel.text = cellModel.time
     }

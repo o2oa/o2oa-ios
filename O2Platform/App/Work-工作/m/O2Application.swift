@@ -21,6 +21,7 @@ class O2Application : NSObject, DataModel {
 	@objc var lastUpdateTime : String?
 	@objc var name : String?
 	@objc var updateTime : String?
+    var processList:[O2ApplicationProcess]?
 
 
 	 
@@ -41,10 +42,28 @@ class O2Application : NSObject, DataModel {
 		lastUpdateTime <- map["lastUpdateTime"]
 		name <- map["name"]
 		updateTime <- map["updateTime"]
+        processList <- map["processList"]
 	}
 
     
 
+}
+
+
+class O2ApplicationProcess: NSObject, DataModel {
+    
+    @objc var id:String?
+    @objc var name:String?
+    @objc var alias:String?
+    @objc var desc:String?
+    @objc var creatorPerson:String?
+    @objc var application:String?
+    @objc var icon:String?
+    @objc var defaultStartMode: String?
+    @objc var startableTerminal: String? // client,mobile,all 有可能没有值 没有值就是all
+    
+    required override init(){}
+    
 }
 
 

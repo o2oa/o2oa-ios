@@ -27,6 +27,9 @@ class CMSCategoryItemData : NSObject, NSCoding, Mappable{
 	var title : String?
 	var updateTime : String?
     var publishTime : String?
+    
+    //readonly 是否只读 移动端默认只读
+    var readonly: Bool?
 
 
 	class func newInstance(map: Map) -> Mappable?{
@@ -56,6 +59,7 @@ class CMSCategoryItemData : NSObject, NSCoding, Mappable{
 		title <- map["title"]
 		updateTime <- map["updateTime"]
         publishTime <- map["publishTime"]
+        readonly <- map["readonly"]
 		
 	}
 
@@ -84,6 +88,7 @@ class CMSCategoryItemData : NSObject, NSCoding, Mappable{
          title = aDecoder.decodeObject(forKey: "title") as? String
          updateTime = aDecoder.decodeObject(forKey: "updateTime") as? String
          publishTime = aDecoder.decodeObject(forKey: "publishTime") as? String
+         readonly = aDecoder.decodeObject(forKey: "readonly") as? Bool
 
 	}
 
@@ -149,6 +154,9 @@ class CMSCategoryItemData : NSObject, NSCoding, Mappable{
 		}
         if publishTime != nil{
             aCoder.encode(publishTime, forKey: "publishTime")
+        }
+        if readonly != nil{
+            aCoder.encode(readonly, forKey: "readonly")
         }
 
 	}

@@ -75,104 +75,107 @@ class ZoneMenuViewController: UIViewController {
         let obj = notification.object
         if let app = obj as? O2Application {
             DispatchQueue.main.async {
-                self.showLoading()
+//                self.showLoading()
+                self.subVC.processList = app.processList ?? []
             }
-            self.loadProcessList(appId: app.id!).then { (list)  in
-                self.hideLoading()
-                self.subVC.processList = list
-            }.catch { (err) in
-                DDLogError(err.localizedDescription)
-                DispatchQueue.main.async {
-                    self.showError(title: "没有获取到流程列表！")
-                }
-            }
+//            self.loadProcessList(appId: app.id!).then { (list)  in
+//                self.hideLoading()
+//                self.subVC.processList = list
+//            }.catch { (err) in
+//                DDLogError(err.localizedDescription)
+//                DispatchQueue.main.async {
+//                    self.showError(title: "没有获取到流程列表！")
+//                }
+//            }
         }
     }
     
     /// 查询流程列表。如果新接口没有 就用老接口
-    private func loadProcessList(appId: String) -> Promise<[AppProcess]> {
-        return Promise {fulfill, reject in
-            self.loadProcessListWithFilter(appId: appId).then { (list)  in
-                fulfill(list)
-            }.catch { (err) in
-                DDLogError(err.localizedDescription)
-                //可能新接口不存在 查询老接口
-                self.loadProcessListOld(appId: appId).then { (oldList) in
-                    fulfill(oldList)
-                }.catch { (err) in
-                    reject(err)
-                }
-            }
-        }
-    }
+//    private func loadProcessList(appId: String) -> Promise<[AppProcess]> {
+//        return Promise {fulfill, reject in
+//            self.loadProcessListWithFilter(appId: appId).then { (list)  in
+//                fulfill(list)
+//            }.catch { (err) in
+//                DDLogError(err.localizedDescription)
+//                //可能新接口不存在 查询老接口
+//                self.loadProcessListOld(appId: appId).then { (oldList) in
+//                    fulfill(oldList)
+//                }.catch { (err) in
+//                    reject(err)
+//                }
+//            }
+//        }
+//    }
     
     ///新接口 过滤仅pc的流程
-    private func loadProcessListWithFilter(appId: String) -> Promise<[AppProcess]> {
-        return Promise {fulfill, reject in
-            self.o2ProcessAPI.request(.applicationItemWithFilter(appId), completion: {result in
-                let response = OOResult<BaseModelClass<[AppProcess]>>(result)
-                if response.isResultSuccess() {
-                    if let list = response.model?.data {
-                        fulfill(list)
-                    }else {
-                        reject(OOAppError.apiEmptyResultError)
-                    }
-                }else {
-                    reject(response.error!)
-                }
-            })
-        }
-    }
+//    private func loadProcessListWithFilter(appId: String) -> Promise<[AppProcess]> {
+//        return Promise {fulfill, reject in
+//            self.o2ProcessAPI.request(.applicationItemWithFilter(appId), completion: {result in
+//                let response = OOResult<BaseModelClass<[AppProcess]>>(result)
+//                if response.isResultSuccess() {
+//                    if let list = response.model?.data {
+//                        fulfill(list)
+//                    }else {
+//                        reject(OOAppError.apiEmptyResultError)
+//                    }
+//                }else {
+//                    reject(response.error!)
+//                }
+//            })
+//        }
+//    }
     
     /// 老接口 不过滤
-    private func loadProcessListOld(appId: String) -> Promise<[AppProcess]> {
-        return Promise {fulfill, reject in
-            self.o2ProcessAPI.request(.applicationItem(appId), completion: {result in
-                let response = OOResult<BaseModelClass<[AppProcess]>>(result)
-                if response.isResultSuccess() {
-                    if let list = response.model?.data {
-                        fulfill(list)
-                    }else {
-                        reject(OOAppError.apiEmptyResultError)
-                    }
-                }else {
-                    reject(response.error!)
-                }
-            })
-        }
-    }
+//    private func loadProcessListOld(appId: String) -> Promise<[AppProcess]> {
+//        return Promise {fulfill, reject in
+//            self.o2ProcessAPI.request(.applicationItem(appId), completion: {result in
+//                let response = OOResult<BaseModelClass<[AppProcess]>>(result)
+//                if response.isResultSuccess() {
+//                    if let list = response.model?.data {
+//                        fulfill(list)
+//                    }else {
+//                        reject(OOAppError.apiEmptyResultError)
+//                    }
+//                }else {
+//                    reject(response.error!)
+//                }
+//            })
+//        }
+//    }
     
     @objc private func receiveSubNotification(_ notification:NSNotification){
         let obj = notification.object
-        loadDepartAndIdentity(process: obj as? AppProcess)
+        loadDepartAndIdentity(process: obj as? O2ApplicationProcess)
     }
     
     
     func loadAppList(){
         self.showLoading(title: "应用加载中...")
-//        let url = AppDelegate.o2Collect.generateURLWithAppContextKey(ApplicationContext.applicationContextKey, query: ApplicationContext.applicationListQuery, parameter: nil)
-        
-//        self.apps.removeAll()
-//        AF.request(url!).responseArray(queue: nil, keyPath: "data", context: nil, completionHandler: { (response:DataResponse<[Application]>) in
-//            switch response.result {
-//            case .success(let apps):
-//                self.apps.append(contentsOf: apps)
-//                self.showSuccess(title: "加载完成")
-//            case .failure(let err):
-//                DDLogError(err.localizedDescription)
-//                self.showError(title: "加载失败")
-//            }
-//
-//        })
-        
-        self.o2ProcessAPI.request(.applicationOnlyList, completion: {result in
+        // 这个接口查询当前用户能看到的全部的应用（包含流程）
+        self.o2ProcessAPI.request(.applicationList, completion: {result in
             let response = OOResult<BaseModelClass<[O2Application]>>(result)
             if response.isResultSuccess() {
                 let list = response.model?.data
                 if let apps = list {
+                    //这里要把不在移动端显示的流程清除掉
+                    var newAppList:[O2Application] = []
+                    for app in apps {
+                        var newProcessList:[O2ApplicationProcess] = []
+                        if let pList = app.processList {
+                            for process in pList {
+                                if "client" != process.startableTerminal { // client 是单独pc上的 这里不需要
+                                    newProcessList.append(process)
+                                }
+                            }
+                        }
+                        if newProcessList.count > 0 {
+                            app.processList = newProcessList
+                            newAppList.append(app)
+                        }
+                    }
                     DispatchQueue.main.async {
                         self.showSuccess(title: "加载完成")
-                        self.mainVC.apps = apps
+                        self.mainVC.apps = newAppList
                     }
                 }else {
                    DispatchQueue.main.async { self.showError(title: "没有应用数据！") }
@@ -186,7 +189,7 @@ class ZoneMenuViewController: UIViewController {
     }
     
     //获取身份列表
-    func loadDepartAndIdentity(process: AppProcess?){
+    func loadDepartAndIdentity(process: O2ApplicationProcess?){
         if process == nil {
             self.showError(title: "流程信息获取失败！")
             return

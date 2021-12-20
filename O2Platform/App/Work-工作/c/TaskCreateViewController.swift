@@ -18,7 +18,7 @@ import CocoaLumberjack
 
 class TaskCreateViewController: UIViewController {
 
-    var process: AppProcess? {
+    var process: O2ApplicationProcess? {
         didSet {
 
         }

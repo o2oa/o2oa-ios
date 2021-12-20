@@ -26,7 +26,12 @@ class CMSItemDetailViewController: BaseWebViewUIViewController {
     var itemData:CMSCategoryItemData? {
         didSet {
             title = itemData?.title
-            itemUrl = AppDelegate.o2Collect.genrateURLWithWebContextKey(DesktopContext.DesktopContextKey, query: DesktopContext.cmsItemDetailQuery, parameter: ["##documentId##":itemData?.id as AnyObject])!
+            DDLogDebug("readonly \(itemData?.readonly)")
+            if itemData?.readonly != nil && itemData?.readonly == false {
+                itemUrl = AppDelegate.o2Collect.genrateURLWithWebContextKey(DesktopContext.DesktopContextKey, query: DesktopContext.cmsItemDetailEditHtml, parameter: ["##documentId##":itemData?.id as AnyObject])!
+            } else {
+                itemUrl = AppDelegate.o2Collect.genrateURLWithWebContextKey(DesktopContext.DesktopContextKey, query: DesktopContext.cmsItemDetailQuery, parameter: ["##documentId##":itemData?.id as AnyObject])!
+            }
         }
     }
     

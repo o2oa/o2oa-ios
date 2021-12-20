@@ -10,6 +10,6 @@ import Foundation
 
 
 struct TaskCreateData {
-    var process: AppProcess?
+    var process: O2ApplicationProcess?
     var identitys:[IdentityV2] = []
 }

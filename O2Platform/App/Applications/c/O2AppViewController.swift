@@ -25,6 +25,10 @@ class O2AppViewController: UIViewController{
        
     fileprivate let collectionViewDelegate = ZLCollectionView()
     
+    private lazy var viewModel: PortalViewModel = {
+        return PortalViewModel()
+    }()
+    
     var o2ALLApps:[O2App] = []
     var apps2:[[O2App]] = [[], [], []]
 
@@ -46,6 +50,7 @@ class O2AppViewController: UIViewController{
     }
     
     func loadAppConfigDb() {
+        self.showLoading()
         let allApps = DBManager.shared.queryData()
         var nativeApps:[O2App] = []
         var portalApps:[O2App] = []
@@ -57,11 +62,27 @@ class O2AppViewController: UIViewController{
             }
         }
         o2ALLApps = allApps
-        
         let mainApps = DBManager.shared.queryMainData()
-        apps2 = [mainApps, nativeApps, portalApps]
-        self.collectionViewDelegate.apps = apps2
+        self.apps2 = [mainApps, nativeApps, portalApps]
+        
+        self.viewModel.listMobile(localList: portalApps).then { newPortalList in
+            DDLogDebug("newPortalList。。。。。。")
+            DispatchQueue.main.async {
+                self.refreshData(newPortalList:newPortalList)
+            }
+        }.catch { err in
+            DDLogDebug("老服务器，没有接口？？。。。。。。")
+            DispatchQueue.main.async {
+                self.refreshData(newPortalList:portalApps)
+            }
+        }
+    }
+    
+    private func refreshData(newPortalList: [O2App]) {
+        self.apps2 = [self.apps2[0], self.apps2[1], newPortalList]
+        self.collectionViewDelegate.apps = self.apps2
         DispatchQueue.main.async {
+            self.hideLoading()
             self.collectionView.reloadData()
         }
     }

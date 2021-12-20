@@ -18,7 +18,7 @@ class ZoneSubCategoryViewController: UITableViewController {
 //        }
 //    }
 
-    var processList: [AppProcess] = [] {
+    var processList: [O2ApplicationProcess] = [] {
         didSet {
             self.tableView.reloadData()
         }
