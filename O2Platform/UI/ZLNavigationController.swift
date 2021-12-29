@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ZLNavigationController: UINavigationController {
+class ZLNavigationController: O2BaseForRotateUINavViewController {
     
 
     override func viewDidLoad() {

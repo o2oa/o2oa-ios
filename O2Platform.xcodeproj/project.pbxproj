@@ -262,6 +262,8 @@
 		B19092382107219B009A7906 /* OOCalendarAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19092372107219B009A7906 /* OOCalendarAPI.swift */; };
 		B190923A21072AF3009A7906 /* OOCalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B190923921072AF3009A7906 /* OOCalendarViewModel.swift */; };
 		B1912BE72146154700AB36E6 /* OOAIViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1912BE62146154700AB36E6 /* OOAIViewModel.swift */; };
+		B19441EF277C325800B7E66A /* UIRotateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19441EE277C325800B7E66A /* UIRotateUtils.swift */; };
+		B194421E277C3E9600B7E66A /* O2BaseControllerForRotate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B194421D277C3E9600B7E66A /* O2BaseControllerForRotate.swift */; };
 		B197771D217D9D810019F3A8 /* beep.wav in Resources */ = {isa = PBXBuildFile; fileRef = B19776E7217D9D810019F3A8 /* beep.wav */; };
 		B19D55A925358AC200CE3B22 /* O2AuthenticationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19D55A725358AC200CE3B22 /* O2AuthenticationModels.swift */; };
 		B19D55AA25358AC200CE3B22 /* O2MoyaResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19D55A825358AC200CE3B22 /* O2MoyaResult.swift */; };
@@ -1478,6 +1480,8 @@
 		B19092372107219B009A7906 /* OOCalendarAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOCalendarAPI.swift; sourceTree = "<group>"; };
 		B190923921072AF3009A7906 /* OOCalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOCalendarViewModel.swift; sourceTree = "<group>"; };
 		B1912BE62146154700AB36E6 /* OOAIViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOAIViewModel.swift; sourceTree = "<group>"; };
+		B19441EE277C325800B7E66A /* UIRotateUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIRotateUtils.swift; sourceTree = "<group>"; };
+		B194421D277C3E9600B7E66A /* O2BaseControllerForRotate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2BaseControllerForRotate.swift; sourceTree = "<group>"; };
 		B19776E7217D9D810019F3A8 /* beep.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = beep.wav; sourceTree = "<group>"; };
 		B19D55A725358AC200CE3B22 /* O2AuthenticationModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = O2AuthenticationModels.swift; sourceTree = "<group>"; };
 		B19D55A825358AC200CE3B22 /* O2MoyaResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = O2MoyaResult.swift; sourceTree = "<group>"; };
@@ -2921,6 +2925,7 @@
 				B1E95F4D2373DDC4004876B7 /* ZoomImageView.swift */,
 				B168BDCE24F62BA60070329F /* O2CanCopyUILabel.swift */,
 				B16CA75326B1210D0009B24C /* O2AudioPlayFloatingWindow.swift */,
+				B194421D277C3E9600B7E66A /* O2BaseControllerForRotate.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -4369,6 +4374,7 @@
 				E4B8893A1D9D6308002E1A46 /* QuickUIUtil.swift */,
 				E4B8893B1D9D6308002E1A46 /* StandDefaultUtil.swift */,
 				E4B8893C1D9D6308002E1A46 /* StringUtil.swift */,
+				B19441EE277C325800B7E66A /* UIRotateUtils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -5574,6 +5580,7 @@
 				B19D55B725358CBB00CE3B22 /* O2AccessTokenAuthorizable.swift in Sources */,
 				E40E246820B5521B009F8BE7 /* OOAttandanceTotalItemCell.swift in Sources */,
 				B165CD692242093500373B66 /* ModalCenterPosition.swift in Sources */,
+				B19441EF277C325800B7E66A /* UIRotateUtils.swift in Sources */,
 				E4B888C51D9D48F1002E1A46 /* CollectUnitData.swift in Sources */,
 				E4BF45DD1E751399008B52F0 /* NewMainAppTableViewCell.swift in Sources */,
 				09E02E831F16319600579887 /* Cache.swift in Sources */,
@@ -5710,6 +5717,7 @@
 				B165CD6D2242093500373B66 /* ModalSize.swift in Sources */,
 				09E02E8B1F16319600579887 /* Format.swift in Sources */,
 				B14B339F2356EB1500442968 /* CloudFileViewModel.swift in Sources */,
+				B194421E277C3E9600B7E66A /* O2BaseControllerForRotate.swift in Sources */,
 				E40E24D220B7DA3C009F8BE7 /* OOFormDateIntervalItemView.swift in Sources */,
 				E4184B251DB4F28800FCC907 /* SMobileChangeViewController.swift in Sources */,
 				E40E24B320B7DA3C009F8BE7 /* OOMeetingMeetingRoomManageController.swift in Sources */,

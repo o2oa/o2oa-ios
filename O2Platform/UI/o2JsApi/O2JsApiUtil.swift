@@ -46,6 +46,9 @@ class O2JsApiUtil: O2WKScriptMessageHandlerImplement {
                     case "calendar.chooseInterval":
                         calendarPickerDateInterval(json: String(json))
                         break
+                    case "device.rotate":
+                        rotateToggle(json: String(json))
+                        break
                     case "device.getPhoneInfo":
                         getPhoneInfo(json: String(json))
                         break
@@ -233,6 +236,19 @@ class O2JsApiUtil: O2WKScriptMessageHandlerImplement {
         }
     }
     
+    
+    // 手机屏幕旋转 横屏转竖屏 竖屏转横屏
+    private func rotateToggle(json: String) {
+        if let alert = O2WebViewBaseMessage<O2UtilNavigation>.deserialize(from: json) {
+            self.viewController.onChangeOrientationBtnTapped(nil)
+            if alert.callback != nil {
+                let callJs = "\(alert.callback!)('{}')"
+                self.evaluateJs(callBackJs: callJs)
+            }
+        }else {
+            DDLogError("rotate 屏幕旋转, 解析json失败")
+        }
+    }
     
     //获取手机信息
     private func getPhoneInfo(json: String) {

@@ -12,7 +12,10 @@ import Photos
 
 
 extension UIViewController {
-    
+    // 是否禁用导航栏的左滑手势，默认不禁用
+     @objc var isForbidInteractivePopGesture: Bool {
+         return false
+     }
     
     ///EZSE: Pushes a view controller onto the receiver’s stack and updates the display.
     open func pushVC(_ vc: UIViewController) {

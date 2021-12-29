@@ -138,6 +138,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, JPUSHRegisterDelegate, UN
         JPUSHService.register(forRemoteNotificationConfig: entity, delegate: self)
     }
     
+    // 旋转屏幕
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+//        if self.allowRotation {
+//            return [.landscapeLeft, .landscapeRight, .portrait]
+//        } else if self.rightRotation {
+//            return .landscapeRight
+//        }
+        return .allButUpsideDown
+    }
  
     
     //注册 APNs 获得device token

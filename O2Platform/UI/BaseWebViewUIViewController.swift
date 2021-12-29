@@ -20,7 +20,7 @@ protocol O2WKScriptMessageHandlerImplement {
     func userController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage)
 }
 
-open class BaseWebViewUIViewController: UIViewController {
+class BaseWebViewUIViewController: O2BaseForRotateUIViewController {
     
     var webView:WKWebView!
     var delegate: BaseWebViewUIViewControllerJSDelegate?
@@ -131,6 +131,59 @@ open class BaseWebViewUIViewController: UIViewController {
         return result
     }
     
+    
+    // MARK: - 旋转屏幕
+    // 此参数由外部传入，并且在要在构造控制器时传入
+    fileprivate var _isLandscape = false
+    override var _prefersStatusBarHidden_: Bool? {
+        return false
+    }
+    
+    override var _supportedInterfaceOrientations_: UIInterfaceOrientationMask? {
+        return _isLandscape ? .landscapeRight: .portrait
+    }
+    
+    override var _preferredInterfaceOrientationForPresentation_: UIInterfaceOrientation? {
+        return _isLandscape ? .landscapeRight: .portrait
+    }
+
+    override var isForbidInteractivePopGesture: Bool {
+        return _isLandscape
+    }
+    
+    // MARK: - 控制旋转
+    fileprivate func updateOrientationIfNeeded(_ force: Bool = false) {
+        if _isLandscape {
+            toLandscapeOrientation(force)
+        } else {
+            toPortraitOrientation(force)
+        }
+    }
+        
+    fileprivate func toLandscapeOrientation(_ force: Bool = false) {
+        guard force || !_isLandscape else {
+            return
+        }
+        UIRotateUtils.shared.rotateToLandscape()
+    }
+        
+    fileprivate func toPortraitOrientation(_ force: Bool = false) {
+        guard force || _isLandscape else {
+            return
+        }
+        UIRotateUtils.shared.rotateToPortrait()
+    }
+    // 点击 “旋转” 按钮
+    @objc func onChangeOrientationBtnTapped(_ any: Any?) {
+        DDLogDebug("旋转屏幕  \(_isLandscape)")
+        // 核心控制
+        _isLandscape = !_isLandscape
+        if _isLandscape {
+            toLandscapeOrientation(true)
+        } else {
+            toPortraitOrientation(true)
+        }
+    }
     
 }
 

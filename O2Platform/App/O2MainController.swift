@@ -11,7 +11,7 @@ import CocoaLumberjack
 import Starscream
 import AudioToolbox
 
-class O2MainController: UITabBarController, UITabBarControllerDelegate {
+class O2MainController: O2BaseForRotateUITabBarController, UITabBarControllerDelegate {
 
     static var tabBarVC: O2MainController!
 

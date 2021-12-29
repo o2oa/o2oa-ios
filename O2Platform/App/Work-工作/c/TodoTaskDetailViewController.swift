@@ -35,7 +35,7 @@ struct TodoTaskJS {
 
 
 class TodoTaskDetailViewController: BaseWebViewUIViewController {
-
+    
     @IBOutlet weak var progress: UIProgressView!
 
     @IBOutlet weak var webViewContainer: UIView!
@@ -119,7 +119,7 @@ class TodoTaskDetailViewController: BaseWebViewUIViewController {
 //        NotificationCenter.default.addObserver(self, selector: #selector(showKey), name: UIResponder.keyboardDidShowNotification, object: nil)
         // 返回按钮重新定义
         self.navigationItem.hidesBackButton = true
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon_fanhui"), style: .plain, target: self, action: #selector(closeForBackBtn))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon_fanhui"), style: .plain, target: self, action: #selector(closeForBackBtn)) //  closeForBackBtn
         self.navigationItem.leftItemsSupplementBackButton = true
         // 文档查看器
         self.qlController.dataSource = qlController
