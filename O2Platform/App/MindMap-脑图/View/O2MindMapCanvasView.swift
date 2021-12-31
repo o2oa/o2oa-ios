@@ -24,6 +24,7 @@ class O2MindMapCanvasView: UIView {
     private let rootTextColor = UIColor.white // root 节点文字颜色
     private let boxColor = UIColor(hex: "#eaf0f4") // 节点背景色
     private let boxTextColor = UIColor.black // 节点文字颜色
+    private let selectedBoxBorderColor = base_color // 选中状态边框颜色
     
     
     
@@ -31,7 +32,7 @@ class O2MindMapCanvasView: UIView {
     private var imageMap:[String:UIImage] = [:]
     private var lines:[MindNodeLine] = []
     
-    
+    // 转化脑图数据成可绘制数据对象
     func resolveData(json: MindRootNode) ->  (MindNodeSize, CGSize)? {
         if let root = json.root {
             lines = [] // 清空
@@ -46,10 +47,31 @@ class O2MindMapCanvasView: UIView {
         return nil
     }
     
+    // 重绘内容
     func repaintContent(node: MindNodeSize) {
         self.canvasNode = node
         self.downloadImagesAndRePaint(node: node)
         self.setNeedsDisplay()
+    }
+    
+    // 点击画布 如果点击到脑图块 显示选中状态
+    private var selectedNode: MindNodeSize? = nil
+    private var needRePaintForClick = false
+    func clickCanvasWithPoint(point: CGPoint)-> MindNodeSize? {
+        if let node = self.canvasNode {
+            DDLogDebug("点击了canvas。。。。。。。。。。。")
+            self.needRePaintForClick = false // 先设置false
+            self.canvasNode = self.recursionFindSelected(point: point, node: node) // 递归查找
+            if !self.needRePaintForClick && self.selectedNode != nil { // 取消选中
+                self.selectedNode = nil
+                self.setNeedsDisplay() // 重绘
+            } else if self.needRePaintForClick {
+                self.setNeedsDisplay()  // 重绘
+            } else {
+                DDLogDebug("不需要动。。。。。。。。")
+            }
+        }
+        return self.selectedNode
     }
     
     override func draw(_ rect: CGRect) {
@@ -89,7 +111,6 @@ class O2MindMapCanvasView: UIView {
             //第一个参数point为path终点坐标，第二个和第三个point参数为控制点坐标
             linePath.addCurve(to: line.end, controlPoint1: bifurcationPoint, controlPoint2: turnPoint)
             linePath.stroke()
-            DDLogDebug("绘画 line  start \(line.start) end \(line.end)")
         }
     }
     // 递归绘出所有内容
@@ -97,29 +118,34 @@ class O2MindMapCanvasView: UIView {
         let box = node.nodeBoxRect
         let bpath = UIBezierPath(roundedRect: box, cornerRadius: 8)
         if let nodeBg = node.data?.background, !nodeBg.isBlank {
-            DDLogDebug("节点，设置自定义背景色 \(nodeBg)")
             UIColor(hex: nodeBg).set()
         } else {
             if node.level == 0 {
-                DDLogDebug("root 节点，设置背景色")
                 rootBoxColor.set()
             } else {
-                DDLogDebug("普通 节点，设置背景色")
                 boxColor.set()
             }
         }
         bpath.fill()
         bpath.stroke()
+        // 选中的 加边框
+        if node.nodeSelected {
+            let borderBox = CGRect(x: box.minX - 1, y: box.minY - 1, width: box.width + 2, height: box.height + 2)
+            let borderPath = UIBezierPath(roundedRect: borderBox, cornerRadius: 8)
+            selectedBoxBorderColor.set()
+            borderPath.lineWidth = 2
+            borderPath.stroke()
+        }
         // 图片
         if let imageRect = node.imageRect, let imageId = node.data?.image, let image = imageMap[imageId] {
             image.draw(in: imageRect)
         }
         // 第二行 图表
         if let priority = node.priorityRect {
-            UIImage(named: "priority1")?.draw(in: priority)
+            UIImage(named: self.priorityImg(priority: node.data?.priority))?.draw(in: priority)
         }
         if let progress = node.progressRect {
-            UIImage(named: "progress1")?.draw(in: progress)
+            UIImage(named: self.progressImg(progress: node.data?.progress))?.draw(in: progress)
         }
         if let link = node.hyperlinkRect {
             UIImage(named: "link")?.draw(in: link)
@@ -127,11 +153,9 @@ class O2MindMapCanvasView: UIView {
         // 第三行 文字
         var textColor: UIColor = .black
         if let nodeTextColor = node.data?.color, !nodeTextColor.isBlank {
-            DDLogDebug("节点文字颜色， \(nodeTextColor)")
             textColor = UIColor(hex: nodeTextColor)
         } else {
             if node.level == 0 {
-                DDLogDebug("root节点， 文字颜色修改")
                 textColor = rootTextColor
             } else {
                 textColor = boxTextColor
@@ -149,6 +173,42 @@ class O2MindMapCanvasView: UIView {
             }
         }
     }
+    // 优先级图标
+    private func priorityImg(priority: Int?) -> String {
+        if let p = priority {
+            return "priority\(p)"
+        }
+        return "priorityx"
+    }
+    // 进度图标
+    private func progressImg(progress: Int?) -> String {
+        if let p = progress {
+            return "progress\(p)"
+        }
+        return "progressx"
+    }
+    
+    // 递归查找是否有选中的节点
+    private func recursionFindSelected(point: CGPoint, node: MindNodeSize)-> MindNodeSize {
+        var newNode = node
+        let box = newNode.nodeBoxRect
+        if ( point.x >= box.minX && point.x <= box.maxX ) && (point.y >= box.minY && point.y <= box.maxY){
+            newNode.nodeSelected = true
+            self.needRePaintForClick = true
+            self.selectedNode = node
+        } else {
+            newNode.nodeSelected = false
+        }
+        if newNode.children.count > 0 {
+            var newNodeChildren:[MindNodeSize] = []
+            for child in newNode.children {
+                newNodeChildren.append(self.recursionFindSelected(point: point, node: child))
+            }
+            newNode.children = newNodeChildren
+        }
+        return newNode
+    }
+    
     
     // 计算整个画布以及元素的位置
     private func paintElementPosition(root: MindNodeSize)-> (MindNodeSize, CGSize) {
@@ -164,7 +224,6 @@ class O2MindMapCanvasView: UIView {
         let left = (canvasSize.width - root.nodeBoxRect.width) / 2
         let top = (canvasSize.height - root.nodeBoxRect.height) / 2
         var newRoot = self.innerElementPosition(top: top, left: left, node: root)
-        DDLogDebug("root center \(left) \(top)")
         
         var newChildrenNode:[MindNodeSize] = []
         // 右边区域
@@ -342,7 +401,6 @@ class O2MindMapCanvasView: UIView {
         var width = root.nodeBoxRect.width
         var height = root.nodeBoxRect.height
         if root.children.count == 0 {
-            DDLogDebug("children is empty...............")
             // 检查屏幕大小和内容大小 使用大的那个
             width =  width * 1.5
             height = height * 1.5

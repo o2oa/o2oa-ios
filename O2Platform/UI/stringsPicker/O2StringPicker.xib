@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,14 +18,14 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3A7-rs-0AU" userLabel="MainView">
                     <rect key="frame" x="0.0" y="912" width="414" height="270"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kaq-8v-Ylc">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kaq-8v-Ylc">
                             <rect key="frame" x="24" y="8" width="48" height="48"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="48" id="pu5-wT-fTf"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <state key="normal" title="取消">
-                                <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="titleColor" systemColor="labelColor"/>
                             </state>
                             <connections>
                                 <action selector="cancelBtnAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="HY3-ik-FeV"/>
@@ -43,14 +44,14 @@
                                 <constraint firstAttribute="height" constant="1" id="SFj-0T-7ul"/>
                             </constraints>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vfI-v2-Lba">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vfI-v2-Lba">
                             <rect key="frame" x="342" y="8" width="48" height="48"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="48" id="c1l-S5-QYd"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <state key="normal" title="确定">
-                                <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="titleColor" systemColor="labelColor"/>
                             </state>
                             <connections>
                                 <action selector="okBtnAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="fPe-wf-ocR"/>
@@ -60,7 +61,7 @@
                             <rect key="frame" x="0.0" y="65" width="414" height="205"/>
                         </pickerView>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="TN6-BB-tsr" secondAttribute="trailing" id="5tN-Oi-BJo"/>
                         <constraint firstItem="vfI-v2-Lba" firstAttribute="top" secondItem="3A7-rs-0AU" secondAttribute="top" constant="8" id="7Ey-CR-C5c"/>
@@ -83,6 +84,7 @@
                     </constraints>
                 </view>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.40164811643835618" colorSpace="custom" customColorSpace="displayP3"/>
             <constraints>
                 <constraint firstItem="3A7-rs-0AU" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="C9J-Ep-twg"/>
@@ -90,7 +92,6 @@
                 <constraint firstItem="3A7-rs-0AU" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" constant="320" id="pOe-Sv-tko"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="mainView" destination="3A7-rs-0AU" id="2c0-FU-vly"/>
                 <outlet property="mainViewBottomLayout" destination="pOe-Sv-tko" id="j2d-2I-Off"/>
@@ -100,4 +101,12 @@
             <point key="canvasLocation" x="131.8840579710145" y="152.67857142857142"/>
         </view>
     </objects>
+    <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

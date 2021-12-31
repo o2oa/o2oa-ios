@@ -33,6 +33,13 @@ class MindNodeData: NSObject, DataModel {
     var priority: Int?
     
     required override init(){}
+    
+    func isRoot()-> Bool {
+        if let id = id, id == "root" {
+            return true
+        }
+        return false
+    }
 }
 
 // 节点对象

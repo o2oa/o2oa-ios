@@ -22,11 +22,15 @@ class O2MindMapCanvasController: UIViewController {
     
     private var canvas: O2MindMapCanvasView? // 脑图画布
     
+    // 底部工具栏
+    private var bottomBar: O2MindMapCanvasBottomBar?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "脑图"
         self.view.backgroundColor = O2MindMapCanvasView.canvasBgColor // 背景色
         self.loadMindMap()
+        
     }
     
     // 双指缩放
@@ -35,6 +39,7 @@ class O2MindMapCanvasController: UIViewController {
             if self.canvas != nil {
                 self.canvas!.transform = self.canvas!.transform.scaledBy(x: scale, y: scale)
             }
+            // 缩放完成后重置
             sender?.scale = 1
         }
     }
@@ -47,8 +52,24 @@ class O2MindMapCanvasController: UIViewController {
             var newCenterX = CGFloat.minimum(newCenter.x, self.view.frame.width)
             newCenterX = CGFloat.maximum(0, newCenterX)
             sender?.view?.center = CGPoint(x: newCenterX, y: newCenterY)
+            // 移动完成后归零
             sender?.setTranslation(CGPoint.zero, in: self.view)
         }
+    }
+    
+    private var selectedNode: MindNodeSize? = nil
+    @objc private func clickCanvas(sender: UITapGestureRecognizer?) {
+        if let point = sender?.location(in: sender?.view) {
+            self.selectedNode = self.canvas?.clickCanvasWithPoint(point: point)
+            if self.selectedNode != nil {
+                self.bottomBar?.show(isRoot: self.selectedNode?.data?.isRoot() ?? false)
+            } else {
+                self.bottomBar?.hide()
+            }
+        }
+//        if let controllerPoint = sender?.location(in: self.view) {
+//            DDLogDebug("在屏幕中的位置 \(controllerPoint)")
+//        }
     }
     
     ///
@@ -76,12 +97,18 @@ class O2MindMapCanvasController: UIViewController {
                 canvas!.addGestureRecognizer(pinch)
                 let move = UIPanGestureRecognizer(target: self, action: #selector(move))
                 canvas!.addGestureRecognizer(move)
+                canvas!.addTapGesture(target: self, action: #selector(clickCanvas))
             }
+            // 添加底部工具栏
+            self.bottomBar = O2MindMapCanvasBottomBar.newBar(y: self.view.frame.height)
+            self.view.addSubview(self.bottomBar!)
+            self.bottomBar?.delegate = self
         } else {
             DDLogError("脑图内容为空！！！！")
         }
     }
     
+    /// 请求脑图数据
     private func loadMindMap() {
         if let viewId = id, !viewId.isBlank {
             self.showLoading()
@@ -99,15 +126,34 @@ class O2MindMapCanvasController: UIViewController {
         }
     }
  
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+ 
+    // 如果有选中节点 就显示底部工具栏
+    private func toggleBottomBar() {
+        
     }
-    */
 
+}
+
+
+extension O2MindMapCanvasController: O2MindMapCanvasBottomBtnDelegate {
+    
+    func clickBtn(type: O2MindMapCanvasBottomBtnType) {
+        DDLogDebug("type: \(type.rawValue)")
+        switch type {
+        case .createSubNode:
+            break
+        case .createSameLevelNode:
+            break
+        case .editNode:
+            break
+        case .deleteNode:
+            break
+        case .addImg:
+            break
+        case .addLink:
+            break
+        case .addIcon:
+            break
+        }
+    }
 }

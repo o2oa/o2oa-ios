@@ -81,6 +81,10 @@ class MainTaskSecondViewController: UIViewController {
         self.topHeaderBar.backgroundColor = base_color
         self.navigationController?.navigationBar.isHidden = true
         self.tableView.delegate = self
+        // 
+        if #available(iOS 15.0, *) {
+            self.tableView.sectionHeaderTopPadding = 0
+        }
         loadHomeApps()
         loadPlayerList()
         let sIndex = self.seguementControl.selectedIndex

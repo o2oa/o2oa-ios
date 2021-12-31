@@ -277,6 +277,8 @@
 		B19D55BA25358E8B00CE3B22 /* O2Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19D55B925358E8A00CE3B22 /* O2Enum.swift */; };
 		B19D55BC25358EF800CE3B22 /* SymmetricCryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19D55BB25358EF800CE3B22 /* SymmetricCryptor.swift */; };
 		B19FF89E226DBD3600FA0B76 /* O2JsApiNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19FF89D226DBD3600FA0B76 /* O2JsApiNotification.swift */; };
+		B1A04B54277DA70B007DDB3B /* O2MindMapCanvasBottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A04B53277DA70B007DDB3B /* O2MindMapCanvasBottomBar.swift */; };
+		B1A04B83277DAB20007DDB3B /* O2CustomViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A04B82277DAB20007DDB3B /* O2CustomViewProtocol.swift */; };
 		B1A47D942656574B00397212 /* contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1A47D962656574B00397212 /* contacts.storyboard */; };
 		B1A91662265C9895004EE9E2 /* O2SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A91661265C9895004EE9E2 /* O2SearchViewModel.swift */; };
 		B1A91664265C9980004EE9E2 /* O2QuerySurfaceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A91663265C9980004EE9E2 /* O2QuerySurfaceAPI.swift */; };
@@ -1495,6 +1497,8 @@
 		B19D55B925358E8A00CE3B22 /* O2Enum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = O2Enum.swift; sourceTree = "<group>"; };
 		B19D55BB25358EF800CE3B22 /* SymmetricCryptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SymmetricCryptor.swift; sourceTree = "<group>"; };
 		B19FF89D226DBD3600FA0B76 /* O2JsApiNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2JsApiNotification.swift; sourceTree = "<group>"; };
+		B1A04B53277DA70B007DDB3B /* O2MindMapCanvasBottomBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2MindMapCanvasBottomBar.swift; sourceTree = "<group>"; };
+		B1A04B82277DAB20007DDB3B /* O2CustomViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2CustomViewProtocol.swift; sourceTree = "<group>"; };
 		B1A47D952656574B00397212 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/contacts.storyboard; sourceTree = "<group>"; };
 		B1A47DC5265657A300397212 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/contacts.strings; sourceTree = "<group>"; };
 		B1A47DC7265657D200397212 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/contacts.strings"; sourceTree = "<group>"; };
@@ -2728,6 +2732,7 @@
 				B16E5F3C2769E7A600891970 /* FolderTreeTableViewCell.swift */,
 				B1670A44276B1AF4009A41BC /* MindMapItemTableViewCell.swift */,
 				B17EFC6F276C331800D7B18F /* O2MindMapCanvasView.swift */,
+				B1A04B53277DA70B007DDB3B /* O2MindMapCanvasBottomBar.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2926,6 +2931,7 @@
 				B168BDCE24F62BA60070329F /* O2CanCopyUILabel.swift */,
 				B16CA75326B1210D0009B24C /* O2AudioPlayFloatingWindow.swift */,
 				B194421D277C3E9600B7E66A /* O2BaseControllerForRotate.swift */,
+				B1A04B82277DAB20007DDB3B /* O2CustomViewProtocol.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -3017,9 +3023,10 @@
 		B1F79C80233B618B004D0AEE /* App */ = {
 			isa = PBXGroup;
 			children = (
+				B16CA7B426B13D420009B24C /* O2MainViewModel.swift */,
+				B1FD026F21FAE00E000E9817 /* O2MainController.swift */,
 				B16E5F062769BD6700891970 /* MindMap-脑图 */,
 				B1A91633265C9833004EE9E2 /* Search */,
-				B1FD026F21FAE00E000E9817 /* O2MainController.swift */,
 				E4B887FD1D9D48F1002E1A46 /* Login-绑定登录 */,
 				E4B8883E1D9D48F1002E1A46 /* Work-工作 */,
 				E4B8882A1D9D48F1002E1A46 /* Setting-设置 */,
@@ -3035,7 +3042,6 @@
 				E40E246E20B7DA3C009F8BE7 /* meeting-会议 */,
 				B19091FD2107145F009A7906 /* Calendar-日程管理 */,
 				E4A0790920CF5CC600B8AA84 /* VoiceAI-语音处理 */,
-				B16CA7B426B13D420009B24C /* O2MainViewModel.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -5512,6 +5518,7 @@
 				E4B6976E207630240062F6E8 /* UIButton+Extension.swift in Sources */,
 				E4BF45D91E750B6B008B52F0 /* NewMainAppCollectionViewCell.swift in Sources */,
 				E4B888821D9D48F1002E1A46 /* FileFolderItemCell.swift in Sources */,
+				B1A04B54277DA70B007DDB3B /* O2MindMapCanvasBottomBar.swift in Sources */,
 				E4B697CD20764A2D0062F6E8 /* OOCloudStorageAPI.swift in Sources */,
 				E4B888FC1D9D48F1002E1A46 /* AppCategoryHeaderView.swift in Sources */,
 				B1298E7C23669BA2006E9236 /* CloudFileTypeListController.swift in Sources */,
@@ -5691,6 +5698,7 @@
 				E4184B271DB4F9CC00FCC907 /* SMobileModifyViewController.swift in Sources */,
 				E4B6980C207652960062F6E8 /* OOTaskPageParameters.swift in Sources */,
 				09E02E901F16319600579887 /* NetworkFetcher.swift in Sources */,
+				B1A04B83277DAB20007DDB3B /* O2CustomViewProtocol.swift in Sources */,
 				E4C24C41208D7EDE00E426B0 /* OOListUnitViewModel.swift in Sources */,
 				E4B888A31D9D48F1002E1A46 /* MJRefreshBackGifFooter.m in Sources */,
 				B1B110E422363F7200775BEF /* BioAuthLoginViewController.swift in Sources */,
