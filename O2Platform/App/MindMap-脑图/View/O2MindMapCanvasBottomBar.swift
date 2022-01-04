@@ -28,7 +28,6 @@ protocol O2MindMapCanvasBottomBtnDelegate {
 class O2MindMapCanvasBottomBar: UIView {
 
     class func newBar(y: CGFloat) -> O2MindMapCanvasBottomBar {
-        DDLogDebug("y: \(y)")
         let bar = O2MindMapCanvasBottomBar()
         bar.frame = CGRect(x: 0, y: SCREEN_HEIGHT, width: SCREEN_WIDTH, height: O2MindMapCanvasBottomBar.bottomBarHeight)
         bar.backgroundColor = .clear
@@ -94,7 +93,7 @@ class O2MindMapCanvasBottomBar: UIView {
                 let btn = UIButton()
                 btn.frame = CGRect(x: CGFloat(btnWidth + btnGap) * CGFloat(i) + btnGap, y: 0, width: btnWidth, height: btnHeight)
                 btn.setTitle(item.rawValue, for: .normal)
-                btn.setImage(UIImage(named: "link"), for: .normal)
+                btn.setImage(self.btnIcon(type: item), for: .normal)
                 btn.setBackgroundColor(.white, forState: .normal)
                 btn.setTitleColor(.black, for: .normal)
                 btn.roundedCorners(cornerRadius: 4, borderWidth: 1, borderColor: .black)
@@ -114,7 +113,7 @@ class O2MindMapCanvasBottomBar: UIView {
                 let btn = UIButton()
                 btn.frame = CGRect(x: CGFloat(btnWidth + btnGap) * CGFloat(i) + btnGap, y: 0, width: btnWidth, height: btnHeight)
                 btn.setTitle(item.rawValue, for: .normal)
-                btn.setImage(UIImage(named: "link"), for: .normal)
+                btn.setImage(self.btnIcon(type: item), for: .normal)
                 btn.setBackgroundColor(.white, forState: .normal)
                 btn.setTitleColor(.black, for: .normal)
                 btn.roundedCorners(cornerRadius: 4, borderWidth: 1, borderColor: .black)
@@ -127,6 +126,25 @@ class O2MindMapCanvasBottomBar: UIView {
                 }
                 i += 1
             }
+        }
+    }
+    //
+    private func btnIcon(type: O2MindMapCanvasBottomBtnType)-> UIImage? {
+        switch type {
+        case .createSubNode:
+            return UIImage(named: "icon_xiaji")
+        case .createSameLevelNode:
+            return UIImage(named: "icon_tongji")
+        case .editNode:
+            return UIImage(named: "icon_bianji_mind")
+        case .deleteNode:
+            return UIImage(named: "icon_delete")
+        case .addIcon:
+            return UIImage(named: "icon_icon")
+        case .addImg:
+            return UIImage(named: "icon_picture")
+        case .addLink:
+            return UIImage(named: "icon_chaolianjie")
         }
     }
     

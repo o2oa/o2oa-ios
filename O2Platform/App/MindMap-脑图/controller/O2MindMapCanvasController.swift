@@ -47,16 +47,28 @@ class O2MindMapCanvasController: UIViewController {
     @objc private func move(sender: UIPanGestureRecognizer? ) {
         if let transation = sender?.translation(in: self.view), let oldCenter = sender?.view?.center {
             let newCenter = CGPoint(x: oldCenter.x + transation.x, y: oldCenter.y + transation.y)
-            var newCenterY = CGFloat.minimum(newCenter.y, self.view.frame.height)
-            newCenterY = CGFloat.maximum(0, newCenterY)
-            var newCenterX = CGFloat.minimum(newCenter.x, self.view.frame.width)
-            newCenterX = CGFloat.maximum(0, newCenterX)
+            let canvansH = self.canvas?.frame.height ?? 0
+            var maxY:CGFloat = 0
+            if canvansH >= self.view.frame.height {
+                maxY = (canvansH - self.view.frame.height) / 2
+            }
+            // let maxY = (canvansH / 2) +  self.view.frame.height
+            var newCenterY = CGFloat.minimum(newCenter.y, maxY + (self.view.frame.height / 2))
+            newCenterY = CGFloat.maximum((self.view.frame.height / 2) - maxY, newCenterY)
+            let canvansW = self.canvas?.frame.width ?? 0
+            var maxX:CGFloat = 0
+            if canvansW > self.view.frame.width {
+                maxX = (canvansW - self.view.frame.width) / 2
+            }
+            // let maxX = (canvansW / 2) +  self.view.frame.width
+            var newCenterX = CGFloat.minimum(newCenter.x, maxX + (self.view.frame.width / 2))
+            newCenterX = CGFloat.maximum((self.view.frame.width / 2) - maxX , newCenterX)
             sender?.view?.center = CGPoint(x: newCenterX, y: newCenterY)
             // 移动完成后归零
             sender?.setTranslation(CGPoint.zero, in: self.view)
         }
     }
-    
+    // 点击画布
     private var selectedNode: MindNodeSize? = nil
     @objc private func clickCanvas(sender: UITapGestureRecognizer?) {
         if let point = sender?.location(in: sender?.view) {
@@ -67,9 +79,6 @@ class O2MindMapCanvasController: UIViewController {
                 self.bottomBar?.hide()
             }
         }
-//        if let controllerPoint = sender?.location(in: self.view) {
-//            DDLogDebug("在屏幕中的位置 \(controllerPoint)")
-//        }
     }
     
     ///
@@ -107,6 +116,29 @@ class O2MindMapCanvasController: UIViewController {
             DDLogError("脑图内容为空！！！！")
         }
     }
+    // 数据变化 重新绘制
+    private func notifyDataChanged() {
+        if let root = root {
+            // 重新计算大小
+            if let paint = self.canvas!.resolveData(json: root) {
+                let size = paint.1
+                DDLogDebug("canvas size \(size)")
+                var x: CGFloat = 0
+                var y: CGFloat = 0
+                if size.width > SCREEN_WIDTH {
+                    x = 1 - ((size.width - SCREEN_WIDTH ) / 2)
+                }
+                if size.height > SCREEN_HEIGHT {
+                    y = 1 - ((size.height - SCREEN_HEIGHT) / 2)
+                }
+                // 修改画布大小
+                canvas!.frame = CGRect(x: x, y: y, width: size.width, height: size.height)
+                // 重新绘画脑图
+                canvas!.repaintContent(node: paint.0)
+            }
+        }
+        
+    }
     
     /// 请求脑图数据
     private func loadMindMap() {
@@ -125,12 +157,55 @@ class O2MindMapCanvasController: UIViewController {
             DDLogError("错误，没有脑图id，无法获取数据！！！！")
         }
     }
- 
- 
-    // 如果有选中节点 就显示底部工具栏
-    private func toggleBottomBar() {
-        
+  
+    // MARK: - 节点工具栏操作
+    
+    // 创建子节点
+    private func createSubNode() {
+        DDLogDebug("创建子节点")
+        if self.selectedNode == nil || self.selectedNode?.data == nil {
+            DDLogError("请先选择节点！！")
+            return
+        }
+        self.showPromptAlert(title: "创建子节点", message: "请输入节点内容", inputText: "") { action, result in
+            if result == "" || result.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+                self.showError(title: "请输入节点内容！")
+                return
+            }
+            if let node = self.root?.root {
+                let newNode = self.createSubNodeWithTextRecursion(node: node, text: result)
+                self.root?.root = newNode
+                self.notifyDataChanged()
+            } else {
+                DDLogError("脑图数据对象不存在，无法创建。。。")
+            }
+        }
     }
+    
+    // 创建新的子节点到对象中
+    private func createSubNodeWithTextRecursion(node: MindNode, text:String)-> MindNode {
+        if node.data?.id != nil && node.data?.id == self.selectedNode?.data?.id {
+            let newNode = MindNode()
+            let newData = MindNodeData()
+            newData.text = text
+            let time = Date().milliStamp
+            newData.id = "mind_\(time)"
+            newNode.data = newData
+            newNode.children = []
+            node.children?.append(newNode)
+        } else {
+            if let nChild = node.children {
+                var children: [MindNode] = []
+                for item in nChild {
+                    let newChild = self.createSubNodeWithTextRecursion(node: item, text: text)
+                    children.append(newChild)
+                }
+                node.children = children
+            }
+        }
+        return node
+    }
+    
 
 }
 
@@ -141,6 +216,7 @@ extension O2MindMapCanvasController: O2MindMapCanvasBottomBtnDelegate {
         DDLogDebug("type: \(type.rawValue)")
         switch type {
         case .createSubNode:
+            self.createSubNode()
             break
         case .createSameLevelNode:
             break

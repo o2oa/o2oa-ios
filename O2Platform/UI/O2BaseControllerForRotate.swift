@@ -39,6 +39,9 @@ class O2BaseForRotateUINavViewController: UINavigationController {
     }
 
     override var shouldAutorotate: Bool {
+        if let presentedViewController = presentedViewController, presentedViewController is UIAlertController {
+            return false
+        }
         if let presentedController = topViewController?.presentedViewController, presentedController.isBeingPresented {
             return presentedViewController?.shouldAutorotate ?? kDefaultShouldAutorotate
         }
@@ -51,6 +54,9 @@ class O2BaseForRotateUINavViewController: UINavigationController {
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        if let presentedViewController = presentedViewController, presentedViewController is UIAlertController {
+            return kDefaultSupportedInterfaceOrientations
+        }
         if let presentedController = topViewController?.presentedViewController, presentedController.isBeingPresented {
             return presentedViewController?.supportedInterfaceOrientations ?? kDefaultSupportedInterfaceOrientations
         }

@@ -57,6 +57,7 @@ class O2MindMapCanvasView: UIView {
     // 点击画布 如果点击到脑图块 显示选中状态
     private var selectedNode: MindNodeSize? = nil
     private var needRePaintForClick = false
+    
     func clickCanvasWithPoint(point: CGPoint)-> MindNodeSize? {
         if let node = self.canvasNode {
             DDLogDebug("点击了canvas。。。。。。。。。。。")
@@ -102,7 +103,6 @@ class O2MindMapCanvasView: UIView {
             let bifurcationPoint = line.start.x < line.end.x ? CGPoint(x:line.start.x + bifurcationX, y:line.start.y) : CGPoint(x:line.start.x - bifurcationX, y:line.start.y)
             let turnPoint = CGPoint(x: bifurcationPoint.x, y: line.end.y)
             let linePath = UIBezierPath()
-            // UIColor.blue.set() 线条颜色用root的背景色
             rootBoxColor.set()
             linePath.lineWidth = 1
             linePath.lineCapStyle = .round
@@ -490,14 +490,18 @@ class O2MindMapCanvasView: UIView {
         }
         var childrenWidth = 0.0
         var childrenHeight = 0.0
+        var childrenSizeList:[MindNodeSize] = []
         if(node.children.count > 0) {
             for child in node.children {
-                let childSize = self.calcChildSize(node: child, verticalSpace: verticalSpace, horizontalSpace: horizontalSpace).childrenSize
+                let childSizeNode = self.calcChildSize(node: child, verticalSpace: verticalSpace, horizontalSpace: horizontalSpace)
+                childrenSizeList.append(childSizeNode)
+                let childSize = childSizeNode.allSize
                 childrenWidth = childrenWidth > childSize.width ? childrenWidth: childSize.width
                 childrenHeight += childSize.height + horizontalSpace
             }
             childrenHeight -= horizontalSpace
         }
+        newNode.children = childrenSizeList
         let newChildSize = CGSize(width: childrenWidth, height: childrenHeight);
         newNode.childrenSize = newChildSize
         width += childrenWidth + verticalSpace;
