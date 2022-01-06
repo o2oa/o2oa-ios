@@ -88,7 +88,7 @@ class O2MindMapCanvasView: UIView {
     
     
     // 外部设置选中的节点，比如新建节点等时候
-    func reSelected(newSelected: MindNodeData) {
+    func reSelected(newSelected: MindNodeData?) {
         self.selectedNode = newSelected
     }
     

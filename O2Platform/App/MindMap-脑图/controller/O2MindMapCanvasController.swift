@@ -295,6 +295,131 @@ class O2MindMapCanvasController: UIViewController {
         return node
     }
     
+    // 创建同级节点
+    private func createSameLevelNode() {
+        DDLogDebug("创建同级节点")
+        if self.selectedNode == nil {
+            DDLogError("请先选择节点！！")
+            return
+        }
+        self.showPromptAlert(title: "创建同级节点", message: "请输入节点内容", inputText: "") { action, result in
+            if result == "" || result.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+                self.showError(title: "请输入节点内容！")
+                return
+            }
+            if let node = self.root?.root {
+                let newNode = self.createSameLevelNodeWithTextRecursion(node: node, text: result)
+                self.root?.root = newNode
+                self.notifyDataChanged()
+            } else {
+                DDLogError("脑图数据对象不存在，无法创建。。。")
+            }
+        }
+    }
+    
+    // 创建新的同级节点到对象中
+    private func createSameLevelNodeWithTextRecursion(node: MindNode, text:String)-> MindNode {
+        if let nChild = node.children {
+            var children: [MindNode] = []
+            for item in nChild {
+                if item.data?.id != nil && item.data?.id == self.selectedNode?.id {
+                    let newNode = MindNode()
+                    let newData = MindNodeData()
+                    newData.text = text
+                    let time = Date().milliStamp
+                    newData.id = "mind_\(time)"
+                    newNode.data = newData
+                    newNode.children = []
+                    children.append(newNode)
+                    self.selectedNode = newData
+                    self.canvas?.reSelected(newSelected: newData)
+                    // 忘了添加兄弟节点
+                    children.append(item)
+                } else {
+                    let newChild = self.createSubNodeWithTextRecursion(node: item, text: text)
+                    children.append(newChild)
+                }
+            }
+            node.children = children
+        }
+        return node
+    }
+    
+    // 修改节点文字
+    private func updateNodeText() {
+        DDLogDebug("修改节点文字内容")
+        if self.selectedNode == nil {
+            DDLogError("请先选择节点！！")
+            return
+        }
+        self.showPromptAlert(title: "修改节点内容", message: "请输入节点内容", inputText: self.selectedNode?.text ?? "") { action, result in
+            if result == "" || result.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+                self.showError(title: "请输入节点内容！")
+                return
+            }
+            if let node = self.root?.root {
+                let newNode = self.updateNodeTextRecursion(node: node, text: result)
+                self.root?.root = newNode
+                self.notifyDataChanged()
+            } else {
+                DDLogError("脑图数据对象不存在，无法创建。。。")
+            }
+        }
+    }
+    private func updateNodeTextRecursion(node: MindNode, text:String)-> MindNode {
+        if node.data?.id != nil && node.data?.id == self.selectedNode?.id {
+            let newData = node.data!
+            newData.text = text
+            node.data = newData
+            self.selectedNode = newData
+            self.canvas?.reSelected(newSelected: newData)
+        } else {
+            if let nChild = node.children {
+                var children: [MindNode] = []
+                for item in nChild {
+                    let newChild = self.updateNodeTextRecursion(node: item, text: text)
+                    children.append(newChild)
+                }
+                node.children = children
+            }
+        }
+        return node
+    }
+    
+    private func deleteNode() {
+        DDLogDebug("删除选中的节点")
+        if self.selectedNode == nil {
+            DDLogError("请先选择节点！！")
+            return
+        }
+        self.showDefaultConfirm(title: "提示", message: "确定要删除【\(self.selectedNode?.text ?? "")】这个节点吗") { action in
+            if let node = self.root?.root {
+                let newNode = self.deleteSelectNodeRecursion(node: node)
+                self.root?.root = newNode
+                self.notifyDataChanged()
+            } else {
+                DDLogError("脑图数据对象不存在，无法创建。。。")
+            }
+        }
+    }
+    private func deleteSelectNodeRecursion(node: MindNode)-> MindNode {
+        if let nChild = node.children {
+            var children: [MindNode] = []
+            for item in nChild {
+                if item.data?.id != nil && item.data?.id == self.selectedNode?.id {
+                    // 找到后清除选中的节点
+                    self.selectedNode = nil
+                    self.canvas?.reSelected(newSelected: nil)
+                } else {
+                    let newChild = self.deleteSelectNodeRecursion(node: item)
+                    children.append(newChild)
+                }
+            }
+            node.children = children
+        }
+        return node
+    }
+    
 
 }
 
@@ -308,10 +433,13 @@ extension O2MindMapCanvasController: O2MindMapCanvasBottomBtnDelegate {
             self.createSubNode()
             break
         case .createSameLevelNode:
+            self.createSameLevelNode()
             break
         case .editNode:
+            self.updateNodeText()
             break
         case .deleteNode:
+            self.deleteNode()
             break
         case .addImg:
             break
