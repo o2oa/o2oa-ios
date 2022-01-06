@@ -41,6 +41,8 @@ enum OOCloudStorageAPI {
     case shieldShare(String)
     case deleteMyShare(String)
     
+    // 上传文件 fileName referencetype reference scale file
+    case uploadImageWithReferencetype(String, String, String, Int, Data)
     
     //老版
     //获取当前人员顶层文件夹 - jaxrs/complex/folder/##id##
@@ -133,8 +135,8 @@ extension OOCloudStorageAPI:TargetType{
         case .deleteMyShare(let shareId):
             return "/jaxrs/share/\(shareId)"
             
-            
-            
+        case .uploadImageWithReferencetype(_, let referencetype, let reference, let scale, _):
+            return "/jaxrs/file/upload/referencetype/\(referencetype)/reference/\(reference)/scale/\(scale)"
         case .listFolder(let folderId):
             return "/jaxrs/complex/folder/\(folderId)"
         case .listMyShare:
@@ -178,7 +180,7 @@ extension OOCloudStorageAPI:TargetType{
             return .get
         case .getPicItemURL(_):
             return .get
-        case .deleteAttachement(_), .updateFolder(_, _), .updateFile(_, _):
+        case .deleteAttachement(_), .updateFolder(_, _), .updateFile(_, _), .uploadImageWithReferencetype(_, _, _, _, _):
             return .put
         case .uploadAttachment(_), .downloadAttachment(_),
             .renameAttachment(_), .createFolder(_, _), .uploadFile(_,_,_), .share(_),.listTypeByPage(_, _, _):
@@ -232,6 +234,14 @@ extension OOCloudStorageAPI:TargetType{
             return .requestParameters(parameters: form.toJSON()!, encoding: JSONEncoding.default)
         case .listTypeByPage(let type, _, _):
             return .requestParameters(parameters: ["fileType": type], encoding: JSONEncoding.default)
+            
+        case .uploadImageWithReferencetype(let fileName, _, _, _, let data):
+            //字符串类型 文件名
+            let strData = fileName.data(using: .utf8)
+            let fileNameData = MultipartFormData(provider: .data(strData!), name: "fileName")
+            //文件类型
+            let fileData = MultipartFormData(provider: .data(data), name: "file", fileName: fileName)
+            return .uploadMultipart([fileData, fileNameData])
         }
     }
     

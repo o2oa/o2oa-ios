@@ -8,11 +8,52 @@
 
 import UIKit
 import Promises
+import Charts
 
 
 class O2MindMapViewModel  {
     
     private let mindMapAPI = OOMoyaProvider<MindMapAPI>()
+    private let cloudAPI = OOMoyaProvider<OOCloudStorageAPI>()
+    
+    // 保存脑图
+    func saveMindMap(mind: MindMapItem)-> Promise<String> {
+        return Promise { fulfill, reject in
+            self.mindMapAPI.request(.saveMindMap(mind)) { result in
+                let response = OOResult<BaseModelClass<O2IdDataModel>>(result)
+                if response.isResultSuccess() {
+                    if let id = response.model?.data?.id {
+                        fulfill(id)
+                    } else {
+                        reject(OOAppError.apiEmptyResultError)
+                    }
+                } else {
+                    reject(response.error!)
+                }
+            }
+        }
+    }
+    // 上传缩略图
+    func saveMindMapThumb(image: UIImage, id: String)-> Promise<String> {
+        return Promise { fulfill, reject in
+            if let pData = image.pngData() {
+                self.cloudAPI.request(.uploadImageWithReferencetype("mind_\(id).png", "mindInfo", id, 200, pData)) { result in
+                    let response = OOResult<BaseModelClass<O2UPloadImageIdsDataModel>>(result)
+                    if response.isResultSuccess() {
+                        if let id = response.model?.data?.id {
+                            fulfill(id)
+                        } else {
+                            reject(OOAppError.apiEmptyResultError)
+                        }
+                    } else {
+                        reject(response.error!)
+                    }
+                }
+            } else {
+                reject(O2APIError.o2ResponseError("图片为空！"))
+            }
+        }
+    }
     
     // 分页查询目录下的脑图列表
     func listMindMapFilter(nextId: String, folderId: String)-> Promise<[MindMapItem]> {
@@ -44,6 +85,10 @@ class O2MindMapViewModel  {
                     if let item = response.model?.data {
                         // 脑图json转对象
                         if let content = item.content, let node = MindRootNode.deserialize(from: content) {
+                            // 特殊处理 根节点的data id设置为root 后面好判断
+                            if node.root?.data?.id == nil || node.root?.data?.id == "" {
+                                node.root?.data?.id = "root"
+                            }
                             fulfill((item, node))
                         } else {
                             fulfill((item, nil))

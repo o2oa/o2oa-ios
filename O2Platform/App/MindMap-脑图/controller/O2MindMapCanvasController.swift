@@ -8,6 +8,7 @@
 
 import UIKit
 import CocoaLumberjack
+import Promises
 
 class O2MindMapCanvasController: UIViewController {
 
@@ -24,14 +25,22 @@ class O2MindMapCanvasController: UIViewController {
     
     // 底部工具栏
     private var bottomBar: O2MindMapCanvasBottomBar?
+    // 点击画布
+    private var selectedNode: MindNodeData? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "脑图"
         self.view.backgroundColor = O2MindMapCanvasView.canvasBgColor // 背景色
         self.loadMindMap()
-        
     }
+    
+    private func addSavebtn() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "保存", style: .plain, target: self, action: #selector(saveMindMap))
+    }
+    
+    
+    // MARK: - 事件
     
     // 双指缩放
     @objc private func scale(sender: UIPinchGestureRecognizer?) {
@@ -68,18 +77,25 @@ class O2MindMapCanvasController: UIViewController {
             sender?.setTranslation(CGPoint.zero, in: self.view)
         }
     }
-    // 点击画布
-    private var selectedNode: MindNodeSize? = nil
+    
     @objc private func clickCanvas(sender: UITapGestureRecognizer?) {
         if let point = sender?.location(in: sender?.view) {
             self.selectedNode = self.canvas?.clickCanvasWithPoint(point: point)
-            if self.selectedNode != nil {
-                self.bottomBar?.show(isRoot: self.selectedNode?.data?.isRoot() ?? false)
+            // 当前脑图是否可编辑
+            if self.mindMapItem?.editable == true {
+                if self.selectedNode != nil {
+                    self.bottomBar?.show(isRoot: self.selectedNode?.isRoot() ?? false)
+                } else {
+                    self.bottomBar?.hide()
+                }
             } else {
-                self.bottomBar?.hide()
+                DDLogError("当前用户不可编辑")
             }
         }
     }
+    
+    
+    // MARK: - 画布相关处理
     
     ///
     /// 绘画脑图
@@ -122,7 +138,6 @@ class O2MindMapCanvasController: UIViewController {
             // 重新计算大小
             if let paint = self.canvas!.resolveData(json: root) {
                 let size = paint.1
-                DDLogDebug("canvas size \(size)")
                 var x: CGFloat = 0
                 var y: CGFloat = 0
                 if size.width > SCREEN_WIDTH {
@@ -135,11 +150,53 @@ class O2MindMapCanvasController: UIViewController {
                 canvas!.frame = CGRect(x: x, y: y, width: size.width, height: size.height)
                 // 重新绘画脑图
                 canvas!.repaintContent(node: paint.0)
+                if self.selectedNode != nil {
+                    self.moveSelectedNode2Center()
+                }
             }
         }
-        
     }
     
+    // 移动画布 让选中的节点移动到中心
+    private func moveSelectedNode2Center() {
+        if self.selectedNode == nil {
+            DDLogError("没有选中的节点，无法移动")
+            return
+        }
+        if let selectP = self.canvas?.getSelectNodePosition(), let selectNodeP = selectP.0, let rootNodeP = selectP.1 {
+            let selectPoint = CGPoint(x: (selectNodeP.nodeBoxRect.origin.x + selectNodeP.nodeBoxRect.width / 2), y: selectNodeP.nodeBoxRect.origin.y + selectNodeP.nodeBoxRect.height / 2)
+            let selectViewPoint = self.canvas!.convert(selectPoint, to: self.view)
+            let rootPoint = CGPoint(x: (rootNodeP.nodeBoxRect.origin.x + rootNodeP.nodeBoxRect.width / 2), y: rootNodeP.nodeBoxRect.origin.y + rootNodeP.nodeBoxRect.height / 2)
+            let rootViewPoint = self.canvas!.convert(rootPoint, to: self.view)
+            var newX = (2 * rootViewPoint.x - selectViewPoint.x)
+            var newY = (2 * rootViewPoint.y - selectViewPoint.y)
+            DDLogInfo("新的 x ： \(newX) y: \(newY)")
+            let maxY = self.view.frame.height / 2 + (self.canvas!.frame.height - self.view.frame.height) / 2
+            let minY = self.view.frame.height / 2 - (self.canvas!.frame.height - self.view.frame.height) / 2
+            let maxX = self.view.frame.width / 2 + (self.canvas!.frame.width - self.view.frame.width) / 2
+            let minX = self.view.frame.width / 2 - (self.canvas!.frame.width - self.view.frame.width) / 2
+            if newX > maxX {
+                newX = maxX
+            }
+            if newX < minX {
+                newX = minX
+            }
+            if newY > maxY {
+                newY = maxY
+            }
+            if newY < minY {
+                newY = minY
+            }
+            let newCenter = CGPoint(x: newX, y: newY)
+            DDLogInfo("新的 root节点的中心点 外部位置 ： \(newCenter)")
+            self.canvas?.center = newCenter
+        } else {
+            DDLogError("没有选中的节点或root节点")
+        }
+    }
+    
+    
+    // MARK: - 后端请求相关
     /// 请求脑图数据
     private func loadMindMap() {
         if let viewId = id, !viewId.isBlank {
@@ -150,6 +207,9 @@ class O2MindMapCanvasController: UIViewController {
                 self.title = item.name // 修改标题
                 self.root = node
                 self.painMindMap()
+                if self.mindMapItem?.editable == true {
+                    self.addSavebtn()
+                }
             }.catch { err in
                 self.showError(title: "请求脑图数据错误！")
             }
@@ -157,13 +217,40 @@ class O2MindMapCanvasController: UIViewController {
             DDLogError("错误，没有脑图id，无法获取数据！！！！")
         }
     }
+    
+    
+    //  保存脑图 结束后更新预览图
+    @objc private func saveMindMap() {
+        if let root = self.root,let item = self.mindMapItem, let id = item.id {
+            // 需要先保存缩略图 然后把id放入MindMapItem中 然后保存对象
+            self.showLoading()
+            if let image = self.canvas?.saveAsImage() {
+                self.viewModel.saveMindMapThumb(image: image, id: id).then { imgId -> Promise<String> in
+                    DDLogInfo("保存缩略图成功！\(imgId)")
+                    let content = root.toJSONString() ?? ""
+                    item.content = content
+                    item.fileVersion = item.fileVersion ?? 0 + 1
+                    item.icon = imgId
+                    return self.viewModel.saveMindMap(mind: item)
+                }.then { _ in
+                    self.showSuccess(title: "保存成功！")
+                    self.mindMapItem = item
+                }.catch { err in
+                    DDLogError(err.localizedDescription)
+                    self.showError(title: "保存失败！")
+                }
+            }
+        }
+    }
+    
+    
   
     // MARK: - 节点工具栏操作
     
     // 创建子节点
     private func createSubNode() {
         DDLogDebug("创建子节点")
-        if self.selectedNode == nil || self.selectedNode?.data == nil {
+        if self.selectedNode == nil {
             DDLogError("请先选择节点！！")
             return
         }
@@ -184,7 +271,7 @@ class O2MindMapCanvasController: UIViewController {
     
     // 创建新的子节点到对象中
     private func createSubNodeWithTextRecursion(node: MindNode, text:String)-> MindNode {
-        if node.data?.id != nil && node.data?.id == self.selectedNode?.data?.id {
+        if node.data?.id != nil && node.data?.id == self.selectedNode?.id {
             let newNode = MindNode()
             let newData = MindNodeData()
             newData.text = text
@@ -193,6 +280,8 @@ class O2MindMapCanvasController: UIViewController {
             newNode.data = newData
             newNode.children = []
             node.children?.append(newNode)
+            self.selectedNode = newData
+            self.canvas?.reSelected(newSelected: newData)
         } else {
             if let nChild = node.children {
                 var children: [MindNode] = []

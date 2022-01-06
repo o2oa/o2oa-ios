@@ -55,24 +55,50 @@ class O2MindMapCanvasView: UIView {
     }
     
     // 点击画布 如果点击到脑图块 显示选中状态
-    private var selectedNode: MindNodeSize? = nil
+    private var selectedNode: MindNodeData? = nil
     private var needRePaintForClick = false
     
-    func clickCanvasWithPoint(point: CGPoint)-> MindNodeSize? {
+    // 点击画布 选中节点或取消选中节点
+    func clickCanvasWithPoint(point: CGPoint)-> MindNodeData? {
         if let node = self.canvasNode {
             DDLogDebug("点击了canvas。。。。。。。。。。。")
             self.needRePaintForClick = false // 先设置false
-            self.canvasNode = self.recursionFindSelected(point: point, node: node) // 递归查找
+            self.recursionFindSelected(point: point, node: node) // 递归查找
             if !self.needRePaintForClick && self.selectedNode != nil { // 取消选中
                 self.selectedNode = nil
                 self.setNeedsDisplay() // 重绘
-            } else if self.needRePaintForClick {
+            } else if self.needRePaintForClick { // 选中
                 self.setNeedsDisplay()  // 重绘
             } else {
                 DDLogDebug("不需要动。。。。。。。。")
             }
         }
         return self.selectedNode
+    }
+    
+    // 查询当前选中节点的位置对象 中心节点
+    func getSelectNodePosition()-> (MindNodeSize?, MindNodeSize?) {
+        if let node = self.canvasNode, self.selectedNode != nil {
+            let size = self.recursionFindSelectedSize(node: node)
+            return (size, self.canvasNode)
+        } else {
+            return (nil, self.canvasNode)
+        }
+    }
+    
+    
+    // 外部设置选中的节点，比如新建节点等时候
+    func reSelected(newSelected: MindNodeData) {
+        self.selectedNode = newSelected
+    }
+    
+    // 保存成图片
+    func saveAsImage()-> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(self.bounds.size, true, UIScreen.main.scale)
+        self.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
     }
     
     override func draw(_ rect: CGRect) {
@@ -129,7 +155,7 @@ class O2MindMapCanvasView: UIView {
         bpath.fill()
         bpath.stroke()
         // 选中的 加边框
-        if node.nodeSelected {
+        if node.data?.id != nil && self.selectedNode != nil && node.data?.id == self.selectedNode?.id {
             let borderBox = CGRect(x: box.minX - 1, y: box.minY - 1, width: box.width + 2, height: box.height + 2)
             let borderPath = UIBezierPath(roundedRect: borderBox, cornerRadius: 8)
             selectedBoxBorderColor.set()
@@ -189,26 +215,35 @@ class O2MindMapCanvasView: UIView {
     }
     
     // 递归查找是否有选中的节点
-    private func recursionFindSelected(point: CGPoint, node: MindNodeSize)-> MindNodeSize {
-        var newNode = node
-        let box = newNode.nodeBoxRect
+    private func recursionFindSelected(point: CGPoint, node: MindNodeSize) {
+         
+        let box = node.nodeBoxRect
         if ( point.x >= box.minX && point.x <= box.maxX ) && (point.y >= box.minY && point.y <= box.maxY){
-            newNode.nodeSelected = true
             self.needRePaintForClick = true
-            self.selectedNode = node
-        } else {
-            newNode.nodeSelected = false
+            self.selectedNode = node.data
+            DDLogInfo("选中了。。。。。\(node.data?.id ?? "")")
+            return
         }
-        if newNode.children.count > 0 {
-            var newNodeChildren:[MindNodeSize] = []
-            for child in newNode.children {
-                newNodeChildren.append(self.recursionFindSelected(point: point, node: child))
+        if node.children.count > 0 {
+            for child in node.children {
+                self.recursionFindSelected(point: point, node: child)
             }
-            newNode.children = newNodeChildren
         }
-        return newNode
     }
     
+    // 递归查询选中的那个节点的 Size对象
+    private func recursionFindSelectedSize(node: MindNodeSize) -> MindNodeSize? {
+        if node.data?.id != nil && node.data?.id == self.selectedNode?.id {
+            return node
+        } else {
+            for item in node.children {
+                if let childSize = self.recursionFindSelectedSize(node: item) {
+                    return childSize
+                }
+            }
+            return nil
+        }
+    }
     
     // 计算整个画布以及元素的位置
     private func paintElementPosition(root: MindNodeSize)-> (MindNodeSize, CGSize) {
@@ -235,7 +270,7 @@ class O2MindMapCanvasView: UIView {
             }
             let gap = (rightChildrenSize.height - subChildrenHeight) / CGFloat(rightChildren.count + 1)
             for child in rightChildren {
-                let childLeft = left + themVerticalSpace + root.nodeBoxRect.width
+                let childLeft = left + themHorizontalSpace + root.nodeBoxRect.width
                 var newNode = self.innerElementPosition(top: rightTop + gap, left: childLeft, node: child)
                 if newNode.children.count > 0 {
                     let newNodeChildren = self.recursionRight(childrenNode: newNode.children, parentNode: newNode)
@@ -259,7 +294,7 @@ class O2MindMapCanvasView: UIView {
             }
             let gap = (leftChildrenSize.height - subChildrenHeight) / CGFloat(leftChildren.count + 1)
             for child in leftChildren {
-                let childLeft = left - themVerticalSpace - child.nodeBoxRect.width
+                let childLeft = left - themHorizontalSpace - child.nodeBoxRect.width
                 var newNode = self.innerElementPosition(top: leftTop + gap, left: childLeft, node: child)
                 if newNode.children.count > 0 {
                     let newNodeChildren = self.recursionLeft(childrenNode: newNode.children, parentNode: newNode)
@@ -283,12 +318,22 @@ class O2MindMapCanvasView: UIView {
     private func recursionRight(childrenNode: [MindNodeSize], parentNode: MindNodeSize)-> [MindNodeSize] {
         let childSize = parentNode.childrenSize
         let allSize = parentNode.allSize
-        var firstNodeTop: CGFloat = 0
+        var childrenAreaTop: CGFloat = 0
         let parentCenterTop = parentNode.nodeBoxRect.origin.y + parentNode.nodeBoxRect.height / 2
         if childSize.height < allSize.height {
-            firstNodeTop = parentCenterTop + childSize.height / 2
+            childrenAreaTop = parentCenterTop - allSize.height / 2
         } else {
-            firstNodeTop = parentCenterTop + allSize.height / 2
+            childrenAreaTop = parentCenterTop - childSize.height / 2
+        }
+        var childrenHeightCount:CGFloat = 0
+        for child in childrenNode {
+            childrenHeightCount += child.nodeBoxRect.height
+        }
+        var firstNodeTop: CGFloat = 0
+        if childSize.height < allSize.height {
+            firstNodeTop = childrenAreaTop + (allSize.height - childrenHeightCount) / 2
+        } else {
+            firstNodeTop = childrenAreaTop
         }
         var newChildrenNode: [MindNodeSize] = []
         for child in childrenNode {
@@ -311,13 +356,25 @@ class O2MindMapCanvasView: UIView {
     private func recursionLeft(childrenNode: [MindNodeSize], parentNode: MindNodeSize)-> [MindNodeSize] {
         let childSize = parentNode.childrenSize
         let allSize = parentNode.allSize
+        var childrenAreaTop: CGFloat = 0
         var firstNodeTop: CGFloat = 0
         let parentCenterTop = parentNode.nodeBoxRect.origin.y + parentNode.nodeBoxRect.height / 2
         if childSize.height < allSize.height {
-            firstNodeTop = parentCenterTop + childSize.height / 2
+            childrenAreaTop = parentCenterTop - allSize.height / 2
         } else {
-            firstNodeTop = parentCenterTop + allSize.height / 2
+            childrenAreaTop = parentCenterTop - childSize.height / 2
         }
+        //循环累加子节点的高度 为了计算第一个节点的位置
+        var childrenHeightCount:CGFloat = 0
+        for child in childrenNode {
+            childrenHeightCount += child.nodeBoxRect.height
+        }
+        if childSize.height < allSize.height {
+            firstNodeTop = childrenAreaTop  +  (allSize.height - childrenHeightCount) / 2
+        } else {
+            firstNodeTop = childrenAreaTop
+        }
+        
         var newChildrenNode: [MindNodeSize] = []
         for child in childrenNode {
             let left = parentNode.nodeBoxRect.origin.x - themHorizontalSpace - child.nodeBoxRect.width
@@ -457,11 +514,11 @@ class O2MindMapCanvasView: UIView {
         let leftChildrenSize = CGSize(width: leftWidth, height: leftHeight) // 左边区域 大小
         
         ///
-           /// root节点本身的宽+2个间隔+left和right最大的宽度*2
-           /// root节点本身的高 和 left、right最大的高度*2
-           ///
-           width += (rightWidth > leftWidth ? rightWidth : leftWidth) * 2 + (themHorizontalSpace * 2)
-           height += (rightHeight > leftHeight ? rightHeight : leftHeight) * 2
+        /// root节点本身的宽+2个间隔+left和right最大的宽度*2
+        /// root节点本身的高 和 left、right最大的高度*2
+        ///
+        width += (rightWidth > leftWidth ? rightWidth : leftWidth) * 2 + (themHorizontalSpace * 2)
+        height += (rightHeight > leftHeight ? rightHeight : leftHeight) * 2
         
         // 先预留大小
         width = width * 1.5
@@ -484,10 +541,7 @@ class O2MindMapCanvasView: UIView {
         var newNode = node
         var width = node.nodeBoxRect.width
         var height = node.nodeBoxRect.height
-        // 模版中第三级开始 有一条底部边线
-        if (node.level>1) {
-          height += themeLineWidth
-        }
+        
         var childrenWidth = 0.0
         var childrenHeight = 0.0
         var childrenSizeList:[MindNodeSize] = []
@@ -497,15 +551,15 @@ class O2MindMapCanvasView: UIView {
                 childrenSizeList.append(childSizeNode)
                 let childSize = childSizeNode.allSize
                 childrenWidth = childrenWidth > childSize.width ? childrenWidth: childSize.width
-                childrenHeight += childSize.height + horizontalSpace
+                childrenHeight += childSize.height + verticalSpace
             }
-            childrenHeight -= horizontalSpace
+            childrenHeight -= verticalSpace
         }
         newNode.children = childrenSizeList
-        let newChildSize = CGSize(width: childrenWidth, height: childrenHeight);
+        let newChildSize = CGSize(width: childrenWidth, height: childrenHeight)
         newNode.childrenSize = newChildSize
-        width += childrenWidth + verticalSpace;
-        height = height>childrenHeight ? height : childrenHeight;
+        width += childrenWidth + horizontalSpace
+        height = height>childrenHeight ? height : childrenHeight
         newNode.allSize = CGSize(width: width, height: height)
         return newNode
     }

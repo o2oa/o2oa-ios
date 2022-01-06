@@ -96,7 +96,8 @@ class O2MindMapCanvasBottomBar: UIView {
                 btn.setImage(self.btnIcon(type: item), for: .normal)
                 btn.setBackgroundColor(.white, forState: .normal)
                 btn.setTitleColor(.black, for: .normal)
-                btn.roundedCorners(cornerRadius: 4, borderWidth: 1, borderColor: .black)
+                btn.cornerRadius = 4 // roundedCorners(cornerRadius: 4, borderWidth: 1, borderColor: .black)
+                btn.addShadow(offset: CGSize(width: 5, height: 5), radius: 4, color: .black, opacity: 0.7, cornerRadius: 4)
                 btn.tag = i
                 self.myScollView?.addSubview(btn)
                 btn.addTapGesture { recg in
@@ -116,7 +117,8 @@ class O2MindMapCanvasBottomBar: UIView {
                 btn.setImage(self.btnIcon(type: item), for: .normal)
                 btn.setBackgroundColor(.white, forState: .normal)
                 btn.setTitleColor(.black, for: .normal)
-                btn.roundedCorners(cornerRadius: 4, borderWidth: 1, borderColor: .black)
+                btn.cornerRadius = 4 // roundedCorners(cornerRadius: 4, borderWidth: 1, borderColor: .black)
+                btn.addShadow(offset: CGSize(width: 5, height: 5), radius: 4, color: .black, opacity: 0.7, cornerRadius: 4)
                 btn.tag = i
                 self.myScollView?.addSubview(btn)
                 btn.addTapGesture { recg in

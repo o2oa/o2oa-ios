@@ -14,6 +14,7 @@ enum MindMapAPI {
     case myFolderTree
     case listNextWithFilter(String, MindMapFilter)
     case viewMindWithId(String)
+    case saveMindMap(MindMapItem)
 }
 
 
@@ -48,6 +49,8 @@ extension MindMapAPI: TargetType {
             return "/jaxrs/mind/filter/list/\(id)/next/\(O2.defaultPageSize)"
         case .viewMindWithId(let id):
             return "/jaxrs/mind/view/\(id)"
+        case .saveMindMap(_):
+            return "/jaxrs/mind/save"
         }
     }
     
@@ -57,6 +60,8 @@ extension MindMapAPI: TargetType {
             return .get
         case .listNextWithFilter(_, _):
             return .put
+        case .saveMindMap(_):
+            return .post
         }
     }
     
@@ -70,6 +75,8 @@ extension MindMapAPI: TargetType {
             return .requestPlain
         case .listNextWithFilter(_, let filter):
             return .requestParameters(parameters: filter.toJSON() ?? [:], encoding: JSONEncoding.default)
+        case .saveMindMap(let data):
+            return .requestParameters(parameters: data.toJSON() ?? [:], encoding: JSONEncoding.default)
         }
     }
     

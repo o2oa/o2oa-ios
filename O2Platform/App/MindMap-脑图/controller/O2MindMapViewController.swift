@@ -31,6 +31,7 @@ class O2MindMapViewController: UIViewController {
         return O2MindMapViewModel()
     }()
     
+    private var isLoading = false
     private var nextId = O2.O2_First_ID
     private var mindMapList:[MindMapItem] = []
     
@@ -55,7 +56,6 @@ class O2MindMapViewController: UIViewController {
         self.folderLabel.text = currentFolder.name
         
         self.tableView.mj_header.beginRefreshing()
-        self.loadMindMapList()
     }
    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -81,6 +81,10 @@ class O2MindMapViewController: UIViewController {
         guard let folderId = self.currentFolder.id else {
             return
         }
+        if self.isLoading { // 正在查询
+            return
+        }
+        self.isLoading = true
         if self.nextId == O2.O2_First_ID {
             self.mindMapList = []
         }
@@ -108,6 +112,7 @@ class O2MindMapViewController: UIViewController {
         }
         
         self.tableView.reloadData()
+        self.isLoading = false
     }
     
     //MARK: - private func

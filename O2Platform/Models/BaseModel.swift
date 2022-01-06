@@ -117,6 +117,18 @@ public class O2IdDataModel: DataModel {
     
 }
 
+public class O2UPloadImageIdsDataModel: DataModel {
+    var id: String?
+    var origId: String?
+    
+    required public init() {}
+    
+    public var description: String {
+        return toJSONString(prettyPrint: true) ?? ""
+    }
+    
+}
+
 
 
 

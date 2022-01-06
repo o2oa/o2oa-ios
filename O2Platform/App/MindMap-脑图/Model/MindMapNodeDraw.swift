@@ -15,7 +15,7 @@ struct MindNodeSize {
     // 节点方块大小位置
     var nodeBoxRect: CGRect
     var nodeBoxBgColor: UIColor = .blue
-    var nodeSelected: Bool = false // 是否选中
+//    var nodeSelected: Bool = false // 是否选中
     
     // 图片
     var imageRect: CGRect?
