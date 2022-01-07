@@ -385,7 +385,7 @@ class O2MindMapCanvasController: UIViewController {
         }
         return node
     }
-    
+    // 删除节点
     private func deleteNode() {
         DDLogDebug("删除选中的节点")
         if self.selectedNode == nil {
@@ -421,9 +421,48 @@ class O2MindMapCanvasController: UIViewController {
     }
     
 
+    private func addLink() {
+        DDLogDebug("删除选中的节点")
+        if self.selectedNode == nil {
+            DDLogError("请先选择节点！！")
+            return
+        }
+        let dialog = O2MindMapAddLinkDialog.mindMapNodeLinkDialog(link: self.selectedNode?.hyperlink, linkTitle: self.selectedNode?.hyperlinkTitle, delegate: self)
+        dialog.show()
+    }
+    private func updateNodeLink(link:String, linkTitle: String) {
+        if let node = self.root?.root {
+            let newNode = self.updateNodeLinkRecursion(node: node, link: link, linkTitle: linkTitle)
+            self.root?.root = newNode
+            self.notifyDataChanged()
+        } else {
+            DDLogError("脑图数据对象不存在，无法创建。。。")
+        }
+    }
+    private func updateNodeLinkRecursion(node: MindNode, link:String, linkTitle: String)-> MindNode {
+        if node.data?.id != nil && node.data?.id == self.selectedNode?.id {
+            let newData = node.data!
+            newData.hyperlink = link
+            newData.hyperlinkTitle = linkTitle
+            node.data = newData
+            self.selectedNode = newData
+            self.canvas?.reSelected(newSelected: newData)
+        } else {
+            if let nChild = node.children {
+                var children: [MindNode] = []
+                for item in nChild {
+                    let newChild = self.updateNodeLinkRecursion(node: item, link: link, linkTitle: linkTitle)
+                    children.append(newChild)
+                }
+                node.children = children
+            }
+        }
+        return node
+    }
+    
 }
 
-
+// MARK: - 点击底部工具栏按钮
 extension O2MindMapCanvasController: O2MindMapCanvasBottomBtnDelegate {
     
     func clickBtn(type: O2MindMapCanvasBottomBtnType) {
@@ -444,9 +483,24 @@ extension O2MindMapCanvasController: O2MindMapCanvasBottomBtnDelegate {
         case .addImg:
             break
         case .addLink:
+            self.addLink()
             break
         case .addIcon:
             break
         }
     }
+}
+
+// MARK: - 添加超链接的delegate
+extension O2MindMapCanvasController: O2MindMapAddLinkDialogDelegate {
+    func deleteLink() {
+        DDLogInfo("删除超链接")
+        self.updateNodeLink(link: "", linkTitle: "")
+    }
+    
+    func saveLink(link: String, linkTitle: String) {
+        DDLogInfo("保存超链接 link: \(link) linkTitle: \(linkTitle)")
+        self.updateNodeLink(link: link, linkTitle: linkTitle)
+    }
+    
 }

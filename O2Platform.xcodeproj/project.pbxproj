@@ -337,6 +337,8 @@
 		B1DA305F2282754500669418 /* QCalendarPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DA305E2282754500669418 /* QCalendarPicker.swift */; };
 		B1DB0843252314F400EE6673 /* SecurityCheckManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DB0842252314F400EE6673 /* SecurityCheckManager.swift */; };
 		B1DB6EA5237E6F2C00D7BA94 /* O2VersionInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DB6EA4237E6F2C00D7BA94 /* O2VersionInfoModel.swift */; };
+		B1DC0D6E2787E0E50007BD56 /* O2MindMapAddLinkDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1DC0D6D2787E0E50007BD56 /* O2MindMapAddLinkDialog.xib */; };
+		B1DC0D9D2787E15F0007BD56 /* O2MindMapAddLinkDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DC0D9C2787E15F0007BD56 /* O2MindMapAddLinkDialog.swift */; };
 		B1DE853823602D36003C36E2 /* Languager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DE853723602D36003C36E2 /* Languager.swift */; };
 		B1DE8564236030E2003C36E2 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DE8563236030E2003C36E2 /* Bundle+Extension.swift */; };
 		B1DE856623603408003C36E2 /* DispatchQueue+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1DE856523603408003C36E2 /* DispatchQueue+Extension.swift */; };
@@ -1559,6 +1561,8 @@
 		B1DA305E2282754500669418 /* QCalendarPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QCalendarPicker.swift; sourceTree = "<group>"; };
 		B1DB0842252314F400EE6673 /* SecurityCheckManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCheckManager.swift; sourceTree = "<group>"; };
 		B1DB6EA4237E6F2C00D7BA94 /* O2VersionInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2VersionInfoModel.swift; sourceTree = "<group>"; };
+		B1DC0D6D2787E0E50007BD56 /* O2MindMapAddLinkDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = O2MindMapAddLinkDialog.xib; sourceTree = "<group>"; };
+		B1DC0D9C2787E15F0007BD56 /* O2MindMapAddLinkDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2MindMapAddLinkDialog.swift; sourceTree = "<group>"; };
 		B1DE853723602D36003C36E2 /* Languager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Languager.swift; sourceTree = "<group>"; };
 		B1DE8563236030E2003C36E2 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		B1DE856523603408003C36E2 /* DispatchQueue+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extension.swift"; sourceTree = "<group>"; };
@@ -2733,6 +2737,8 @@
 				B1670A44276B1AF4009A41BC /* MindMapItemTableViewCell.swift */,
 				B17EFC6F276C331800D7B18F /* O2MindMapCanvasView.swift */,
 				B1A04B53277DA70B007DDB3B /* O2MindMapCanvasBottomBar.swift */,
+				B1DC0D6D2787E0E50007BD56 /* O2MindMapAddLinkDialog.xib */,
+				B1DC0D9C2787E15F0007BD56 /* O2MindMapAddLinkDialog.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -5155,6 +5161,7 @@
 				B15BE10C249A0EFE008CD1DB /* IMAudioView.xib in Resources */,
 				E4C24C48208D7EDE00E426B0 /* OOContactGroupHeaderView.xib in Resources */,
 				E4B888DB1D9D48F1002E1A46 /* 隶变体.ttf in Resources */,
+				B1DC0D6E2787E0E50007BD56 /* O2MindMapAddLinkDialog.xib in Resources */,
 				E4B888D61D9D48F1002E1A46 /* 001.jpg in Resources */,
 				E46E6C8B1DD41F5D00AB7561 /* ZSSitalic.png in Resources */,
 				E4CB27851E793AE6004A7ACB /* ZoneFileListCell.xib in Resources */,
@@ -5839,6 +5846,7 @@
 				E4A748D31EC1598600163F58 /* O2TaskAttachmentInfoData.swift in Sources */,
 				B1FB9FAE2302891F00A90722 /* ContactPickerViewModel.swift in Sources */,
 				B12FD1EF228425BE00E636BA /* OOMeetingTabBarController.swift in Sources */,
+				B1DC0D9D2787E15F0007BD56 /* O2MindMapAddLinkDialog.swift in Sources */,
 				B1FB9FE32302A93500A90722 /* UnitPickerTableViewCell.swift in Sources */,
 				B130A7832281565F00282AD1 /* DeviceTableViewCell.swift in Sources */,
 				E4CB278B1E797B58004A7ACB /* CMSQLViewController.swift in Sources */,
