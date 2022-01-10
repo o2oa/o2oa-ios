@@ -16,6 +16,63 @@ class O2MindMapViewModel  {
     private let mindMapAPI = OOMoyaProvider<MindMapAPI>()
     private let cloudAPI = OOMoyaProvider<OOCloudStorageAPI>()
     
+    
+    // 创建脑图
+    func createMindMap(name: String, folderId: String)-> Promise<String> {
+        return Promise { fulfill, reject in
+            let root = MindRootNode()
+            root.template = "default"
+            root.theme = "fresh-blue"
+            root.version = "1"
+            let node = MindNode()
+            let data = MindNodeData()
+            data.id = "root"
+            data.text = name
+            node.data = data
+            node.children = []
+            root.root = node
+            
+            let body = MindMapItem()
+            body.name = name
+            body.folderId = folderId
+            body.content = root.toJSONString()
+            body.fileVersion = 1
+            
+            self.mindMapAPI.request(.saveMindMap(body)) { result in
+                let response = OOResult<BaseModelClass<O2IdDataModel>>(result)
+                if response.isResultSuccess() {
+                    if let id = response.model?.data?.id {
+                        fulfill(id)
+                    } else {
+                        reject(OOAppError.apiEmptyResultError)
+                    }
+                } else {
+                    reject(response.error!)
+                }
+            }
+        }
+    }
+    // 创建目录
+    func createFolder(name: String, parentId: String)-> Promise<String> {
+        return Promise { fulfill, reject in
+            let folder = MindFolder()
+            folder.name = name
+            folder.parentId = parentId
+            self.mindMapAPI.request(.createFolder(folder)) { result in
+                let response = OOResult<BaseModelClass<O2IdDataModel>>(result)
+                if response.isResultSuccess() {
+                    if let id = response.model?.data?.id {
+                        fulfill(id)
+                    } else {
+                        reject(OOAppError.apiEmptyResultError)
+                    }
+                } else {
+                    reject(response.error!)
+                }
+            }
+        }
+    }
+    
     // 保存脑图
     func saveMindMap(mind: MindMapItem)-> Promise<String> {
         return Promise { fulfill, reject in
@@ -51,6 +108,23 @@ class O2MindMapViewModel  {
                 }
             } else {
                 reject(O2APIError.o2ResponseError("图片为空！"))
+            }
+        }
+    }
+    // 节点图片上传
+    func saveMindMapNodeImage(filename:String, data: Data, id:String)-> Promise<String> {
+        return Promise { fulfill, reject in
+            self.cloudAPI.request(.uploadImageWithReferencetype(filename, "mindInfo", id, 400, data)) { result in
+                let response = OOResult<BaseModelClass<O2UPloadImageIdsDataModel>>(result)
+                if response.isResultSuccess() {
+                    if let id = response.model?.data?.id {
+                        fulfill(id)
+                    } else {
+                        reject(OOAppError.apiEmptyResultError)
+                    }
+                } else {
+                    reject(response.error!)
+                }
             }
         }
     }
@@ -124,7 +198,7 @@ class O2MindMapViewModel  {
                         }
                         fulfill(newList)
                     } else {
-                        reject(OOAppError.apiEmptyResultError)
+                        fulfill([])
                     }
                 } else {
                     reject(response.error!)

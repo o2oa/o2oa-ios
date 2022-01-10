@@ -12,9 +12,11 @@ import Moya
 
 enum MindMapAPI {
     case myFolderTree
+    case createFolder(MindFolder)
     case listNextWithFilter(String, MindMapFilter)
     case viewMindWithId(String)
     case saveMindMap(MindMapItem)
+    
 }
 
 
@@ -51,6 +53,8 @@ extension MindMapAPI: TargetType {
             return "/jaxrs/mind/view/\(id)"
         case .saveMindMap(_):
             return "/jaxrs/mind/save"
+        case .createFolder(_):
+            return "/jaxrs/folder/save"
         }
     }
     
@@ -60,7 +64,7 @@ extension MindMapAPI: TargetType {
             return .get
         case .listNextWithFilter(_, _):
             return .put
-        case .saveMindMap(_):
+        case .saveMindMap(_), .createFolder(_):
             return .post
         }
     }
@@ -76,6 +80,8 @@ extension MindMapAPI: TargetType {
         case .listNextWithFilter(_, let filter):
             return .requestParameters(parameters: filter.toJSON() ?? [:], encoding: JSONEncoding.default)
         case .saveMindMap(let data):
+            return .requestParameters(parameters: data.toJSON() ?? [:], encoding: JSONEncoding.default)
+        case .createFolder(let data):
             return .requestParameters(parameters: data.toJSON() ?? [:], encoding: JSONEncoding.default)
         }
     }

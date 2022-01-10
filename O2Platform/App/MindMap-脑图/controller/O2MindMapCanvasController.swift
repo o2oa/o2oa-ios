@@ -312,7 +312,7 @@ class O2MindMapCanvasController: UIViewController {
                 self.root?.root = newNode
                 self.notifyDataChanged()
             } else {
-                DDLogError("脑图数据对象不存在，无法创建。。。")
+                DDLogError("脑图数据对象不存在，无法创建同级节点。。。")
             }
         }
     }
@@ -362,7 +362,7 @@ class O2MindMapCanvasController: UIViewController {
                 self.root?.root = newNode
                 self.notifyDataChanged()
             } else {
-                DDLogError("脑图数据对象不存在，无法创建。。。")
+                DDLogError("脑图数据对象不存在，无法修改节点文字")
             }
         }
     }
@@ -398,7 +398,7 @@ class O2MindMapCanvasController: UIViewController {
                 self.root?.root = newNode
                 self.notifyDataChanged()
             } else {
-                DDLogError("脑图数据对象不存在，无法创建。。。")
+                DDLogError("脑图数据对象不存在，无法删除")
             }
         }
     }
@@ -419,10 +419,9 @@ class O2MindMapCanvasController: UIViewController {
         }
         return node
     }
-    
-
+    // 节点设置超链接
     private func addLink() {
-        DDLogDebug("删除选中的节点")
+        DDLogDebug("添加超链接")
         if self.selectedNode == nil {
             DDLogError("请先选择节点！！")
             return
@@ -436,7 +435,7 @@ class O2MindMapCanvasController: UIViewController {
             self.root?.root = newNode
             self.notifyDataChanged()
         } else {
-            DDLogError("脑图数据对象不存在，无法创建。。。")
+            DDLogError("脑图数据对象不存在，无法修改超链接")
         }
     }
     private func updateNodeLinkRecursion(node: MindNode, link:String, linkTitle: String)-> MindNode {
@@ -460,13 +459,197 @@ class O2MindMapCanvasController: UIViewController {
         return node
     }
     
+    private func addIcon() {
+        DDLogDebug("添加图标")
+        if self.selectedNode == nil {
+            DDLogError("请先选择节点！！")
+            return
+        }
+        let dialog = O2MindMapAddIconDialog.mindMapNodeIconDialog(progress: self.selectedNode?.progress, priority: self.selectedNode?.priority, delegate: self)
+        dialog.show()
+    }
+    private func updateNodeIcons(progress:Int?, priority:Int?) {
+        if let node = self.root?.root {
+            let newNode = self.updateNodeIconsRecursion(node: node, progress: progress, priority: priority)
+            self.root?.root = newNode
+            self.notifyDataChanged()
+        } else {
+            DDLogError("脑图数据对象不存在，无法修改Icons。")
+        }
+    }
+    private func updateNodeIconsRecursion(node: MindNode, progress:Int?, priority:Int?)-> MindNode {
+        if node.data?.id != nil && node.data?.id == self.selectedNode?.id {
+            let newData = node.data!
+            newData.progress = progress
+            newData.priority = priority
+            node.data = newData
+            self.selectedNode = newData
+            self.canvas?.reSelected(newSelected: newData)
+        } else {
+            if let nChild = node.children {
+                var children: [MindNode] = []
+                for item in nChild {
+                    let newChild = self.updateNodeIconsRecursion(node: item, progress: progress, priority: priority)
+                    children.append(newChild)
+                }
+                node.children = children
+            }
+        }
+        return node
+    }
+    
+    // 节点添加图片
+    private func addImage() {
+        DDLogDebug("添加图片")
+        if self.selectedNode == nil {
+            DDLogError("请先选择节点！！")
+            return
+        }
+        var hasImage = false
+        if let _ = self.selectedNode?.image {
+            hasImage = true
+        }
+        var menus :[UIAlertAction] = []
+        if hasImage {
+            let deleteBtn = UIAlertAction(title: "删除图片", style: .destructive) { (ok) in
+                 DDLogInfo("删除图片")
+                self.deleteImage()
+            }
+            menus.append(deleteBtn)
+        }
+        let chooseImg = UIAlertAction(title: "选择图片", style: .default) { (ok) in
+            DDLogInfo("选择图片")
+            self.chooseImageForNode()
+        }
+        menus.append(chooseImg)
+        let camera = UIAlertAction(title: "拍照", style: .default) { (ok) in
+            DDLogInfo("拍照")
+            self.takePhotoImageForNode()
+        }
+        menus.append(camera)
+        
+        self.showSheetAction(title: "添加图片", message: "", actions: menus)
+    }
+    // 删除节点上的图片
+    private func deleteImage() {
+        if let node = self.root?.root {
+            let newNode = self.updateNodeImageRecursion(node: node, image: nil, imageId: nil, size: nil)
+            self.root?.root = newNode
+            self.notifyDataChanged()
+        } else {
+            DDLogError("脑图数据对象不存在，无法删除图片")
+        }
+    }
+    // 选择图片加入节点
+    private func chooseImageForNode() {
+        self.choosePhotoWithImagePicker { fileName, data in
+            DDLogDebug("图片：\(fileName)")
+            var size:CGSize? = nil
+            if let image: UIImage = UIImage(data: data) {
+                DDLogDebug("图片：\(image.size)")
+                size = image.size
+            }
+            self.uploadImage(fileName: fileName, data: data, size: size)
+        }
+    }
+    // 拍照加入节点
+    private func takePhotoImageForNode() {
+        self.takePhoto(delegate: self)
+    }
+    // 上传图片到服务器
+    private func uploadImage(fileName: String, data: Data, size: CGSize?) {
+        self.showLoading()
+        self.viewModel
+            .saveMindMapNodeImage(filename: fileName, data: data, id: self.mindMapItem!.id!)
+            .then { id in
+                self.hideLoading()
+                // 生成url 计算size对象
+                let urlstr = O2AuthSDK.shared.getFileDownloadUrl(fileId: id)
+                let imageSize = self.calcSize(size: size)
+                if let node = self.root?.root {
+                    let newNode = self.updateNodeImageRecursion(node: node, image: urlstr, imageId: id, size: imageSize)
+                    self.root?.root = newNode
+                    self.notifyDataChanged()
+                } else {
+                    DDLogError("脑图数据对象不存在，无法删除图片")
+                }
+            }.catch {  err in
+                DDLogError(err.localizedDescription)
+                self.showError(title: "图片上传失败！")
+            }
+    }
+    // 计算图片大小，最大的尺寸400 等比例压缩
+    private func calcSize(size:CGSize?)-> MindNodeImageSize? {
+        if let s = size {
+            let width = s.width
+            let height = s.height
+            
+            var newH: CGFloat = 400
+            if height <= 0 {
+                newH = 400
+            } else {
+                newH = height
+            }
+            var newW: CGFloat = 400
+            if width <= 0 {
+                newW = 400
+            }else {
+                newW = width
+            }
+            
+            if (height > width) {
+              if (height > 400) {
+                let scale = height / 400
+                newH = 400
+                newW = width / scale
+              }
+            } else {
+              if (width > 400) {
+                let scale = width / 400;
+                newH = height / scale
+                newW = 400
+              }
+            }
+            let imageSize = MindNodeImageSize()
+            imageSize.width = Int(newW)
+            imageSize.height = Int(newH)
+            return imageSize
+        }
+        return nil
+    }
+    // 更新图片对象到选中的节点
+    private func updateNodeImageRecursion(node: MindNode, image:String?, imageId:String?, size: MindNodeImageSize?)-> MindNode {
+        if node.data?.id != nil && node.data?.id == self.selectedNode?.id {
+            let newData = node.data!
+            newData.image = image
+            if let _ = image {
+            } else {
+                newData.imageTitle = nil
+            }
+            newData.imageId = imageId
+            newData.imageSize = size
+            node.data = newData
+            self.selectedNode = newData
+            self.canvas?.reSelected(newSelected: newData)
+        } else {
+            if let nChild = node.children {
+                var children: [MindNode] = []
+                for item in nChild {
+                    let newChild = self.updateNodeImageRecursion(node: item, image: image, imageId: imageId, size: size)
+                    children.append(newChild)
+                }
+                node.children = children
+            }
+        }
+        return node
+    }
+    
 }
 
 // MARK: - 点击底部工具栏按钮
 extension O2MindMapCanvasController: O2MindMapCanvasBottomBtnDelegate {
     
     func clickBtn(type: O2MindMapCanvasBottomBtnType) {
-        DDLogDebug("type: \(type.rawValue)")
         switch type {
         case .createSubNode:
             self.createSubNode()
@@ -481,11 +664,13 @@ extension O2MindMapCanvasController: O2MindMapCanvasBottomBtnDelegate {
             self.deleteNode()
             break
         case .addImg:
+            self.addImage()
             break
         case .addLink:
             self.addLink()
             break
         case .addIcon:
+            self.addIcon()
             break
         }
     }
@@ -503,4 +688,26 @@ extension O2MindMapCanvasController: O2MindMapAddLinkDialogDelegate {
         self.updateNodeLink(link: link, linkTitle: linkTitle)
     }
     
+}
+
+// MARK: - 添加图标delegate
+extension O2MindMapCanvasController: O2MindMapAddIconDialogDelegate {
+    func saveIcons(progress: Int?, priority: Int?) {
+        DDLogInfo("保存图标 progress: \(String(describing: progress)) priority: \(String(describing: priority))")
+        self.updateNodeIcons(progress: progress, priority: priority)
+    }
+}
+
+// MARK: - 拍照返回
+extension O2MindMapCanvasController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        if let image = info[.editedImage] as? UIImage, let newData = image.pngData() {
+            let fileName = "\(UUID().uuidString).png"
+            let size = image.size
+            self.uploadImage(fileName: fileName, data: newData, size: size)
+        } else {
+            DDLogError("没有选择到图片！")
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
 }

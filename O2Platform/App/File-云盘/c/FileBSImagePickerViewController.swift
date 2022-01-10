@@ -17,11 +17,18 @@ struct FileBSImagePickerViewController {
         picker.settings.selection.max = 1
         picker.settings.theme.selectionStyle = .checked
         picker.settings.selection.unselectOnReachingMax = true
+        if #available(iOS 15.0, *) {
+            let appearance = UINavigationBarAppearance.init()
+            appearance.backgroundColor = navbar_barTint_color
+            appearance.titleTextAttributes =  [NSAttributedString.Key.font:navbar_text_font,NSAttributedString.Key.foregroundColor:navbar_tint_color]
+            picker.navigationBar.standardAppearance = appearance
+            picker.navigationBar.scrollEdgeAppearance = appearance
+        }else {
+            picker.navigationBar.barTintColor = navbar_barTint_color
+            picker.navigationBar.titleTextAttributes = [NSAttributedString.Key.font:navbar_text_font,NSAttributedString.Key.foregroundColor:navbar_tint_color]
+        }
         picker.navigationBar.isTranslucent = false
-        picker.navigationBar.barTintColor = navbar_barTint_color
         picker.navigationBar.tintColor = navbar_tint_color
-        picker.navigationBar.titleTextAttributes = [NSAttributedString.Key.font:navbar_text_font,NSAttributedString.Key.foregroundColor:navbar_tint_color]
-        
         return picker
     }
 }

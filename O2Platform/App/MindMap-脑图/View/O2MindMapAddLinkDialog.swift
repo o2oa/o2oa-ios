@@ -96,6 +96,7 @@ class O2MindMapAddLinkDialog: UIView, NibLoadable {
     
     private func initUI(link: String?, linkTitle: String?) {
         self.submitBtn.setBackgroundColor(base_color, forState: .normal)
+        self.submitBtn.setCornerRadius(radius: 4)
         self.linkText.text = link ?? ""
         self.linkTitleText.text = linkTitle ?? ""
         

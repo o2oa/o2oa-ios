@@ -13,11 +13,18 @@ class ZLNavigationController: O2BaseForRotateUINavViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationBar.isTranslucent = false
-        self.navigationBar.barTintColor = navbar_barTint_color
+        if #available(iOS 15.0, *) {
+            let appearance = UINavigationBarAppearance.init()
+            appearance.backgroundColor = navbar_barTint_color
+            appearance.titleTextAttributes =  [NSAttributedString.Key.font:navbar_text_font,NSAttributedString.Key.foregroundColor:navbar_tint_color]
+            self.navigationBar.standardAppearance = appearance
+            self.navigationBar.scrollEdgeAppearance = appearance
+        }else {
+            self.navigationBar.barTintColor = navbar_barTint_color
+            self.navigationBar.titleTextAttributes = [NSAttributedString.Key.font:navbar_text_font,NSAttributedString.Key.foregroundColor:navbar_tint_color]
+        }
         self.navigationBar.tintColor = navbar_tint_color
-        self.navigationBar.titleTextAttributes = [NSAttributedString.Key.font:navbar_text_font,NSAttributedString.Key.foregroundColor:navbar_tint_color]
-        
+        self.navigationBar.isTranslucent = false
         self.toolbar.barTintColor = navbar_barTint_color
         self.toolbar.tintColor = navbar_tint_color
         self.toolbar.barStyle = .default

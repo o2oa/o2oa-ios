@@ -255,6 +255,8 @@
 		B18398B0249B079B001C6FAA /* IMLocationChooseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18398AE249B079B001C6FAA /* IMLocationChooseController.swift */; };
 		B18398B1249B079B001C6FAA /* IMLocationChooseController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B18398AF249B079B001C6FAA /* IMLocationChooseController.xib */; };
 		B18398B3249B4154001C6FAA /* IMShowLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18398B2249B4154001C6FAA /* IMShowLocationViewController.swift */; };
+		B1843F272788104000A028B9 /* O2MindMapAddIconDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1843F262788104000A028B9 /* O2MindMapAddIconDialog.swift */; };
+		B1843F562788106300A028B9 /* O2MindMapAddIconDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1843F552788106300A028B9 /* O2MindMapAddIconDialog.xib */; };
 		B18FFF5F23756B6C001B2887 /* JPushAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18FFF5E23756B6C001B2887 /* JPushAPI.swift */; };
 		B1908E1422685E8F00D75632 /* O2WebViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1908E1322685E8F00D75632 /* O2WebViewModels.swift */; };
 		B1908E4C22687B1A00D75632 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B1908E4E22687B1A00D75632 /* Localizable.strings */; };
@@ -1477,6 +1479,8 @@
 		B18398AE249B079B001C6FAA /* IMLocationChooseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMLocationChooseController.swift; sourceTree = "<group>"; };
 		B18398AF249B079B001C6FAA /* IMLocationChooseController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IMLocationChooseController.xib; sourceTree = "<group>"; };
 		B18398B2249B4154001C6FAA /* IMShowLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMShowLocationViewController.swift; sourceTree = "<group>"; };
+		B1843F262788104000A028B9 /* O2MindMapAddIconDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2MindMapAddIconDialog.swift; sourceTree = "<group>"; };
+		B1843F552788106300A028B9 /* O2MindMapAddIconDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = O2MindMapAddIconDialog.xib; sourceTree = "<group>"; };
 		B18FFF5E23756B6C001B2887 /* JPushAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JPushAPI.swift; sourceTree = "<group>"; };
 		B1908E1322685E8F00D75632 /* O2WebViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2WebViewModels.swift; sourceTree = "<group>"; };
 		B1908E4D22687B1A00D75632 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -2739,6 +2743,8 @@
 				B1A04B53277DA70B007DDB3B /* O2MindMapCanvasBottomBar.swift */,
 				B1DC0D6D2787E0E50007BD56 /* O2MindMapAddLinkDialog.xib */,
 				B1DC0D9C2787E15F0007BD56 /* O2MindMapAddLinkDialog.swift */,
+				B1843F262788104000A028B9 /* O2MindMapAddIconDialog.swift */,
+				B1843F552788106300A028B9 /* O2MindMapAddIconDialog.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -5018,6 +5024,7 @@
 				E4B697D520764A2D0062F6E8 /* toplist.json in Resources */,
 				E46E6C881DD41F5D00AB7561 /* ZSSindent@2x.png in Resources */,
 				E46E6C861DD41F5D00AB7561 /* ZSSimageDevice@2x.png in Resources */,
+				B1843F562788106300A028B9 /* O2MindMapAddIconDialog.xib in Resources */,
 				B1C0A1A3256E3EEA00C7041E /* MeetingFormChoosePersonCell.xib in Resources */,
 				B17126C121084A2F00369F15 /* calendar.storyboard in Resources */,
 				B1BB678124C6D1DD0020BD7D /* OOAttendanceCheckInNewController.xib in Resources */,
@@ -5471,6 +5478,7 @@
 				B165CD5C2242093500373B66 /* CoverHorizontalAnimation.swift in Sources */,
 				B1908E1422685E8F00D75632 /* O2WebViewModels.swift in Sources */,
 				B1F6CDF024A89836005CB1E0 /* BBSSubjectAttachmentViewCell.swift in Sources */,
+				B1843F272788104000A028B9 /* O2MindMapAddIconDialog.swift in Sources */,
 				B1F6CDEE24A893B6005CB1E0 /* BBSSubjectAttachmentViewController.swift in Sources */,
 				E4B69738207602A40062F6E8 /* OOAccessTokenAuthorizable.swift in Sources */,
 				E4B8889C1D9D48F1002E1A46 /* MJRefreshBackFooter.m in Sources */,

@@ -52,6 +52,9 @@ class O2MindSelectViewController: UITableViewController {
         }
     }
   
+    
+    
+   
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return folderList.count

@@ -296,7 +296,7 @@ extension UIViewController {
 // MARK: - 业务工具
 extension UIViewController {
     
-    
+    // 拍照
     func takePhoto(delegate: (UIImagePickerControllerDelegate & UINavigationControllerDelegate)?) {
         var sourceType = UIImagePickerController.SourceType.camera
         if !UIImagePickerController.isSourceTypeAvailable(sourceType) {
