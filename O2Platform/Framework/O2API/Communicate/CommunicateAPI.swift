@@ -22,6 +22,7 @@ enum CommunicateAPI {
     case updateConversationPeople(String, [String])
     case imUploadFile(String, String, String, Data)
     case imDownloadFullFile(String, String)
+    case clearAllChatMsg(String)
     
     
 }
@@ -70,6 +71,8 @@ extension CommunicateAPI: TargetType {
             return "/jaxrs/im/msg/upload/\(conversationId)/type/\(type)"
         case .imDownloadFullFile(let id, _):
             return "/jaxrs/im/msg/download/\(id)"
+        case .clearAllChatMsg(let id):
+            return "/jaxrs/im/conversation/\(id)/clear/all/msg"
         }
     }
     
@@ -81,6 +84,8 @@ extension CommunicateAPI: TargetType {
             return .post
         case .readConversation(_), .updateConversationPeople(_, _), .updateConversationTitle(_, _):
             return .put
+        case .clearAllChatMsg(_):
+            return .delete
         }
     }
     
@@ -90,7 +95,7 @@ extension CommunicateAPI: TargetType {
     
     var task: Task {
         switch self {
-        case .myConversationList, .instantMessageList(_), .readConversation(_):
+        case .myConversationList, .instantMessageList(_), .readConversation(_), .clearAllChatMsg(_):
             return .requestPlain
         case .msgListByPaging(_, _, let conversationId):
             let form = IMMessageRequestForm()

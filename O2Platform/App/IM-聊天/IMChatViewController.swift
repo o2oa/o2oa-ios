@@ -72,6 +72,8 @@ class IMChatViewController: UIViewController {
     private var playingAudioMessageId: String? // 正在播放音频的消息id
 
     
+    private var imConfig = IMConfig()
+    
     deinit {
         AudioPlayerManager.shared.delegate = nil
     }
@@ -79,6 +81,13 @@ class IMChatViewController: UIViewController {
     // MARK: - functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        // 配置文件
+        if let web = O2UserDefaults.shared.o2WebConfig, let config = web.imConfig {
+            imConfig = config
+        } else {
+            imConfig.enableClearMsg = false
+        }
+        
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.register(UINib(nibName: "IMChatMessageViewCell", bundle: nil), forCellReuseIdentifier: "IMChatMessageViewCell")
@@ -122,7 +131,12 @@ class IMChatViewController: UIViewController {
         //群会话 添加修改标题的按钮
         if self.conversation?.type == o2_im_conversation_type_group &&
             O2AuthSDK.shared.myInfo()?.distinguishedName == self.conversation?.adminPerson {
+
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "修改", style: .plain, target: self, action: #selector(clickUpdate))
+        } else if self.conversation?.type == o2_im_conversation_type_single {
+            if imConfig.enableClearMsg == true {
+                navigationItem.rightBarButtonItem = UIBarButtonItem(title: "清除聊天记录", style: .plain, target: self, action: #selector(clearAllChatMsg))
+            }
         }
         
         //获取聊天数据
@@ -151,14 +165,39 @@ class IMChatViewController: UIViewController {
     }
     
     @objc private func clickUpdate() {
-        self.showSheetAction(title: "", message: "选择要修改的项", actions: [
+        var arr = [
             UIAlertAction(title: "修改群名", style: .default, handler: { (action) in
                 self.updateTitle()
             }),
             UIAlertAction(title: "修改成员", style: .default, handler: { (action) in
                 self.updatePeople()
             })
-        ])
+        ]
+        if imConfig.enableClearMsg == true {
+            arr.append(UIAlertAction(title: "清除聊天记录", style: .default, handler: { (action) in
+                self.clearAllChatMsg()
+            }))
+        }
+        self.showSheetAction(title: "", message: "选择要修改的项", actions: arr)
+    }
+    
+    @objc private func clearAllChatMsg() {
+        self.showDefaultConfirm(title: "提示", message: "确定要清空聊天记录吗，清空后当前会话所有人都将看不到这些聊天记录？") { action in
+            // 清空聊天记录
+            if let id = self.conversation?.id {
+                self.viewModel.clearAllChatMsg(conversationId:  id).then { result in
+                    if result {
+                        self.showMessage(msg: "清空聊天记录成功！")
+                        self.chatMessageList.removeAll()
+                        self.tableView.reloadData()
+                        self.page = 0
+                        self.loadMsgList()
+                    } else {
+                        self.showError(title: "清空失败！")
+                    }
+                }
+            }
+        }
     }
     
     private func updateTitle() {

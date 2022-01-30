@@ -40,6 +40,7 @@ class IMConversationListViewController: UIViewController {
 
     private var conversationList: [IMConversationInfo] = []
     private var instantMsgList: [InstantMessage] = []
+    private var imConfig = IMConfig()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +52,10 @@ class IMConversationListViewController: UIViewController {
 
         NotificationCenter.default.addObserver(self, selector: #selector(receiveMessageFromWs(notice:)), name: OONotification.websocket.notificationName, object: nil)
 
+        imConfig.enableClearMsg = false
+        viewModel.loadImConfig().then { imConfig in
+            self.imConfig = imConfig
+        }
 
     }
 

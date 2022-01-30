@@ -148,3 +148,25 @@ struct  O2LocationData {
     var latitude: Double?
     var longitude: Double?
 }
+
+/// IM聊天的配置文件
+open class IMConfig: NSObject, HandyJSON, NSCoding {
+    open var enableClearMsg: Bool?
+    
+    public func encode(with aCoder: NSCoder) {
+        if enableClearMsg != nil {
+            aCoder.encode(enableClearMsg, forKey: "enableClearMsg")
+        }
+        
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        enableClearMsg = aDecoder.decodeObject(forKey: "enableClearMsg") as? Bool
+    }
+    
+    required public override init() {}
+    
+    open override var description: String {
+        return toJSONString(prettyPrint: true) ?? ""
+    }
+}

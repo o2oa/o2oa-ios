@@ -8,6 +8,7 @@
 
 import Promises
 import CocoaLumberjack
+import Moya
 
 class IMViewModel: NSObject {
     override init() {
@@ -17,9 +18,43 @@ class IMViewModel: NSObject {
 
     private let communicateAPI = OOMoyaProvider<CommunicateAPI>()
     private let workAPI = OOMoyaProvider<OOWorkAPI>()
+    private let deskTopAPI = OOMoyaProvider<O2DesktopAPI>()
 }
 
 extension IMViewModel {
+    
+    func loadImConfig() -> Promise<IMConfig> {
+        return Promise { fulfill, reject in
+            self.deskTopAPI.request(.webConfig, completion: {result in
+                switch result {
+                case .success(let resp):
+                    var imConfig = IMConfig()
+                    if resp.statusCode == 200 {
+                        if let jsonObj = resp.mapObject(O2WebConfig.self) {
+                            O2UserDefaults.shared.o2WebConfig = jsonObj
+                            if jsonObj.imConfig != nil {
+                                imConfig = jsonObj.imConfig!
+                            } else {
+                                imConfig.enableClearMsg = false
+                            }
+                        } else {
+                            imConfig.enableClearMsg = false
+                        }
+                    } else {
+                        O2UserDefaults.shared.o2WebConfig = nil
+                        imConfig.enableClearMsg = false
+                    }
+                    fulfill(imConfig)
+                case .failure(let err):
+                    O2UserDefaults.shared.o2WebConfig = nil
+                    DDLogError(err.localizedDescription)
+                    var imConfig = IMConfig()
+                    imConfig.enableClearMsg = false
+                    fulfill(imConfig)
+                }
+            })
+        }
+    }
     
     //创建会话 @param type: single group
     func createConversation(type: String, users: [String]) -> Promise<IMConversationInfo> {
@@ -217,6 +252,19 @@ extension IMViewModel {
                     fulfill(false)
                 }else {
                     fulfill(true)
+                }
+            })
+        }
+    }
+    // 清空聊天记录
+    func clearAllChatMsg(conversationId: String) -> Promise<Bool> {
+        return Promise {fulfill, reject in
+            self.communicateAPI.request(.clearAllChatMsg(conversationId), completion: {result in
+                let response = OOResult<BaseModelClass<OOCommonValueBoolModel>>(result)
+                if response.isResultSuccess() {
+                    fulfill(true)
+                }else {
+                    fulfill(false)
                 }
             })
         }

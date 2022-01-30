@@ -243,6 +243,7 @@
 		B1750085233C8736003DA7B9 /* UIFontExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1750084233C8736003DA7B9 /* UIFontExtensions.swift */; };
 		B1750087233C937E003DA7B9 /* IntExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1750086233C937E003DA7B9 /* IntExtensions.swift */; };
 		B1750089233C9B2C003DA7B9 /* Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1750088233C9B2C003DA7B9 /* Stack.swift */; };
+		B17BF2F327A67D9A002FD1CF /* O2WebConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17BF2F227A67D9A002FD1CF /* O2WebConfig.swift */; };
 		B17BF43022B23758009E36E0 /* SkinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17BF42F22B23758009E36E0 /* SkinViewController.swift */; };
 		B17DCCB32519A31900E9EE37 /* OOCalendarStoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17DCCB22519A31900E9EE37 /* OOCalendarStoreViewController.swift */; };
 		B17DCCE32519BCC100E9EE37 /* CalendarStoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17DCCE22519BCC100E9EE37 /* CalendarStoreTableViewCell.swift */; };
@@ -1467,6 +1468,7 @@
 		B1750084233C8736003DA7B9 /* UIFontExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFontExtensions.swift; sourceTree = "<group>"; };
 		B1750086233C937E003DA7B9 /* IntExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntExtensions.swift; sourceTree = "<group>"; };
 		B1750088233C9B2C003DA7B9 /* Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stack.swift; sourceTree = "<group>"; };
+		B17BF2F227A67D9A002FD1CF /* O2WebConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2WebConfig.swift; sourceTree = "<group>"; };
 		B17BF42F22B23758009E36E0 /* SkinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkinViewController.swift; sourceTree = "<group>"; };
 		B17DCCB22519A31900E9EE37 /* OOCalendarStoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOCalendarStoreViewController.swift; sourceTree = "<group>"; };
 		B17DCCE22519BCC100E9EE37 /* CalendarStoreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarStoreTableViewCell.swift; sourceTree = "<group>"; };
@@ -3028,6 +3030,7 @@
 				B1DB6EA4237E6F2C00D7BA94 /* O2VersionInfoModel.swift */,
 				B16CA78326B132A80009B24C /* OrganizationPermissionData.swift */,
 				B16CA7B626B1437D0009B24C /* PersonIdentityListData.swift */,
+				B17BF2F227A67D9A002FD1CF /* O2WebConfig.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -5651,6 +5654,7 @@
 				E4B6970D2075FA560062F6E8 /* OOUISwitch.swift in Sources */,
 				E424BAD81EE10C190078DB47 /* O2ReachabilityManager.swift in Sources */,
 				B1B7470921523F010041948D /* O2UISignatureView.swift in Sources */,
+				B17BF2F327A67D9A002FD1CF /* O2WebConfig.swift in Sources */,
 				E40E24CD20B7DA3C009F8BE7 /* OOFormConfigProtocol.swift in Sources */,
 				E46E6CB71DD41F5D00AB7561 /* CYRLayoutManager.m in Sources */,
 				E428AF5520AA7A7500D964B9 /* OOAttanceItemCell.swift in Sources */,

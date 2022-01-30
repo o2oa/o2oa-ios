@@ -34,6 +34,10 @@ extension UserDefaults {
         get { return unarchive(key) }
         set { archive(key, newValue) }
     }
+    subscript(key: DefaultsKey<O2WebConfig?>) -> O2WebConfig? {
+        get { return unarchive(key) }
+        set { archive(key, newValue) }
+    }
 
 }
 // MARK:- 扩展定义的键
@@ -48,6 +52,7 @@ extension DefaultsKeys {
     static let customStyle = DefaultsKey<O2CustomStyleModel?>("O2customStyle")
     static let customStyleHash = DefaultsKey<String?>("O2customStyleHash")
     static let searchHistory = DefaultsKey<[String]?>("O2SearchHistoryKey")
+    static let o2WebConfig = DefaultsKey<O2WebConfig?>("O2WebConfig")
 
 }
 
@@ -175,5 +180,16 @@ class O2UserDefaults {
         }
     }
     
+    var o2WebConfig: O2WebConfig? {
+        get {
+            guard let config = Defaults[.o2WebConfig] else {
+                return O2WebConfig()
+            }
+            return config
+        }
+        set {
+            Defaults[.o2WebConfig] = newValue
+        }
+    }
     
 }

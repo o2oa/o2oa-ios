@@ -17,6 +17,7 @@ enum O2DesktopAPI {
     case bbsItemDetail(String)
     case cmsItemDetail(String)
     case appItemDetail(String)
+    case webConfig
 }
 
 // MARK:- 上下文实现
@@ -56,6 +57,8 @@ extension O2DesktopAPI:TargetType {
             return "/cmsdocMobile.html?id=\(documentId)&\(String.randomString(length: 6))"
         case .appItemDetail(let status):
             return "/appMobile.html?app=portal.Portal&status=\(status)&\(String.randomString(length: 6))"
+        case .webConfig:
+            return "/res/config/config.json"
         }
     }
     
