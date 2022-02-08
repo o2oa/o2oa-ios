@@ -175,6 +175,7 @@
 "Login Verification code login" = "Verification code login";
 "Login Select the following login method" = "Please select the following login method";
 "Login Mobile phone number or password is empty" = "Mobile phone number or password cannot be empty!";
+"Login Captcha is empty" = "Login captcha cannot be empty！";
 "Login Login fail error" = "Login failed, %@";
 "Login Send code fail" = "Verification code sending failed!";
 "Login Verify login now" = "Verify login now";

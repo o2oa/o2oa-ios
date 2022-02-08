@@ -161,6 +161,7 @@ internal enum L10n {
         internal static let verificationCodeLogin = L10n.tr("Localizable", "Login Verification code login")
         internal static let selectFollowLoginMethod = L10n.tr("Localizable", "Login Select the following login method")
         internal static let mobilePhoneNumberPasswordIsEmptry = L10n.tr("Localizable", "Login Mobile phone number or password is empty")
+        internal static let captchaCodeIsEmpty = L10n.tr("Localizable", "Login Captcha is empty")
         internal static let sendCodeFail = L10n.tr("Localizable", "Login Send code fail")
         
         internal static let verifyLoginNow = L10n.tr("Localizable", "Login Verify login now")

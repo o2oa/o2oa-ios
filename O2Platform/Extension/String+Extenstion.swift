@@ -94,12 +94,19 @@ extension String {
     
     // MARK: - URL允许的字符
     var urlEscaped: String {
-        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
+        return self.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)  ?? ""
     }
     
     var urlEncoded: String {
         return self.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
     }
+   
+    func urlEncoding() -> String {
+        let toSearchword = (self as NSString).addingPercentEncoding(withAllowedCharacters: CharacterSet(charactersIn: #"?!@#$^&%*+,:;='"`<>()[]{}/\|"#).inverted)
+        return toSearchword as String? ?? ""
+    }
+        
+    
     
     
     // MARK:- 获取字符串的CGSize

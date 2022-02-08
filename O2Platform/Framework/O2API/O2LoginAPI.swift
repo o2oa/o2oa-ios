@@ -11,15 +11,21 @@ import Moya
 enum O2LoginAPI {
     case createLoginCode(String)
     
-    case loginWithCredntial(String,String)
+    case loginWithCredntial(String, String)
     
     case loginWithPassword(String, String)
+    
+    case loginWithCaptcha(O2LoginWithCaptchaForm)
     
     case loginWithToken(String)
     
     case loginWithScanCode(String)
     
     case loginWithSSO(String, String)
+    
+    case loginMode
+    // 获取图片验证码
+    case getCaptchaCodeImg(Int, Int)
 }
 
 
@@ -65,7 +71,7 @@ extension O2LoginAPI: TargetType {
     public var path: String {
         switch self {
         case .createLoginCode(let credential):
-            return "/jaxrs/authentication/code/credential/\(credential.urlEscaped)"
+            return "/jaxrs/authentication/code/credential/\(credential)"
         case .loginWithCredntial(_,_):
             return "/jaxrs/authentication/code"
         case .loginWithToken(_):
@@ -73,9 +79,15 @@ extension O2LoginAPI: TargetType {
         case .loginWithPassword(_,  _):
             return "/jaxrs/authentication"
         case .loginWithScanCode(let meta):
-            return "/jaxrs/authentication/bind/meta/\(meta.urlEscaped)"
+            return "/jaxrs/authentication/bind/meta/\(meta)"
         case .loginWithSSO(_, _):
             return "/jaxrs/sso"
+        case .loginMode:
+            return "/jaxrs/authentication/mode"
+        case .getCaptchaCodeImg(let width, let height):
+            return "/jaxrs/authentication/captcha/width/\(width)/height/\(height)"
+        case .loginWithCaptcha(_):
+            return "/jaxrs/authentication/captcha"
         }
     }
     
@@ -87,12 +99,19 @@ extension O2LoginAPI: TargetType {
             return .post
         case .loginWithToken(_):
             return .get
+        case .loginMode:
+            return .get
+        case .getCaptchaCodeImg(_, _):
+            return .get
         case .loginWithPassword(_, _):
             return .post
         case .loginWithScanCode(_):
             return .post
         case .loginWithSSO(_, _):
             return .post
+        case .loginWithCaptcha(_):
+            return .post
+            
         }
     }
     
@@ -104,7 +123,7 @@ extension O2LoginAPI: TargetType {
     
     public var task: Task {
         switch self {
-        case .createLoginCode(_):
+        case .createLoginCode(_), .loginMode, .getCaptchaCodeImg(_, _):
             return .requestPlain
         case .loginWithCredntial(let username, let codeAnswer):
             return .requestParameters(parameters: ["credential":username,"codeAnswer":codeAnswer], encoding: JSONEncoding.default)
@@ -116,6 +135,8 @@ extension O2LoginAPI: TargetType {
             return .requestPlain
         case .loginWithSSO(let client, let token):
             return .requestParameters(parameters: ["client": client,"token": token], encoding: JSONEncoding.default)
+        case .loginWithCaptcha(let form):
+            return .requestParameters(parameters:form.toJSON() ?? [:], encoding: JSONEncoding.default)
         }
     }
     

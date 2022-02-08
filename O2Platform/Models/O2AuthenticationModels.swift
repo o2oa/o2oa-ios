@@ -411,6 +411,117 @@ open class O2CenterServerModel: NSObject, DataModel, NSCoding, IO2CenterServerMo
 }
 
 //MARK: - 登录认证相关的对象
+
+// 登录模式
+public class O2LoginMode: HandyJSON, CustomStringConvertible, NSCoding {
+    var captchaLogin: Bool? //图片验证码登录
+    var codeLogin: Bool? //短信验证码登录
+    var bindLogin: Bool?
+    var faceLogin: Bool?
+    
+    public func encode(with aCoder: NSCoder) {
+        if captchaLogin != nil {
+            aCoder.encode(captchaLogin, forKey: "captchaLogin")
+        }
+        if codeLogin != nil {
+            aCoder.encode(codeLogin, forKey: "codeLogin")
+        }
+        if bindLogin != nil {
+            aCoder.encode(bindLogin, forKey: "bindLogin")
+        }
+        if faceLogin != nil {
+            aCoder.encode(faceLogin, forKey: "faceLogin")
+        }
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        captchaLogin = aDecoder.decodeObject(forKey: "captchaLogin") as? Bool
+        codeLogin = aDecoder.decodeObject(forKey: "codeLogin") as? Bool
+        bindLogin = aDecoder.decodeObject(forKey: "bindLogin") as? Bool
+        faceLogin = aDecoder.decodeObject(forKey: "faceLogin") as? Bool
+    }
+    
+    required public  init() {}
+    
+    public var description: String {
+        return toJSONString(prettyPrint: true) ?? ""
+    }
+}
+
+// 图片验证码
+public class O2LoginCaptchaImgData: HandyJSON, CustomStringConvertible, NSCoding {
+    var id: String?
+    var image: String? //图片验证码 base64
+    
+    
+    public func encode(with aCoder: NSCoder) {
+        if image != nil {
+            aCoder.encode(image, forKey: "image")
+        }
+        if id != nil {
+            aCoder.encode(id, forKey: "id")
+        }
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        id = aDecoder.decodeObject(forKey: "id") as? String
+        image = aDecoder.decodeObject(forKey: "image") as? String
+    }
+    
+    required public  init() {}
+    
+    public var description: String {
+        return toJSONString(prettyPrint: true) ?? ""
+    }
+}
+ 
+
+///
+/// 登录的form对象
+/// 支持用户名密码登录 可以包含图片验证码
+///
+public class O2LoginWithCaptchaForm: HandyJSON, CustomStringConvertible, NSCoding {
+    var credential: String? // 用户名
+    var password: String? // 密码
+    
+    var captcha: String? // 图片认证编号id
+    var captchaAnswer: String? // 图片认证码
+    var isEncrypted: String? // 是否启用加密 "y"
+    
+    public func encode(with aCoder: NSCoder) {
+        if credential != nil {
+            aCoder.encode(credential, forKey: "credential")
+        }
+        if password != nil {
+            aCoder.encode(password, forKey: "password")
+        }
+        if captcha != nil {
+            aCoder.encode(captcha, forKey: "captcha")
+        }
+        if captchaAnswer != nil {
+            aCoder.encode(captchaAnswer, forKey: "captchaAnswer")
+        }
+        if isEncrypted != nil {
+            aCoder.encode(isEncrypted, forKey: "isEncrypted")
+        }
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        credential = aDecoder.decodeObject(forKey: "credential") as? String
+        password = aDecoder.decodeObject(forKey: "password") as? String
+        captcha = aDecoder.decodeObject(forKey: "captcha") as? String
+        captchaAnswer = aDecoder.decodeObject(forKey: "captchaAnswer") as? String
+        isEncrypted = aDecoder.decodeObject(forKey: "isEncrypted") as? String
+    }
+    
+    required public  init() {}
+    
+    public var description: String {
+        return toJSONString(prettyPrint: true) ?? ""
+    }
+}
+
+
 /// 当前登录用户对象信息
 public protocol IO2LoginAccountModel: HandyJSON, CustomStringConvertible {
     var changePasswordTime : String? { get set }

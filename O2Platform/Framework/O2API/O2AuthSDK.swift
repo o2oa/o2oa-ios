@@ -563,6 +563,7 @@ public class O2AuthSDK: NSObject {
         }
     }
     
+    /// 登录 密码登录
     public func loginWithPassword(username: String, password: String, callback: @escaping (_ result: Bool, _ error: String?) ->()) {
         _ = self.loginWithUsernamePassword(username, password)
             .subscribe(onNext: { (response) in
@@ -584,6 +585,73 @@ public class O2AuthSDK: NSObject {
             }) {
                 print("login finish!")
         }
+    }
+    
+    /// 登录 密码登录
+    public func loginWithCaptcha(form: O2LoginWithCaptchaForm, callback: @escaping (_ result: Bool, _ error: String?) ->()) {
+        _ = loginAPI.rx.request(.loginWithCaptcha(form)).asObservable()
+            .subscribe(onNext: { (response) in
+                let account = response.mapObject(BaseO2ResponseData<O2LoginAccountModel>.self)
+                if account?.isSuccess() == true {
+                    if let myInfo = account?.data, myInfo.name != "anonymous" {
+                        O2UserDefaults.shared.myInfo = myInfo
+                        callback(true, nil)
+                    }else {
+                        callback(false, "登录失败，用户名是： 找不到该用户信息 ！ ")
+                    }
+                }else {
+                    callback(false, "登录失败，\(account?.message ?? "")")
+                }
+            }, onError: { (error) in
+                callback(false, "登录失败，\(String(describing: error))")
+            }, onCompleted: {
+                print("loginWithCaptcha completed!")
+            }) {
+                print("loginWithCaptcha finish!")
+        }
+    }
+    
+    ///
+    /// 登录模式
+    /// 密码登录 短信登录
+    ///
+    public func loginMode(callback: @escaping (_ result: O2LoginMode?, _ error: String?) ->()) {
+       _ = loginAPI.rx.request(.loginMode).asObservable()
+            .subscribe { (response) in
+                let mode = response.mapObject(BaseO2ResponseData<O2LoginMode>.self)
+                if mode?.isSuccess() == true, let m = mode?.data {
+                    callback(m, nil)
+                } else {
+                    callback(nil, "获取登录模式失败，返回结果为空！")
+                }
+            } onError: { (error) in
+                callback(nil, "获取登录模式失败，\(String(describing: error))")
+            } onCompleted: {
+                print("loginMode completed!")
+            } onDisposed: {
+                print("loginMode finish!")
+            }
+    }
+    
+    ///
+    /// 图片验证码获取
+    ///
+    public func getLoginCaptchaCode(callback: @escaping (_ result: O2LoginCaptchaImgData?, _ error: String?) ->()) {
+        _ = loginAPI.rx.request(.getCaptchaCodeImg(120, 50)).asObservable()
+            .subscribe { (response) in
+                let mode = response.mapObject(BaseO2ResponseData<O2LoginCaptchaImgData>.self)
+                if mode?.isSuccess() == true, let m = mode?.data {
+                    callback(m, nil)
+                } else {
+                    callback(nil, "获取图片验证码失败，返回结果为空！")
+                }
+            } onError: { (error) in
+                callback(nil, "获取图片验证码失败，\(String(describing: error))")
+            } onCompleted: {
+                print("getLoginCaptchaCode completed!")
+            } onDisposed: {
+                print("getLoginCaptchaCode finish!")
+            }
     }
     
     /// 人脸识别登录

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="2FW-oB-Z7W">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="2FW-oB-Z7W">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -218,7 +218,7 @@
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="OONodeUnitTableViewCell" id="sh0-GF-gvO" customClass="OONodeUnitTableViewCell" customModule="O2Platform" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="44.5" width="375" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sh0-GF-gvO" id="EcZ-57-FOC">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -305,7 +305,7 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="VlL-pa-xtW">
-                                <rect key="frame" x="16" y="175" width="343" height="180"/>
+                                <rect key="frame" x="16" y="175" width="343" height="320"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入用户名" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lEi-tc-UYF" customClass="OOUITextField" customModule="O2Platform" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="50"/>
@@ -349,8 +349,8 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </textField>
-                                    <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Nr9-8F-s20" customClass="OOUITextField" customModule="O2Platform" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="130" width="343" height="50"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Nr9-8F-s20" customClass="OOUITextField" customModule="O2Platform" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="140" width="343" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="jfy-Ns-KfD"/>
                                         </constraints>
@@ -373,8 +373,56 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </textField>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j30-xI-h6K" userLabel="captchaCodeView">
+                                        <rect key="frame" x="0.0" y="210" width="343" height="50"/>
+                                        <subviews>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入验证码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mT9-aH-05h" userLabel="captchaCodeField" customClass="OOUITextField" customModule="O2Platform" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="213" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="fPl-cm-eOZ"/>
+                                                    <constraint firstAttribute="height" constant="50" id="vv7-4I-n2i"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="icon_verification_code_nor"/>
+                                                    <userDefinedRuntimeAttribute type="image" keyPath="leftLightImage" value="icon_verification_code_sel"/>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="lineColor">
+                                                        <color key="value" red="0.98431372549999996" green="0.2784313725" blue="0.2784313725" alpha="0.39894584760000001" colorSpace="calibratedRGB"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="lineLightColor">
+                                                        <color key="value" red="0.85262101889999997" green="0.42218321559999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="buttonTitleColor">
+                                                        <color key="value" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="labelTextColor">
+                                                        <color key="value" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </textField>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_image" translatesAutoresizingMaskIntoConstraints="NO" id="BG4-Js-Bik">
+                                                <rect key="frame" x="223" y="0.0" width="120" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="120" id="X0H-8R-C8t"/>
+                                                    <constraint firstAttribute="height" constant="50" id="lBj-Gw-MLj"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="BG4-Js-Bik" secondAttribute="trailing" id="EM4-5B-CNh"/>
+                                            <constraint firstAttribute="bottom" secondItem="mT9-aH-05h" secondAttribute="bottom" id="OQ6-PV-Jg5"/>
+                                            <constraint firstItem="BG4-Js-Bik" firstAttribute="leading" secondItem="mT9-aH-05h" secondAttribute="trailing" constant="10" id="Z4H-7u-Neg"/>
+                                            <constraint firstAttribute="height" constant="50" id="bTg-4c-bvR"/>
+                                            <constraint firstAttribute="bottom" secondItem="BG4-Js-Bik" secondAttribute="bottom" id="bh2-bE-UP6"/>
+                                            <constraint firstItem="mT9-aH-05h" firstAttribute="leading" secondItem="j30-xI-h6K" secondAttribute="leading" id="c6j-fe-aSP"/>
+                                            <constraint firstItem="mT9-aH-05h" firstAttribute="top" secondItem="j30-xI-h6K" secondAttribute="top" id="ooS-2F-nlc"/>
+                                            <constraint firstItem="BG4-Js-Bik" firstAttribute="top" secondItem="j30-xI-h6K" secondAttribute="top" id="sPE-2N-ooA"/>
+                                        </constraints>
+                                    </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bkV-iJ-Vkd" customClass="OOBaseUIButton" customModule="O2Platform" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="140" width="343" height="40"/>
+                                        <rect key="frame" x="0.0" y="280" width="343" height="40"/>
                                         <color key="backgroundColor" red="0.98431372549999996" green="0.2784313725" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="43O-2Q-T3O"/>
@@ -403,7 +451,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sdH-Rd-Uu5">
-                                <rect key="frame" x="243" y="363" width="100" height="35"/>
+                                <rect key="frame" x="243" y="503" width="100" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="McM-ZF-FyV"/>
                                     <constraint firstAttribute="width" constant="100" id="kFw-P8-2nn"/>
@@ -416,7 +464,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VU6-Hu-1I4">
-                                <rect key="frame" x="32" y="363" width="100" height="35"/>
+                                <rect key="frame" x="32" y="503" width="100" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="DyV-tz-NyM"/>
                                     <constraint firstAttribute="width" constant="100" id="xav-tr-QlL"/>
@@ -450,6 +498,9 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="bioAuthLoginBtn" destination="VU6-Hu-1I4" id="RDQ-Zu-A9j"/>
+                        <outlet property="captchaCodeField" destination="mT9-aH-05h" id="Ltd-aj-1Gf"/>
+                        <outlet property="captchaCodeImage" destination="BG4-Js-Bik" id="FSh-Y5-GKp"/>
+                        <outlet property="captchaCodeView" destination="j30-xI-h6K" id="oa4-By-N0B"/>
                         <outlet property="copyrightLabel" destination="A52-E8-znd" id="Ybu-EC-cUV"/>
                         <outlet property="logoImageView" destination="wxO-Qg-4fw" id="Hh7-Oe-gAu"/>
                         <outlet property="passwordField" destination="Nr9-8F-s20" id="nwD-fE-rjt"/>
@@ -555,11 +606,15 @@
         <designable name="lEi-tc-UYF">
             <size key="intrinsicContentSize" width="86" height="18.5"/>
         </designable>
+        <designable name="mT9-aH-05h">
+            <size key="intrinsicContentSize" width="86" height="18.5"/>
+        </designable>
         <designable name="uXf-3e-9Bs">
             <size key="intrinsicContentSize" width="100" height="18.5"/>
         </designable>
     </designables>
     <resources>
+        <image name="default_image" width="63" height="63"/>
         <image name="icon__ok2_click" width="22" height="22"/>
         <image name="icon_circle" width="22" height="22"/>
         <image name="icon_liebiao1" width="20" height="20"/>

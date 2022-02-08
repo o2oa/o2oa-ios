@@ -18,10 +18,17 @@ class OOLoginViewController: OOBaseViewController {
     @IBOutlet weak var logoImageView: UIImageView!
     
     @IBOutlet weak var userNameTextField: OOUITextField!
-    
+    // 短信验证码
     @IBOutlet weak var passwordTextField: OOUIDownButtonTextField!
-    
+    // 密码
     @IBOutlet weak var passwordField: OOUITextField!
+    // 图片验证码区域
+    @IBOutlet weak var captchaCodeView: UIView!
+    // 图片验证码输入
+    @IBOutlet weak var captchaCodeField: OOUITextField!
+    // 图片验证码
+    @IBOutlet weak var captchaCodeImage: UIImageView!
+    
     
     @IBOutlet weak var copyrightLabel: UILabel!
     
@@ -37,6 +44,9 @@ class OOLoginViewController: OOBaseViewController {
     private var notJumpBioAuth = false
     //登录方式
     private var loginType = 0 // 0默认的用户名验证码登录 1用户名密码登录
+    
+    private var useCaptcha = false // 是否启用图片验证码
+    private var captchaCodeData: O2LoginCaptchaImgData? = nil
     
 
     var viewModel:OOLoginViewModel = {
@@ -104,6 +114,43 @@ class OOLoginViewController: OOBaseViewController {
         }
     }
     
+    // 查询服务器开启的登录模式
+    private func loadLoginMode() {
+        O2AuthSDK.shared.loginMode { result, error in
+            if let result = result {
+                self.useCaptcha = result.captchaLogin ?? false
+                if (result.codeLogin == true) {
+                    self.bioAuthLoginBtn.isHidden = false
+                    self.change2PasswordLogin()
+                }
+                if (result.captchaLogin == true) {
+                    if self.loginType == 1 && self.useCaptcha == true {
+                        if let base64String = self.captchaCodeData?.image, let base64Data = Data(base64Encoded: base64String) {
+                            self.captchaCodeImage.image = UIImage(data: base64Data)
+                        }
+                        self.captchaCodeView.isHidden = false
+                    } else {
+                        self.captchaCodeView.isHidden = true // 图片验证码
+                    }
+                }
+            } else {
+                DDLogError("\(error ?? "登录模式查询错误！")")
+            }
+            
+        }
+    }
+    
+    private func getCaptchaImage() {
+        O2AuthSDK.shared.getLoginCaptchaCode{ result, error in
+            if let result = result {
+                self.captchaCodeData = result
+            } else {
+                DDLogError("\(error ?? "获取图片验证码错误！")")
+            }
+            self.loadLoginMode()
+        }
+    }
+    
     private func setupUI(){
         logoImageView.image = OOCustomImageManager.default.loadImage(.login_avatar)
         let backImageView = UIImageView(image: #imageLiteral(resourceName: "pic_beijing"))
@@ -125,12 +172,17 @@ class OOLoginViewController: OOBaseViewController {
         self.userNameTextField.returnKeyType = .next
         self.userNameTextField.returnNextDelegate = self
         
+        // 图片验证码 隐藏
+        self.captchaCodeView.isHidden = true
+        
         if O2IsConnect2Collect {
+            self.loginType = 0
             self.rebindBtn.isHidden = false
             self.passwordTextField.isHidden = false //验证码
             self.passwordField.isHidden = true //密码
             self.bioAuthLoginBtn.isHidden = false
         }else {
+            self.loginType = 1
             self.rebindBtn.isHidden = true
             self.passwordTextField.isHidden = true
             self.passwordField.isHidden = false
@@ -164,7 +216,9 @@ class OOLoginViewController: OOBaseViewController {
         //版权信息
         self.view.insertSubview(backImageView, belowSubview: self.logoImageView)
         let year = Calendar.current.component(Calendar.Component.year, from: Date())
-        copyrightLabel.text = "Copyright © 2015 - \(year)  All Rights Reserved"
+        copyrightLabel.text = "Copyright © \(year)  All Rights Reserved"
+        
+        self.getCaptchaImage()
     }
     
     override func didReceiveMemoryWarning() {
@@ -213,24 +267,29 @@ class OOLoginViewController: OOBaseViewController {
         self.passwordTextField.isHidden = true //验证码
         self.passwordField.isHidden = false //密码
         self.loginType = 1
+        if self.useCaptcha == true {
+            if let base64String = self.captchaCodeData?.image, let base64Data = Data(base64Encoded: base64String) {
+                self.captchaCodeImage.image = UIImage(data: base64Data)
+            }
+            self.captchaCodeView.isHidden = false
+        } else {
+            self.captchaCodeView.isHidden = true // 图片验证码
+        }
     }
     
     private func change2PhoneCodeLogin() {
         self.passwordTextField.isHidden = false //验证码
         self.passwordField.isHidden = true //密码
         self.loginType = 0
+        self.captchaCodeView.isHidden = true // 图片验证码
     }
     
     @IBAction func btnLogin(_ sender: OOBaseUIButton) {
         self.view.endEditing(true)
         let credential = userNameTextField.text ?? ""
         var codeAnswer = ""
-        if O2IsConnect2Collect {
-            if self.loginType == 0 {
-                codeAnswer = passwordTextField.text ?? ""
-            }else {
-                codeAnswer = passwordField.text ?? ""
-            }
+        if self.loginType == 0 {
+            codeAnswer = passwordTextField.text ?? ""
         }else {
             codeAnswer = passwordField.text ?? ""
         }
@@ -239,11 +298,11 @@ class OOLoginViewController: OOBaseViewController {
             self.showError(title: L10n.Login.mobilePhoneNumberPasswordIsEmptry)
             return
         }
+        
         self.showLoading()
         if O2IsConnect2Collect {
             if self.loginType == 0 {
                 passwordTextField.stopTimerButton()
-                
                 //app 上架用 sample服务器 固定的手机号码和验证码
                 if credential == "13912345678" && codeAnswer == "5678" && O2UserDefaults.shared.unit?.centerHost == "sample.o2oa.net" {
                     DDLogDebug("sample 测试用的。。。。。。。。")
@@ -266,7 +325,66 @@ class OOLoginViewController: OOBaseViewController {
                     }
                 }
             }else {
-                O2AuthSDK.shared.loginWithPassword(username: credential, password: codeAnswer) { (result, msg) in
+                let form = O2LoginWithCaptchaForm()
+                form.credential = credential
+                form.password = codeAnswer
+                if self.useCaptcha {
+                    // 验证码
+                    let captchaCode = self.captchaCodeField.text ?? ""
+                    if captchaCode == "" {
+                        self.showError(title: L10n.Login.captchaCodeIsEmpty)
+                        return
+                    }
+                    form.captcha = self.captchaCodeData?.id ?? ""
+                    form.captchaAnswer = captchaCode
+                    
+                }
+                O2AuthSDK.shared.loginWithCaptcha(form: form) { (result, msg) in
+                    if result {
+                        self.hideLoading()
+                        self.gotoMain()
+                    }else  {
+                        self.showError(title: L10n.Login.loginErrorWith(msg ?? ""))
+                    }
+                }
+//
+//                O2AuthSDK.shared.loginWithPassword(username: credential, password: codeAnswer) { (result, msg) in
+//                    if result {
+//                        self.hideLoading()
+//                        self.gotoMain()
+//                    }else  {
+//                        self.showError(title: L10n.Login.loginErrorWith(msg ?? ""))
+//                    }
+//                }
+            }
+        }else {
+            //内网版本登录
+            if self.loginType == 0 {
+                passwordTextField.stopTimerButton()
+                O2AuthSDK.shared.login(mobile: credential, code: codeAnswer) { (result, msg) in
+                    if result {
+                        self.hideLoading()
+                        self.gotoMain()
+                    }else  {
+                        self.showError(title: L10n.Login.loginErrorWith(msg ?? ""))
+                    }
+                }
+            } else {
+                let form = O2LoginWithCaptchaForm()
+                form.credential = credential
+                form.password = codeAnswer
+                if self.useCaptcha {
+                    // 验证码
+                    let captchaCode = self.captchaCodeField.text ?? ""
+                    if captchaCode == "" {
+                        self.showError(title: L10n.Login.captchaCodeIsEmpty)
+                        return
+                    }
+                    form.captcha = self.captchaCodeData?.id ?? ""
+                    form.captchaAnswer = captchaCode
+                    
+                }
+                O2AuthSDK.shared.loginWithCaptcha(form: form) { (result, msg) in
                     if result {
                         self.hideLoading()
                         self.gotoMain()
@@ -275,16 +393,15 @@ class OOLoginViewController: OOBaseViewController {
                     }
                 }
             }
-        }else {
-            //todo内网版本登录
-            O2AuthSDK.shared.loginWithPassword(username: credential, password: codeAnswer) { (result, msg) in
-                if result {
-                    self.hideLoading()
-                    self.gotoMain()
-                }else  {
-                    self.showError(title: L10n.Login.loginErrorWith(msg ?? ""))
-                }
-            }
+            
+//            O2AuthSDK.shared.loginWithPassword(username: credential, password: codeAnswer) { (result, msg) in
+//                if result {
+//                    self.hideLoading()
+//                    self.gotoMain()
+//                }else  {
+//                    self.showError(title: L10n.Login.loginErrorWith(msg ?? ""))
+//                }
+//            }
         }
         
     }
