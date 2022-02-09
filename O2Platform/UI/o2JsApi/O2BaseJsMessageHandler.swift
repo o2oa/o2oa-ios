@@ -16,9 +16,11 @@ import Photos
 
 import SwiftyJSON
 
-class O2BaseJsMessageHandler: O2WKScriptMessageHandlerImplement {
+class O2BaseJsMessageHandler: NSObject, O2WKScriptMessageHandlerImplement {
     
     let viewController: BaseWebViewUIViewController
+    
+    var uploadImageData: O2WebViewUploadImage? = nil
     
     init(viewController: BaseWebViewUIViewController) {
         self.viewController = viewController
@@ -137,7 +139,19 @@ class O2BaseJsMessageHandler: O2WKScriptMessageHandlerImplement {
                 let json = message.body as! NSString
                 DDLogDebug("上传图片:\(json)")
                 if let uploadImage = O2WebViewUploadImage.deserialize(from: String(json)) {
-                    self.uploadImage(data: uploadImage)
+                    self.uploadImageData = uploadImage
+                    self.uploadImageData?.scale = 800
+                    // 显示菜单 选择拍照或相册
+                    DispatchQueue.main.async {
+                        self.viewController.showSheetAction(title: "提示", message: "请选择方式", actions: [
+                            UIAlertAction(title: "从相册选择", style: .default, handler: { (action) in
+                                self.chooseFromAlbum()
+                            }),
+                            UIAlertAction(title: "拍照", style: .default, handler: { (action) in
+                                self.takePhoto()
+                            })
+                        ])
+                    }
                 }else {
                     DDLogError("解析json失败")
                     self.viewController.showError(title: "参数不正确！")
@@ -266,14 +280,8 @@ class O2BaseJsMessageHandler: O2WKScriptMessageHandlerImplement {
         }
     }
     
-    // 表单图片控件
-    private func uploadImage(data: O2WebViewUploadImage) {
-        if data.callback == nil || data.callback.isEmpty || data.reference == nil || data.reference.isEmpty
-            || data.referencetype == nil || data.referencetype.isEmpty {
-            self.viewController.showError(title: "参数传入为空，无法上传图片")
-            return
-        }
-        data.scale = 800
+    // 表单图片控件 从相册选择
+    private func chooseFromAlbum() {
         let vc = FileBSImagePickerViewController().bsImagePicker()
         self.viewController.presentImagePicker(vc, select: nil, deselect: nil, cancel: nil, finish: { (arr) in
             let count = arr.count
@@ -321,90 +329,8 @@ class O2BaseJsMessageHandler: O2WKScriptMessageHandlerImplement {
                                 newData = newImage?.pngData()
                             }
                         }
-                        let fileUploadURL = AppDelegate.o2Collect
-                            .generateURLWithAppContextKey(
-                                FileContext.fileContextKey,
-                                query: FileContext.fileUploadReference,
-                                parameter: [
-                                    "##referencetype##": data.referencetype as AnyObject,
-                                    "##reference##": data.reference as AnyObject,
-                                    "##scale##": String(data.scale) as AnyObject
-                                ],
-                                coverted: true)!
-                        DDLogDebug(fileUploadURL)
-                        let tokenName = O2AuthSDK.shared.tokenName()
-                        let headers:HTTPHeaders = [tokenName:(O2AuthSDK.shared.myInfo()?.token!)!]
-//                        let fileURL = dict?["PHImageFileURLKey"] as! URL
+                        self.uploadImage2Server(imageData: newData!, fName: fName)
                         
-                        DispatchQueue.global(qos: .userInitiated).async {
-                            AF.upload(multipartFormData: { (mData) in
-                                mData.append(newData!, withName: "file", fileName: fName, mimeType: "image/png")
-                            }, to: fileUploadURL, method: .put, headers: headers).responseJSON { (response) in
-                                if let err = response.error {
-                                    DispatchQueue.main.async {
-                                        DDLogError(err.localizedDescription)
-                                        self.viewController.showError(title: "上传图片失败")
-                                    }
-                                }else {
-                                    let attachId = JSON(response.data)["data"]["id"].string!
-                                    data.fileId = attachId
-                                    let callback = data.callback!
-                                    let callbackParameterJson = data.toJSONString()
-                                    if callbackParameterJson != nil {
-                                        DDLogDebug("json:\(callbackParameterJson!)")
-                                        DispatchQueue.main.async {
-                                            let callJS = "\(callback)('\(callbackParameterJson!)')"
-                                            DDLogDebug("执行js：\(callJS)")
-                                            self.viewController.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
-                                                self.viewController.showSuccess(title: "上传成功")
-                                            })
-                                        }
-                                    }
-                                }
-                            }
-//                            AF.upload(multipartFormData: { (mData) in
-//                                mData.append(newData!, withName: "file", fileName: fileURL.lastPathComponent, mimeType: "image/png")
-//                            }, to: fileUploadURL, method: .put, headers: headers, encodingCompletion: { (encodingResult) in
-//                                switch encodingResult {
-//                                case .success(let upload, _, _):
-//                                    
-//                                    upload.responseJSON {
-//                                        respJSON in
-//                                        switch respJSON.result {
-//                                        case .success(let val):
-//                                            let attachId = JSON(val)["data"]["id"].string!
-//                                            data.fileId = attachId
-//                                            let callback = data.callback!
-//                                            let callbackParameterJson = data.toJSONString()
-//                                            if callbackParameterJson != nil {
-//                                                DDLogDebug("json:\(callbackParameterJson!)")
-//                                                DispatchQueue.main.async {
-//                                                    let callJS = "\(callback)('\(callbackParameterJson!)')"
-//                                                    DDLogDebug("执行js：\(callJS)")
-//                                                    self.viewController.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
-//                                                        self.viewController.showSuccess(title: "上传成功")
-//                                                    })
-//                                                }
-//                                            }
-//                                            
-//                                        case .failure(let err):
-//                                            DispatchQueue.main.async {
-//                                                DDLogError(err.localizedDescription)
-//                                                self.viewController.showError(title: "上传图片失败")
-//                                            }
-//                                            break
-//                                        }
-//                                        
-//                                    }
-//                                case .failure(let errType):
-//                                    DispatchQueue.main.async {
-//                                        DDLogError(errType.localizedDescription)
-//                                        self.viewController.showError(title: "上传图片失败")
-//                                    }
-//                                }
-//                                
-//                            })
-                        }
                     })
                     
                 }else {
@@ -415,5 +341,80 @@ class O2BaseJsMessageHandler: O2WKScriptMessageHandlerImplement {
         }, completion: nil)
     }
 
+    // 表单图片控件 拍照功能
+    private func takePhoto() {
+        self.viewController.takePhoto(delegate: self)
+    }
+    
+    //表单图片控件 上传图片到服务器
+    private func uploadImage2Server(imageData: Data, fName: String) {
+        guard let data = self.uploadImageData else {
+            self.viewController.showError(title: "参数传入为空，无法上传图片")
+            return
+        }
+        if data.callback == nil || data.callback.isEmpty || data.reference == nil || data.reference.isEmpty
+            || data.referencetype == nil || data.referencetype.isEmpty {
+            self.viewController.showError(title: "参数传入为空，无法上传图片")
+            return
+        }
+        
+        let fileUploadURL = AppDelegate.o2Collect
+            .generateURLWithAppContextKey(
+                FileContext.fileContextKey,
+                query: FileContext.fileUploadReference,
+                parameter: [
+                    "##referencetype##": data.referencetype as AnyObject,
+                    "##reference##": data.reference as AnyObject,
+                    "##scale##": String(data.scale) as AnyObject
+                ],
+                coverted: true)!
+        DDLogDebug(fileUploadURL)
+        let tokenName = O2AuthSDK.shared.tokenName()
+        let headers:HTTPHeaders = [tokenName:(O2AuthSDK.shared.myInfo()?.token!)!]
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            AF.upload(multipartFormData: { (mData) in
+                mData.append(imageData, withName: "file", fileName: fName, mimeType: "image/png")
+            }, to: fileUploadURL, method: .put, headers: headers).responseJSON { (response) in
+                if let err = response.error {
+                    DispatchQueue.main.async {
+                        DDLogError(err.localizedDescription)
+                        self.viewController.showError(title: "上传图片失败")
+                    }
+                } else {
+                    if let resData = response.data {
+                        let attachId = JSON(resData)["data"]["id"].string!
+                        data.fileId = attachId
+                    }
+                    let callback = data.callback!
+                    let callbackParameterJson = data.toJSONString()
+                    if callbackParameterJson != nil {
+                        DDLogDebug("json:\(callbackParameterJson!)")
+                        DispatchQueue.main.async {
+                            let callJS = "\(callback)('\(callbackParameterJson!)')"
+                            DDLogDebug("执行js：\(callJS)")
+                            self.viewController.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
+                                self.viewController.showSuccess(title: "上传成功")
+                            })
+                        }
+                    }
+                }
+            }
+        }
+    }
 
+}
+
+// MARK: - 拍照返回
+extension O2BaseJsMessageHandler: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        if let image = info[.editedImage] as? UIImage, let newData = image.pngData() {
+            let fileName = "\(UUID().uuidString).png"
+//            let size = image.size
+            self.uploadImage2Server(imageData: newData, fName: fileName)
+        } else {
+            DDLogError("没有选择到图片！")
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
 }
