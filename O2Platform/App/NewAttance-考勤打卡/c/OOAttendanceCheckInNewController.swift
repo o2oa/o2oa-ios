@@ -390,14 +390,16 @@ extension OOAttendanceCheckInNewController: BMKGeoCodeSearchDelegate {
         if let location = result?.location {
             let calResult = calcErrorRange(location)
             self.locationReceive(bmkResult: result!, isIn: calResult.0, workPlace: calResult.1)
+        } else {
+            DDLogError("GeoCodeSearch 查询到 地址信息为空！！")
         }
     }
 
     func onGetGeoCodeResult(_ searcher: BMKGeoCodeSearch!, result: BMKGeoCodeSearchResult!, errorCode error: BMKSearchErrorCode) {
         if Int(error.rawValue) == 0 {
-            DDLogDebug("result \(String(describing: result))")
+            DDLogError("GeoCodeSearch 查询错误 \(String(describing: result))")
         } else {
-            DDLogDebug("result error  errorCode = \(Int(error.rawValue))")
+            DDLogError("GeoCodeSearch 查询错误  errorCode = \(Int(error.rawValue))")
         }
 
     }

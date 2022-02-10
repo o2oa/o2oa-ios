@@ -28,14 +28,6 @@ class ZLNavigationController: O2BaseForRotateUINavViewController {
         self.toolbar.barTintColor = navbar_barTint_color
         self.toolbar.tintColor = navbar_tint_color
         self.toolbar.barStyle = .default
-        //        //隐藏返回按钮文字
-        let barItem = UIBarButtonItem.appearance()
-        let offset = UIOffset(horizontal: -200, vertical: 0)
-        barItem.setBackButtonTitlePositionAdjustment(offset, for: .default)
-        barItem.setTitleTextAttributes([
-            NSAttributedString.Key.font:navbar_item_font,
-            NSAttributedString.Key.foregroundColor:navbar_tint_color
-            ], for:UIControl.State())
         
     }
     
