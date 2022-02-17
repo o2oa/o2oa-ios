@@ -188,6 +188,9 @@ class DBManager {
         self.queue.inDatabase({ (db) in
             db?.executeUpdate(delSql, withArgumentsIn: nil)
         })
+        
+        //清除了数据库数据 需要清除  customStyleHashLocal 这样新登录绑定后才会读取
+        AppConfigSettings.shared.customStyleHashLocal = ""
     }
 
     func deleteNotExistApp(_ exitApps: [String]) {
