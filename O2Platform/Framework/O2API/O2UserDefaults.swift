@@ -34,7 +34,7 @@ extension UserDefaults {
         get { return unarchive(key) }
         set { archive(key, newValue) }
     }
-    subscript(key: DefaultsKey<O2WebConfig?>) -> O2WebConfig? {
+    subscript(key: DefaultsKey<IMConfig?>) -> IMConfig? {
         get { return unarchive(key) }
         set { archive(key, newValue) }
     }
@@ -52,7 +52,7 @@ extension DefaultsKeys {
     static let customStyle = DefaultsKey<O2CustomStyleModel?>("O2customStyle")
     static let customStyleHash = DefaultsKey<String?>("O2customStyleHash")
     static let searchHistory = DefaultsKey<[String]?>("O2SearchHistoryKey")
-    static let o2WebConfig = DefaultsKey<O2WebConfig?>("O2WebConfig")
+    static let imConfig = DefaultsKey<IMConfig?>("imConfig")
 
 }
 
@@ -180,15 +180,15 @@ class O2UserDefaults {
         }
     }
     
-    var o2WebConfig: O2WebConfig? {
+    var imConfig: IMConfig? {
         get {
-            guard let config = Defaults[.o2WebConfig] else {
-                return O2WebConfig()
+            guard let config = Defaults[.imConfig] else {
+                return IMConfig()
             }
             return config
         }
         set {
-            Defaults[.o2WebConfig] = newValue
+            Defaults[.imConfig] = newValue
         }
     }
     

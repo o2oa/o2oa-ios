@@ -152,16 +152,21 @@ struct  O2LocationData {
 /// IM聊天的配置文件
 open class IMConfig: NSObject, HandyJSON, NSCoding {
     open var enableClearMsg: Bool?
+    open var enableRevokeMsg: Bool?
     
     public func encode(with aCoder: NSCoder) {
         if enableClearMsg != nil {
             aCoder.encode(enableClearMsg, forKey: "enableClearMsg")
+        }
+        if enableRevokeMsg != nil {
+            aCoder.encode(enableRevokeMsg, forKey: "enableRevokeMsg")
         }
         
     }
     
     public required init?(coder aDecoder: NSCoder) {
         enableClearMsg = aDecoder.decodeObject(forKey: "enableClearMsg") as? Bool
+        enableRevokeMsg = aDecoder.decodeObject(forKey: "enableRevokeMsg") as? Bool
     }
     
     required public override init() {}

@@ -18,38 +18,32 @@ class IMViewModel: NSObject {
 
     private let communicateAPI = OOMoyaProvider<CommunicateAPI>()
     private let workAPI = OOMoyaProvider<OOWorkAPI>()
-    private let deskTopAPI = OOMoyaProvider<O2DesktopAPI>()
 }
 
 extension IMViewModel {
     
     func loadImConfig() -> Promise<IMConfig> {
         return Promise { fulfill, reject in
-            self.deskTopAPI.request(.webConfig, completion: {result in
-                switch result {
-                case .success(let resp):
-                    var imConfig = IMConfig()
-                    if resp.statusCode == 200 {
-                        if let jsonObj = resp.mapObject(O2WebConfig.self) {
-                            O2UserDefaults.shared.o2WebConfig = jsonObj
-                            if jsonObj.imConfig != nil {
-                                imConfig = jsonObj.imConfig!
-                            } else {
-                                imConfig.enableClearMsg = false
-                            }
-                        } else {
-                            imConfig.enableClearMsg = false
-                        }
+            self.communicateAPI.request(.getImConfig, completion: {result in
+                let response = OOResult<BaseModelClass<IMConfig>>(result)
+                if response.isResultSuccess() {
+                    if let config = response.model?.data {
+                        O2UserDefaults.shared.imConfig = config
+                        fulfill(config)
                     } else {
-                        O2UserDefaults.shared.o2WebConfig = nil
+                        DDLogError("IM配置文件为空！！")
+                        let imConfig = IMConfig()
                         imConfig.enableClearMsg = false
+                        imConfig.enableRevokeMsg = false
+                        O2UserDefaults.shared.imConfig = imConfig
+                        fulfill(imConfig)
                     }
-                    fulfill(imConfig)
-                case .failure(let err):
-                    O2UserDefaults.shared.o2WebConfig = nil
-                    DDLogError(err.localizedDescription)
-                    var imConfig = IMConfig()
+                } else {
+                    DDLogError(response.error?.localizedDescription ?? "IM配置文件查询出错！")
+                    let imConfig = IMConfig()
                     imConfig.enableClearMsg = false
+                    imConfig.enableRevokeMsg = false
+                    O2UserDefaults.shared.imConfig = imConfig
                     fulfill(imConfig)
                 }
             })
@@ -261,6 +255,20 @@ extension IMViewModel {
         return Promise {fulfill, reject in
             self.communicateAPI.request(.clearAllChatMsg(conversationId), completion: {result in
                 let response = OOResult<BaseModelClass<OOCommonValueBoolModel>>(result)
+                if response.isResultSuccess() {
+                    fulfill(true)
+                }else {
+                    fulfill(false)
+                }
+            })
+        }
+    }
+    
+    // 撤回消息
+    func revokeChatMsg(msgId: String) -> Promise<Bool> {
+        return Promise {fulfill, reject in
+            self.communicateAPI.request(.revokeMsg(msgId), completion: {result in
+                let response = OOResult<BaseModelClass<OOCommonIdModel>>(result)
                 if response.isResultSuccess() {
                     fulfill(true)
                 }else {

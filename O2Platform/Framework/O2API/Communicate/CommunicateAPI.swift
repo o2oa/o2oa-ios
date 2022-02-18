@@ -23,6 +23,8 @@ enum CommunicateAPI {
     case imUploadFile(String, String, String, Data)
     case imDownloadFullFile(String, String)
     case clearAllChatMsg(String)
+    case revokeMsg(String)
+    case getImConfig
     
     
 }
@@ -73,12 +75,16 @@ extension CommunicateAPI: TargetType {
             return "/jaxrs/im/msg/download/\(id)"
         case .clearAllChatMsg(let id):
             return "/jaxrs/im/conversation/\(id)/clear/all/msg"
+        case .revokeMsg(let msgId):
+            return "/jaxrs/im/msg/revoke/\(msgId)"
+        case .getImConfig:
+            return "/jaxrs/im/manager/config"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .myConversationList, .instantMessageList(_), .imDownloadFullFile(_, _):
+        case .myConversationList, .instantMessageList(_), .imDownloadFullFile(_, _), .revokeMsg(_), .getImConfig:
             return .get
         case .msgListByPaging(_, _, _), .sendMsg(_), .createConversation(_), .imUploadFile(_, _, _, _):
             return .post
@@ -95,7 +101,7 @@ extension CommunicateAPI: TargetType {
     
     var task: Task {
         switch self {
-        case .myConversationList, .instantMessageList(_), .readConversation(_), .clearAllChatMsg(_):
+        case .myConversationList, .instantMessageList(_), .readConversation(_), .clearAllChatMsg(_), .revokeMsg(_), .getImConfig:
             return .requestPlain
         case .msgListByPaging(_, _, let conversationId):
             let form = IMMessageRequestForm()

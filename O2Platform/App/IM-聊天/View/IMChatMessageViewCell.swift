@@ -50,6 +50,8 @@ class IMChatMessageViewCell: UITableViewCell {
     var delegate: IMChatMessageDelegate?
     //是否正在播放音频 音频消息使用
     private var isPlayingAudio = false
+    
+    var msgInfo: IMMessageInfo? = nil
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -58,6 +60,11 @@ class IMChatMessageViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+    
+    // UIMenuController菜单弹出 这个参数很重要 
+    override var canBecomeFirstResponder: Bool {
+        return true
     }
 
     //普通通知消息
@@ -243,6 +250,7 @@ class IMChatMessageViewCell: UITableViewCell {
 
     //聊天消息
     func setContent(item: IMMessageInfo, isPlayingAudio: Bool) {
+        self.msgInfo = item
         self.isPlayingAudio = isPlayingAudio
         //time
         if let time = item.createTime {
