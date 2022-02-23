@@ -11,7 +11,7 @@ import Alamofire
 import AlamofireObjectMapper
 import ObjectMapper
 import WebKit
-import SwiftyJSON
+
 import CocoaLumberjack
 
 class BBSSubjectCreateTableViewController: UITableViewController {

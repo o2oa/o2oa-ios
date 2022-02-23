@@ -8,7 +8,7 @@
 
 import Foundation
 import ObjectMapper
-import SwiftyJSON
+
 
 //typedef enum : NSUInteger {
 //    kFile = 0,

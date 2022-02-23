@@ -11,7 +11,7 @@ import UIKit
 import AlamofireObjectMapper
 import Alamofire
 import SwiftyTimer
-import SwiftyJSON
+
 import ObjectMapper
 import CocoaLumberjack
 import Promises

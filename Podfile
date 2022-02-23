@@ -41,14 +41,14 @@ target 'O2Platform' do
 #    pod 'AlamofireImage', '~> 3.3'
     pod 'AlamofireNetworkActivityIndicator', '~> 3.0'
     # pod 'AlamofireObjectMapper', '~> 6.2.0'
-    pod 'AlamofireObjectMapper', :path => '/Users/fancy/github/AlamofireObjectMapper'
+    pod 'AlamofireObjectMapper', :path => './AlamofireObjectMapper'
     pod 'Moya', '~> 14.0'
     pod 'Moya/RxSwift', '~> 14.0'
     # UserDefaults加强
     pod 'SwiftyUserDefaults', '~>3.0'
     # json
     pod 'HandyJSON', '~> 5.0.2-beta'
-    pod 'SwiftyJSON', '~>3.1'
+#    pod 'SwiftyJSON', '~>3.1'
     # reactive
     pod 'ReactiveSwift', '~> 6.1'
     pod 'ReactiveCocoa', '~> 10.1'
@@ -70,8 +70,8 @@ target 'O2Platform' do
     pod 'SnapKit', '~> 4.0'
     
     pod 'SwiftValidator', :git => 'https://github.com/jpotts18/SwiftValidator.git', :branch => 'master'
-    pod 'YHPopupView'
-    pod 'YHPhotoKit'
+#    pod 'YHPopupView'
+#    pod 'YHPhotoKit'
     pod 'RxCocoa', '~> 5.1.1'
     #表格数据源为空时显示
     pod 'EmptyDataSet-Swift', '~> 5.0.0'

@@ -13,7 +13,7 @@ import BSImagePicker
 import Photos
 import Alamofire
 import AlamofireImage
-import SwiftyJSON
+
 import QuickLook
 import SnapKit
 

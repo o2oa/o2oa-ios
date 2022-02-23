@@ -67,16 +67,13 @@ PODS:
   - SnapKit (4.0.1)
   - Starscream (4.0.0)
   - SwiftValidator (4.0.0)
-  - SwiftyJSON (3.1.4)
   - SwiftyTimer (2.1.0)
   - SwiftyUserDefaults (3.0.1)
-  - YHPhotoKit (0.2.1)
-  - YHPopupView (0.3.0)
 
 DEPENDENCIES:
   - Alamofire (~> 5.0)
   - AlamofireNetworkActivityIndicator (~> 3.0)
-  - AlamofireObjectMapper (from `/Users/fancy/github/AlamofireObjectMapper`)
+  - AlamofireObjectMapper (from `./AlamofireObjectMapper`)
   - BaiduMapKit
   - BetterSegmentedControl (~> 1.2)
   - BMKLocationKit
@@ -109,11 +106,8 @@ DEPENDENCIES:
   - SnapKit (~> 4.0)
   - Starscream (~> 4.0.0)
   - SwiftValidator (from `https://github.com/jpotts18/SwiftValidator.git`, branch `master`)
-  - SwiftyJSON (~> 3.1)
   - SwiftyTimer
   - SwiftyUserDefaults (~> 3.0)
-  - YHPhotoKit
-  - YHPopupView
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -153,15 +147,12 @@ SPEC REPOS:
     - SDWebImage
     - SnapKit
     - Starscream
-    - SwiftyJSON
     - SwiftyTimer
     - SwiftyUserDefaults
-    - YHPhotoKit
-    - YHPopupView
 
 EXTERNAL SOURCES:
   AlamofireObjectMapper:
-    :path: "/Users/fancy/github/AlamofireObjectMapper"
+    :path: "./AlamofireObjectMapper"
   SwiftValidator:
     :branch: master
     :git: https://github.com/jpotts18/SwiftValidator.git
@@ -210,12 +201,9 @@ SPEC CHECKSUMS:
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   Starscream: 04b26f02727e10a002e6b5d21b188ba0d049910b
   SwiftValidator: 25ded5ca1f10c05adf57f6ac82a72d28ac8d91af
-  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   SwiftyTimer: 02dd6cf10cbc71cbf67cec494f6e5eb782102543
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
-  YHPhotoKit: e88368af1fca0a110d41b88417088f7e49876981
-  YHPopupView: 96d9c05c79a2a17cf69c3def09e5305cfae9e8e8
 
-PODFILE CHECKSUM: 53fb07c16a5b9e5a81082fa14a7da99b34fd0d89
+PODFILE CHECKSUM: 15799d0878a675544bcce377153af6974f80a85f
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2

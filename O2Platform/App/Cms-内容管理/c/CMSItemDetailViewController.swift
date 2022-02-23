@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 import Alamofire
 import AlamofireObjectMapper
-import SwiftyJSON
+
 import ObjectMapper
 import QuickLook
 import Photos

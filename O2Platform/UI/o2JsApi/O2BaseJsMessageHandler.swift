@@ -14,7 +14,7 @@ import CocoaLumberjack
 import BSImagePicker
 import Photos
 
-import SwiftyJSON
+
 
 class O2BaseJsMessageHandler: NSObject, O2WKScriptMessageHandlerImplement {
     

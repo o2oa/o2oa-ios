@@ -11,7 +11,7 @@ import WebKit
 import Alamofire
 import AlamofireImage
 import AlamofireObjectMapper
-import SwiftyJSON
+
 import ObjectMapper
 import CocoaLumberjack
 import Photos

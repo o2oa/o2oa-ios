@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import AlamofireImage
 import AlamofireObjectMapper
-import SwiftyJSON
+
 import ObjectMapper
 import BSImagePicker
 import Photos

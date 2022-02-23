@@ -11,7 +11,7 @@ import Alamofire
 import AlamofireImage
 import AlamofireObjectMapper
 import ObjectMapper
-import SwiftyJSON
+
 import CocoaLumberjack
 
 protocol FileFolderPassValueDelegate {

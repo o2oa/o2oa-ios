@@ -8,7 +8,7 @@
 
 import UIKit
 import WebKit
-import SwiftyJSON
+
 import Alamofire
 import ObjectMapper
 import AlamofireObjectMapper

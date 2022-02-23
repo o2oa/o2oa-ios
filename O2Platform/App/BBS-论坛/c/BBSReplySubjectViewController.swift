@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import AlamofireObjectMapper
 import ObjectMapper
-import SwiftyJSON
+
 import CocoaLumberjack
 
 

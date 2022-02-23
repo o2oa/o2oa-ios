@@ -258,6 +258,7 @@
 		B18398B3249B4154001C6FAA /* IMShowLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18398B2249B4154001C6FAA /* IMShowLocationViewController.swift */; };
 		B1843F272788104000A028B9 /* O2MindMapAddIconDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1843F262788104000A028B9 /* O2MindMapAddIconDialog.swift */; };
 		B1843F562788106300A028B9 /* O2MindMapAddIconDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1843F552788106300A028B9 /* O2MindMapAddIconDialog.xib */; };
+		B1852EF027C5DD8A00608478 /*  SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1852EC527C5DD8A00608478 /*  SwiftyJSON.swift */; };
 		B18FFF5F23756B6C001B2887 /* JPushAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18FFF5E23756B6C001B2887 /* JPushAPI.swift */; };
 		B1908E1422685E8F00D75632 /* O2WebViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1908E1322685E8F00D75632 /* O2WebViewModels.swift */; };
 		B1908E4C22687B1A00D75632 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B1908E4E22687B1A00D75632 /* Localizable.strings */; };
@@ -1062,13 +1063,6 @@
 			remoteGlobalIDString = 88AE298E29A958F217CD5346628EFF03;
 			remoteInfo = SwiftValidator;
 		};
-		B10AC5E421058DAE00179587 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E4E7755421017DB4006ED7FC /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 0DE92B5A65421EAD64B4E21F293B8CB5;
-			remoteInfo = SwiftyJSON;
-		};
 		B10AC5E621058DAE00179587 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E4E7755421017DB4006ED7FC /* Pods.xcodeproj */;
@@ -1082,20 +1076,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = A0FB6D4113C16CAF94406B9507CF9AC4;
 			remoteInfo = SwiftyUserDefaults;
-		};
-		B10AC5EE21058DAE00179587 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E4E7755421017DB4006ED7FC /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C62EB68189E0031F51E12882A51E1428;
-			remoteInfo = YHPhotoKit;
-		};
-		B10AC5F021058DAE00179587 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E4E7755421017DB4006ED7FC /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 183276F1FBCA05D9F840C64172C84A44;
-			remoteInfo = YHPopupView;
 		};
 		B1173A582488C3DD005075F0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1483,6 +1463,7 @@
 		B18398B2249B4154001C6FAA /* IMShowLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMShowLocationViewController.swift; sourceTree = "<group>"; };
 		B1843F262788104000A028B9 /* O2MindMapAddIconDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2MindMapAddIconDialog.swift; sourceTree = "<group>"; };
 		B1843F552788106300A028B9 /* O2MindMapAddIconDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = O2MindMapAddIconDialog.xib; sourceTree = "<group>"; };
+		B1852EC527C5DD8A00608478 /*  SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = " SwiftyJSON.swift"; sourceTree = "<group>"; };
 		B18FFF5E23756B6C001B2887 /* JPushAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JPushAPI.swift; sourceTree = "<group>"; };
 		B1908E1322685E8F00D75632 /* O2WebViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2WebViewModels.swift; sourceTree = "<group>"; };
 		B1908E4D22687B1A00D75632 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -2311,45 +2292,42 @@
 		B10AC55121058DAE00179587 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B10AC58921058DAE00179587 /* Alamofire.framework */,
-				B10AC58B21058DAE00179587 /* AlamofireImage.framework */,
-				B10AC58D21058DAE00179587 /* AlamofireNetworkActivityIndicator.framework */,
-				B17B49042535468400D74EBF /* AlamofireObjectMapper.framework */,
-				B10AC59121058DAE00179587 /* BetterSegmentedControl.framework */,
-				B10AC59521058DAE00179587 /* BSImagePicker.framework */,
-				B10AC59B21058DAE00179587 /* Charts.framework */,
-				B1F79C78233B5F9B004D0AEE /* Chrysan.framework */,
-				B1F79C7A233B5F9B004D0AEE /* Chrysan.bundle */,
-				B10AC59D21058DAE00179587 /* CocoaLumberjack.framework */,
-				B10AC5A521058DAE00179587 /* EmptyDataSet_Swift.framework */,
-				B10AC5A721058DAE00179587 /* Eureka.framework */,
-				B10AC5AB21058DAE00179587 /* FMDB.framework */,
-				B108968D210AC61B00F02267 /* FSCalendar.framework */,
-				B10AC5AF21058DAE00179587 /* HandyJSON.framework */,
-				B10AC5B321058DAE00179587 /* ImageSlideshow.framework */,
-				B16CA7E826B2447F0009B24C /* IQKeyboardManagerSwift.framework */,
-				B1573CB9213E51A9007333C6 /* JTCalendar.framework */,
-				B10AC5BD21058DAE00179587 /* MBProgressHUD.framework */,
-				B1F79C7C233B5F9B004D0AEE /* MJRefresh.framework */,
-				B10AC5BF21058DAE00179587 /* Moya.framework */,
-				B17B49062535468400D74EBF /* ObjectMapper.framework */,
-				B10AC5C321058DAE00179587 /* Pods_O2Platform.framework */,
-				B10AC5CB21058DAE00179587 /* FBLPromises.framework */,
-				B10AC5CD21058DAE00179587 /* Promises.framework */,
-				B10AC5CF21058DAE00179587 /* ReactiveCocoa.framework */,
-				B10AC5D121058DAE00179587 /* ReactiveSwift.framework */,
-				B10AC5D521058DAE00179587 /* RxCocoa.framework */,
-				B17B48CF2534075D00D74EBF /* RxRelay.framework */,
-				B10AC5D721058DAE00179587 /* RxSwift.framework */,
-				B10AC5D921058DAE00179587 /* SDWebImage.framework */,
-				B10AC5DF21058DAE00179587 /* SnapKit.framework */,
-				B1173A592488C3DD005075F0 /* Starscream.framework */,
-				B10AC5E321058DAE00179587 /* SwiftValidator.framework */,
-				B10AC5E521058DAE00179587 /* SwiftyJSON.framework */,
-				B10AC5E721058DAE00179587 /* SwiftyTimer.framework */,
-				B10AC5E921058DAE00179587 /* SwiftyUserDefaults.framework */,
-				B10AC5EF21058DAE00179587 /* YHPhotoKit.framework */,
-				B10AC5F121058DAE00179587 /* YHPopupView.framework */,
+				B10AC58921058DAE00179587 /* Alamofire */,
+				B10AC58B21058DAE00179587 /* AlamofireImage */,
+				B10AC58D21058DAE00179587 /* AlamofireNetworkActivityIndicator */,
+				B17B49042535468400D74EBF /* AlamofireObjectMapper */,
+				B10AC59121058DAE00179587 /* BetterSegmentedControl */,
+				B10AC59521058DAE00179587 /* BSImagePicker */,
+				B10AC59B21058DAE00179587 /* Charts */,
+				B1F79C78233B5F9B004D0AEE /* Chrysan */,
+				B1F79C7A233B5F9B004D0AEE /* Chrysan-Chrysan */,
+				B10AC59D21058DAE00179587 /* CocoaLumberjack */,
+				B10AC5A521058DAE00179587 /* EmptyDataSet-Swift */,
+				B10AC5A721058DAE00179587 /* Eureka */,
+				B10AC5AB21058DAE00179587 /* FMDB */,
+				B108968D210AC61B00F02267 /* FSCalendar */,
+				B10AC5AF21058DAE00179587 /* HandyJSON */,
+				B10AC5B321058DAE00179587 /* ImageSlideshow */,
+				B16CA7E826B2447F0009B24C /* IQKeyboardManagerSwift */,
+				B1573CB9213E51A9007333C6 /* JTCalendar */,
+				B10AC5BD21058DAE00179587 /* MBProgressHUD */,
+				B1F79C7C233B5F9B004D0AEE /* MJRefresh */,
+				B10AC5BF21058DAE00179587 /* Moya */,
+				B17B49062535468400D74EBF /* ObjectMapper */,
+				B10AC5C321058DAE00179587 /* Pods-O2Platform */,
+				B10AC5CB21058DAE00179587 /* PromisesObjC */,
+				B10AC5CD21058DAE00179587 /* PromisesSwift */,
+				B10AC5CF21058DAE00179587 /* ReactiveCocoa */,
+				B10AC5D121058DAE00179587 /* ReactiveSwift */,
+				B10AC5D521058DAE00179587 /* RxCocoa */,
+				B17B48CF2534075D00D74EBF /* RxRelay */,
+				B10AC5D721058DAE00179587 /* RxSwift */,
+				B10AC5D921058DAE00179587 /* SDWebImage */,
+				B10AC5DF21058DAE00179587 /* SnapKit */,
+				B1173A592488C3DD005075F0 /* Starscream */,
+				B10AC5E321058DAE00179587 /* SwiftValidator */,
+				B10AC5E721058DAE00179587 /* SwiftyTimer */,
+				B10AC5E921058DAE00179587 /* SwiftyUserDefaults */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2761,6 +2739,14 @@
 				B17EFC69276C1DBF00D7B18F /* MindMapNodeDraw.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		B1852EC427C5DD8A00608478 /* SwiftyJSON */ = {
+			isa = PBXGroup;
+			children = (
+				B1852EC527C5DD8A00608478 /*  SwiftyJSON.swift */,
+			);
+			path = SwiftyJSON;
 			sourceTree = "<group>";
 		};
 		B18FFF3323756B24001B2887 /* JpushAPI */ = {
@@ -4027,6 +4013,7 @@
 		E4B887821D9D48F1002E1A46 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				B1852EC427C5DD8A00608478 /* SwiftyJSON */,
 				B168BED024F797DF0070329F /* BaiDuASR */,
 				B15BE0F1249A06BE008CD1DB /* lame */,
 				E4B69721207602840062F6E8 /* O2API */,
@@ -4677,275 +4664,290 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		B108968D210AC61B00F02267 /* FSCalendar.framework */ = {
+		B108968D210AC61B00F02267 /* FSCalendar */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = FSCalendar;
 			path = FSCalendar.framework;
 			remoteRef = B108968C210AC61B00F02267 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC58921058DAE00179587 /* Alamofire.framework */ = {
+		B10AC58921058DAE00179587 /* Alamofire */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = Alamofire;
 			path = Alamofire.framework;
 			remoteRef = B10AC58821058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC58B21058DAE00179587 /* AlamofireImage.framework */ = {
+		B10AC58B21058DAE00179587 /* AlamofireImage */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = AlamofireImage;
 			path = AlamofireImage.framework;
 			remoteRef = B10AC58A21058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC58D21058DAE00179587 /* AlamofireNetworkActivityIndicator.framework */ = {
+		B10AC58D21058DAE00179587 /* AlamofireNetworkActivityIndicator */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = AlamofireNetworkActivityIndicator;
 			path = AlamofireNetworkActivityIndicator.framework;
 			remoteRef = B10AC58C21058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC59121058DAE00179587 /* BetterSegmentedControl.framework */ = {
+		B10AC59121058DAE00179587 /* BetterSegmentedControl */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = BetterSegmentedControl;
 			path = BetterSegmentedControl.framework;
 			remoteRef = B10AC59021058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC59521058DAE00179587 /* BSImagePicker.framework */ = {
+		B10AC59521058DAE00179587 /* BSImagePicker */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = BSImagePicker;
 			path = BSImagePicker.framework;
 			remoteRef = B10AC59421058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC59B21058DAE00179587 /* Charts.framework */ = {
+		B10AC59B21058DAE00179587 /* Charts */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = Charts;
 			path = Charts.framework;
 			remoteRef = B10AC59A21058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC59D21058DAE00179587 /* CocoaLumberjack.framework */ = {
+		B10AC59D21058DAE00179587 /* CocoaLumberjack */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = CocoaLumberjack;
 			path = CocoaLumberjack.framework;
 			remoteRef = B10AC59C21058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC5A521058DAE00179587 /* EmptyDataSet_Swift.framework */ = {
+		B10AC5A521058DAE00179587 /* EmptyDataSet-Swift */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = "EmptyDataSet-Swift";
 			path = EmptyDataSet_Swift.framework;
 			remoteRef = B10AC5A421058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC5A721058DAE00179587 /* Eureka.framework */ = {
+		B10AC5A721058DAE00179587 /* Eureka */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = Eureka;
 			path = Eureka.framework;
 			remoteRef = B10AC5A621058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC5AB21058DAE00179587 /* FMDB.framework */ = {
+		B10AC5AB21058DAE00179587 /* FMDB */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = FMDB;
 			path = FMDB.framework;
 			remoteRef = B10AC5AA21058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC5AF21058DAE00179587 /* HandyJSON.framework */ = {
+		B10AC5AF21058DAE00179587 /* HandyJSON */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = HandyJSON;
 			path = HandyJSON.framework;
 			remoteRef = B10AC5AE21058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC5B321058DAE00179587 /* ImageSlideshow.framework */ = {
+		B10AC5B321058DAE00179587 /* ImageSlideshow */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = ImageSlideshow;
 			path = ImageSlideshow.framework;
 			remoteRef = B10AC5B221058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC5BD21058DAE00179587 /* MBProgressHUD.framework */ = {
+		B10AC5BD21058DAE00179587 /* MBProgressHUD */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = MBProgressHUD;
 			path = MBProgressHUD.framework;
 			remoteRef = B10AC5BC21058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC5BF21058DAE00179587 /* Moya.framework */ = {
+		B10AC5BF21058DAE00179587 /* Moya */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = Moya;
 			path = Moya.framework;
 			remoteRef = B10AC5BE21058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC5C321058DAE00179587 /* Pods_O2Platform.framework */ = {
+		B10AC5C321058DAE00179587 /* Pods-O2Platform */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = "Pods-O2Platform";
 			path = Pods_O2Platform.framework;
 			remoteRef = B10AC5C221058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC5CB21058DAE00179587 /* FBLPromises.framework */ = {
+		B10AC5CB21058DAE00179587 /* PromisesObjC */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = PromisesObjC;
 			path = FBLPromises.framework;
 			remoteRef = B10AC5CA21058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC5CD21058DAE00179587 /* Promises.framework */ = {
+		B10AC5CD21058DAE00179587 /* PromisesSwift */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = PromisesSwift;
 			path = Promises.framework;
 			remoteRef = B10AC5CC21058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC5CF21058DAE00179587 /* ReactiveCocoa.framework */ = {
+		B10AC5CF21058DAE00179587 /* ReactiveCocoa */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = ReactiveCocoa;
 			path = ReactiveCocoa.framework;
 			remoteRef = B10AC5CE21058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC5D121058DAE00179587 /* ReactiveSwift.framework */ = {
+		B10AC5D121058DAE00179587 /* ReactiveSwift */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = ReactiveSwift;
 			path = ReactiveSwift.framework;
 			remoteRef = B10AC5D021058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC5D521058DAE00179587 /* RxCocoa.framework */ = {
+		B10AC5D521058DAE00179587 /* RxCocoa */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = RxCocoa;
 			path = RxCocoa.framework;
 			remoteRef = B10AC5D421058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC5D721058DAE00179587 /* RxSwift.framework */ = {
+		B10AC5D721058DAE00179587 /* RxSwift */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = RxSwift;
 			path = RxSwift.framework;
 			remoteRef = B10AC5D621058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC5D921058DAE00179587 /* SDWebImage.framework */ = {
+		B10AC5D921058DAE00179587 /* SDWebImage */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = SDWebImage;
 			path = SDWebImage.framework;
 			remoteRef = B10AC5D821058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC5DF21058DAE00179587 /* SnapKit.framework */ = {
+		B10AC5DF21058DAE00179587 /* SnapKit */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = SnapKit;
 			path = SnapKit.framework;
 			remoteRef = B10AC5DE21058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC5E321058DAE00179587 /* SwiftValidator.framework */ = {
+		B10AC5E321058DAE00179587 /* SwiftValidator */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = SwiftValidator;
 			path = SwiftValidator.framework;
 			remoteRef = B10AC5E221058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC5E521058DAE00179587 /* SwiftyJSON.framework */ = {
+		B10AC5E721058DAE00179587 /* SwiftyTimer */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = SwiftyJSON.framework;
-			remoteRef = B10AC5E421058DAE00179587 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B10AC5E721058DAE00179587 /* SwiftyTimer.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
+			name = SwiftyTimer;
 			path = SwiftyTimer.framework;
 			remoteRef = B10AC5E621058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC5E921058DAE00179587 /* SwiftyUserDefaults.framework */ = {
+		B10AC5E921058DAE00179587 /* SwiftyUserDefaults */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = SwiftyUserDefaults;
 			path = SwiftyUserDefaults.framework;
 			remoteRef = B10AC5E821058DAE00179587 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B10AC5EF21058DAE00179587 /* YHPhotoKit.framework */ = {
+		B1173A592488C3DD005075F0 /* Starscream */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = YHPhotoKit.framework;
-			remoteRef = B10AC5EE21058DAE00179587 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B10AC5F121058DAE00179587 /* YHPopupView.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = YHPopupView.framework;
-			remoteRef = B10AC5F021058DAE00179587 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		B1173A592488C3DD005075F0 /* Starscream.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
+			name = Starscream;
 			path = Starscream.framework;
 			remoteRef = B1173A582488C3DD005075F0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B1573CB9213E51A9007333C6 /* JTCalendar.framework */ = {
+		B1573CB9213E51A9007333C6 /* JTCalendar */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = JTCalendar;
 			path = JTCalendar.framework;
 			remoteRef = B1573CB8213E51A9007333C6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B16CA7E826B2447F0009B24C /* IQKeyboardManagerSwift.framework */ = {
+		B16CA7E826B2447F0009B24C /* IQKeyboardManagerSwift */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = IQKeyboardManagerSwift;
 			path = IQKeyboardManagerSwift.framework;
 			remoteRef = B16CA7E726B2447F0009B24C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B17B48CF2534075D00D74EBF /* RxRelay.framework */ = {
+		B17B48CF2534075D00D74EBF /* RxRelay */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = RxRelay;
 			path = RxRelay.framework;
 			remoteRef = B17B48CE2534075D00D74EBF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B17B49042535468400D74EBF /* AlamofireObjectMapper.framework */ = {
+		B17B49042535468400D74EBF /* AlamofireObjectMapper */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = AlamofireObjectMapper;
 			path = AlamofireObjectMapper.framework;
 			remoteRef = B17B49032535468400D74EBF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B17B49062535468400D74EBF /* ObjectMapper.framework */ = {
+		B17B49062535468400D74EBF /* ObjectMapper */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = ObjectMapper;
 			path = ObjectMapper.framework;
 			remoteRef = B17B49052535468400D74EBF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B1F79C78233B5F9B004D0AEE /* Chrysan.framework */ = {
+		B1F79C78233B5F9B004D0AEE /* Chrysan */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = Chrysan;
 			path = Chrysan.framework;
 			remoteRef = B1F79C77233B5F9B004D0AEE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B1F79C7A233B5F9B004D0AEE /* Chrysan.bundle */ = {
+		B1F79C7A233B5F9B004D0AEE /* Chrysan-Chrysan */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
+			name = "Chrysan-Chrysan";
 			path = Chrysan.bundle;
 			remoteRef = B1F79C79233B5F9B004D0AEE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B1F79C7C233B5F9B004D0AEE /* MJRefresh.framework */ = {
+		B1F79C7C233B5F9B004D0AEE /* MJRefresh */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
+			name = MJRefresh;
 			path = MJRefresh.framework;
 			remoteRef = B1F79C7B233B5F9B004D0AEE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -5255,11 +5257,8 @@
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftValidator/SwiftValidator.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyTimer/SwiftyTimer.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
-				"${BUILT_PRODUCTS_DIR}/YHPhotoKit/YHPhotoKit.framework",
-				"${BUILT_PRODUCTS_DIR}/YHPopupView/YHPopupView.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -5295,11 +5294,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftValidator.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyTimer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YHPhotoKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YHPopupView.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -5846,6 +5842,7 @@
 				B108F3FE229E34D400778050 /* LBXScanLineAnimation.swift in Sources */,
 				E40958C2207F4842000FECC3 /* OOTabBarHelper.swift in Sources */,
 				E428AF5B20ABDCB400D964B9 /* OOAttandanceModels.swift in Sources */,
+				B1852EF027C5DD8A00608478 /*  SwiftyJSON.swift in Sources */,
 				E486D99F1DB07BCE005BF545 /* SMessageNotiViewController.swift in Sources */,
 				E4184B1E1DB4A33500FCC907 /* SInfoAndSecurityViewController.swift in Sources */,
 				B16CA78226B131CD0009B24C /* OrganizationPermissionManager.swift in Sources */,
@@ -6254,13 +6251,12 @@
 					"-framework",
 					"\"SwiftValidator\"",
 					"-framework",
-					"\"SwiftyJSON\"",
-					"-framework",
 					"\"SwiftyTimer\"",
 					"-framework",
 					"\"SwiftyUserDefaults\"",
 					"-w",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = net.o2oa.app.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "9ebefd7c-6117-4bee-a96c-7ddb06ad4c6f";
@@ -6357,8 +6353,6 @@
 					"\"SnapKit\"",
 					"-framework",
 					"\"SwiftValidator\"",
-					"-framework",
-					"\"SwiftyJSON\"",
 					"-framework",
 					"\"SwiftyTimer\"",
 					"-framework",
