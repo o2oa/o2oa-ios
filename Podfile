@@ -95,7 +95,7 @@ target 'O2Platform' do
     pod 'JMessage'
     
     # websocket
-    pod 'Starscream', '~> 4.0.0'
+    pod 'Starscream', '~> 4.0.3'
     
     
     
