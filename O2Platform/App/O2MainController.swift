@@ -362,15 +362,15 @@ extension O2MainController: WebSocketDelegate {
             isWsOpen = false
             break
         case .binary(let data):
-            DDLogDebug("Received binary data: \(data.count)")
+            DDLogDebug("websocket binary Received  二进制对象: \(data.count)")
             break
         case .ping(_):
             break
         case .pong(_):
             break
-        case .viablityChanged(_):
-            DDLogDebug("websocket viablityChanged")
-            break
+//        case .viablityChanged(_):
+//            DDLogDebug("websocket viablityChanged")
+//            break
         case .reconnectSuggested(_):
             DDLogDebug("websocket reconnectSuggested")
             break
@@ -382,6 +382,10 @@ extension O2MainController: WebSocketDelegate {
             DDLogError("websocket is error, \(String(describing: error?.localizedDescription))")
             isWsOpen = false
             break
+        case .viabilityChanged(_):
+            DDLogDebug("websocket viablityChanged")
+            break
+         
         }
     }
 
