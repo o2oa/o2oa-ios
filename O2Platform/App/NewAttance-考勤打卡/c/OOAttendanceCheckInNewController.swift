@@ -23,9 +23,9 @@ class OOAttendanceCheckInNewController: UIViewController {
     fileprivate let itemNumberInRow = 2
 
     //定位
-    private var userLocation: BMKUserLocation!
-    private var locService: BMKLocationManager!
-    private var searchAddress: BMKGeoCodeSearch!
+    private var userLocation: BMKUserLocation? = nil
+    private var locService: BMKLocationManager? = nil
+    private var searchAddress: BMKGeoCodeSearch? = nil
     private var workPlaces: [OOAttandanceWorkPlace] = []
 
     //定时器
@@ -53,21 +53,26 @@ class OOAttendanceCheckInNewController: UIViewController {
             self.postCheckinButton(nil)
         }
 
-        //初始化定时器
-        self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timeTick), userInfo: nil, repeats: true)
+        
         //获取数据
         self.loadMyRecords()
-        //工作地址
-        self.loadWorkPlace()
+       
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        if self.timer == nil {
+            //初始化定时器
+            self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timeTick), userInfo: nil, repeats: true)
+        }
         self.timer?.fire()
-        self.startLocationService()
+        //工作地址
+        self.loadWorkPlace()
+        
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         self.timer?.invalidate()
+        self.timer = nil
         self.stopLocationService()
     }
 
@@ -194,29 +199,29 @@ class OOAttendanceCheckInNewController: UIViewController {
     ///定位
     private func startLocationService() {
         locService = BMKLocationManager()
-        locService.desiredAccuracy = kCLLocationAccuracyBest
+        locService?.desiredAccuracy = kCLLocationAccuracyBest
         //设置返回位置的坐标系类型
-        locService.coordinateType = .BMK09LL
+        locService?.coordinateType = .BMK09LL
         //设置距离过滤参数
-        locService.distanceFilter = kCLDistanceFilterNone;
+        locService?.distanceFilter = kCLDistanceFilterNone;
         //设置预期精度参数
-        locService.desiredAccuracy = kCLLocationAccuracyBest;
+        locService?.desiredAccuracy = kCLLocationAccuracyBest;
         //设置应用位置类型
-        locService.activityType = .automotiveNavigation
+        locService?.activityType = .automotiveNavigation
         //设置是否自动停止位置更新
-        locService.pausesLocationUpdatesAutomatically = false
+        locService?.pausesLocationUpdatesAutomatically = false
 
-        locService.delegate = self
-        locService.startUpdatingLocation()
+        locService?.delegate = self
+        locService?.startUpdatingLocation()
 
         searchAddress = BMKGeoCodeSearch()
-        searchAddress.delegate = self
+        searchAddress?.delegate = self
     }
     ///结束定位
     private func stopLocationService() {
-        locService.stopUpdatingLocation()
-        locService.delegate = nil
-        searchAddress.delegate = nil
+        locService?.stopUpdatingLocation()
+        locService?.delegate = nil
+        searchAddress?.delegate = nil
     }
 
     ///查询工作地址
@@ -227,11 +232,19 @@ class OOAttendanceCheckInNewController: UIViewController {
                 if let model = result as? [OOAttandanceWorkPlace] {
                     DispatchQueue.main.async {
                         self.workPlaces = model
+                        self.startLocationService()
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.locationLabel.text = "没有配置工作地址！"
                     }
                 }
                 break
             case .fail(let s):
                 self.showError(title: "错误:\n\(s)")
+                DispatchQueue.main.async {
+                    self.locationLabel.text = "没有配置工作地址！"
+                }
                 break
             default:
                 break
@@ -302,7 +315,9 @@ class OOAttendanceCheckInNewController: UIViewController {
 
     ///刷新按钮时间
     @objc private func timeTick() {
+        
         let now = Date().toString("HH:mm:ss")
+        DDLogDebug("timeTick ： \(now)")
         self.checkInBtnTimeLabel.text = now
     }
 
@@ -357,8 +372,8 @@ extension OOAttendanceCheckInNewController: BMKLocationManagerDelegate {
             //搜索到指定的地点
             let re = BMKReverseGeoCodeSearchOption()
             re.location = CLLocationCoordinate2D(latitude: loc.coordinate.latitude, longitude: loc.coordinate.longitude)
-            let s = searchAddress.reverseGeoCode(re)
-            DDLogDebug("查询地址结果: \(s)")
+            let s = searchAddress?.reverseGeoCode(re)
+            DDLogDebug("查询地址结果: \(s ?? false)")
         } else {
             DDLogError("没有获取到定位信息！！！！！")
         }
