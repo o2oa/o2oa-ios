@@ -147,8 +147,10 @@ class TodoTaskDetailViewController: BaseWebViewUIViewController {
         addScriptMessageHandler(key: "closeWork", handler: self)
         addScriptMessageHandler(key: "appFormLoaded", handler: self)
         addScriptMessageHandler(key: "uploadAttachment", handler: self)
+        addScriptMessageHandler(key: "uploadAttachmentForDatagrid", handler: self)
         addScriptMessageHandler(key: "downloadAttachment", handler: self)
         addScriptMessageHandler(key: "replaceAttachment", handler: self)
+        addScriptMessageHandler(key: "replaceAttachmentForDatagrid", handler: self)
         addScriptMessageHandler(key: "openDocument", handler: self)
         self.theWebView()
 
@@ -895,6 +897,22 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
                 }
             })
             break
+        case "uploadAttachmentForDatagrid":
+            DDLogDebug("进入了 uploadAttachmentForDatagrid")
+            ZonePermissions.requestImagePickerAuthorization(callback: { (zoneStatus) in
+                if zoneStatus == ZoneAuthorizationStatus.zAuthorizationStatusAuthorized {
+//                    let site = (message.body as! NSDictionary)["site"]
+                    if  let body = (message.body as?  NSDictionary), let site = body["site"] as? String, let param = body["param"] as? String {
+                        self.uploadAttachment(site, param: param)
+                    }else {
+                        self.showError(title: "参数传入错误，无法上传！")
+                    }
+                } else {
+                    //显示
+                    self.gotoApplicationSettings(alertMessage: "需要照片允许访问权限，是否跳转到手机设置页面开启相机权限？")
+                }
+            })
+            break
         case "downloadAttachment":
 //            let attachmentId = (message.body as! NSDictionary)["id"]
             if let body = (message.body as? NSDictionary), let attachmentId = body["id"] as? String {
@@ -908,6 +926,13 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
 //            let site = (message.body as! NSDictionary)["site"] as? String
             if let body = (message.body as? NSDictionary), let attachmentId = body["id"] as? String, let site = body["site"] as? String {
                 self.replaceAttachment(attachmentId, site)
+            }else {
+                self.showError(title: "参数传入错误，无法替换！")
+            }
+            break
+        case "replaceAttachmentForDatagrid":
+            if let body = (message.body as? NSDictionary), let attachmentId = body["id"] as? String, let site = body["site"] as? String, let param = body["param"] as? String {
+                self.replaceAttachment(attachmentId, site, param: param)
             }else {
                 self.showError(title: "参数传入错误，无法替换！")
             }
@@ -927,8 +952,8 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
 
 
     //上传附件
-    private func uploadAttachment(_ site: String) {
-        
+    private func uploadAttachment(_ site: String, param: String = "") {
+        DDLogDebug("uploadAttachment site: \(site) param: \(param)")
         self.choosePhotoWithImagePicker { (fileName, imageData) in
             DispatchQueue.main.async {
                 self.showLoading(title: "上传中...")
@@ -936,10 +961,20 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
             self.viewModel.uploadAttachment(workId: self.workId!, site: site, fileName: fileName, fileData: imageData).then { (idData)  in
                 DispatchQueue.main.async {
                     //ProgressHUD.showSuccess("上传成功")
-                    let callJS = "layout.appForm.uploadedAttachment(\"\(site)\", \"\(idData.id ?? "")\")"
-                    self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
-                        
-                    })
+                    if param != "" {
+                        DDLogDebug("执行了 layout.appForm.uploadedAttachmentDatagrid")
+                        let callJS = "layout.appForm.uploadedAttachmentDatagrid(\"\(site)\", \"\(idData.id ?? "")\", \"\(param)\")"
+                        self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
+                            
+                        })
+                    } else {
+                        DDLogDebug("执行了 layout.appForm.uploadedAttachment")
+                        let callJS = "layout.appForm.uploadedAttachment(\"\(site)\", \"\(idData.id ?? "")\")"
+                        self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
+                            
+                        })
+                    }
+                    
                     self.showSuccess(title: "上传成功")
                 }
             }.catch { (err) in
@@ -1012,7 +1047,7 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
     }
     
     /// 替换附件
-    private func replaceAttachment(_ attachmentId: String, _ site: String) {
+    private func replaceAttachment(_ attachmentId: String, _ site: String, param: String = "") {
         
         self.choosePhotoWithImagePicker { (fileName, imageData) in
             DispatchQueue.main.async {
@@ -1020,10 +1055,18 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
             }
             self.viewModel.replaceAttachment(id: attachmentId, workId: self.workId!, site: site, fileName: fileName, fileData: imageData).then { (idData) in
                 DispatchQueue.main.async {
-                    let callJS = "layout.appForm.replacedAttachment(\"\(site)\", \"\(attachmentId)\")"
-                    self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
-                        
-                    })
+                    if param == "" {
+                        let callJS = "layout.appForm.replacedAttachment(\"\(site)\", \"\(attachmentId)\")"
+                        self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
+                            
+                        })
+                    } else {
+                        let callJS = "layout.appForm.replacedAttachmentDatagrid(\"\(site)\", \"\(attachmentId)\", \"\(attachmentId)\")"
+                        self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
+                            
+                        })
+                    }
+                   
                     self.showSuccess(title: "替换成功")
                 }
             }.catch { (err) in

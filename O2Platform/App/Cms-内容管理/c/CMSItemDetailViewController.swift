@@ -85,8 +85,10 @@ class CMSItemDetailViewController: BaseWebViewUIViewController {
         //先添加js注入
         addScriptMessageHandler(key: "cmsFormLoaded", handler: self)
         addScriptMessageHandler(key: "uploadAttachment", handler: self)
+        addScriptMessageHandler(key: "uploadAttachmentForDatagrid", handler: self)
         addScriptMessageHandler(key: "downloadAttachment", handler: self)
         addScriptMessageHandler(key: "replaceAttachment", handler: self)
+        addScriptMessageHandler(key: "replaceAttachmentForDatagrid", handler: self)
         addScriptMessageHandler(key: "openDocument", handler: self)
         addScriptMessageHandler(key: "closeDocumentWindow", handler: self)
         self.theWebView()
@@ -272,8 +274,25 @@ extension CMSItemDetailViewController: O2WKScriptMessageHandlerImplement {
         case "uploadAttachment":
             ZonePermissions.requestImagePickerAuthorization(callback: { (zoneStatus) in
                 if zoneStatus == ZoneAuthorizationStatus.zAuthorizationStatusAuthorized {
-                    let site = (message.body as! NSDictionary)["site"]
-                    self.uploadAttachment(site as! String)
+                    if let body = (message.body as?  NSDictionary), let site = body["site"] as? String {
+                        self.uploadAttachment(site)
+                    }else {
+                        self.showError(title: "参数传入错误，无法上传！")
+                    }
+                }else {
+                    self.gotoApplicationSettings(alertMessage: "需要照片允许访问权限，是否跳转到手机设置页面开启相机权限？")
+                }
+            })
+            break
+        case "uploadAttachmentForDatagrid":
+            ZonePermissions.requestImagePickerAuthorization(callback: { (zoneStatus) in
+                if zoneStatus == ZoneAuthorizationStatus.zAuthorizationStatusAuthorized {
+                    if let body = (message.body as?  NSDictionary), let site = body["site"] as? String, let param = body["param"] as? String  {
+                        self.uploadAttachment(site, param: param)
+                    }else {
+                        self.showError(title: "参数传入错误，无法上传！")
+                    }
+                    
                 }else {
                     self.gotoApplicationSettings(alertMessage: "需要照片允许访问权限，是否跳转到手机设置页面开启相机权限？")
                 }
@@ -284,9 +303,19 @@ extension CMSItemDetailViewController: O2WKScriptMessageHandlerImplement {
             self.downloadAttachment(attachmentId as! String)
             break
         case "replaceAttachment":
-            let attachmentId = (message.body as! NSDictionary)["id"] as! String
-            let site = (message.body as! NSDictionary)["site"] as? String
-            self.replaceAttachment(attachmentId, site ?? "")
+            if let body = (message.body as? NSDictionary), let attachmentId = body["id"] as? String, let site = body["site"] as? String {
+                self.replaceAttachment(attachmentId, site)
+            }else {
+                self.showError(title: "参数传入错误，无法替换！")
+            }
+            
+            break
+        case "replaceAttachmentForDatagrid":
+            if let body = (message.body as? NSDictionary), let attachmentId = body["id"] as? String, let site = body["site"] as? String, let param = body["param"] as? String {
+                self.replaceAttachment(attachmentId, site, param: param)
+            }else {
+                self.showError(title: "参数传入错误，无法替换！")
+            }
             break
         case "openDocument":
             let url = (message.body as! NSString)
@@ -304,7 +333,7 @@ extension CMSItemDetailViewController: O2WKScriptMessageHandlerImplement {
     
     
     //上传附件
-    private func uploadAttachment(_ site:String){
+    private func uploadAttachment(_ site:String, param: String = ""){
         //选择附件上传
         var id = ""
         if self.documentId != nil {
@@ -313,9 +342,9 @@ extension CMSItemDetailViewController: O2WKScriptMessageHandlerImplement {
             id = self.itemData!.id!
         }
         let updloadURL = AppDelegate.o2Collect.generateURLWithAppContextKey(CMSContext.cmsContextKey, query: CMSContext.cmsAttachmentUpload, parameter: ["##docId##":id as AnyObject])
-        self.uploadAttachment(site, uploadURL: updloadURL!)
+        self.uploadAttachment(site, uploadURL: updloadURL!, param: param)
     }
-    private func uploadAttachment(_ site:String,uploadURL url:String) {
+    private func uploadAttachment(_ site:String,uploadURL url:String, param: String = "") {
         
         self.choosePhotoWithImagePicker { (fName, imageData) in
             DispatchQueue.main.async {
@@ -336,10 +365,16 @@ extension CMSItemDetailViewController: O2WKScriptMessageHandlerImplement {
                     }else {
                         let attachId = JSON(reponse.data)["data"]["id"].string!
                         DispatchQueue.main.async {
-                            let callJS = "layout.appForm.uploadedAttachment(\"\(site)\", \"\(attachId)\")"
-                            self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
-                                self.showSuccess(title: "上传成功")
-                            })
+                            if param == "" {
+                                let callJS = "layout.appForm.uploadedAttachment(\"\(site)\", \"\(attachId)\")"
+                                self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
+                                })
+                            } else {
+                                let callJS = "layout.appForm.uploadedAttachmentDatagrid(\"\(site)\", \"\(attachId)\", \"\(param)\")"
+                                self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
+                                })
+                            }
+                            self.showSuccess(title: "上传成功")
                         }
                     }
                 })
@@ -408,7 +443,7 @@ extension CMSItemDetailViewController: O2WKScriptMessageHandlerImplement {
     }
     
     //替换附件
-    private func replaceAttachment(_ attachmentId:String, _ site:String){
+    private func replaceAttachment(_ attachmentId:String, _ site:String, param: String = ""){
         var id = ""
         if self.documentId != nil {
             id = self.documentId!
@@ -416,7 +451,7 @@ extension CMSItemDetailViewController: O2WKScriptMessageHandlerImplement {
             id = self.itemData!.id!
         }
         let replaceURL = AppDelegate.o2Collect.generateURLWithAppContextKey(CMSContext.cmsContextKey, query: CMSContext.cmsAttachmentReplace, parameter: ["##attachId##":attachmentId as AnyObject,"##docId##": id as AnyObject])!
-        self.replaceAttachment(site, attachmentId, replaceURL: replaceURL)
+        self.replaceAttachment(site, attachmentId, replaceURL: replaceURL, param: param)
     }
     
     
@@ -470,7 +505,7 @@ extension CMSItemDetailViewController: O2WKScriptMessageHandlerImplement {
     }
     
     
-    private func replaceAttachment(_ site:String,_ attachmentId:String,replaceURL url:String){
+    private func replaceAttachment(_ site:String,_ attachmentId:String,replaceURL url:String, param: String = ""){
         
         self.choosePhotoWithImagePicker { (fName, imageData) in
             DispatchQueue.main.async {
@@ -489,10 +524,18 @@ extension CMSItemDetailViewController: O2WKScriptMessageHandlerImplement {
                     }
                 }else {
                     DispatchQueue.main.async {
-                        let callJS = "layout.appForm.replacedAttachment(\"\(site)\", \"\(attachmentId)\")"
-                        self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
-                            self.showSuccess(title: "替换成功")
-                        })
+                        if param == "" {
+                            let callJS = "layout.appForm.replacedAttachment(\"\(site)\", \"\(attachmentId)\")"
+                            self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
+                                
+                            })
+                        } else {
+                            let callJS = "layout.appForm.replacedAttachmentDatagrid(\"\(site)\", \"\(attachmentId)\", \"\(param)\")"
+                            self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
+                                
+                            })
+                        }
+                        self.showSuccess(title: "替换成功")
                     }
                 }
             }
