@@ -18,6 +18,7 @@ class OOMeetingFormViewController: FormViewController {
     var fromDetail: Bool = false //是否从OOMeetingDetailViewController来的，如果是，就需要返回两层
     
     var meetingInfo: OOMeetingInfo? = nil
+    var typeList: [String] = [] // 会议类型
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +35,12 @@ class OOMeetingFormViewController: FormViewController {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "创建", style: .plain, target: self, action: #selector(createOrUpdateMeetingAction))
             self.meetingInfo = OOMeetingInfo()
         }
+        
+        // 从配置文件读取会议类型列表
+        if let config = O2UserDefaults.shared.meetingConfig, let types = config.typeList {
+            self.typeList = types
+        }
+        
         self.loadForm()
     }
     
@@ -142,11 +149,35 @@ class OOMeetingFormViewController: FormViewController {
                 }
                 row.value = self.meetingInfo?.woRoom
             }
+        
+            <<< ActionSheetRow<String>("type") {
+                $0.title = "会议类型"
+                $0.selectorTitle = "请选择会议类型"
+                $0.options = self.typeList
+                $0.value = self.meetingInfo?.type ?? ""
+            }
+        
+            <<< MeetingFormSinglePersonPickerRow("hostPerson") { row in
+                row.title = "主持人"
+                row.value = self.meetingInfo?.hostPerson ?? ""
+            }
+        
+            <<< MeetingFormSingleUnitPickerRow("hostUnit") { row in
+                row.title = "承办部门"
+                row.value = self.meetingInfo?.hostUnit ?? ""
+            }
+
             <<< MeetingFormChoosePersonCellRow("invitePerson") { row in
                 row.title = "参会人员"
                 row.cell.viewModel = self.viewModel
                 row.cell.isUpdate = self.meetingInfo?.id != nil
-                if let persons = self.meetingInfo?.invitePersonList, persons.count > 0 {
+                let oldPersons = self.meetingInfo?.invitePersonList ?? [] //兼容老字段
+                let newPersons = self.meetingInfo?.inviteMemberList ?? [] //
+                var persons = newPersons
+                if persons.count <= 0 {
+                    persons = oldPersons
+                }
+                if persons.count > 0 {
                     var selectPersons: [OOPersonModel] = []
                     for person in persons {
                         let pModel = OOPersonModel()
@@ -243,8 +274,17 @@ class OOMeetingFormViewController: FormViewController {
             }
         }
         self.meetingInfo?.invitePersonList = personIds
+        self.meetingInfo?.inviteMemberList = personIds //被邀请的人员 这个是新字段
         let summaryRow = form.rowBy(tag: "summary") as? TextAreaRow
         self.meetingInfo?.summary = summaryRow?.value
+        
+        //
+        let typeRow = form.rowBy(tag: "type") as? ActionSheetRow<String>
+        self.meetingInfo?.type = typeRow?.value ?? ""
+        let hostPersonRow = form.rowBy(tag: "hostPerson") as? MeetingFormSinglePersonPickerRow
+        self.meetingInfo?.hostPerson = hostPersonRow?.value ?? ""
+        let hostUnitRow = form.rowBy(tag: "hostUnit") as? MeetingFormSingleUnitPickerRow
+        self.meetingInfo?.hostUnit = hostUnitRow?.value ?? ""
         
         return true
     }

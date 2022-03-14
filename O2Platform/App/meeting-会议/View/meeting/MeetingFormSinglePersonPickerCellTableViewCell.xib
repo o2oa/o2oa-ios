@@ -10,43 +10,43 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="MeetingFormRoomPickerCell" customModule="O2Platform" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="MeetingFormSinglePersonPickerCellTableViewCell" customModule="O2Platform" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bKz-6r-23f">
-                        <rect key="frame" x="272" y="5" width="0.0" height="34"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vw6-ph-cBK">
+                        <rect key="frame" x="274" y="5" width="0.0" height="34"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="34" id="wbQ-S6-8wM"/>
+                            <constraint firstAttribute="height" constant="34" id="a8f-mt-Toe"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_r" translatesAutoresizingMaskIntoConstraints="NO" id="QsL-4W-7xb">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_r" translatesAutoresizingMaskIntoConstraints="NO" id="SL6-PX-niZ">
                         <rect key="frame" x="284" y="10" width="24" height="24"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="24" id="b8v-Tg-rGX"/>
-                            <constraint firstAttribute="width" constant="24" id="nv9-no-Wu6"/>
+                            <constraint firstAttribute="width" constant="24" id="Lus-uF-Q7z"/>
+                            <constraint firstAttribute="height" constant="24" id="RRe-Vc-Szn"/>
                         </constraints>
                     </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="QsL-4W-7xb" secondAttribute="trailing" constant="12" id="Rb7-yd-8yq"/>
-                    <constraint firstItem="QsL-4W-7xb" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="ThN-9N-Rr0"/>
-                    <constraint firstItem="bKz-6r-23f" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="Xeb-59-x6p"/>
-                    <constraint firstAttribute="bottom" secondItem="bKz-6r-23f" secondAttribute="bottom" constant="5" id="c7M-db-MLl"/>
-                    <constraint firstItem="QsL-4W-7xb" firstAttribute="leading" secondItem="bKz-6r-23f" secondAttribute="trailing" constant="12" id="zVZ-33-APb"/>
+                    <constraint firstItem="SL6-PX-niZ" firstAttribute="leading" secondItem="vw6-ph-cBK" secondAttribute="trailing" constant="10" id="0ac-OJ-M3Y"/>
+                    <constraint firstAttribute="bottom" secondItem="vw6-ph-cBK" secondAttribute="bottom" constant="5" id="7kk-ny-r5H"/>
+                    <constraint firstAttribute="trailing" secondItem="SL6-PX-niZ" secondAttribute="trailing" constant="12" id="TkU-v6-Gef"/>
+                    <constraint firstItem="SL6-PX-niZ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="WyF-Y2-31H"/>
+                    <constraint firstItem="vw6-ph-cBK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="pPH-Fu-eVK"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="roomLabel" destination="bKz-6r-23f" id="37y-ND-PNO"/>
+                <outlet property="personLabel" destination="vw6-ph-cBK" id="fMX-Na-LOG"/>
             </connections>
-            <point key="canvasLocation" x="-242.0289855072464" y="130.58035714285714"/>
+            <point key="canvasLocation" x="131.8840579710145" y="130.58035714285714"/>
         </tableViewCell>
     </objects>
     <resources>

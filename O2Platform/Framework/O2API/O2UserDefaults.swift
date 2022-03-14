@@ -38,6 +38,10 @@ extension UserDefaults {
         get { return unarchive(key) }
         set { archive(key, newValue) }
     }
+    subscript(key: DefaultsKey<OOMeetingConfigInfo?>) -> OOMeetingConfigInfo? {
+        get { return unarchive(key) }
+        set { archive(key, newValue) }
+    }
 
 }
 // MARK:- 扩展定义的键
@@ -53,7 +57,7 @@ extension DefaultsKeys {
     static let customStyleHash = DefaultsKey<String?>("O2customStyleHash")
     static let searchHistory = DefaultsKey<[String]?>("O2SearchHistoryKey")
     static let imConfig = DefaultsKey<IMConfig?>("imConfig")
-
+    static let meetingConfig = DefaultsKey<OOMeetingConfigInfo?>("meetingConfig")
 }
 
 class O2UserDefaults {
@@ -189,6 +193,18 @@ class O2UserDefaults {
         }
         set {
             Defaults[.imConfig] = newValue
+        }
+    }
+    
+    var meetingConfig: OOMeetingConfigInfo? {
+        get {
+            guard let config = Defaults[.meetingConfig] else {
+                return OOMeetingConfigInfo()
+            }
+            return config
+        }
+        set {
+            Defaults[.meetingConfig] = newValue
         }
     }
     

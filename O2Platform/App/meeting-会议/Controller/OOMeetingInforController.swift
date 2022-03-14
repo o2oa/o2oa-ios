@@ -89,6 +89,7 @@ class OOMeetingInforController: UIViewController {
         viewModel.loadMeetingConfig().then { (config) in
             self.config = config
             if let c = self.config {
+                O2UserDefaults.shared.meetingConfig = c
                 if c.mobileCreateEnable == true {
                     DispatchQueue.main.async {
                         UIApplication.shared.windows.first?.addSubview(self.createView)

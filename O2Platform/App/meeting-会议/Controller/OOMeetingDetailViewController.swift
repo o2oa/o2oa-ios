@@ -63,6 +63,26 @@ class OOMeetingDetailViewController: FormViewController {
                 row.title = "会议室"
                 row.value = self.meetingInfo?.woRoom?.name
             }
+            <<< LabelRow(){ row in
+                row.title = "会议类型"
+                row.value = self.meetingInfo?.type ?? ""
+            }
+            <<< LabelRow(){ row in
+                row.title = "主持人"
+                var name = self.meetingInfo?.hostPerson ?? ""
+                if name.contains("@") {
+                     name  = name.split("@")[0]
+                }
+                row.value = name
+            }
+            <<< LabelRow(){ row in
+                row.title = "承办部门"
+                var name = self.meetingInfo?.hostUnit ?? ""
+                if name.contains("@") {
+                     name  = name.split("@")[0]
+                }
+                row.value = name
+            }
             <<< PersonListRow(){ row in
                 row.cell.viewModel = self.viewModel
                 row.cell.delegate = self

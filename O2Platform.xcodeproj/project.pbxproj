@@ -259,6 +259,10 @@
 		B1843F272788104000A028B9 /* O2MindMapAddIconDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1843F262788104000A028B9 /* O2MindMapAddIconDialog.swift */; };
 		B1843F562788106300A028B9 /* O2MindMapAddIconDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1843F552788106300A028B9 /* O2MindMapAddIconDialog.xib */; };
 		B1852EF027C5DD8A00608478 /*  SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1852EC527C5DD8A00608478 /*  SwiftyJSON.swift */; };
+		B18EEB9327DEE4CC00479DA1 /* MeetingFormSinglePersonPickerCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18EEB9127DEE4CC00479DA1 /* MeetingFormSinglePersonPickerCellTableViewCell.swift */; };
+		B18EEB9427DEE4CC00479DA1 /* MeetingFormSinglePersonPickerCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B18EEB9227DEE4CC00479DA1 /* MeetingFormSinglePersonPickerCellTableViewCell.xib */; };
+		B18EEB9727DEEACA00479DA1 /* MeetingFormSingleUnitPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18EEB9527DEEACA00479DA1 /* MeetingFormSingleUnitPickerCell.swift */; };
+		B18EEB9827DEEACA00479DA1 /* MeetingFormSingleUnitPickerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B18EEB9627DEEACA00479DA1 /* MeetingFormSingleUnitPickerCell.xib */; };
 		B18FFF5F23756B6C001B2887 /* JPushAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18FFF5E23756B6C001B2887 /* JPushAPI.swift */; };
 		B1908E1422685E8F00D75632 /* O2WebViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1908E1322685E8F00D75632 /* O2WebViewModels.swift */; };
 		B1908E4C22687B1A00D75632 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B1908E4E22687B1A00D75632 /* Localizable.strings */; };
@@ -1464,6 +1468,10 @@
 		B1843F262788104000A028B9 /* O2MindMapAddIconDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2MindMapAddIconDialog.swift; sourceTree = "<group>"; };
 		B1843F552788106300A028B9 /* O2MindMapAddIconDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = O2MindMapAddIconDialog.xib; sourceTree = "<group>"; };
 		B1852EC527C5DD8A00608478 /*  SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = " SwiftyJSON.swift"; sourceTree = "<group>"; };
+		B18EEB9127DEE4CC00479DA1 /* MeetingFormSinglePersonPickerCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFormSinglePersonPickerCellTableViewCell.swift; sourceTree = "<group>"; };
+		B18EEB9227DEE4CC00479DA1 /* MeetingFormSinglePersonPickerCellTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingFormSinglePersonPickerCellTableViewCell.xib; sourceTree = "<group>"; };
+		B18EEB9527DEEACA00479DA1 /* MeetingFormSingleUnitPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFormSingleUnitPickerCell.swift; sourceTree = "<group>"; };
+		B18EEB9627DEEACA00479DA1 /* MeetingFormSingleUnitPickerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingFormSingleUnitPickerCell.xib; sourceTree = "<group>"; };
 		B18FFF5E23756B6C001B2887 /* JPushAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JPushAPI.swift; sourceTree = "<group>"; };
 		B1908E1322685E8F00D75632 /* O2WebViewModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2WebViewModels.swift; sourceTree = "<group>"; };
 		B1908E4D22687B1A00D75632 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -3235,6 +3243,10 @@
 				E40E249620B7DA3C009F8BE7 /* OOMeetingPersonTableViewCell.xib */,
 				B1B145202564FFE100CD7D2B /* PersonListCell.swift */,
 				B1B145212564FFE100CD7D2B /* PersonListCell.xib */,
+				B18EEB9127DEE4CC00479DA1 /* MeetingFormSinglePersonPickerCellTableViewCell.swift */,
+				B18EEB9227DEE4CC00479DA1 /* MeetingFormSinglePersonPickerCellTableViewCell.xib */,
+				B18EEB9527DEEACA00479DA1 /* MeetingFormSingleUnitPickerCell.swift */,
+				B18EEB9627DEEACA00479DA1 /* MeetingFormSingleUnitPickerCell.xib */,
 			);
 			path = meeting;
 			sourceTree = "<group>";
@@ -5006,6 +5018,7 @@
 				B1B0102C23586831002BF874 /* CFFolderTableViewCell.xib in Resources */,
 				E428AF6920AEA5EE00D964B9 /* OOAttandanceSettingDataView.xib in Resources */,
 				E4B8871E1D9D477A002E1A46 /* Assets.xcassets in Resources */,
+				B18EEB9827DEEACA00479DA1 /* MeetingFormSingleUnitPickerCell.xib in Resources */,
 				E46E6CA51DD41F5D00AB7561 /* ZSSsuperscript.png in Resources */,
 				B1173A682488CD5B005075F0 /* IMConversationItemCell.xib in Resources */,
 				B197771D217D9D810019F3A8 /* beep.wav in Resources */,
@@ -5073,6 +5086,7 @@
 				E46E6CB41DD41F5D00AB7561 /* ZSSviewsource@2x.png in Resources */,
 				E4B2321820B3C1870082F30A /* OOAttanceFooterView.xib in Resources */,
 				E428AF5620AA7A7500D964B9 /* OOAttanceItemCell.xib in Resources */,
+				B18EEB9427DEE4CC00479DA1 /* MeetingFormSinglePersonPickerCellTableViewCell.xib in Resources */,
 				E4B888EA1D9D48F1002E1A46 /* task.storyboard in Resources */,
 				E4B888A91D9D48F1002E1A46 /* MJRefresh.bundle in Resources */,
 				E46E6C951DD41F5D00AB7561 /* ZSSoutdent.png in Resources */,
@@ -5659,6 +5673,7 @@
 				E45DA8F21DACD7CA00E0735D /* SCScrollView.swift in Sources */,
 				E40C41E91E7F7C0D00568805 /* ZoneMainCategoryTableViewCell.swift in Sources */,
 				E4B889401D9D6308002E1A46 /* CacheUtil.swift in Sources */,
+				B18EEB9327DEE4CC00479DA1 /* MeetingFormSinglePersonPickerCellTableViewCell.swift in Sources */,
 				B12FD1D92283D5B700E636BA /* O2ThemeManager+OC.swift in Sources */,
 				E428AF4520A95FE800D964B9 /* OOAttanceTotalController.swift in Sources */,
 				B1089693210AD8E400F02267 /* CalendarEventTableViewCell.swift in Sources */,
@@ -5927,6 +5942,7 @@
 				E4B888F61D9D48F1002E1A46 /* Application.swift in Sources */,
 				E4C24C3F208D7EDE00E426B0 /* OOContactSearchViewModel.swift in Sources */,
 				E4B697FC2076520E0062F6E8 /* OOFileModels.swift in Sources */,
+				B18EEB9727DEEACA00479DA1 /* MeetingFormSingleUnitPickerCell.swift in Sources */,
 				E4B889011D9D48F1002E1A46 /* TodoedActionCell.swift in Sources */,
 				E4C24C4C208D7EDE00E426B0 /* OOCDLCell.swift in Sources */,
 				B158E95E215DD3F500AB2727 /* AIConstants.swift in Sources */,
