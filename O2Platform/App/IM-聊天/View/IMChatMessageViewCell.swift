@@ -46,6 +46,13 @@ class IMChatMessageViewCell: UITableViewCell {
         view.frame = CGRect(x: 0, y: 0, width: IMFileView.IMFileView_width, height: IMFileView.IMFileView_height)
         return view
     }()
+    
+    // 流程消息卡片
+    private lazy var processView: IMProcessCardView = {
+        let view = Bundle.main.loadNibNamed("IMProcessCardView", owner: self, options: nil)?.first as! IMProcessCardView
+        view.frame = CGRect(x: 0, y: 0, width: IMProcessCardView.IMProcessCardView_width, height: IMProcessCardView.IMProcessCardView_height)
+        return view
+    }()
 
     var delegate: IMChatMessageDelegate?
     //是否正在播放音频 音频消息使用
@@ -283,9 +290,24 @@ class IMChatMessageViewCell: UITableViewCell {
                 locationMsgRender(info: body)
             } else if o2_im_msg_type_file == body.type {
                 fileMsgRender(info: body)
+            } else if o2_im_msg_type_process == body.type {
+                processMsgRender(info: body)
             } else {
-                _ = textMsgRender(msg: body.body!)
+                _ = textMsgRender(msg: body.body ?? "")
             }
+        }
+    }
+    
+    // 流程工作卡片消息
+    private func processMsgRender(info: IMMessageBodyInfo) {
+        self.messageBackgroundWidth.constant = IMProcessCardView.IMProcessCardView_width + 20
+        self.messageBackgroundHeight.constant =  IMProcessCardView.IMProcessCardView_height + 20
+        self.processView.translatesAutoresizingMaskIntoConstraints = false
+        self.messageBackgroundView.addSubview(self.processView)
+        self.processView.setCardInfo(info: info)
+        self.constraintWithContent(contentView: self.processView)
+        self.processView.addTapGesture { tap in
+            self.delegate?.openWork(workId: info.work ?? "")
         }
     }
     

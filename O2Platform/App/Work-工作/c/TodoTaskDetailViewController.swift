@@ -322,7 +322,14 @@ class TodoTaskDetailViewController: BaseWebViewUIViewController {
         })
     }
 
+    private var goBackDoing = false
+    
     @objc func goBack() {
+        if (goBackDoing) {
+            DDLogInfo("多次执行/////////goBack()")
+            return
+        }
+        goBackDoing = true
         DDLogDebug("backFlag = \(backFlag)")
         switch backFlag {
         case 1:
@@ -852,6 +859,11 @@ extension TodoTaskDetailViewController: WKNavigationDelegate, WKUIDelegate {
         DDLogDebug("didFail")
         DDLogError(error.localizedDescription)
         self.showError(title: "工作加载异常！")
+    }
+    
+    func webViewDidClose(_ webView: WKWebView) {
+        DDLogInfo("h5执行了window.close()")
+        self.goBack()
     }
 
 }

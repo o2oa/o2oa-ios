@@ -85,6 +85,14 @@ class IMMessageBodyInfo: NSObject, DataModel {
     @objc var addressDetail: String?
     var latitude: Double?//type=location的时候位置信息
     var longitude: Double?//type=location的时候位置信息
+    
+    @objc var title:  String? // 流程工作标题
+    @objc var work:  String?// 流程工作id
+    @objc var process:  String?// 流程id
+    @objc var processName:  String?// 流程名称
+    @objc var application:  String?// 流程应用id
+    @objc var applicationName:  String?// 流程应用名称
+    @objc var job:  String?// 流程工作jobId
 
 
     required override init() { }

@@ -756,18 +756,20 @@ extension IMChatViewController: IMChatMessageDelegate {
     }
     
     func openWork(workId: String) {
-        self.showLoading()
-        self.viewModel.isWorkCompleted(work: workId).always {
-            self.hideLoading()
-        }.then{ result in
-            if result {
-                self.showMessage(msg: "工作已经完成了！")
-            }else {
-                self.openWorkPage(work: workId)
-            }
-        }.catch {_ in
-            self.showMessage(msg: "工作已经完成了！")
-        }
+        self.openWorkPage(work: workId)
+        // 已经支持 未结束和结束的工作打开
+//        self.showLoading()
+//        self.viewModel.isWorkCompleted(work: workId).always {
+//            self.hideLoading()
+//        }.then{ result in
+//            if result {
+//                self.showMessage(msg: "工作已经完成了！")
+//            }else {
+//                self.openWorkPage(work: workId)
+//            }
+//        }.catch {_ in
+//            self.showMessage(msg: "工作已经完成了！")
+//        }
         
         
     }
@@ -986,10 +988,15 @@ extension IMChatViewController: UITableViewDelegate, UITableViewDataSource {
             }  else if o2_im_msg_type_file == body.type {
                 
                 return 69 + IMFileView.IMFileView_height + 20 + 10
-           } else {
-                let size = body.body!.getSizeWithMaxWidth(fontSize: 16, maxWidth: messageWidth)
-                // 上边距 69 + 文字高度 + 内边距 + 底部空白高度
-                return 69 + size.height + 28 + 10
+            }   else if o2_im_msg_type_process == body.type {
+               
+                return 69 + IMProcessCardView.IMProcessCardView_height + 20 + 10
+            } else {
+                if let bodyText = body.body {
+                    let size = bodyText.getSizeWithMaxWidth(fontSize: 16, maxWidth: messageWidth)
+                    // 上边距 69 + 文字高度 + 内边距 + 底部空白高度
+                    return 69 + size.height + 28 + 10
+                }
             }
         }
         return 132

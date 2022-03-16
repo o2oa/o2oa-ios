@@ -110,18 +110,21 @@ extension IMInstantMessageViewController : IMChatMessageDelegate {
     }
     
     func openWork(workId: String) {
-        self.showLoading()
-        self.viewModel.isWorkCompleted(work: workId).always {
-            self.hideLoading()
-        }.then{ result in
-            if result {
-                self.showMessage(msg: "工作已经完成了！")
-            }else {
-                self.openWorkPage(work: workId)
-            }
-        }.catch {_ in
-            self.showMessage(msg: "工作已经完成了！")
-        }
+        self.openWorkPage(work: workId)
+        
+        // 已经支持 未结束和结束的工作打开
+//        self.showLoading()
+//        self.viewModel.isWorkCompleted(work: workId).always {
+//            self.hideLoading()
+//        }.then{ result in
+//            if result {
+//                self.showMessage(msg: "工作已经完成了！")
+//            }else {
+//                self.openWorkPage(work: workId)
+//            }
+//        }.catch {_ in
+//            self.showMessage(msg: "工作已经完成了！")
+//        }
         
         
     }

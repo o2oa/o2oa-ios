@@ -69,6 +69,8 @@
 		B1173A682488CD5B005075F0 /* IMConversationItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1173A662488CD5B005075F0 /* IMConversationItemCell.xib */; };
 		B1173A6A2488D4AD005075F0 /* O2IM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1173A692488D4AD005075F0 /* O2IM.swift */; };
 		B1173B5E2489F48C005075F0 /* O2Emoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B1173B2C2489F48C005075F0 /* O2Emoji.bundle */; };
+		B126588527E1CBDE00365C9A /* IMProcessCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B126588427E1CBDE00365C9A /* IMProcessCardView.swift */; };
+		B12658B127E1CBE800365C9A /* IMProcessCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B12658B027E1CBE800365C9A /* IMProcessCardView.xib */; };
 		B1298E50236692AB006E9236 /* CloudFileListBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1298E4F236692AB006E9236 /* CloudFileListBaseController.swift */; };
 		B1298E7C23669BA2006E9236 /* CloudFileTypeListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1298E7B23669BA2006E9236 /* CloudFileTypeListController.swift */; };
 		B1298E7E2366AE4C006E9236 /* CloudFileImageCollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1298E7D2366AE4C006E9236 /* CloudFileImageCollectionController.swift */; };
@@ -1249,6 +1251,8 @@
 		B1173A662488CD5B005075F0 /* IMConversationItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IMConversationItemCell.xib; sourceTree = "<group>"; };
 		B1173A692488D4AD005075F0 /* O2IM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2IM.swift; sourceTree = "<group>"; };
 		B1173B2C2489F48C005075F0 /* O2Emoji.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = O2Emoji.bundle; sourceTree = "<group>"; };
+		B126588427E1CBDE00365C9A /* IMProcessCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMProcessCardView.swift; sourceTree = "<group>"; };
+		B12658B027E1CBE800365C9A /* IMProcessCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IMProcessCardView.xib; sourceTree = "<group>"; };
 		B1298E4F236692AB006E9236 /* CloudFileListBaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFileListBaseController.swift; sourceTree = "<group>"; };
 		B1298E7B23669BA2006E9236 /* CloudFileTypeListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFileTypeListController.swift; sourceTree = "<group>"; };
 		B1298E7D2366AE4C006E9236 /* CloudFileImageCollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFileImageCollectionController.swift; sourceTree = "<group>"; };
@@ -2399,6 +2403,8 @@
 				B1D4AFEC24B409A9004E648E /* AudioTouchButton.swift */,
 				B1B4EEF02588A9D700E8B7C8 /* IMFileView.xib */,
 				B1B4EEF22588AC6900E8B7C8 /* IMFileView.swift */,
+				B126588427E1CBDE00365C9A /* IMProcessCardView.swift */,
+				B12658B027E1CBE800365C9A /* IMProcessCardView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -5019,6 +5025,7 @@
 				E428AF6920AEA5EE00D964B9 /* OOAttandanceSettingDataView.xib in Resources */,
 				E4B8871E1D9D477A002E1A46 /* Assets.xcassets in Resources */,
 				B18EEB9827DEEACA00479DA1 /* MeetingFormSingleUnitPickerCell.xib in Resources */,
+				B12658B127E1CBE800365C9A /* IMProcessCardView.xib in Resources */,
 				E46E6CA51DD41F5D00AB7561 /* ZSSsuperscript.png in Resources */,
 				B1173A682488CD5B005075F0 /* IMConversationItemCell.xib in Resources */,
 				B197771D217D9D810019F3A8 /* beep.wav in Resources */,
@@ -5655,6 +5662,7 @@
 				E40E24E520BBA6C9009F8BE7 /* OOMeetingViewModelError.swift in Sources */,
 				B1DE8564236030E2003C36E2 /* Bundle+Extension.swift in Sources */,
 				E4B8887B1D9D48F1002E1A46 /* FileBSImagePickerViewController.swift in Sources */,
+				B126588527E1CBDE00365C9A /* IMProcessCardView.swift in Sources */,
 				E4D559CC1DD1B203002C4D6C /* BBSSubjectDetailViewController.swift in Sources */,
 				09E02E8F1F16319600579887 /* Log.swift in Sources */,
 				E4B888701D9D48F1002E1A46 /* ContactPersonInfoController.swift in Sources */,

@@ -100,6 +100,14 @@ class IMConversationItemCell: UITableViewCell {
                 let bundle = Bundle().o2EmojiBundle(anyClass: IMConversationItemCell.self)
                 let path = o2ImEmojiPath(emojiBody: body.body!)
                 self.emojiImg.image = UIImage(named: path, in: bundle, compatibleWith: nil)
+            } else if body.type == o2_im_msg_type_process {
+                self.messageLabel.text = o2_im_msg_body_process
+                self.messageLabel.isHidden = false
+                self.emojiImg.isHidden = true
+            } else if body.type == o2_im_msg_type_cms {
+                self.messageLabel.text = o2_im_msg_body_cms
+                self.messageLabel.isHidden = false
+                self.emojiImg.isHidden = true
             } else {
                 self.messageLabel.isHidden = true
                 self.emojiImg.isHidden = true
