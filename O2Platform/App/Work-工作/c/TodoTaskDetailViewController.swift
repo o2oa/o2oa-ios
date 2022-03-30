@@ -154,6 +154,11 @@ class TodoTaskDetailViewController: BaseWebViewUIViewController {
         addScriptMessageHandler(key: "openDocument", handler: self)
         self.theWebView()
 
+        
+        //水印
+//        let waterView = WaterMarkView.addWaterMarkView(waterMarkText: "你的姓名")
+//        self.view.addSubview(waterView)
+//        self.view.layer.masksToBounds = true // 裁剪 因为水印是一个很大的view
     }
     
     @objc private func showKey() {

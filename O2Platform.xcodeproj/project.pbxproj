@@ -69,6 +69,7 @@
 		B1173A682488CD5B005075F0 /* IMConversationItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1173A662488CD5B005075F0 /* IMConversationItemCell.xib */; };
 		B1173A6A2488D4AD005075F0 /* O2IM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1173A692488D4AD005075F0 /* O2IM.swift */; };
 		B1173B5E2489F48C005075F0 /* O2Emoji.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B1173B2C2489F48C005075F0 /* O2Emoji.bundle */; };
+		B119BC6427F43657001DB15C /* WaterMarkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B119BC6327F43657001DB15C /* WaterMarkTableViewCell.swift */; };
 		B126588527E1CBDE00365C9A /* IMProcessCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B126588427E1CBDE00365C9A /* IMProcessCardView.swift */; };
 		B12658B127E1CBE800365C9A /* IMProcessCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B12658B027E1CBE800365C9A /* IMProcessCardView.xib */; };
 		B1298E50236692AB006E9236 /* CloudFileListBaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1298E4F236692AB006E9236 /* CloudFileListBaseController.swift */; };
@@ -325,6 +326,7 @@
 		B1BB67B224C6E0320020BD7D /* OOAttendanceScheduleViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BB67B024C6E0320020BD7D /* OOAttendanceScheduleViewCell.swift */; };
 		B1BB67B324C6E0320020BD7D /* OOAttendanceScheduleViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1BB67B124C6E0320020BD7D /* OOAttendanceScheduleViewCell.xib */; };
 		B1BC8CDA216B3D5F00AF571F /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B1BC8CD9216B3D5E00AF571F /* libc++.tbd */; };
+		B1BEF33927F3FD1C00D4F449 /* WaterMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1BEF33827F3FD1C00D4F449 /* WaterMarkView.swift */; };
 		B1C0A171256E2AF800C7041E /* MeetingFormRoomPickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C0A16F256E2AF800C7041E /* MeetingFormRoomPickerCell.swift */; };
 		B1C0A172256E2AF800C7041E /* MeetingFormRoomPickerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1C0A170256E2AF800C7041E /* MeetingFormRoomPickerCell.xib */; };
 		B1C0A1A2256E3EEA00C7041E /* MeetingFormChoosePersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C0A1A0256E3EEA00C7041E /* MeetingFormChoosePersonCell.swift */; };
@@ -1251,6 +1253,7 @@
 		B1173A662488CD5B005075F0 /* IMConversationItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IMConversationItemCell.xib; sourceTree = "<group>"; };
 		B1173A692488D4AD005075F0 /* O2IM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2IM.swift; sourceTree = "<group>"; };
 		B1173B2C2489F48C005075F0 /* O2Emoji.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = O2Emoji.bundle; sourceTree = "<group>"; };
+		B119BC6327F43657001DB15C /* WaterMarkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterMarkTableViewCell.swift; sourceTree = "<group>"; };
 		B126588427E1CBDE00365C9A /* IMProcessCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMProcessCardView.swift; sourceTree = "<group>"; };
 		B12658B027E1CBE800365C9A /* IMProcessCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IMProcessCardView.xib; sourceTree = "<group>"; };
 		B1298E4F236692AB006E9236 /* CloudFileListBaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFileListBaseController.swift; sourceTree = "<group>"; };
@@ -1538,6 +1541,7 @@
 		B1BB67B024C6E0320020BD7D /* OOAttendanceScheduleViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOAttendanceScheduleViewCell.swift; sourceTree = "<group>"; };
 		B1BB67B124C6E0320020BD7D /* OOAttendanceScheduleViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OOAttendanceScheduleViewCell.xib; sourceTree = "<group>"; };
 		B1BC8CD9216B3D5E00AF571F /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		B1BEF33827F3FD1C00D4F449 /* WaterMarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterMarkView.swift; sourceTree = "<group>"; };
 		B1C0A16F256E2AF800C7041E /* MeetingFormRoomPickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFormRoomPickerCell.swift; sourceTree = "<group>"; };
 		B1C0A170256E2AF800C7041E /* MeetingFormRoomPickerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingFormRoomPickerCell.xib; sourceTree = "<group>"; };
 		B1C0A1A0256E3EEA00C7041E /* MeetingFormChoosePersonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFormChoosePersonCell.swift; sourceTree = "<group>"; };
@@ -2946,6 +2950,8 @@
 				B16CA75326B1210D0009B24C /* O2AudioPlayFloatingWindow.swift */,
 				B194421D277C3E9600B7E66A /* O2BaseControllerForRotate.swift */,
 				B1A04B82277DAB20007DDB3B /* O2CustomViewProtocol.swift */,
+				B1BEF33827F3FD1C00D4F449 /* WaterMarkView.swift */,
+				B119BC6327F43657001DB15C /* WaterMarkTableViewCell.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -5488,6 +5494,7 @@
 				B1489CB624935104009EE9FD /* IMInstantMessageViewController.swift in Sources */,
 				E40C41F21E83715C00568805 /* ZLUISearchBar.swift in Sources */,
 				E4B888791D9D48F1002E1A46 /* Person.swift in Sources */,
+				B119BC6427F43657001DB15C /* WaterMarkTableViewCell.swift in Sources */,
 				E46E6CC01DD41F5D00AB7561 /* HRColorUtil.m in Sources */,
 				E41512611ED80AE8006531B0 /* ZonePermissions.swift in Sources */,
 				E4B6975820762EA00062F6E8 /* OOPlaceTextView.swift in Sources */,
@@ -5647,6 +5654,7 @@
 				09E02E0E1F16001B00579887 /* Head.swift in Sources */,
 				B18398AD249B00AA001C6FAA /* IMLocationView.swift in Sources */,
 				E4D2313020A29E9F00837868 /* OOAppMainCollectionReusableView.swift in Sources */,
+				B1BEF33927F3FD1C00D4F449 /* WaterMarkView.swift in Sources */,
 				B165CD5B2242093500373B66 /* PresentrShadow.swift in Sources */,
 				B107453C21A52FA00015F1B2 /* O2PersonInfo.swift in Sources */,
 				E4B698012076524C0062F6E8 /* O2InformationModels.swift in Sources */,
