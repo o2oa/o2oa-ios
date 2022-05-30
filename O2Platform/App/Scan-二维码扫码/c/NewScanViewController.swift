@@ -93,7 +93,7 @@ class NewScanViewController: LBXScanViewController {
                             
                         }
                     })
-                }else {//其他扫描结果
+                } else {//其他扫描结果
                     let alertController = UIAlertController(title: "扫描结果", message: result.strScanned!, preferredStyle: .alert)
                     let okAction = UIAlertAction(title: "确定", style: .default) {
                         action in

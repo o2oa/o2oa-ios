@@ -15,10 +15,10 @@ class ScanHelper {
         //新版本 仿新版微信 全屏扫码
         let scanVC = ScanQRViewController()
         scanVC.resultBlock = { result in
-            if let callback = callbackResult  {
+            let o2Check = QRCodeResultViewController.checkResultIsO2(result: result)
+            if let callback = callbackResult, !(o2Check.0 || !o2Check.1.isEmpty)  {
                 callback(result)
-            }else {
-                //打开O2业务vc 目前两个功能 扫码登录O2和会议签到
+            } else {
                 QRCodeResultViewController.openQRResult(result: result, vc: vc)
             }
         }
