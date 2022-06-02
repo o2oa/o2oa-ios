@@ -131,6 +131,21 @@ public class O2UPloadImageIdsDataModel: DataModel {
 
 
 
+class BaseErrorResponse: HandyJSON {
+    var count:Int?
+    
+    @objc var date:String?
+    
+    @objc var message:String?
+     
+    @objc var size:String?
+    
+    var spent:Int?
+    
+    @objc var type:String?
+    
+    required public init() {}
+}
 
 
 

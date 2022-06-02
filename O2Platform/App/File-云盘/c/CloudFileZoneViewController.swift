@@ -25,12 +25,31 @@ class CloudFileZoneViewController: UITableViewController {
         self.tableView.register(UINib.init(nibName: "CloudFileV3ZoneCell", bundle: nil), forCellReuseIdentifier: "CloudFileV3ZoneCell")
         self.tableView.register(UINib.init(nibName: "CloudFileV3ZoneHeaderCell", bundle: nil), forCellReuseIdentifier: "CloudFileV3ZoneHeaderCell")
         self.tableView.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(loadData(_:)))
-        
-        
+        self.loadIsZoneCreator()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         self.loadData(nil)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let id = segue.identifier, id == "openZoneForm", let zone = sender as? CloudFileV3Zone, let vc = segue.destination as? CloudFileV3ZoneFormViewController {
+            vc.oldZone = zone
+        }
+    }
     
+    
+    func loadIsZoneCreator() {
+        self.cFileVM.isZoneCreator().then { r in
+            if r { // 有创建共享区的权限
+                self.navigationItem.rightBarButtonItems = [UIBarButtonItem(image: UIImage(named: "add"), style: .plain, target: self, action: #selector(self.addZone))]
+            }
+        }.catch { e in
+            DDLogError(e.localizedDescription)
+        }
+    }
+    
+    // 加载列表数据 收藏的共享区和我能看到的共享区
     @objc func loadData(_ sender:AnyObject?) {
         self.showLoading()
         self.cFileVM.loadAllZoneAndFavoriteList().then { list in
@@ -144,7 +163,56 @@ class CloudFileZoneViewController: UITableViewController {
         cell.layer.insertSublayer(layer, at: 0)
         
     }
+    
+    
+    @objc private func addZone() {
+        self.performSegue(withIdentifier: "openZoneForm", sender: nil)
+    }
+    
+    
+    private func deleteZone(id: String, name: String) {
+        self.showDefaultConfirm(title: L10n.alert, message: L10n.cloudFileV3ConfirmDeleteZone(name)) { _ in
+            self.cFileVM.deleteZone(id: id)
+                .then { _ in
+                    self.loadData(nil)
+                }.catch { e in
+                    self.showError(title: "\(e.localizedDescription)")
+                }
+        }
+    }
+    
+    private func addFavorite(name: String, zoneId: String) {
+        self.cFileVM.addFavorite(name: name, zoneId: zoneId)
+            .then { _ in
+                self.loadData(nil)
+            }.catch { e in
+                self.showError(title: "\(e.localizedDescription)")
+            }
+    }
 
+    private func cancelFavorite(id: String) {
+        self.cFileVM.cancelFavorite(id: id)
+            .then { _ in
+                self.loadData(nil)
+            }.catch { e in
+                self.showError(title: "\(e.localizedDescription)")
+            }
+    }
+    
+    private func renameFavorite(id: String, oldName: String) {
+        self.showPromptAlert(title: L10n.alert, message: L10n.cloudFileV3MessageAlertRenameFavorite, inputText: oldName) { _, newName in
+            if newName == "" || newName.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+                self.showError(title: L10n.cloudFileV3MessageNameNotEmpty)
+            } else {
+                self.cFileVM.renameFavorite(id: id, name: newName)
+                    .then { _ in
+                        self.loadData(nil)
+                    }.catch { e in
+                        self.showError(title: "\(e.localizedDescription)")
+                    }
+            }
+        }
+    }
 
   
     // 显示收藏的菜单
@@ -152,34 +220,34 @@ class CloudFileZoneViewController: UITableViewController {
         let menus: [UIAlertAction] = [
             UIAlertAction(title: L10n.cloudFileV3MenuCancelFav, style: .default, handler: { action in
                 // 取消收藏
+                if let id = fav.id {
+                    self.cancelFavorite(id: id)
+                }
             }),
             UIAlertAction(title: L10n.cloudFileV3MenuRenameFav, style: .default, handler: { action in
                 // 重命名收藏
+                self.renameFavorite(id: fav.id ?? "", oldName: fav.name ?? "")
             })
         ]
         self.showSheetAction(title: L10n.alert, message: "", actions: menus)
     }
     // 显示共享区的菜单
     private func showZoneMenu(zone: CloudFileV3Zone) {
-        var menus: [UIAlertAction] = []
+        var menus: [UIAlertAction] = [UIAlertAction(title: L10n.cloudFileV3MenuAddFav, style: .default, handler: { action in
+            // 加入收藏
+            self.addFavorite(name: zone.name ?? "", zoneId: zone.id ?? "")
+        })]
         if zone.isAdmin == true {
-            menus = [
-                UIAlertAction(title: L10n.cloudFileV3MenuAddFav, style: .default, handler: { action in
-                    // 加入收藏
-                }),
+            menus.append(
                 UIAlertAction(title: L10n.cloudFileV3MenuEditZone, style: .default, handler: { action in
                     // 编辑
-                }),
+                    self.performSegue(withIdentifier: "openZoneForm", sender: zone)
+                }))
+            menus.append(
                 UIAlertAction(title: L10n.cloudFileV3MenuDeleteZone, style: .default, handler: { action in
                     // 删除
-                })
-            ]
-        }else {
-            menus = [
-                UIAlertAction(title: L10n.cloudFileV3MenuAddFav, style: .default, handler: { action in
-                    // 加入收藏
-                })
-            ]
+                    self.deleteZone(id: zone.id ?? "", name: zone.name ?? "")
+                }))
         }
         self.showSheetAction(title: L10n.alert, message: "", actions: menus)
     }

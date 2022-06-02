@@ -61,6 +61,14 @@ internal enum L10n {
     internal static let cloudFileV3MenuEditZone = L10n.tr("Localizable", "Cloud File V3 Menu Edit Zone")
     internal static let cloudFileV3MenuDeleteZone = L10n.tr("Localizable", "Cloud File V3 Menu Delete Zone")
     
+    internal static func cloudFileV3ConfirmDeleteZone(_ message: String) -> String {
+      return L10n.tr("Localizable", "Cloud File V3 Confirm Delete Zone", message)
+    }
+    internal static let cloudFileV3MessageAlertRenameFavorite = L10n.tr("Localizable", "Cloud File V3 Rename Alert Message")
+    internal static let cloudFileV3MessageNameNotEmpty = L10n.tr("Localizable", "Cloud File V3 Name Not Empty Message")
+    internal static let cloudFileV3ZoneFormCreateTitle = L10n.tr("Localizable", "Cloud File V3 Zone Form Create Title")
+    internal static let cloudFileV3ZoneFormUpdateTitle = L10n.tr("Localizable", "Cloud File V3 Zone Form Update Title")
+    
   /// 完成
   internal static let done = L10n.tr("Localizable", "Done")
     /// 编辑

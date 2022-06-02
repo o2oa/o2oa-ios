@@ -86,7 +86,7 @@ class CloudFileViewModel: NSObject {
         }
     }
     
-    func myFavoriteList() -> Promise<[CloudFileV3Favorite]> {
+    private func myFavoriteList() -> Promise<[CloudFileV3Favorite]> {
         return Promise {fulfill, reject in
             self.cFileV3API.request(.myFavoriteList) { result in
                 let response = OOResult<BaseModelClass<[CloudFileV3Favorite]>>(result)
@@ -104,7 +104,7 @@ class CloudFileViewModel: NSObject {
     }
     
     
-    func myZoneList() -> Promise<[CloudFileV3Zone]> {
+    private func myZoneList() -> Promise<[CloudFileV3Zone]> {
         return Promise {fulfill, reject in
             self.cFileV3API.request(.myZoneList) { result in
                 let response = OOResult<BaseModelClass<[CloudFileV3Zone]>>(result)
@@ -121,9 +121,110 @@ class CloudFileViewModel: NSObject {
         }
     }
     
+    // 是否有创建共享区的权限
+    func isZoneCreator() -> Promise<Bool> {
+        return Promise {fulfill, _ in
+            self.cFileV3API.request(.isZoneCreator) { result in
+                let response = OOResult<BaseModelClass<OOCommonValueBoolModel>>(result)
+                if response.isResultSuccess() && response.model?.data?.value == true  {
+                    fulfill(true)
+                } else {
+                    fulfill(false)
+                }
+            }
+        }
+    }
+    // 创建共享区
+    func createZone(name: String, desc: String) -> Promise<Bool> {
+        return Promise{ fulfill, reject in
+            let zone = CloudFileV3ZonePost()
+            zone.name = name
+            zone.desc = desc
+            self.cFileV3API.request(.createZone(zone)) { result in
+                let response = OOResult<BaseModelClass<OOCommonIdModel>>(result)
+                if response.isResultSuccess() , let _ = response.model?.data {
+                    fulfill(true)
+                } else {
+                    reject(response.error ?? OOAppError.common(type: "", message: "创建失败！", statusCode: 1000))
+                }
+            }
+        }
+    }
+    // 更新共享区
+    func updateZone(id: String, name: String, desc: String) -> Promise<Bool> {
+        return Promise{ fulfill, reject in
+            let zone = CloudFileV3ZonePost()
+            zone.name = name
+            zone.desc = desc
+            self.cFileV3API.request(.updateZone(id, zone)) { result in
+                let response = OOResult<BaseModelClass<OOCommonValueBoolModel>>(result)
+                if response.isResultSuccess() && response.model?.data?.value == true {
+                    fulfill(true)
+                } else {
+                    reject(response.error ?? OOAppError.common(type: "", message: "修改失败！", statusCode: 1001))
+                }
+            }
+        }
+    }
+    // 删除共享区
+    func deleteZone(id: String) -> Promise<Bool> {
+        return Promise{ fulfill, reject in
+            self.cFileV3API.request(.deleteZone(id)) { result in
+                let response = OOResult<BaseModelClass<OOCommonValueBoolModel>>(result)
+                if response.isResultSuccess() && response.model?.data?.value == true {
+                    fulfill(true)
+                } else {
+                    reject(response.error ?? OOAppError.common(type: "", message: "删除失败！", statusCode: 1002))
+                }
+            }
+        }
+    }
+    // 加入收藏
+    func addFavorite(name: String, zoneId: String) -> Promise<Bool> {
+        return Promise{ fulfill, reject in
+            let fav = CloudFileV3FavoritePost()
+            fav.name = name
+            fav.folder = zoneId
+            self.cFileV3API.request(.createFavorite(fav)) { result in
+                let response = OOResult<BaseModelClass<OOCommonIdModel>>(result)
+                if response.isResultSuccess() , let _ = response.model?.data {
+                    fulfill(true)
+                } else {
+                    reject(response.error ?? OOAppError.common(type: "", message: "添加收藏失败！", statusCode: 1000))
+                }
+            }
+        }
+    }
     
+    // 重命名收藏
+    func renameFavorite(id: String, name: String) -> Promise<Bool> {
+        return Promise{ fulfill, reject in
+            let fav = CloudFileV3FavoritePost()
+            fav.name = name
+            self.cFileV3API.request(.updateFavorite(id, fav)) { result in
+                let response = OOResult<BaseModelClass<OOCommonValueBoolModel>>(result)
+                if response.isResultSuccess() && response.model?.data?.value == true {
+                    fulfill(true)
+                } else {
+                    reject(response.error ?? OOAppError.common(type: "", message: "重命名失败！", statusCode: 1001))
+                }
+            }
+        }
+    }
     
-    
+    // 删除共享区
+    func cancelFavorite(id: String) -> Promise<Bool> {
+        return Promise{ fulfill, reject in
+            self.cFileV3API.request(.deleteFavorite(id)) { result in
+                let response = OOResult<BaseModelClass<OOCommonValueBoolModel>>(result)
+                if response.isResultSuccess() && response.model?.data?.value == true {
+                    fulfill(true)
+                } else {
+                    reject(response.error ?? OOAppError.common(type: "", message: "取消收藏失败！", statusCode: 1002))
+                }
+            }
+        }
+    }
     
     //获取图片地址 根据传入的大小进行比例缩放
     func scaleImageUrl(id: String) -> String {

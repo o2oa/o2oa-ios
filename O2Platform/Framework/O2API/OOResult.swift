@@ -35,8 +35,11 @@ public final class OOResult<T:BaseModel> {
                     DDLogError(resp.debugDescription)
                 }
             } else {
-                DDLogError(resp.debugDescription)
-                self.error = OOAppError.common(type: "networkError", message: "请求出错，status Code \(resp.statusCode) ", statusCode: resp.statusCode)
+                if let errResponse = resp.mapObject(BaseErrorResponse.self) {
+                    self.error = OOAppError.common(type: errResponse.type ?? "error", message: "\(errResponse.message ?? "")", statusCode: resp.statusCode)
+                } else {
+                    self.error = OOAppError.common(type: "networkError", message: "请求出错，status Code \(resp.statusCode) ", statusCode: resp.statusCode)
+                }
             }
             break
         case .failure(let err):

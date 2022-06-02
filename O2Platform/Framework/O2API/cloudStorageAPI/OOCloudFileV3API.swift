@@ -18,6 +18,13 @@ enum OOCloudFileV3API {
     case echo
     case myFavoriteList
     case myZoneList
+    case isZoneCreator
+    case createZone(CloudFileV3ZonePost)
+    case updateZone(String, CloudFileV3ZonePost)
+    case deleteZone(String)
+    case createFavorite(CloudFileV3FavoritePost)
+    case updateFavorite(String, CloudFileV3FavoritePost)
+    case deleteFavorite(String)
     
     //新版
     case listTop
@@ -105,12 +112,30 @@ extension OOCloudFileV3API:TargetType{
    
     var path: String {
         switch self {
+            //v3
         case .echo:
             return "/jaxrs/echo"
         case .myFavoriteList:
             return "/jaxrs/favorite/list"
         case .myZoneList:
             return "/jaxrs/zone/list"
+        case .isZoneCreator:
+            return "/jaxrs/config/is/zone/creator"
+        case .createZone(_):
+            return "/jaxrs/zone"
+        case .updateZone(let id, _):
+            return "/jaxrs/zone/\(id)/update"
+        case .deleteZone(let id):
+            return "/jaxrs/zone/\(id)"
+        case .createFavorite(_):
+            return "/jaxrs/favorite"
+        case .updateFavorite(let id, _):
+            return "/jaxrs/favorite/\(id)/update"
+        case .deleteFavorite(let id):
+            return "/jaxrs/favorite/\(id)"
+            
+            
+            //v2
         case .listTop:
             return "/jaxrs/attachment2/list/top"
         case .listFolderTop:
@@ -178,9 +203,13 @@ extension OOCloudFileV3API:TargetType{
     var method: Moya.Method {
         switch self {
             //v3
-        case .echo, .myZoneList, .myFavoriteList:
+        case .echo, .myZoneList, .myFavoriteList, .isZoneCreator:
             return .get
-            
+        case .createZone(_), .updateZone(_, _), .createFavorite(_), .updateFavorite(_, _):
+            return .post
+        case .deleteZone(_), .deleteFavorite(_):
+            return .delete
+         // v2
         case .listTop, .listFolderTop, .listByFolder(_), .listFolderByFolder(_), .downloadFile(_), .getFile(_):
            return .get
         case .listFolder(_), .shareToMe(_), .myShareList(_), .shareFileListWithFolderId(_, _), .shareFolderListWithFolderId(_, _), .shieldShare(_):
@@ -214,8 +243,12 @@ extension OOCloudFileV3API:TargetType{
     var task: Task {
         switch self {
             // v3
-        case .echo, .myFavoriteList, .myZoneList:
+        case .echo, .myFavoriteList, .myZoneList, .isZoneCreator, .deleteZone(_), .deleteFavorite(_):
             return.requestPlain
+        case .createZone(let zone), .updateZone(_, let zone):
+            return .requestParameters(parameters: zone.toJSON()!, encoding: JSONEncoding.default)
+        case .createFavorite(let fav), .updateFavorite(_, let fav):
+            return .requestParameters(parameters: fav.toJSON()!, encoding: JSONEncoding.default)
             
         case .listFolderByFolder(_), .listByFolder(_), .listTop,.listFolderTop,.listFolder(_),.listMyEditorByPerson(_),.listMyShareByPerson(_),
              .listMyEditor,.listMyShare,.getAttachment(_),.deleteAttachement(_),.getPicItemURL(_), .deleteFolder(_), .deleteFile(_),

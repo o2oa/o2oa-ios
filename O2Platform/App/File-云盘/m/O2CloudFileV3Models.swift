@@ -23,9 +23,17 @@ class CloudFileV3Favorite: NSObject,DataModel {
     @objc var updateTime: String?
     var isAdmin: Bool?
     var isEditor: Bool?
+    @objc  var desc : String?
+    
+   
     
     override required init() {
         
+    }
+    
+    
+    func mapping(mapper: HelpingMapper) {
+        mapper <<< self.desc <-- "description"
     }
 }
 
@@ -45,12 +53,19 @@ class CloudFileV3Zone: NSObject,DataModel {
     @objc var status: String?
     @objc var lastUpdatePerson: String?
     @objc var lastUpdateTime:String?
-
+    @objc  var desc : String?
+    
     var isZone: Bool?
     
     override required init() {
         
     }
+    
+     
+    func mapping(mapper: HelpingMapper) {
+        mapper <<< self.desc <-- "description"
+    }
+    
 }
 
 class CloudFileV3ZoneHeader: NSObject,DataModel {
@@ -84,4 +99,30 @@ class CloudFileV3CellViewModel {
         }
     }
     
+}
+
+// 共享区 post对象
+class CloudFileV3ZonePost: NSObject,DataModel {
+    @objc  var name : String?
+    @objc  var desc : String?
+    
+    override required init() {
+        
+    }
+    
+    func mapping(mapper: HelpingMapper) {
+        mapper <<< self.desc <-- "description"
+    }
+}
+
+//收藏post对象
+class CloudFileV3FavoritePost: NSObject,DataModel {
+    @objc  var name : String?
+    @objc  var folder : String?
+    @objc  var orderNumber : String?
+    
+    override required init() {
+        
+    }
+     
 }

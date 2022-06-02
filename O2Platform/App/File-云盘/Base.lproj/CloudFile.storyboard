@@ -426,10 +426,101 @@
                             <outlet property="delegate" destination="ybs-Jd-eBu" id="moK-8D-Izu"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <segue destination="u1y-K2-mtO" kind="show" identifier="openZoneForm" id="uvr-YQ-dAU"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Akb-iv-8Kn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="448" y="-1058"/>
+        </scene>
+        <!--共享区Form-->
+        <scene sceneID="ahD-EW-RBZ">
+            <objects>
+                <viewController title="共享区Form" id="u1y-K2-mtO" customClass="CloudFileV3ZoneFormViewController" customModule="O2Platform" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="E8e-Gj-Hnm">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入共享区名称" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="hNi-Pe-oaK">
+                                <rect key="frame" x="15" y="16" width="384" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="CoE-EJ-y45"/>
+                                </constraints>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LTp-iB-Nsy" userLabel="split View">
+                                <rect key="frame" x="15" y="63" width="384" height="1"/>
+                                <color key="backgroundColor" red="0.87450980392156863" green="0.87450980392156863" blue="0.87450980392156863" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="Uwi-xM-Yeb"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="描述" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AIS-3b-Ei6">
+                                <rect key="frame" x="15" y="76" width="29" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="请输入共享区描述" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ASW-Le-E7R">
+                                <rect key="frame" x="24" y="101" width="375" height="84"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="84" id="X8z-Zk-uc6"/>
+                                </constraints>
+                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z7G-fE-fR1">
+                                <rect key="frame" x="15" y="209" width="384" height="34"/>
+                                <color key="backgroundColor" red="0.98431372549999996" green="0.2784313725" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="6yL-mL-28y"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="提交">
+                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="17"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="clickSubmitBtn:" destination="u1y-K2-mtO" eventType="touchUpInside" id="F80-Ap-aYN"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="mgs-8k-oic"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="hNi-Pe-oaK" firstAttribute="leading" secondItem="mgs-8k-oic" secondAttribute="leading" constant="15" id="G27-QK-uxa"/>
+                            <constraint firstItem="LTp-iB-Nsy" firstAttribute="leading" secondItem="mgs-8k-oic" secondAttribute="leading" constant="15" id="GkX-EI-FRr"/>
+                            <constraint firstItem="hNi-Pe-oaK" firstAttribute="top" secondItem="mgs-8k-oic" secondAttribute="top" constant="16" id="IPp-Y1-3vW"/>
+                            <constraint firstItem="z7G-fE-fR1" firstAttribute="top" secondItem="ASW-Le-E7R" secondAttribute="bottom" constant="24" id="Php-ZE-BUh"/>
+                            <constraint firstItem="mgs-8k-oic" firstAttribute="trailing" secondItem="ASW-Le-E7R" secondAttribute="trailing" constant="15" id="Rxd-fA-Fze"/>
+                            <constraint firstItem="mgs-8k-oic" firstAttribute="trailing" secondItem="LTp-iB-Nsy" secondAttribute="trailing" constant="15" id="TwZ-DR-qPa"/>
+                            <constraint firstItem="ASW-Le-E7R" firstAttribute="leading" secondItem="mgs-8k-oic" secondAttribute="leading" constant="24" id="cf2-bg-2cG"/>
+                            <constraint firstItem="LTp-iB-Nsy" firstAttribute="top" secondItem="hNi-Pe-oaK" secondAttribute="bottom" constant="5" id="i5S-NL-cEH"/>
+                            <constraint firstItem="AIS-3b-Ei6" firstAttribute="leading" secondItem="mgs-8k-oic" secondAttribute="leading" constant="15" id="jZm-Wf-Owy"/>
+                            <constraint firstItem="z7G-fE-fR1" firstAttribute="leading" secondItem="mgs-8k-oic" secondAttribute="leading" constant="15" id="lF1-Fl-9tJ"/>
+                            <constraint firstItem="AIS-3b-Ei6" firstAttribute="top" secondItem="LTp-iB-Nsy" secondAttribute="bottom" constant="12" id="mtV-bK-i4Y"/>
+                            <constraint firstItem="ASW-Le-E7R" firstAttribute="top" secondItem="AIS-3b-Ei6" secondAttribute="bottom" constant="8" id="naY-mV-6Pk"/>
+                            <constraint firstItem="mgs-8k-oic" firstAttribute="trailing" secondItem="z7G-fE-fR1" secondAttribute="trailing" constant="15" id="pan-YL-5EB"/>
+                            <constraint firstItem="mgs-8k-oic" firstAttribute="trailing" secondItem="hNi-Pe-oaK" secondAttribute="trailing" constant="15" id="sd7-hf-Y5D"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="qYD-fu-Elx"/>
+                    <connections>
+                        <outlet property="descTextField" destination="ASW-Le-E7R" id="d2F-I9-MnQ"/>
+                        <outlet property="nameTextField" destination="hNi-Pe-oaK" id="RXA-k1-ipo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pyQ-Ws-XJS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1304" y="-1058"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="BDs-1O-dND">

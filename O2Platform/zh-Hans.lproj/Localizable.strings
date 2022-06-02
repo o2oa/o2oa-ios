@@ -57,6 +57,17 @@
 "Cloud File V3 Menu Edit Zone" = "编辑";
 
 "Cloud File V3 Menu Delete Zone" = "删除";
+
+"Cloud File V3 Confirm Delete Zone" = "确定要删除这个共享区【%@】，里面的数据将不可恢复？";
+
+"Cloud File V3 Rename Alert Message" = "重命名收藏的共享区";
+
+"Cloud File V3 Name Not Empty Message" = "名称不能为空！";
+
+"Cloud File V3 Zone Form Create Title" = "创建共享工作区";
+
+"Cloud File V3 Zone Form Update Title" = "更新共享工作区";
+
 /* 
   Localizable.strings
   O2Platform

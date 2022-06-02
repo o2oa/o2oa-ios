@@ -254,6 +254,7 @@
 		B17EFC6A276C1DBF00D7B18F /* MindMapNodeDraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17EFC69276C1DBF00D7B18F /* MindMapNodeDraw.swift */; };
 		B17EFC6E276C2E5100D7B18F /* O2MindMapCanvasController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17EFC6D276C2E5100D7B18F /* O2MindMapCanvasController.swift */; };
 		B17EFC70276C331800D7B18F /* O2MindMapCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17EFC6F276C331800D7B18F /* O2MindMapCanvasView.swift */; };
+		B182FB4428489DC9007F2E9D /* CloudFileV3ZoneFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B182FB4328489DC9007F2E9D /* CloudFileV3ZoneFormViewController.swift */; };
 		B183987D249AFF64001C6FAA /* IMLocationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B183987C249AFF64001C6FAA /* IMLocationView.xib */; };
 		B18398AD249B00AA001C6FAA /* IMLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18398AC249B00AA001C6FAA /* IMLocationView.swift */; };
 		B18398B0249B079B001C6FAA /* IMLocationChooseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18398AE249B079B001C6FAA /* IMLocationChooseController.swift */; };
@@ -1475,6 +1476,7 @@
 		B17EFC69276C1DBF00D7B18F /* MindMapNodeDraw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindMapNodeDraw.swift; sourceTree = "<group>"; };
 		B17EFC6D276C2E5100D7B18F /* O2MindMapCanvasController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2MindMapCanvasController.swift; sourceTree = "<group>"; };
 		B17EFC6F276C331800D7B18F /* O2MindMapCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2MindMapCanvasView.swift; sourceTree = "<group>"; };
+		B182FB4328489DC9007F2E9D /* CloudFileV3ZoneFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFileV3ZoneFormViewController.swift; sourceTree = "<group>"; };
 		B183987C249AFF64001C6FAA /* IMLocationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IMLocationView.xib; sourceTree = "<group>"; };
 		B18398AC249B00AA001C6FAA /* IMLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMLocationView.swift; sourceTree = "<group>"; };
 		B18398AE249B079B001C6FAA /* IMLocationChooseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMLocationChooseController.swift; sourceTree = "<group>"; };
@@ -4017,6 +4019,7 @@
 				B1E95FA62375155F004876B7 /* CloudFileBaseVC.swift */,
 				B1982F7E28445FA700F9D8B7 /* CloudFileV3ViewController.swift */,
 				B1982FB62844A61F00F9D8B7 /* CloudFileZoneViewController.swift */,
+				B182FB4328489DC9007F2E9D /* CloudFileV3ZoneFormViewController.swift */,
 			);
 			path = c;
 			sourceTree = "<group>";
@@ -5659,6 +5662,7 @@
 				B19441EF277C325800B7E66A /* UIRotateUtils.swift in Sources */,
 				E4B888C51D9D48F1002E1A46 /* CollectUnitData.swift in Sources */,
 				E4BF45DD1E751399008B52F0 /* NewMainAppTableViewCell.swift in Sources */,
+				B182FB4428489DC9007F2E9D /* CloudFileV3ZoneFormViewController.swift in Sources */,
 				09E02E831F16319600579887 /* Cache.swift in Sources */,
 				B14CCF7B256DEE66003ECC3C /* MeetingFormDatePickerCell.swift in Sources */,
 				E4B888A61D9D48F1002E1A46 /* MJRefreshGifHeader.m in Sources */,
