@@ -18,6 +18,7 @@ import Foundation
 /// - x_processplatform_assemble_surface_attachment:
 /// - x_processplatform_assemble_surface_work:
 /// - x_file_assemble_control: //云文件
+/// - x_pan_assemble_control: //云文件V3
 /// - x_meeting_assemble_control: //会议管理
 /// - x_attendance_assemble_control: //考勤管理
 /// - x_okr_assemble_control: //OKR
@@ -54,6 +55,7 @@ public enum O2ModuleContext {
     case x_processplatform_assemble_surface_attachment
     case x_processplatform_assemble_surface_work
     case x_file_assemble_control
+    case x_pan_assemble_control
     case x_meeting_assemble_control
     case x_attendance_assemble_control
     case x_okr_assemble_control

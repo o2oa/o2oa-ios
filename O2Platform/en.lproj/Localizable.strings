@@ -42,6 +42,22 @@
 
 "Delete My Share File Confirm Message" = "Cancel these share items, are you sure ?";
 
+"Cloud File V3 Zone Name" = "Enterprise Shared Area";
+
+"Cloud File V3 My Favorite" = "My Favorite";
+
+"Cloud File V3 My Zone" = "My Zone";
+
+"Cloud File V3 Menu Add Favorite" = "加入收藏";
+
+"Cloud File V3 Menu Cancel Favorite" = "取消收藏";
+
+"Cloud File V3 Menu Rename" = "重命名";
+
+"Cloud File V3 Menu Edit Zone" = "编辑";
+
+"Cloud File V3 Menu Delete Zone" = "删除";
+
 /* 
   Localizable.strings
   O2Platform

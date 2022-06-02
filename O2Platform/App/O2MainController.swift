@@ -37,6 +37,10 @@ class O2MainController: O2BaseForRotateUITabBarController, UITabBarControllerDel
     private lazy var attendanceViewModel: OOAttandanceViewModel = {
         return OOAttandanceViewModel()
     }()
+    // 云盘
+    private lazy var cFileVM: CloudFileViewModel = {
+        return CloudFileViewModel()
+    }()
     
     private let barIm = L10n.mainBarIm
     private let barContact = L10n.mainBarContacts
@@ -79,6 +83,8 @@ class O2MainController: O2BaseForRotateUITabBarController, UITabBarControllerDel
         self.getConversationList()
         //检查考勤版本
         self.checkAttendanceVersion()
+        //检查云盘版本
+        self.checkCloudFileVersion()
     }
 
     deinit {
@@ -205,6 +211,16 @@ class O2MainController: O2BaseForRotateUITabBarController, UITabBarControllerDel
                 StandDefaultUtil.share.userDefaultCache(value: false as AnyObject, key: O2.O2_Attendance_version_key)
                 break
             }
+        }
+    }
+    
+    // MARK: - 云盘判断是否v3版本
+    private func checkCloudFileVersion() {
+        self.cFileVM.v3Echo().then { result in
+            StandDefaultUtil.share.userDefaultCache(value: result as AnyObject, key: O2.O2CloudFileVersionKey)
+        }.catch { error in
+            StandDefaultUtil.share.userDefaultCache(value: false as AnyObject, key: O2.O2CloudFileVersionKey)
+            DDLogError(error.localizedDescription)
         }
     }
 

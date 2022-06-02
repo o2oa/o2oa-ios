@@ -270,3 +270,16 @@ public class OOCommonModel:DataModel {
         return "CommonModel"
     }
 }
+
+public class OOEchoModel: DataModel {
+    public var description: String {
+        return "OOEchoModel"
+    }
+    
+    var servletContextName:String?
+    var serverTime:String?
+    
+    required public init() {
+        
+    }
+}

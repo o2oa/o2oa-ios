@@ -276,6 +276,14 @@
 		B19441EF277C325800B7E66A /* UIRotateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19441EE277C325800B7E66A /* UIRotateUtils.swift */; };
 		B194421E277C3E9600B7E66A /* O2BaseControllerForRotate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B194421D277C3E9600B7E66A /* O2BaseControllerForRotate.swift */; };
 		B197771D217D9D810019F3A8 /* beep.wav in Resources */ = {isa = PBXBuildFile; fileRef = B19776E7217D9D810019F3A8 /* beep.wav */; };
+		B1982F7F28445FA700F9D8B7 /* CloudFileV3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1982F7E28445FA700F9D8B7 /* CloudFileV3ViewController.swift */; };
+		B1982FAB28446F5A00F9D8B7 /* OOCloudFileV3API.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1982FAA28446F5A00F9D8B7 /* OOCloudFileV3API.swift */; };
+		B1982FAE28449FC000F9D8B7 /* CloudFileV3ZoneCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1982FAC28449FC000F9D8B7 /* CloudFileV3ZoneCell.swift */; };
+		B1982FAF28449FC000F9D8B7 /* CloudFileV3ZoneCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1982FAD28449FC000F9D8B7 /* CloudFileV3ZoneCell.xib */; };
+		B1982FB42844A52700F9D8B7 /* CloudFileV3ZoneHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1982FB22844A52700F9D8B7 /* CloudFileV3ZoneHeaderCell.swift */; };
+		B1982FB52844A52700F9D8B7 /* CloudFileV3ZoneHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1982FB32844A52700F9D8B7 /* CloudFileV3ZoneHeaderCell.xib */; };
+		B1982FB72844A61F00F9D8B7 /* CloudFileZoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1982FB62844A61F00F9D8B7 /* CloudFileZoneViewController.swift */; };
+		B1982FB92844A81800F9D8B7 /* O2CloudFileV3Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1982FB82844A81800F9D8B7 /* O2CloudFileV3Models.swift */; };
 		B19D55A925358AC200CE3B22 /* O2AuthenticationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19D55A725358AC200CE3B22 /* O2AuthenticationModels.swift */; };
 		B19D55AA25358AC200CE3B22 /* O2MoyaResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19D55A825358AC200CE3B22 /* O2MoyaResult.swift */; };
 		B19D55AD25358B2700CE3B22 /* O2LoginAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B19D55AB25358B2700CE3B22 /* O2LoginAPI.swift */; };
@@ -1489,6 +1497,14 @@
 		B19441EE277C325800B7E66A /* UIRotateUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIRotateUtils.swift; sourceTree = "<group>"; };
 		B194421D277C3E9600B7E66A /* O2BaseControllerForRotate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2BaseControllerForRotate.swift; sourceTree = "<group>"; };
 		B19776E7217D9D810019F3A8 /* beep.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = beep.wav; sourceTree = "<group>"; };
+		B1982F7E28445FA700F9D8B7 /* CloudFileV3ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFileV3ViewController.swift; sourceTree = "<group>"; };
+		B1982FAA28446F5A00F9D8B7 /* OOCloudFileV3API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOCloudFileV3API.swift; sourceTree = "<group>"; };
+		B1982FAC28449FC000F9D8B7 /* CloudFileV3ZoneCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFileV3ZoneCell.swift; sourceTree = "<group>"; };
+		B1982FAD28449FC000F9D8B7 /* CloudFileV3ZoneCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CloudFileV3ZoneCell.xib; sourceTree = "<group>"; };
+		B1982FB22844A52700F9D8B7 /* CloudFileV3ZoneHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFileV3ZoneHeaderCell.swift; sourceTree = "<group>"; };
+		B1982FB32844A52700F9D8B7 /* CloudFileV3ZoneHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CloudFileV3ZoneHeaderCell.xib; sourceTree = "<group>"; };
+		B1982FB62844A61F00F9D8B7 /* CloudFileZoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFileZoneViewController.swift; sourceTree = "<group>"; };
+		B1982FB82844A81800F9D8B7 /* O2CloudFileV3Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2CloudFileV3Models.swift; sourceTree = "<group>"; };
 		B19D55A725358AC200CE3B22 /* O2AuthenticationModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = O2AuthenticationModels.swift; sourceTree = "<group>"; };
 		B19D55A825358AC200CE3B22 /* O2MoyaResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = O2MoyaResult.swift; sourceTree = "<group>"; };
 		B19D55AB25358B2700CE3B22 /* O2LoginAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = O2LoginAPI.swift; sourceTree = "<group>"; };
@@ -3728,6 +3744,7 @@
 			children = (
 				E4B6979520764A2C0062F6E8 /* OOCloudStorageAPI.swift */,
 				E4B6979620764A2C0062F6E8 /* stub */,
+				B1982FAA28446F5A00F9D8B7 /* OOCloudFileV3API.swift */,
 			);
 			path = cloudStorageAPI;
 			sourceTree = "<group>";
@@ -3998,6 +4015,8 @@
 				B1298E7D2366AE4C006E9236 /* CloudFileImageCollectionController.swift */,
 				B1E95F7A23750CC2004876B7 /* CloudFilePreviewController.swift */,
 				B1E95FA62375155F004876B7 /* CloudFileBaseVC.swift */,
+				B1982F7E28445FA700F9D8B7 /* CloudFileV3ViewController.swift */,
+				B1982FB62844A61F00F9D8B7 /* CloudFileZoneViewController.swift */,
 			);
 			path = c;
 			sourceTree = "<group>";
@@ -4007,6 +4026,7 @@
 			children = (
 				E4B8877A1D9D48F1002E1A46 /* File.swift */,
 				E4B697FB2076520E0062F6E8 /* OOFileModels.swift */,
+				B1982FB82844A81800F9D8B7 /* O2CloudFileV3Models.swift */,
 			);
 			path = m;
 			sourceTree = "<group>";
@@ -4030,6 +4050,10 @@
 				B167F7652362C60200F182B8 /* CloudFileMoveFolderCell.xib */,
 				B1298E7F2366B2E7006E9236 /* CFImageViewCell.swift */,
 				B1298E802366B2E7006E9236 /* CFImageViewCell.xib */,
+				B1982FAC28449FC000F9D8B7 /* CloudFileV3ZoneCell.swift */,
+				B1982FAD28449FC000F9D8B7 /* CloudFileV3ZoneCell.xib */,
+				B1982FB22844A52700F9D8B7 /* CloudFileV3ZoneHeaderCell.swift */,
+				B1982FB32844A52700F9D8B7 /* CloudFileV3ZoneHeaderCell.xib */,
 			);
 			path = v;
 			sourceTree = "<group>";
@@ -5037,6 +5061,7 @@
 				B197771D217D9D810019F3A8 /* beep.wav in Resources */,
 				E40E24C920B7DA3C009F8BE7 /* OOMeetingPersonTableViewCell.xib in Resources */,
 				E4B2321C20B3E94E0082F30A /* OOAttanceCheckinPromptView.xib in Resources */,
+				B1982FAF28449FC000F9D8B7 /* CloudFileV3ZoneCell.xib in Resources */,
 				E4B697D920764A2D0062F6E8 /* myshareEditorByPerson.json in Resources */,
 				E457559D1E0BA72E00EC44F4 /* qrcode_scan_btn_flash_down@2x.png in Resources */,
 				B1489B1D248E0F4D009EE9FD /* IMChatViewController.xib in Resources */,
@@ -5059,6 +5084,7 @@
 				B1C0A1A3256E3EEA00C7041E /* MeetingFormChoosePersonCell.xib in Resources */,
 				B17126C121084A2F00369F15 /* calendar.storyboard in Resources */,
 				B1BB678124C6D1DD0020BD7D /* OOAttendanceCheckInNewController.xib in Resources */,
+				B1982FB52844A52700F9D8B7 /* CloudFileV3ZoneHeaderCell.xib in Resources */,
 				E46E6C831DD41F5D00AB7561 /* ZSSimage.png in Resources */,
 				E46E6CA31DD41F5D00AB7561 /* ZSSsubscript.png in Resources */,
 				E428AF5220AA7A2400D964B9 /* OOAttanceHeaderView.xib in Resources */,
@@ -5461,6 +5487,7 @@
 				09E02E931F16319600579887 /* NSURLResponse+Haneke.swift in Sources */,
 				B108F3FF229E34D400778050 /* LBXScanView.swift in Sources */,
 				E40E24AC20B7DA3C009F8BE7 /* OOMeetingMainViewModel.swift in Sources */,
+				B1982FAB28446F5A00F9D8B7 /* OOCloudFileV3API.swift in Sources */,
 				E4B697F2207650DF0062F6E8 /* OOBBSModels.swift in Sources */,
 				B1D1BC8B234C5C49002025DA /* CloudFileShareViewController.swift in Sources */,
 				B12FD1E52283D5B700E636BA /* O2ThemeManager+Plist.swift in Sources */,
@@ -5649,6 +5676,7 @@
 				E40502C920722208009A8D30 /* ImageRow.swift in Sources */,
 				E40E24CB20B7DA3C009F8BE7 /* OOFormTextItemView.swift in Sources */,
 				09E02E8A1F16319600579887 /* Fetcher.swift in Sources */,
+				B1982FAE28449FC000F9D8B7 /* CloudFileV3ZoneCell.swift in Sources */,
 				B1B144EE2564C74A00CD7D2B /* OOMeetingDetailViewController.swift in Sources */,
 				E46E6CBF1DD41F5D00AB7561 /* HRColorPickerViewController.m in Sources */,
 				09E02E0E1F16001B00579887 /* Head.swift in Sources */,
@@ -5669,6 +5697,7 @@
 				B1DE853823602D36003C36E2 /* Languager.swift in Sources */,
 				E40E24E520BBA6C9009F8BE7 /* OOMeetingViewModelError.swift in Sources */,
 				B1DE8564236030E2003C36E2 /* Bundle+Extension.swift in Sources */,
+				B1982FB42844A52700F9D8B7 /* CloudFileV3ZoneHeaderCell.swift in Sources */,
 				E4B8887B1D9D48F1002E1A46 /* FileBSImagePickerViewController.swift in Sources */,
 				B126588527E1CBDE00365C9A /* IMProcessCardView.swift in Sources */,
 				E4D559CC1DD1B203002C4D6C /* BBSSubjectDetailViewController.swift in Sources */,
@@ -5830,6 +5859,7 @@
 				B1750087233C937E003DA7B9 /* IntExtensions.swift in Sources */,
 				E46E6CBD1DD41F5D00AB7561 /* HRColorCursor.m in Sources */,
 				E4B889481D9D6308002E1A46 /* StandDefaultUtil.swift in Sources */,
+				B1982FB92844A81800F9D8B7 /* O2CloudFileV3Models.swift in Sources */,
 				E4B889461D9D6308002E1A46 /* KeychainUtil.swift in Sources */,
 				E42E41C61E6E570E00C5B5C7 /* MainPublishTableViewCell.swift in Sources */,
 				09E02E911F16319600579887 /* NSFileManager+Haneke.swift in Sources */,
@@ -5949,6 +5979,7 @@
 				B1E95FA72375155F004876B7 /* CloudFileBaseVC.swift in Sources */,
 				B1298E50236692AB006E9236 /* CloudFileListBaseController.swift in Sources */,
 				E4C24A4E2083802C00E426B0 /* OOBaseViewController.swift in Sources */,
+				B1982F7F28445FA700F9D8B7 /* CloudFileV3ViewController.swift in Sources */,
 				E40E24AD20B7DA3C009F8BE7 /* OOMeetingRoomViewModel.swift in Sources */,
 				B13A0120236935BC00025F3B /* O2CloudFileInfo.swift in Sources */,
 				B15F8129210EF15E00B81F35 /* OOCalendarEventViewController.swift in Sources */,
@@ -5986,6 +6017,7 @@
 				B165CD652242093500373B66 /* PresentationType.swift in Sources */,
 				E40E24C220B7DA3C009F8BE7 /* OOMeetingRoomMainSectionHeaderView.swift in Sources */,
 				B12FD1D52283D5B700E636BA /* UIRefreshControl+TitleAttributes.swift in Sources */,
+				B1982FB72844A61F00F9D8B7 /* CloudFileZoneViewController.swift in Sources */,
 				E4B888DE1D9D48F1002E1A46 /* SettingHeaderView.swift in Sources */,
 				E4B888781D9D48F1002E1A46 /* Identity.swift in Sources */,
 				E40E24B520B7DA3C009F8BE7 /* OOFormModels.swift in Sources */,

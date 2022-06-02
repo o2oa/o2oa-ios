@@ -35,7 +35,7 @@ PODS:
   - IQKeyboardManagerSwift (6.5.6)
   - JCore (2.1.2)
   - JMessage (3.9.1):
-    - JCore (< 3.0.0, >= 2.0.0)
+    - JCore (>= 2.0.0)
   - JPush (3.2.4):
     - JCore (< 3.0.0, >= 2.0.0)
   - JTCalendar (2.2.3)
@@ -183,7 +183,7 @@ SPEC CHECKSUMS:
   ImageSlideshow: 67184be896a28472bd3b906c33ce4e0734aa3d22
   IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
   JCore: 1a426120b510cdebfd67b82bfb9483238ee09413
-  JMessage: 43dfcd5348573b2f4f24357b12e9b19076322606
+  JMessage: e1f8f78bafa4f03153cb925838a229a46e4b42ae
   JPush: 29466e5f30dbd703f640d70540e411e829cac1fa
   JTCalendar: f54975f1426facc38d112f372f0d3d955aae8d86
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a

@@ -9,6 +9,7 @@
 import Moya
 import Promises
 import CocoaLumberjack
+import Combine
 
 
 
@@ -27,6 +28,102 @@ class CloudFileViewModel: NSObject {
     }
     
     private let cFileAPI = OOMoyaProvider<OOCloudStorageAPI>()
+    
+    // v3 网盘
+    private let cFileV3API = OOMoyaProvider<OOCloudFileV3API>()
+    
+    // 判断网盘v3版本是否存在
+    func v3Echo() -> Promise<Bool> {
+        return Promise { fulfill, reject in
+            self.cFileV3API.request(.echo) { result in
+                let response = OOResult<BaseModelClass<OOEchoModel>>(result)
+                if response.isResultSuccess() {
+                    if let _ = response.model?.data {
+                        DDLogInfo("网盘v3版本")
+                        fulfill(true)
+                    } else {
+                        fulfill(false)
+                    }
+                }else {
+                    fulfill(false)
+                }
+            }
+        }
+    }
+    
+    /// 企业共享区列表 包含我的收藏
+    func loadAllZoneAndFavoriteList() -> Promise<[Int:[CloudFileV3CellViewModel]]> {
+        return Promise { fulfill, reject in
+            all(self.myFavoriteList(), self.myZoneList()).then { results in
+                var all : [Int:[CloudFileV3CellViewModel]] = [:]
+                let favoriteList = results.0
+                if favoriteList.count > 0 {
+                    var list0: [CloudFileV3CellViewModel] = []
+                    let header = CloudFileV3ZoneHeader()
+                    header.name = L10n.cloudFileMyFavorite
+                    list0.append(CloudFileV3CellViewModel(name: header.name, sourceObject: header))
+                    favoriteList.forEach { fav in
+                        list0.append(CloudFileV3CellViewModel(name: fav.name, sourceObject: fav))
+                    }
+                    all[0] = list0
+                }
+                
+                let zoneList = results.1
+                if zoneList.count > 0 {
+                    var list1: [CloudFileV3CellViewModel] = []
+                    let header = CloudFileV3ZoneHeader()
+                    header.name = L10n.cloudFileMyZone
+                    list1.append(CloudFileV3CellViewModel(name: header.name, sourceObject: header))
+                    zoneList.forEach { zone in
+                        list1.append(CloudFileV3CellViewModel(name: zone.name, sourceObject: zone))
+                    }
+                    all[all.count] = list1
+                }
+                fulfill(all)
+            }.catch { (error) in
+                reject(error)
+            }
+        }
+    }
+    
+    func myFavoriteList() -> Promise<[CloudFileV3Favorite]> {
+        return Promise {fulfill, reject in
+            self.cFileV3API.request(.myFavoriteList) { result in
+                let response = OOResult<BaseModelClass<[CloudFileV3Favorite]>>(result)
+                if response.isResultSuccess() {
+                    if let list = response.model?.data {
+                        fulfill(list)
+                    } else {
+                        fulfill([])
+                    }
+                }else {
+                    reject(response.error!)
+                }
+            }
+        }
+    }
+    
+    
+    func myZoneList() -> Promise<[CloudFileV3Zone]> {
+        return Promise {fulfill, reject in
+            self.cFileV3API.request(.myZoneList) { result in
+                let response = OOResult<BaseModelClass<[CloudFileV3Zone]>>(result)
+                if response.isResultSuccess() {
+                    if let list = response.model?.data {
+                        fulfill(list)
+                    } else {
+                        fulfill([])
+                    }
+                }else {
+                    reject(response.error!)
+                }
+            }
+        }
+    }
+    
+    
+    
+    
     
     //获取图片地址 根据传入的大小进行比例缩放
     func scaleImageUrl(id: String) -> String {
