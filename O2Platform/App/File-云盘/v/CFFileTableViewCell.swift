@@ -21,16 +21,17 @@ class CFFileTableViewCell: UITableViewCell {
     
     
     var file: OOAttachment?
+    var fileV3: OOAttachmentV3?
     var clickdelegate: CloudFileCheckClickDelegate?
     var showCheckBox = true
     
     
     @IBAction func clickBoxAction(_ sender: Any) {
-        DDLogDebug("点击。。。。。。。。CFFileTableViewCell")
         if self.showCheckBox {
             if self.file != nil {
-                DDLogDebug("enter click file")
                 self.clickdelegate?.clickFile(self.file!)
+            } else if self.fileV3 != nil {
+                self.clickdelegate?.clickFileV3(self.fileV3!)
             }
         }
     }
@@ -45,6 +46,27 @@ class CFFileTableViewCell: UITableViewCell {
     
     func setData(file: OOAttachment, checked: Bool, isShowCheck: Bool = true) {
         self.file = file
+        self.fileV3 = nil
+        self.fileNameLabel.text = file.name ?? ""
+        self.fileTimeLabel.text = file.lastUpdateTime ?? ""
+        self.fileSizeLabel.text = self.formatSize(len: file.length)
+//        self.setFileTypeImage(ext: file.extension)
+        self.fileTypeImageView.image = UIImage(named: O2.fileExtension2Icon(file.extension))
+        self.showCheckBox = isShowCheck
+        if self.showCheckBox {
+            self.checkBoxButton.isHidden = false
+            if checked {
+                self.checkBoxButton.setImage(UIImage(named: "icon__ok2_click"), for: .normal)
+            }else {
+                self.checkBoxButton.setImage(UIImage(named: "icon_circle"), for: .normal)
+            }
+        }else {
+            self.checkBoxButton.isHidden = true
+        }
+    }
+    func setDataV3(file: OOAttachmentV3, checked: Bool, isShowCheck: Bool = true) {
+        self.file = nil
+        self.fileV3 = file
         self.fileNameLabel.text = file.name ?? ""
         self.fileTimeLabel.text = file.lastUpdateTime ?? ""
         self.fileSizeLabel.text = self.formatSize(len: file.length)

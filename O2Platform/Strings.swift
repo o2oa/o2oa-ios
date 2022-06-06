@@ -68,6 +68,7 @@ internal enum L10n {
     internal static let cloudFileV3MessageNameNotEmpty = L10n.tr("Localizable", "Cloud File V3 Name Not Empty Message")
     internal static let cloudFileV3ZoneFormCreateTitle = L10n.tr("Localizable", "Cloud File V3 Zone Form Create Title")
     internal static let cloudFileV3ZoneFormUpdateTitle = L10n.tr("Localizable", "Cloud File V3 Zone Form Update Title")
+    internal static let cloudFileV3ZoneFileSaveToPan = L10n.tr("Localizable", "Cloud File V3 Zone File Save To My Pan")
     
   /// 完成
   internal static let done = L10n.tr("Localizable", "Done")

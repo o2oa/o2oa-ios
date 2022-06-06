@@ -20,6 +20,8 @@ protocol CloudFileCheckDelegate {
 protocol CloudFileCheckClickDelegate {
     func clickFolder(_ folder: OOFolder)
     func clickFile(_ file: OOAttachment)
+    func clickFolderV3(_ folder: OOFolderV3)
+    func clickFileV3(_ file: OOAttachmentV3)
 }
 
 class CloudFileViewModel: NSObject {
@@ -31,6 +33,18 @@ class CloudFileViewModel: NSObject {
     
     // v3 网盘
     private let cFileV3API = OOMoyaProvider<OOCloudFileV3API>()
+    
+    // 是否使用v3版本的api 就是x_pan_assemble_control模块
+    private let useV3Api: Bool = {
+        let value = StandDefaultUtil.share.userDefaultGetValue(key: O2.O2CloudFileVersionKey) as? Bool
+        return value == true
+    }()
+    
+    
+    
+    
+    // MARK: - V3 新加的企业网盘相关api
+    
     
     // 判断网盘v3版本是否存在
     func v3Echo() -> Promise<Bool> {
@@ -85,7 +99,7 @@ class CloudFileViewModel: NSObject {
             }
         }
     }
-    
+    // 企业网盘 我的收藏 共享区
     private func myFavoriteList() -> Promise<[CloudFileV3Favorite]> {
         return Promise {fulfill, reject in
             self.cFileV3API.request(.myFavoriteList) { result in
@@ -103,7 +117,7 @@ class CloudFileViewModel: NSObject {
         }
     }
     
-    
+    // 我的共享区
     private func myZoneList() -> Promise<[CloudFileV3Zone]> {
         return Promise {fulfill, reject in
             self.cFileV3API.request(.myZoneList) { result in
@@ -226,9 +240,119 @@ class CloudFileViewModel: NSObject {
         }
     }
     
+    
+    //共享工作区 获取列表 包含文件夹和文件
+    func loadZoneFileListByFolderId(folderParentId: String) -> Promise<[DataModel]> {
+        return Promise{ fulfill, reject in
+            all(self.folderListV3(folderId: folderParentId), self.fileListV3(folderId: folderParentId))
+                .then { (result) in
+                    var dataList: [DataModel] = []
+                    let folderList = result.0
+                    DDLogInfo("文件夹：\(folderList.count)")
+                    for folder in folderList {
+                        dataList.append(folder)
+                    }
+                    let fileList = result.1
+                    DDLogInfo("文件：\(fileList.count)")
+                    for file in fileList {
+                        dataList.append(file)
+                    }
+                    fulfill(dataList)
+                }.catch { (error) in
+                    DDLogError(error.localizedDescription)
+                   reject(error)
+            }
+        }
+    }
+    
+    // 共享工作区 文件列表
+    func fileListV3(folderId: String) -> Promise<[OOAttachmentV3]> {
+        return Promise { fulfill, reject in
+            let completion: Completion = { (result) in
+                let response = OOResult<BaseModelClass<[OOAttachmentV3]>>(result)
+                if response.isResultSuccess() {
+                    if let data = response.model?.data {
+                        fulfill(data)
+                    } else {
+                        reject(OOAppError.apiEmptyResultError)
+                    }
+                }else {
+                    reject(OOAppError.common(type: "cloudFile", message: response.error?.localizedDescription ?? "", statusCode: 1024))
+                }
+            }
+            
+            self.cFileV3API.request(.listFileByFolderIdV3(folderId), completion:completion)
+        }
+        
+    }
+    
+    // 共享工作区 文件夹列表
+    func folderListV3(folderId: String) -> Promise<[OOFolderV3]> {
+        return Promise { fulfill, reject in
+            let completion: Completion = { (result) in
+                let response = OOResult<BaseModelClass<[OOFolderV3]>>(result)
+                if response.isResultSuccess() {
+                    if let data = response.model?.data {
+                        fulfill(data)
+                    } else {
+                        reject(OOAppError.apiEmptyResultError)
+                    }
+                }else {
+                    reject(response.error!)
+                }
+            }
+            self.cFileV3API.request(.listFolderByFolderIdV3(folderId), completion:completion)
+        }
+        
+    }
+    
+    // 共享工作区 创建文件夹
+    func createFolderV3(name: String, superior: String = "") -> Promise<String> {
+        return Promise { fulfill, reject in
+            let completion: Completion =  { (result) in
+                let response = OOResult<BaseModelClass<OOCommonIdModel>>(result)
+                if response.isResultSuccess() {
+                    if let id = response.model?.data {
+                        fulfill(id.id ?? "")
+                    }else {
+                        fulfill("")
+                    }
+                }else {
+                    reject(response.error!)
+                }
+            }
+            self.cFileV3API.request(.createFolderV3(name, superior), completion: completion)
+        }
+    }
+    // 共享工作区 上传文件
+    func uploadFileV3(folderId: String, fileName: String, file: Data) -> Promise<String> {
+        return Promise { fulfill, reject in
+            let completion: Completion = { (result) in
+                let response = OOResult<BaseModelClass<OOCommonIdModel>>(result)
+                if response.isResultSuccess() {
+                    if let id = response.model?.data {
+                        fulfill(id.id ?? "")
+                    }else {
+                        fulfill("")
+                    }
+                }else {
+                    reject(response.error!)
+                }
+            }
+            self.cFileV3API.request(.uploadFileV3(folderId, fileName, file), completion: completion)
+        }
+    }
+    
+    // MARK: - V2 版本api 根据当前环境查询不同的 网盘模块 x_file_assemble_control ｜ x_pan_assemble_control
+    
     //获取图片地址 根据传入的大小进行比例缩放
     func scaleImageUrl(id: String) -> String {
-        let model = O2AuthSDK.shared.o2APIServer(context: .x_file_assemble_control)
+        var model: O2APIServerModel?
+        if useV3Api {
+            model = O2AuthSDK.shared.o2APIServer(context: .x_pan_assemble_control)
+        } else {
+            model = O2AuthSDK.shared.o2APIServer(context: .x_file_assemble_control)
+        }
         var baseURLString = "\(model?.httpProtocol ?? "http")://\(model?.host ?? ""):\(model?.port ?? 80)\(model?.context ?? "")"
         if let trueUrl = O2AuthSDK.shared.bindUnitTransferUrl2Mapping(url: baseURLString) {
             baseURLString = trueUrl
@@ -238,15 +362,16 @@ class CloudFileViewModel: NSObject {
         let height = 200
         return baseURLString + "/jaxrs/attachment2/\(id)/download/image/width/\(width)/height/\(height)"
     }
+    
     //获取图片地址 原图
-    func originImageUrl(id: String) -> String {
-        let model = O2AuthSDK.shared.o2APIServer(context: .x_file_assemble_control)
-        var baseURLString = "\(model?.httpProtocol ?? "http")://\(model?.host ?? ""):\(model?.port ?? 80)\(model?.context ?? "")"
-        if let trueUrl = O2AuthSDK.shared.bindUnitTransferUrl2Mapping(url: baseURLString) {
-            baseURLString = trueUrl
-        }
-        return baseURLString + "/jaxrs/attachment2/\(id)/download"
-    }
+//    func originImageUrl(id: String) -> String {
+//        let model = O2AuthSDK.shared.o2APIServer(context: .x_file_assemble_control)
+//        var baseURLString = "\(model?.httpProtocol ?? "http")://\(model?.host ?? ""):\(model?.port ?? 80)\(model?.context ?? "")"
+//        if let trueUrl = O2AuthSDK.shared.bindUnitTransferUrl2Mapping(url: baseURLString) {
+//            baseURLString = trueUrl
+//        }
+//        return baseURLString + "/jaxrs/attachment2/\(id)/download"
+//    }
     
     //分页查询分类列表
     func listTypeByPage(type: CloudFileType, page: Int, count:Int) -> Promise<[OOAttachment]> {
@@ -269,7 +394,7 @@ class CloudFileViewModel: NSObject {
                 typeString = "other"
                 break
             }
-            self.cFileAPI.request(.listTypeByPage(typeString, page, count), completion: { (result) in
+            let completion: Completion = { (result) in
                 let response = OOResult<BaseModelClass<[OOAttachment]>>(result)
                 if response.isResultSuccess() {
                     if let list = response.model?.data {
@@ -280,7 +405,12 @@ class CloudFileViewModel: NSObject {
                 }else {
                     reject(response.error!)
                 }
-            })
+            }
+            if self.useV3Api {
+                self.cFileV3API.request(.listTypeByPage(typeString, page, count), completion: completion)
+            } else {
+                self.cFileAPI.request(.listTypeByPage(typeString, page, count), completion: completion)
+            }
         }
     }
     
@@ -396,7 +526,7 @@ class CloudFileViewModel: NSObject {
     //重命名文件夹
     func updateFolder(folder: OOFolder) -> Promise<Bool> {
         return Promise { fulfill, reject in
-            self.cFileAPI.request(.updateFolder(folder.id!, folder), completion: { (result) in
+            let completion: Completion = { (result) in
                 let response = OOResult<BaseModelClass<OOCommonIdModel>>(result)
                 if response.isResultSuccess() {
                     if let id = response.model?.data {
@@ -406,14 +536,19 @@ class CloudFileViewModel: NSObject {
                 }else {
                     reject(response.error!)
                 }
-            })
+            }
+            if self.useV3Api {
+                self.cFileV3API.request(.updateFolder(folder.id!, folder), completion: completion)
+            } else {
+                self.cFileAPI.request(.updateFolder(folder.id!, folder), completion: completion)
+            }
         }
     }
     
     //重命名文件
     func updateFile(file: OOAttachment) -> Promise<Bool> {
         return Promise { fulfill, reject in
-            self.cFileAPI.request(.updateFile(file.id!, file), completion: { (result) in
+            let completion: Completion = { (result) in
                 let response = OOResult<BaseModelClass<OOCommonIdModel>>(result)
                 if response.isResultSuccess() {
                     if let id = response.model?.data {
@@ -423,7 +558,13 @@ class CloudFileViewModel: NSObject {
                 }else {
                     reject(response.error!)
                 }
-            })
+            }
+            if self.useV3Api {
+                self.cFileV3API.request(.updateFile(file.id!, file), completion: completion)
+            } else {
+                self.cFileAPI.request(.updateFile(file.id!, file), completion: completion)
+            }
+            
         }
     }
     
@@ -496,35 +637,33 @@ class CloudFileViewModel: NSObject {
     
     //文件列表
     func fileList(folderId: String) -> Promise<[OOAttachment]> {
-        if folderId.isBlank {
-            return Promise { fulfill, reject in
-                self.cFileAPI.request(.listTop, completion: { (result) in
-                    let response = OOResult<BaseModelClass<[OOAttachment]>>(result)
-                    if response.isResultSuccess() {
-                        if let data = response.model?.data {
-                            fulfill(data)
-                        } else {
-                            reject(OOAppError.apiEmptyResultError)
-                        }
-                    }else {
-                        reject(OOAppError.common(type: "cloudFile", message: response.error?.localizedDescription ?? "", statusCode: 1024))
+        return Promise { fulfill, reject in
+            
+            let completion: Completion = { (result) in
+                let response = OOResult<BaseModelClass<[OOAttachment]>>(result)
+                if response.isResultSuccess() {
+                    if let data = response.model?.data {
+                        fulfill(data)
+                    } else {
+                        reject(OOAppError.apiEmptyResultError)
                     }
-                })
+                }else {
+                    reject(OOAppError.common(type: "cloudFile", message: response.error?.localizedDescription ?? "", statusCode: 1024))
+                }
             }
-        }else {
-            return Promise { fulfill, reject in
-                self.cFileAPI.request(.listByFolder(folderId), completion: { (result) in
-                    let response = OOResult<BaseModelClass<[OOAttachment]>>(result)
-                    if response.isResultSuccess() {
-                        if let data = response.model?.data {
-                            fulfill(data)
-                        } else {
-                            reject(OOAppError.apiEmptyResultError)
-                        }
-                    }else {
-                        reject(response.error!)
-                    }
-                })
+            
+            if folderId.isBlank {
+                if self.useV3Api {
+                    self.cFileV3API.request(.listTop, completion: completion)
+                } else {
+                    self.cFileAPI.request(.listTop, completion: completion)
+                }
+            } else {
+                if self.useV3Api {
+                    self.cFileV3API.request(.listByFolder(folderId), completion:completion)
+                } else {
+                    self.cFileAPI.request(.listByFolder(folderId), completion:completion)
+                }
             }
         }
         
@@ -532,35 +671,32 @@ class CloudFileViewModel: NSObject {
     
     //文件夹列表
     func folderList(folderId: String) -> Promise<[OOFolder]> {
-        if folderId.isBlank {
-            return Promise { fulfill, reject in
-                self.cFileAPI.request(.listFolderTop, completion: { (result) in
-                    let response = OOResult<BaseModelClass<[OOFolder]>>(result)
-                    if response.isResultSuccess() {
-                        if let data = response.model?.data {
-                            fulfill(data)
-                        } else {
-                            reject(OOAppError.apiEmptyResultError)
-                        }
-                    }else {
-                        reject(response.error!)
+        
+        return Promise { fulfill, reject in
+            let completion: Completion = { (result) in
+                let response = OOResult<BaseModelClass<[OOFolder]>>(result)
+                if response.isResultSuccess() {
+                    if let data = response.model?.data {
+                        fulfill(data)
+                    } else {
+                        reject(OOAppError.apiEmptyResultError)
                     }
-                })
+                }else {
+                    reject(response.error!)
+                }
             }
-        } else {
-            return Promise { fulfill, reject in
-                self.cFileAPI.request(.listFolderByFolder(folderId), completion: { (result) in
-                    let response = OOResult<BaseModelClass<[OOFolder]>>(result)
-                    if response.isResultSuccess() {
-                        if let data = response.model?.data {
-                            fulfill(data)
-                        } else {
-                            reject(OOAppError.apiEmptyResultError)
-                        }
-                    }else {
-                        reject(response.error!)
-                    }
-                })
+            if folderId.isBlank {
+                if self.useV3Api {
+                    self.cFileV3API.request(.listFolderTop, completion: completion)
+                } else {
+                    self.cFileAPI.request(.listFolderTop, completion: completion)
+                }
+            } else {
+                if self.useV3Api {
+                    self.cFileV3API.request(.listFolderByFolder(folderId), completion:completion)
+                } else {
+                    self.cFileAPI.request(.listFolderByFolder(folderId), completion:completion)
+                }
             }
         }
         
@@ -569,7 +705,7 @@ class CloudFileViewModel: NSObject {
     //创建文件夹
     func createFolder(name: String, superior: String = "") -> Promise<String> {
         return Promise { fulfill, reject in
-            self.cFileAPI.request(.createFolder(name, superior), completion: { (result) in
+            let completion: Completion =  { (result) in
                 let response = OOResult<BaseModelClass<OOCommonIdModel>>(result)
                 if response.isResultSuccess() {
                     if let id = response.model?.data {
@@ -580,14 +716,19 @@ class CloudFileViewModel: NSObject {
                 }else {
                     reject(response.error!)
                 }
-            })
+            }
+            if self.useV3Api {
+                self.cFileV3API.request(.createFolder(name, superior), completion: completion)
+            } else {
+                self.cFileAPI.request(.createFolder(name, superior), completion: completion)
+            }
         }
     }
     
     //上传文件
     func uploadFile(folderId: String, fileName: String, file: Data) -> Promise<String> {
         return Promise { fulfill, reject in
-            self.cFileAPI.request(.uploadFile(folderId, fileName, file), completion: { (result) in
+            let completion: Completion = { (result) in
                 let response = OOResult<BaseModelClass<OOCommonIdModel>>(result)
                 if response.isResultSuccess() {
                     if let id = response.model?.data {
@@ -598,7 +739,12 @@ class CloudFileViewModel: NSObject {
                 }else {
                     reject(response.error!)
                 }
-            })
+            }
+            if self.useV3Api {
+                self.cFileV3API.request(.uploadFile(folderId, fileName, file), completion: completion)
+            } else {
+                self.cFileAPI.request(.uploadFile(folderId, fileName, file), completion: completion)
+            }
         }
     }
     
@@ -611,7 +757,7 @@ class CloudFileViewModel: NSObject {
             return self.shareToMeTopFolderList()
         } else {
             return Promise { fulfill, reject in
-                self.cFileAPI.request(.shareFolderListWithFolderId(shareId, folderId), completion: { (result) in
+                let completion: Completion = { (result) in
                     let response = OOResult<BaseModelClass<[OOFolder]>>(result)
                     if response.isResultSuccess() {
                         if let data = response.model?.data {
@@ -622,7 +768,13 @@ class CloudFileViewModel: NSObject {
                     }else {
                         reject(response.error!)
                     }
-                })
+                }
+                if self.useV3Api {
+                    self.cFileV3API.request(.shareFolderListWithFolderId(shareId, folderId), completion: completion)
+                } else {
+                    self.cFileAPI.request(.shareFolderListWithFolderId(shareId, folderId), completion: completion)
+                }
+                
             }
         }
     }
@@ -630,7 +782,7 @@ class CloudFileViewModel: NSObject {
     //分享给我的顶层文件夹列表
     private func shareToMeTopFolderList() -> Promise<[OOFolder]> {
         return Promise { fulfill, reject in
-            self.cFileAPI.request(.shareToMe("folder"), completion: { (result) in
+            let completion: Completion = { (result) in
                 let response = OOResult<BaseModelClass<[OOFolder]>>(result)
                 if response.isResultSuccess() {
                     if let data = response.model?.data {
@@ -641,7 +793,13 @@ class CloudFileViewModel: NSObject {
                 }else {
                     reject(response.error!)
                 }
-            })
+            }
+            if self.useV3Api {
+                self.cFileV3API.request(.shareToMe("folder"), completion: completion)
+            } else {
+                self.cFileAPI.request(.shareToMe("folder"), completion: completion)
+            }
+            
         }
     }
     
@@ -651,7 +809,7 @@ class CloudFileViewModel: NSObject {
             return self.shareToMeTopFileList()
         }else {
             return Promise { fulfill, reject in
-                self.cFileAPI.request(.shareFileListWithFolderId(shareId, folderId), completion: { (result) in
+                let completion: Completion = { (result) in
                     let response = OOResult<BaseModelClass<[OOAttachment]>>(result)
                     if response.isResultSuccess() {
                         if let data = response.model?.data {
@@ -662,7 +820,12 @@ class CloudFileViewModel: NSObject {
                     }else {
                         reject(response.error!)
                     }
-                })
+                }
+                if self.useV3Api {
+                    self.cFileV3API.request(.shareFileListWithFolderId(shareId, folderId), completion: completion)
+                } else {
+                    self.cFileAPI.request(.shareFileListWithFolderId(shareId, folderId), completion: completion)
+                }
             }
         }
         
@@ -671,7 +834,7 @@ class CloudFileViewModel: NSObject {
     //分享给我的顶层文件列表
     private func shareToMeTopFileList() -> Promise<[OOAttachment]> {
         return Promise { fulfill, reject in
-            self.cFileAPI.request(.shareToMe("attachment"), completion: { (result) in
+            let completion: Completion = { (result) in
                 let response = OOResult<BaseModelClass<[OOAttachment]>>(result)
                 if response.isResultSuccess() {
                     if let data = response.model?.data {
@@ -682,7 +845,12 @@ class CloudFileViewModel: NSObject {
                 }else {
                     reject(response.error!)
                 }
-            })
+            }
+            if self.useV3Api {
+                self.cFileV3API.request(.shareToMe("attachment"), completion: completion)
+            } else {
+                self.cFileAPI.request(.shareToMe("attachment"), completion: completion)
+            }
         }
     }
     
@@ -693,7 +861,7 @@ class CloudFileViewModel: NSObject {
             return self.myShareTopFolderList()
         } else {
             return Promise { fulfill, reject in
-                self.cFileAPI.request(.shareFolderListWithFolderId(shareId, folderId), completion: { (result) in
+                let completion: Completion = { (result) in
                     let response = OOResult<BaseModelClass<[OOFolder]>>(result)
                     if response.isResultSuccess() {
                         if let data = response.model?.data {
@@ -704,7 +872,13 @@ class CloudFileViewModel: NSObject {
                     }else {
                         reject(response.error!)
                     }
-                })
+                }
+                if self.useV3Api {
+                    self.cFileV3API.request(.shareFolderListWithFolderId(shareId, folderId), completion: completion)
+                } else {
+                    self.cFileAPI.request(.shareFolderListWithFolderId(shareId, folderId), completion: completion)
+                }
+                
             }
         }
     }
@@ -712,7 +886,7 @@ class CloudFileViewModel: NSObject {
     //我分享的顶层文件夹列表
     private func myShareTopFolderList() -> Promise<[OOFolder]> {
         return Promise { fulfill, reject in
-            self.cFileAPI.request(.myShareList("folder"), completion: { (result) in
+            let completion: Completion = { (result) in
                 let response = OOResult<BaseModelClass<[OOFolder]>>(result)
                 if response.isResultSuccess() {
                     if let data = response.model?.data {
@@ -723,7 +897,13 @@ class CloudFileViewModel: NSObject {
                 }else {
                     reject(response.error!)
                 }
-            })
+            }
+            if self.useV3Api {
+                self.cFileV3API.request(.myShareList("folder"), completion: completion)
+            } else {
+                self.cFileAPI.request(.myShareList("folder"), completion: completion)
+            }
+            
         }
     }
     
@@ -733,7 +913,7 @@ class CloudFileViewModel: NSObject {
             return self.myShareTopFileList()
         }else {
             return Promise { fulfill, reject in
-                self.cFileAPI.request(.shareFileListWithFolderId(shareId, folderId), completion: { (result) in
+                let completion: Completion = { (result) in
                     let response = OOResult<BaseModelClass<[OOAttachment]>>(result)
                     if response.isResultSuccess() {
                         if let data = response.model?.data {
@@ -744,7 +924,12 @@ class CloudFileViewModel: NSObject {
                     }else {
                         reject(response.error!)
                     }
-                })
+                }
+                if self.useV3Api {
+                    self.cFileV3API.request(.shareFileListWithFolderId(shareId, folderId), completion: completion)
+                } else {
+                    self.cFileAPI.request(.shareFileListWithFolderId(shareId, folderId), completion: completion)
+                }
             }
         }
         
@@ -753,7 +938,7 @@ class CloudFileViewModel: NSObject {
     //我分享的顶层文件列表
     private func myShareTopFileList() -> Promise<[OOAttachment]> {
         return Promise { fulfill, reject in
-            self.cFileAPI.request(.myShareList("attachment"), completion: { (result) in
+            let completion: Completion = { (result) in
                 let response = OOResult<BaseModelClass<[OOAttachment]>>(result)
                 if response.isResultSuccess() {
                     if let data = response.model?.data {
@@ -764,14 +949,21 @@ class CloudFileViewModel: NSObject {
                 }else {
                     reject(response.error!)
                 }
-            })
+            }
+            if self.useV3Api {
+                self.cFileV3API.request(.myShareList("attachment"), completion: completion)
+            } else {
+                self.cFileAPI.request(.myShareList("attachment"), completion: completion)
+            }
+            
+           
         }
     }
     
     //删除文件
     private func deleteFile(id: String) -> Promise<Bool> {
         return Promise { fulfill, reject in
-            self.cFileAPI.request(.deleteFile(id), completion: { (result) in
+            let  completion: Completion = { (result) in
                 let response = OOResult<BaseModelClass<OOCommonIdModel>>(result)
                 if response.isResultSuccess() {
                     if let id = response.model?.data {
@@ -781,14 +973,20 @@ class CloudFileViewModel: NSObject {
                 }else {
                     reject(response.error!)
                 }
-            })
+            }
+            if self.useV3Api {
+                self.cFileV3API.request(.deleteFile(id), completion: completion)
+            } else {
+                self.cFileAPI.request(.deleteFile(id), completion: completion)
+            }
+            
         }
     }
     
     //删除文件夹
     private func deleteFolder(id: String) -> Promise<Bool> {
         return Promise { fulfill, reject in
-            self.cFileAPI.request(.deleteFolder(id), completion: { (result) in
+            let  completion: Completion = { (result) in
                 let response = OOResult<BaseModelClass<OOCommonIdModel>>(result)
                 if response.isResultSuccess() {
                     if let id = response.model?.data {
@@ -798,7 +996,13 @@ class CloudFileViewModel: NSObject {
                 }else {
                     reject(response.error!)
                 }
-            })
+            }
+            if self.useV3Api {
+                self.cFileV3API.request(.deleteFolder(id), completion: completion)
+            } else {
+                self.cFileAPI.request(.deleteFolder(id), completion: completion)
+            }
+            
         }
     }
     
@@ -810,7 +1014,8 @@ class CloudFileViewModel: NSObject {
             form.shareType = "member"
             form.shareUserList = users
             form.shareOrgList = orgs
-            self.cFileAPI.request(.share(form), completion: { (result) in
+            
+            let completion: Completion = { (result) in
                 let response = OOResult<BaseModelClass<OOCommonIdModel>>(result)
                 if response.isResultSuccess() {
                     if let id = response.model?.data {
@@ -820,14 +1025,21 @@ class CloudFileViewModel: NSObject {
                 }else {
                     reject(response.error!)
                 }
-            })
+            }
+            if self.useV3Api {
+                self.cFileV3API.request(.share(form), completion: completion)
+            } else {
+                self.cFileAPI.request(.share(form), completion: completion)
+            }
+            
+            
         }
     }
     
     //删除分享
     private func deleteShare(shareId: String) -> Promise<Bool> {
         return Promise { fulfill, reject in
-            self.cFileAPI.request(.deleteMyShare(shareId), completion: { result in
+            let completion: Completion = { result in
                 let response = OOResult<BaseModelClass<OOCommonIdModel>>(result)
                 if response.isResultSuccess() {
                     if let id = response.model?.data {
@@ -837,14 +1049,21 @@ class CloudFileViewModel: NSObject {
                 }else {
                     reject(response.error!)
                 }
-            })
+            }
+            if self.useV3Api {
+                self.cFileV3API.request(.deleteMyShare(shareId), completion: completion)
+            } else {
+                self.cFileAPI.request(.deleteMyShare(shareId), completion: completion)
+            }
+            
+           
         }
     }
     
     //屏蔽分享给我的文件
     private func shieldShare(shareId: String) -> Promise<Bool> {
         return Promise { fulfill, reject in
-            self.cFileAPI.request(.shieldShare(shareId), completion: { result in
+            let completion: Completion = { result in
                 let response = OOResult<BaseModelClass<OOCommonIdModel>>(result)
                 if response.isResultSuccess() {
                     if let id = response.model?.data {
@@ -854,7 +1073,13 @@ class CloudFileViewModel: NSObject {
                 }else {
                     reject(response.error!)
                 }
-            })
+            }
+            if self.useV3Api {
+                self.cFileV3API.request(.shieldShare(shareId), completion: completion)
+            } else {
+                self.cFileAPI.request(.shieldShare(shareId), completion: completion)
+            }
+            
         }
     }
     

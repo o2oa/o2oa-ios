@@ -25,8 +25,21 @@ enum OOCloudFileV3API {
     case createFavorite(CloudFileV3FavoritePost)
     case updateFavorite(String, CloudFileV3FavoritePost)
     case deleteFavorite(String)
+    case listFileByFolderIdV3(String) // 根据目录id查询文件列表
+    case listFolderByFolderIdV3(String)// 根据目录id查询文件夹列表
+    case createFolderV3(String, String)
+    // folderId, fileName , file
+    case uploadFileV3(String, String, Data)
+    case updateFolderNameV3(String, RenamePost)
+    case updateFileNameV3(String, RenamePost)
+    case deleteFileV3(String)
+    case deleteFolderV3(String)
+    case moveToMyPan(String, MoveToMyPanPost)
+    case moveFolderV3(String, MoveV3Post)
+    case moveFileV3(String, MoveV3Post)
     
-    //新版
+    
+    //新版v2
     case listTop
     case listFolderTop
     case listByFolder(String)
@@ -133,17 +146,39 @@ extension OOCloudFileV3API:TargetType{
             return "/jaxrs/favorite/\(id)/update"
         case .deleteFavorite(let id):
             return "/jaxrs/favorite/\(id)"
+        case .listFolderByFolderIdV3(let folderId):
+            return "/jaxrs/folder3/list/\(folderId)/order/by/updateTime/desc/true"
+        case .listFileByFolderIdV3(let folderId):
+            return "/jaxrs/attachment3/list/folder/\(folderId)/order/by/updateTime/desc/true"
+        case .createFolderV3(_, _):
+            return "/jaxrs/folder3"
+        case .uploadFileV3(let folderId, _, _):
+            return "/jaxrs/attachment3/upload/folder/\(folderId)"
+        case .updateFolderNameV3(let id, _):
+            return "/jaxrs/folder3/\(id)/update/name"
+        case .updateFileNameV3(let id, _):
+            return "/jaxrs/attachment3/\(id)/update/name"
+        case .deleteFileV3(let id):
+            return "/jaxrs/attachment3/\(id)"
+        case .deleteFolderV3(let id):
+            return "/jaxrs/folder3/\(id)"
+        case .moveToMyPan(let personFolder, _):
+            return "/jaxrs/folder3/save/to/person/\(personFolder)"
+        case .moveFileV3(let id, _):
+            return "/jaxrs/attachment3/\(id)/move"
+        case .moveFolderV3(let id, _):
+            return "/jaxrs/folder3/\(id)/move"
             
             
             //v2
         case .listTop:
-            return "/jaxrs/attachment2/list/top"
+            return "/jaxrs/attachment2/list/top/order/by/updateTime/desc/true"
         case .listFolderTop:
-            return "/jaxrs/folder2/list/top"
+            return "/jaxrs/folder2/list/top/order/by/updateTime/desc/true"
         case .listByFolder(let folderId):
-            return "/jaxrs/attachment2/list/folder/\(folderId)"
+            return "/jaxrs/attachment2/list/folder/\(folderId)/order/by/updateTime/desc/true"
         case .listFolderByFolder(let folderId):
-            return "/jaxrs/folder2/list/\(folderId)"
+            return "/jaxrs/folder2/list/\(folderId)/order/by/updateTime/desc/true"
         case .createFolder(_, _):
             return "/jaxrs/folder2"
         case .uploadFile(let folderId, _, _):
@@ -203,11 +238,13 @@ extension OOCloudFileV3API:TargetType{
     var method: Moya.Method {
         switch self {
             //v3
-        case .echo, .myZoneList, .myFavoriteList, .isZoneCreator:
+        case .echo, .myZoneList, .myFavoriteList, .isZoneCreator, .listFileByFolderIdV3(_), .listFolderByFolderIdV3(_):
             return .get
-        case .createZone(_), .updateZone(_, _), .createFavorite(_), .updateFavorite(_, _):
+        case .createZone(_), .updateZone(_, _), .createFavorite(_), .updateFavorite(_, _), .createFolderV3(_, _),
+                .uploadFileV3(_, _, _), .updateFileNameV3(_, _), .updateFolderNameV3(_, _), .moveFileV3(_, _),
+                .moveFolderV3(_, _), .moveToMyPan(_, _):
             return .post
-        case .deleteZone(_), .deleteFavorite(_):
+        case .deleteZone(_), .deleteFavorite(_), .deleteFolderV3(_), .deleteFileV3(_):
             return .delete
          // v2
         case .listTop, .listFolderTop, .listByFolder(_), .listFolderByFolder(_), .downloadFile(_), .getFile(_):
@@ -243,12 +280,29 @@ extension OOCloudFileV3API:TargetType{
     var task: Task {
         switch self {
             // v3
-        case .echo, .myFavoriteList, .myZoneList, .isZoneCreator, .deleteZone(_), .deleteFavorite(_):
+        case .echo, .myFavoriteList, .myZoneList, .isZoneCreator, .deleteZone(_), .deleteFavorite(_), .listFileByFolderIdV3(_), .listFolderByFolderIdV3(_):
             return.requestPlain
         case .createZone(let zone), .updateZone(_, let zone):
             return .requestParameters(parameters: zone.toJSON()!, encoding: JSONEncoding.default)
         case .createFavorite(let fav), .updateFavorite(_, let fav):
             return .requestParameters(parameters: fav.toJSON()!, encoding: JSONEncoding.default)
+        case .createFolderV3(let name, let superior):
+            return .requestParameters(parameters: ["name":name, "superior": superior], encoding: JSONEncoding.default)
+        case .uploadFileV3(_, let fileName, let data):
+            //字符串类型 文件名
+            let strData = fileName.data(using: .utf8)
+            let fileNameData = MultipartFormData(provider: .data(strData!), name: "fileName")
+            //文件类型
+            let fileData = MultipartFormData(provider: .data(data), name: "file", fileName: fileName)
+            return .uploadMultipart([fileData, fileNameData])
+        case .updateFileNameV3(_, let body), .updateFolderNameV3(_, let body) :
+            return .requestParameters(parameters: body.toJSON()!, encoding: JSONEncoding.default)
+        case .moveFileV3(_, let body), .moveFolderV3(_, let body):
+            return .requestParameters(parameters: body.toJSON()!, encoding: JSONEncoding.default)
+        case .moveToMyPan(_, let body):
+            return .requestParameters(parameters: body.toJSON()!, encoding: JSONEncoding.default)
+        case .deleteFileV3(_), .deleteFolderV3(_):
+            return .requestPlain
             
         case .listFolderByFolder(_), .listByFolder(_), .listTop,.listFolderTop,.listFolder(_),.listMyEditorByPerson(_),.listMyShareByPerson(_),
              .listMyEditor,.listMyShare,.getAttachment(_),.deleteAttachement(_),.getPicItemURL(_), .deleteFolder(_), .deleteFile(_),
