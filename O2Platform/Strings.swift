@@ -50,6 +50,26 @@ internal enum L10n {
   internal static let deleteItemsConfirmMessage = L10n.tr("Localizable", "Delete Items Confirm Message")
   /// 确定要取消这些分享的数据吗？
   internal static let deleteMyShareFileConfirmMessage = L10n.tr("Localizable", "Delete My Share File Confirm Message")
+    /// 企业共享区
+    internal static let cloudFileZoneName = L10n.tr("Localizable", "Cloud File V3 Zone Name")
+    internal static let cloudFileMyFavorite = L10n.tr("Localizable", "Cloud File V3 My Favorite")
+    internal static let cloudFileMyZone = L10n.tr("Localizable", "Cloud File V3 Zone Name")
+    // 菜单
+    internal static let cloudFileV3MenuAddFav = L10n.tr("Localizable", "Cloud File V3 Menu Add Favorite")
+    internal static let cloudFileV3MenuCancelFav = L10n.tr("Localizable", "Cloud File V3 Menu Cancel Favorite")
+    internal static let cloudFileV3MenuRenameFav = L10n.tr("Localizable", "Cloud File V3 Menu Rename")
+    internal static let cloudFileV3MenuEditZone = L10n.tr("Localizable", "Cloud File V3 Menu Edit Zone")
+    internal static let cloudFileV3MenuDeleteZone = L10n.tr("Localizable", "Cloud File V3 Menu Delete Zone")
+    
+    internal static func cloudFileV3ConfirmDeleteZone(_ message: String) -> String {
+      return L10n.tr("Localizable", "Cloud File V3 Confirm Delete Zone", message)
+    }
+    internal static let cloudFileV3MessageAlertRenameFavorite = L10n.tr("Localizable", "Cloud File V3 Rename Alert Message")
+    internal static let cloudFileV3MessageNameNotEmpty = L10n.tr("Localizable", "Cloud File V3 Name Not Empty Message")
+    internal static let cloudFileV3ZoneFormCreateTitle = L10n.tr("Localizable", "Cloud File V3 Zone Form Create Title")
+    internal static let cloudFileV3ZoneFormUpdateTitle = L10n.tr("Localizable", "Cloud File V3 Zone Form Update Title")
+    internal static let cloudFileV3ZoneFileSaveToPan = L10n.tr("Localizable", "Cloud File V3 Zone File Save To My Pan")
+    
   /// 完成
   internal static let done = L10n.tr("Localizable", "Done")
     /// 编辑

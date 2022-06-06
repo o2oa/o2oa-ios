@@ -27,6 +27,13 @@ class CloudFileBaseVC: UIViewController {
     //选中的文件列表
     var checkedFileList: [OOAttachment] = []
     
+    
+    //选中的文件夹列表
+    var checkedV3FolderList: [OOFolderV3] = []
+    //选中的文件列表
+    var checkedV3FileList: [OOAttachmentV3] = []
+    
+    
     //重新加载数据 子类各自实现
     func loadListData() {
         
@@ -178,6 +185,11 @@ class CloudFileBaseVC: UIViewController {
         }else {
             self.previewFile(fileId: file.id!)
         }
+    }
+    
+    // 企业网盘 工作共享区内的 文件查看
+    func clickFileV3(file: OOAttachmentV3)  {
+        
     }
     
     /// 播放音频

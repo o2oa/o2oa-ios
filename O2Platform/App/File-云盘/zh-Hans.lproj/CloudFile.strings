@@ -42,3 +42,9 @@
 
 /* Class = "UITableViewController"; title = "分类列表VC"; ObjectID = "t8P-Yb-g3f"; */
 "t8P-Yb-g3f.title" = "";
+
+/* Class = "CloudFileV3ViewController"; */
+"Nv6-pn-c0r.text" = "我的文件";
+"yLB-GZ-xpZ.text" = "个人文件";
+"3lT-Ew-KKq.text" = "企业文件";
+"JAe-yI-dpC.text" = "企业共享区";

@@ -23,6 +23,27 @@ class QRCodeResultViewController: UIViewController {
         vc.navigationController?.pushViewController(resultVC, animated: false)
     }
     
+    /// 扫码结果是否会议签到、扫码登录
+    static func checkResultIsO2(result: String) -> (Bool, String) {
+        let url = NSURL(string: result)
+       //会议签到功能
+       var isMeetingCheck = false
+       let allU = url?.absoluteString
+       if allU != nil && allU!.contains("/checkin") && allU!.contains("x_meeting_assemble_control") {
+           isMeetingCheck = true
+       }
+        let query = url?.query
+        let querys = query?.split("&")
+        var meta = ""
+        querys?.forEach { (e) in
+            let name = e.split("=")[0]
+            if name == "meta" {
+                meta = e.split("=")[1]
+            }
+        }
+        return (isMeetingCheck, meta)
+    }
+    
     @IBOutlet weak var loginStackView: UIStackView!
     @IBOutlet weak var loginImage: UIImageView!
     @IBOutlet weak var loginBtn: UIButton!
@@ -114,13 +135,6 @@ class QRCodeResultViewController: UIViewController {
                 self.loginBtn.isHidden = false
                 
             }else {//其他扫描结果
-//                let alertController = UIAlertController(title: "扫描结果", message: result, preferredStyle: .alert)
-//                let okAction = UIAlertAction(title: "确定", style: .default) {
-//                    action in
-//                    self.popVC()
-//                }
-//                alertController.addAction(okAction)
-//                self.presentVC(alertController)
                 self.resultLabel.isHidden = false
                 self.resultLabel.text = result
             }

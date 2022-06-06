@@ -11,11 +11,12 @@ import CocoaLumberjack
 import Promises
 import QuickLook
 
-//当前页面显示模式 normal：普通页面 shareToMe：分享给我的页面 myShare：我分享的页面
+//当前页面显示模式 normal：普通页面 shareToMe：分享给我的页面 myShare：我分享的页面 zone： 企业网盘共享工作区
 enum FileListShowMode {
     case normal
     case shareToMe
     case myShare
+    case zone
 }
 
 class CloudFileListController: CloudFileBaseVC {
@@ -57,6 +58,14 @@ class CloudFileListController: CloudFileBaseVC {
         case .myShare:
             self.title = L10n.cloudFileMyShareFiles // Languager.standardLanguager().string(key: "Cloud File My Share Files")
             self.navigationItem.rightBarButtonItems = []
+            break
+        case .zone:
+            // 打开共享工作区 第一条数据是 工作区的id和名称
+            if self.breadcrumbList.count > 0 {
+                let zone = self.breadcrumbList[0]
+                self.title = zone.name ?? ""
+                self.navigationItem.rightBarButtonItems = [UIBarButtonItem(image: UIImage(named: "add"), style: .plain, target: self, action: #selector(addEventInZone))]
+            }
             break
         }
        
@@ -105,6 +114,23 @@ class CloudFileListController: CloudFileBaseVC {
             myShareVC.breadcrumbList = []
             self.pushVC(myShareVC)
         }
+    }
+    
+    //点击新建按钮 企业网盘共享工作区使用
+    @objc private func addEventInZone() {
+        var actions: [UIAlertAction] = []
+        let uploadFile = L10n.uploadFile // Languager.standardLanguager().string(key: "Upload File")
+        let newFile = UIAlertAction(title: uploadFile, style: .default) { (action) in
+            self.choosePhotoAndUploadV3()
+        }
+        let newFolderTitle = L10n.newFolder // Languager.standardLanguager().string(key: "New Folder")
+        let newFolder = UIAlertAction(title: newFolderTitle, style: .default) { (action) in
+            self.createFolderV3()
+        }
+        actions.append(newFile)
+        actions.append(newFolder)
+        let newMsg = L10n.new // Languager.standardLanguager().string(key: "New")
+        self.showSheetAction(title: "", message: newMsg, actions: actions)
     }
     
     
@@ -181,7 +207,7 @@ class CloudFileListController: CloudFileBaseVC {
     
     //重新生成刷新底部工具栏和按钮
     private func refreshBottomToolBar() {
-        let totalCount = self.checkedFileList.count + self.checkedFolderList.count
+        let totalCount = self.checkedFileList.count + self.checkedFolderList.count + self.checkedV3FileList.count + self.checkedV3FolderList.count
         if totalCount > 0 {
             var items: [UIBarButtonItem] = []
             switch self.showMode {
@@ -218,6 +244,27 @@ class CloudFileListController: CloudFileBaseVC {
                 let deleteName = L10n.shieldShare // Languager.standardLanguager().string(key: "Shield Share")
                 self.generateBottomButton(&items, name: deleteName) {
                     self.shieldFileShareToMe()
+                }
+                break
+            case .zone:
+                 // 共享区 文件操作按钮生成
+                if totalCount == 1 {
+                    let reName = L10n.rename // 重命名
+                    generateBottomButton(&items, name: reName, tapCall: {
+                        self.renameV3()
+                    })
+                    let deleteName = L10n.delete // 删除
+                    self.generateBottomButton(&items, name: deleteName) {
+                        self.deleteV3()
+                    }
+                }
+                let moveName = L10n.move // 移动
+                self.generateBottomButton(&items, name: moveName) {
+                    self.moveV3Inner()
+                }
+                let saveToMyPan = L10n.cloudFileV3ZoneFileSaveToPan
+                self.generateBottomButton(&items, name: saveToMyPan) {
+                    self.saveToMyPan()
                 }
                 break
             }
@@ -281,11 +328,16 @@ class CloudFileListController: CloudFileBaseVC {
     private func isFolderChecked(_ folder: OOFolder) -> Bool {
         return self.checkedFolderList.contains(folder)
     }
+    private func isFolderV3Checked(_ folder: OOFolderV3) -> Bool {
+        return self.checkedV3FolderList.contains(folder)
+    }
     
     private func isFileChecked(_ file: OOAttachment) -> Bool {
         return self.checkedFileList.contains(file)
     }
-
+    private func isFileV3Checked(_ file: OOAttachmentV3) -> Bool {
+        return self.checkedV3FileList.contains(file)
+    }
     
     
     // MARK: - 后台数据服务
@@ -297,6 +349,8 @@ class CloudFileListController: CloudFileBaseVC {
         self.dataList = []
         self.checkedFileList = []
         self.checkedFolderList = []
+        self.checkedV3FileList = []
+        self.checkedV3FolderList = []
         //分模式查询数据
         switch self.showMode {
         case .normal:
@@ -344,6 +398,19 @@ class CloudFileListController: CloudFileBaseVC {
                 parentId = folder.id ?? ""
             }
             self.cFileVM.loadShareToMeList(folderParentId: parentId, shareId: self.shareId)
+                .then { (result)  in
+                    self.dataList = result
+                    self.hideLoading()
+                    self.reloadUI()
+                }.catch { (error) in
+                    DDLogError(error.localizedDescription)
+                    self.hideLoading()
+                    self.reloadUI()
+            }
+            break
+        case .zone:
+            let id = self.breadcrumbList[self.breadcrumbList.count-1].id ?? ""
+            self.cFileVM.loadZoneFileListByFolderId(folderParentId: id)
                 .then { (result)  in
                     self.dataList = result
                     self.hideLoading()
@@ -444,6 +511,60 @@ class CloudFileListController: CloudFileBaseVC {
             }
         }
     }
+    
+    
+    
+     
+     // 共享工作区内 新建文件夹
+     private func createFolderV3() {
+         let newFolderTitle = L10n.newFolder // Languager.standardLanguager().string(key: "New Folder")
+         self.showPromptAlert(title: newFolderTitle, message: "", inputText: "") { (ok, result) in
+             if result != "" {
+                 let folderId = self.breadcrumbList.last?.id ?? ""
+                 self.cFileVM.createFolderV3(name: result, superior: folderId).then({ (id) in
+                     self.loadListData()
+                 }).catch({ (error) in
+                     DDLogError("创建文件失败,\(error.localizedDescription)")
+                     let errTitle = L10n.createFolderErrorMessage
+                     self.showError(title: errTitle)
+                 })
+             }
+         }
+     }
+     
+   
+     // 共享工作区内 选择照片上传
+     private func choosePhotoAndUploadV3() {
+         self.choosePhotoWithImagePicker { (fileName, imageData) in
+             self.showLoading()
+             let folderId = self.breadcrumbList.last?.id ?? O2.O2_First_ID
+             self.cFileVM.uploadFileV3(folderId: folderId, fileName: fileName, file: imageData)
+                 .then { result in
+                     DDLogInfo("上传成功，\(result)")
+                     self.hideLoading()
+                     self.loadListData()
+                 }.catch { (error) in
+                     DDLogError(error.localizedDescription)
+                     self.hideLoading()
+             }
+         }
+     }
+    // 共享工作区内文件、文件夹重命名
+    private func renameV3() {
+        
+    }
+    // 共享工作区内文件、文件夹删除
+    private func deleteV3() {
+        
+    }
+    // 共享工作区内文件、文件夹移动
+    private func moveV3Inner() {
+        
+    }
+    // 将共享工作区的文件、文件夹保存到我的网盘
+    private func saveToMyPan() {
+        
+    }
    
 }
 
@@ -466,7 +587,7 @@ extension CloudFileListController: UITableViewDelegate, UITableViewDataSource {
         let item = self.dataList[indexPath.row]
         // 分享列表的时候 二级一下目录文件不能显示checkbox 它们是不能操作的
         var isShowCheckBox = true
-        if self.showMode != .normal && self.breadcrumbList.count > 1 {
+        if (self.showMode == .myShare || self.showMode == .shareToMe) && self.breadcrumbList.count > 1 {
             isShowCheckBox = false
         }
         if item is OOFolder {
@@ -487,7 +608,25 @@ extension CloudFileListController: UITableViewDelegate, UITableViewDataSource {
             } else {
                 return UITableViewCell()
             }
-        }else {
+        } else if item is OOFolderV3 {
+            let folder = item as! OOFolderV3
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "CFFolderTableViewCell", for: indexPath) as? CFFolderTableViewCell {
+                cell.clickdelegate = self
+                cell.setDataV3(folder: folder, checked: self.isFolderV3Checked(folder), isShowCheck: isShowCheckBox)
+                return cell
+            } else {
+                return UITableViewCell()
+            }
+        } else if item is OOAttachmentV3 {
+            let file = item as! OOAttachmentV3
+            if let cell = tableView.dequeueReusableCell(withIdentifier: "CFFileTableViewCell", for: indexPath) as? CFFileTableViewCell {
+                cell.clickdelegate = self
+                cell.setDataV3(file: file, checked: self.isFileV3Checked(file), isShowCheck: isShowCheckBox)
+                return cell
+            } else {
+                return UITableViewCell()
+            }
+        }  else {
             return UITableViewCell()
         }
     }
@@ -505,6 +644,16 @@ extension CloudFileListController: UITableViewDelegate, UITableViewDataSource {
                 file.id = trueId
             }
             self.clickFile(file: file)
+        } else if item is OOFolderV3 { //点击文件夹进入下一层
+            let folderV3 = item as! OOFolderV3
+            let folder = OOFolder()
+            folder.id = folderV3.id
+            folder.name = folderV3.name
+            self.breadcrumbList.append(folder)
+            self.loadListData()
+        } else if item is OOAttachmentV3 { //点击文件
+            let file = item as! OOAttachmentV3
+            self.clickFileV3(file: file)
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -516,6 +665,26 @@ extension CloudFileListController: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: - Ext CloudFileCheckClickDelegate
 extension CloudFileListController: CloudFileCheckClickDelegate {
+    func clickFolderV3(_ folder: OOFolderV3) {
+        DDLogDebug("click folder v3")
+        if self.checkedV3FolderList.contains(folder) {
+            self.checkedV3FolderList.removeFirst(folder)
+        }else {
+            self.checkedV3FolderList.append(folder)
+        }
+        self.reloadUI()
+    }
+    
+    func clickFileV3(_ file: OOAttachmentV3) {
+        DDLogDebug("click file v3")
+        if self.checkedV3FileList.contains(file) {
+            self.checkedV3FileList.removeFirst(file)
+        }else {
+            self.checkedV3FileList.append(file)
+        }
+        self.reloadUI()
+    }
+    
     func clickFolder(_ folder: OOFolder) {
         DDLogDebug("clci folder")
         if self.checkedFolderList.contains(folder) {

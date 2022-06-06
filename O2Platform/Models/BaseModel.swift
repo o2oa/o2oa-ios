@@ -131,6 +131,21 @@ public class O2UPloadImageIdsDataModel: DataModel {
 
 
 
+class BaseErrorResponse: HandyJSON {
+    var count:Int?
+    
+    @objc var date:String?
+    
+    @objc var message:String?
+     
+    @objc var size:String?
+    
+    var spent:Int?
+    
+    @objc var type:String?
+    
+    required public init() {}
+}
 
 
 
@@ -268,5 +283,18 @@ public class OOCommonModel:DataModel {
     
     public var description: String {
         return "CommonModel"
+    }
+}
+
+public class OOEchoModel: DataModel {
+    public var description: String {
+        return "OOEchoModel"
+    }
+    
+    var servletContextName:String?
+    var serverTime:String?
+    
+    required public init() {
+        
     }
 }

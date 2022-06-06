@@ -42,6 +42,33 @@
 
 "Delete My Share File Confirm Message" = "Cancel these share items, are you sure ?";
 
+"Cloud File V3 Zone Name" = "Enterprise Shared Area";
+
+"Cloud File V3 My Favorite" = "My Favorite";
+
+"Cloud File V3 My Zone" = "My Zone";
+
+"Cloud File V3 Menu Add Favorite" = "Add Favorite";
+
+"Cloud File V3 Menu Cancel Favorite" = "Cancel Favorite";
+
+"Cloud File V3 Menu Rename" = "Rename";
+
+"Cloud File V3 Menu Edit Zone" = "Edit";
+
+"Cloud File V3 Menu Delete Zone" = "Delete";
+
+"Cloud File V3 Confirm Delete Zone" = "Are you sure you want to delete this sharing area [%@], and the data in it will not be recovered?";
+
+"Cloud File V3 Rename Alert Message" = "Rename the shared area of the collection";
+
+"Cloud File V3 Name Not Empty Message" = "The Name is required!";
+
+"Cloud File V3 Zone Form Create Title" = "Create a shared workspace";
+
+"Cloud File V3 Zone Form Update Title" = "Update Shared Workspace";
+
+"Cloud File V3 Zone File Save To My Pan" = "Save To My Disk";
 /* 
   Localizable.strings
   O2Platform

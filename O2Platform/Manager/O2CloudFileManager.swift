@@ -25,6 +25,15 @@ class O2CloudFileManager {
        return OOMoyaProvider<OOCloudStorageAPI>()
     }()
     
+    // v3 网盘
+    private let cFileV3API  = { return OOMoyaProvider<OOCloudFileV3API>() }()
+    
+    // 是否使用v3版本的api 就是x_pan_assemble_control模块
+    private let useV3Api: Bool = {
+        let value = StandDefaultUtil.share.userDefaultGetValue(key: O2.O2CloudFileVersionKey) as? Bool
+        return value == true
+    }()
+    
     
     // MARK: - 工具服务 获取url 本地文件夹路径等等
     
@@ -43,7 +52,14 @@ class O2CloudFileManager {
     
     //获取图片地址 根据传入的大小进行比例缩放
     func scaleImageUrl(id: String, width: Int = 200, height: Int = 200) -> String {
-        let model = O2AuthSDK.shared.o2APIServer(context: .x_file_assemble_control)
+//        let model = O2AuthSDK.shared.o2APIServer(context: .x_file_assemble_control)
+        var model: O2APIServerModel?
+        if useV3Api {
+            model = O2AuthSDK.shared.o2APIServer(context: .x_pan_assemble_control)
+        } else {
+            model = O2AuthSDK.shared.o2APIServer(context: .x_file_assemble_control)
+        }
+        
         var baseURLString = "\(model?.httpProtocol ?? "http")://\(model?.host ?? ""):\(model?.port ?? 80)\(model?.context ?? "")"
         if let trueUrl = O2AuthSDK.shared.bindUnitTransferUrl2Mapping(url: baseURLString) {
             baseURLString = trueUrl
@@ -53,7 +69,13 @@ class O2CloudFileManager {
     
     //获取源文件下载地址
     func originFileUrl(id: String) -> String {
-        let model = O2AuthSDK.shared.o2APIServer(context: .x_file_assemble_control)
+//        let model = O2AuthSDK.shared.o2APIServer(context: .x_file_assemble_control)
+        var model: O2APIServerModel?
+        if useV3Api {
+            model = O2AuthSDK.shared.o2APIServer(context: .x_pan_assemble_control)
+        } else {
+            model = O2AuthSDK.shared.o2APIServer(context: .x_file_assemble_control)
+        }
         var baseURLString = "\(model?.httpProtocol ?? "http")://\(model?.host ?? ""):\(model?.port ?? 80)\(model?.context ?? "")"
         if let trueUrl = O2AuthSDK.shared.bindUnitTransferUrl2Mapping(url: baseURLString) {
             baseURLString = trueUrl
@@ -176,26 +198,51 @@ class O2CloudFileManager {
     //网络下载附件
     private func downdloadFile(id: String) -> Promise<OOAttachment>{
         return Promise { fulfill, reject in
-            self.cloudFileApi.request(.getFile(id)) { (result) in
-                let response = OOResult<BaseModelClass<OOAttachment>>(result)
-                if response.isResultSuccess() {
-                    if let file = response.model?.data {
-                        self.cloudFileApi.request(.downloadFile(file), completion: { (downloadResult) in
-                            switch downloadResult {
-                            case .success(_):
-                                //下载文件成功 返回附件对象 需要附件的地方根据固定的文件位置去查找
-                                fulfill(file)
-                                break
-                            case .failure(let err):
-                                reject(err)
-                                break
-                            }
-                        })
+            if self.useV3Api {
+                self.cFileV3API.request(.getFile(id)) { (result) in
+                    let response = OOResult<BaseModelClass<OOAttachment>>(result)
+                    if response.isResultSuccess() {
+                        if let file = response.model?.data {
+                            self.cFileV3API.request(.downloadFile(file), completion: { (downloadResult) in
+                                switch downloadResult {
+                                case .success(_):
+                                    //下载文件成功 返回附件对象 需要附件的地方根据固定的文件位置去查找
+                                    fulfill(file)
+                                    break
+                                case .failure(let err):
+                                    reject(err)
+                                    break
+                                }
+                            })
+                        }else {
+                            reject(O2APIError.o2ResponseError("没有查询到附件对象， id: \(id)"))
+                        }
                     }else {
-                        reject(O2APIError.o2ResponseError("没有查询到附件对象， id: \(id)"))
+                        reject(response.error!)
                     }
-                }else {
-                    reject(response.error!)
+                }
+            } else {
+                self.cloudFileApi.request(.getFile(id)) { (result) in
+                    let response = OOResult<BaseModelClass<OOAttachment>>(result)
+                    if response.isResultSuccess() {
+                        if let file = response.model?.data {
+                            self.cloudFileApi.request(.downloadFile(file), completion: { (downloadResult) in
+                                switch downloadResult {
+                                case .success(_):
+                                    //下载文件成功 返回附件对象 需要附件的地方根据固定的文件位置去查找
+                                    fulfill(file)
+                                    break
+                                case .failure(let err):
+                                    reject(err)
+                                    break
+                                }
+                            })
+                        }else {
+                            reject(O2APIError.o2ResponseError("没有查询到附件对象， id: \(id)"))
+                        }
+                    }else {
+                        reject(response.error!)
+                    }
                 }
             }
         }

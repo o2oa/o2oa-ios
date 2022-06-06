@@ -42,6 +42,33 @@
 
 "Delete My Share File Confirm Message" = "确定要取消这些分享的数据吗？";
 
+"Cloud File V3 Zone Name" = "企业共享区";
+
+"Cloud File V3 My Favorite" = "我的收藏";
+
+"Cloud File V3 My Zone" = "共享工作区";
+
+"Cloud File V3 Menu Add Favorite" = "加入收藏";
+
+"Cloud File V3 Menu Cancel Favorite" = "取消收藏";
+
+"Cloud File V3 Menu Rename" = "重命名";
+
+"Cloud File V3 Menu Edit Zone" = "编辑";
+
+"Cloud File V3 Menu Delete Zone" = "删除";
+
+"Cloud File V3 Confirm Delete Zone" = "确定要删除这个共享区【%@】，里面的数据将不可恢复？";
+
+"Cloud File V3 Rename Alert Message" = "重命名收藏的共享区";
+
+"Cloud File V3 Name Not Empty Message" = "名称不能为空！";
+
+"Cloud File V3 Zone Form Create Title" = "创建共享工作区";
+
+"Cloud File V3 Zone Form Update Title" = "更新共享工作区";
+
+"Cloud File V3 Zone File Save To My Pan" = "保存到网盘";
 /* 
   Localizable.strings
   O2Platform

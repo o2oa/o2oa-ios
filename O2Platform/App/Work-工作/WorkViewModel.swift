@@ -272,7 +272,7 @@ extension WorkViewModel {
     
     /// 下载附件
     private func downloadAttachmentWithWorkId(id: String, workId: String, info: O2WorkAttachmentInfo) -> Promise<URL> {
-        let path = FileUtil.share.cacheDir().appendingPathComponent("\(info.name ?? "temp").\(info.extension ?? "")")
+        let path = FileUtil.share.cacheDir().appendingPathComponent("\(info.id ?? "noId")").appendingPathComponent("\(info.name ?? "temp").\(info.extension ?? "")")
         DDLogDebug("file Path: \(path)")
         if FileUtil.share.fileExist(filePath: path.path) {
             if let updateTime = info.updateTime,  let updateDate = Date.date(updateTime), let fileDate = FileUtil.share.fileModificationDate(filePath: path.path) as Date? {
@@ -318,7 +318,7 @@ extension WorkViewModel {
     
     /// 下载附件
     private func downloadAttachmentWithWorkcompleted(id: String, workcompleted: String, info: O2WorkAttachmentInfo) -> Promise<URL> {
-        let path = FileUtil.share.cacheDir().appendingPathComponent("\(info.name ?? "temp").\(info.extension ?? "")")
+        let path = FileUtil.share.cacheDir().appendingPathComponent("\(info.id ?? "noId")").appendingPathComponent("\(info.name ?? "temp").\(info.extension ?? "")")
         DDLogDebug("file Path: \(path)")
         if FileUtil.share.fileExist(filePath: path.path) {
             if let updateTime = info.updateTime,  let updateDate = Date.date(updateTime), let fileDate = FileUtil.share.fileModificationDate(filePath: path.path) as Date? {

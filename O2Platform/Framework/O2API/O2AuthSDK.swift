@@ -144,6 +144,9 @@ public class O2AuthSDK: NSObject {
         case .x_file_assemble_control:
             return dic["x_file_assemble_control"]
             
+        case .x_pan_assemble_control:
+            return dic["x_pan_assemble_control"]
+            
         case .x_meeting_assemble_control:
             return dic["x_meeting_assemble_control"]
             
