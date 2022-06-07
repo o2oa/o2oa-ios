@@ -32,7 +32,7 @@ class CloudFilePreviewController: QLPreviewController {
     
     private func loadImageDownloadBtn() {
         let downImageBtn = UIImageView(frame: CGRect(x: SCREEN_WIDTH - 48 - 12 , y: SCREEN_HEIGHT - 48 - 10, width: 48, height: 48))
-        downImageBtn.image = UIImage(named: "icon_bbs_attach_download")
+        downImageBtn.image = UIImage(named: "icon_download")
         self.view.addSubview(downImageBtn)
         downImageBtn.isHidden = false
         downImageBtn.addTapGesture { tap in

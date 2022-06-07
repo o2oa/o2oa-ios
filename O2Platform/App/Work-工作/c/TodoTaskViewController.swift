@@ -74,7 +74,11 @@ class TodoTaskViewController: UITableViewController {
     //分页查询 最后一条数据的id
     var lastId = O2.O2_First_ID
     
+    // 下拉刷新还是上拉加载
     var isRefresh = false
+    
+    // 防止重复刷新
+    var isloading = false
     
     private lazy var viewModel: WorkViewModel = {
         return WorkViewModel()
@@ -108,7 +112,9 @@ class TodoTaskViewController: UITableViewController {
         self.searchController.searchBar.searchBarStyle = UISearchBar.Style.minimal
         self.searchController.searchBar.sizeToFit()
         //设置搜索框是否显示
-        self.setSearchBarIsShow()
+        self.tableView.tableHeaderView = self.searchController.searchBar
+        self.searchController.isActive = true
+//        self.setSearchBarIsShow()
         
         //分页刷新功能
         self.tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: {
@@ -123,20 +129,25 @@ class TodoTaskViewController: UITableViewController {
     
     //隐藏搜索框
     func setSearchBarIsShow(){
-        let taskIndex = AppConfigSettings.shared.taskIndex
-        if taskIndex ==  2 {
-            self.tableView.tableHeaderView = self.searchController.searchBar
-        }else{
-            if self.searchController.isActive {
-                self.searchController.isActive = false
-            }
-            self.tableView.tableHeaderView = nil
-        }
+//        let taskIndex = AppConfigSettings.shared.taskIndex
+//        if taskIndex ==  2 {
+//            self.tableView.tableHeaderView = self.searchController.searchBar
+//        }else{
+//            if self.searchController.isActive {
+//                self.searchController.isActive = false
+//            }
+//            self.tableView.tableHeaderView = nil
+//        }
     }
     
     /// 刷新数据
     func headerLoadData(){
         DDLogDebug("加载数据。。。。。。。。。")
+        if self.isloading {
+            DDLogDebug("正在加载中....")
+            return
+        }
+        self.isloading = true
         let taskIndex = AppConfigSettings.shared.taskIndex
         self.isRefresh = true
         self.lastId = O2.O2_First_ID
@@ -146,6 +157,11 @@ class TodoTaskViewController: UITableViewController {
     /// 加载数据
     func footerLoadData(){
         DDLogDebug("获取更多数据。。。。。。。。。。。。。。")
+        if self.isloading {
+            DDLogDebug("正在加载中....")
+            return
+        }
+        self.isloading = true
         let taskIndex = AppConfigSettings.shared.taskIndex
         self.loadDataList(taskIndex: taskIndex)
     }
@@ -156,7 +172,7 @@ class TodoTaskViewController: UITableViewController {
         tv.emptyTitle = self.emptyTexts[taskIndex]
         switch taskIndex {
         case 0:
-            self.viewModel.taskListNext(lastId: self.lastId).then { (list) in
+            self.viewModel.taskListNext(lastId: self.lastId, key: self.searchText).then { (list) in
                 if self.isRefresh {
                     self.models.removeAll()
                 }
@@ -169,6 +185,7 @@ class TodoTaskViewController: UITableViewController {
                 self.isRefresh = false
                 self.tableView.reloadData()
             }.always {
+                self.isloading = false
                 if tv.mj_header.isRefreshing(){
                     tv.mj_header.endRefreshing()
                 }
@@ -180,7 +197,7 @@ class TodoTaskViewController: UITableViewController {
             }
             break
         case 1:
-            self.viewModel.readListNext(lastId: self.lastId).then { (list) in
+            self.viewModel.readListNext(lastId: self.lastId, key: self.searchText).then { (list) in
                 if self.isRefresh {
                     self.models.removeAll()
                 }
@@ -193,6 +210,7 @@ class TodoTaskViewController: UITableViewController {
                 self.isRefresh = false
                 self.tableView.reloadData()
             }.always {
+                self.isloading = false
                 if tv.mj_header.isRefreshing(){
                     tv.mj_header.endRefreshing()
                 }
@@ -217,6 +235,7 @@ class TodoTaskViewController: UITableViewController {
                 self.isRefresh = false
                 self.tableView.reloadData()
             }.always {
+                self.isloading = false
                 if tv.mj_header.isRefreshing(){
                     tv.mj_header.endRefreshing()
                 }
@@ -228,7 +247,7 @@ class TodoTaskViewController: UITableViewController {
             }
             break
         case 3:
-            self.viewModel.readcompletedListNext(lastId: self.lastId).then { (list) in
+            self.viewModel.readcompletedListNext(lastId: self.lastId, key: self.searchText).then { (list) in
                 if self.isRefresh {
                     self.models.removeAll()
                 }
@@ -241,6 +260,7 @@ class TodoTaskViewController: UITableViewController {
                 self.isRefresh = false
                 self.tableView.reloadData()
             }.always {
+                self.isloading = false
                 if tv.mj_header.isRefreshing(){
                     tv.mj_header.endRefreshing()
                 }
