@@ -420,6 +420,95 @@ class CloudFileViewModel: NSObject {
         }
     }
     
+    // 保存文件、文件夹到我的网盘
+    func saveToMyPan(parentId: String, files:[String], folders:[String]) -> Promise<Bool> {
+        return Promise { fulfill, reject in
+            let  completion: Completion = { (result) in
+                let response = OOResult<BaseModelClass<OOCommonValueBoolModel>>(result)
+                if response.isResultSuccess() {
+                    if let id = response.model?.data {
+                        DDLogDebug("保存文件到我的网盘成功：\(id)")
+                    }
+                    fulfill(true)
+                }else {
+                    reject(response.error!)
+                }
+            }
+            let body = MoveToMyPanPost()
+            body.folderIdList = folders
+            body.attIdList = files
+            self.cFileV3API.request(.moveToMyPan(parentId, body), completion: completion)
+        }
+    }
+    
+    
+    // 企业网盘内 移动文件夹
+    func moveV3Folder(folder: OOFolderV3, destFolder: OOFolderV3) -> Promise<Bool> {
+        return Promise { fulfill, reject in
+            let completion: Completion = { (result) in
+                let response = OOResult<BaseModelClass<OOCommonValueBoolModel>>(result)
+                if response.isResultSuccess() {
+                    if let id = response.model?.data {
+                     DDLogDebug("移动文件夹成功：\(id)")
+                    }
+                    fulfill(true)
+                }else {
+                    reject(response.error!)
+                }
+            }
+            let movePost = MoveV3Post()
+            movePost.folder = destFolder.id
+            movePost.superior = destFolder.id
+            movePost.name = folder.name
+            self.cFileV3API.request(.moveFolderV3(folder.id ?? "", movePost), completion: completion)
+        }
+    }
+    
+    // 企业网盘内 移动文件
+    func moveV3File(file: OOAttachmentV3, destFolder: OOFolderV3) -> Promise<Bool> {
+        return Promise { fulfill, reject in
+            let completion: Completion = { (result) in
+                let response = OOResult<BaseModelClass<OOCommonIdModel>>(result)
+                if response.isResultSuccess() {
+                    if let id = response.model?.data {
+                     DDLogDebug("移动文件成功：\(id)")
+                    }
+                    fulfill(true)
+                }else {
+                    reject(response.error!)
+                }
+            }
+            let movePost = MoveV3Post()
+            movePost.folder = destFolder.id
+            movePost.superior = destFolder.id
+            movePost.name = file.name
+            self.cFileV3API.request(.moveFileV3(file.id ?? "", movePost), completion: completion)
+        }
+    }
+    
+    //移动操作
+    func moveV3(folderList: [OOFolderV3], fileList: [OOAttachmentV3], destFolder: OOFolderV3) -> Promise<Bool> {
+        return Promise { fulfill, reject in
+            var fileMove : [Promise<Bool>] = []
+            folderList.forEach({ (folder) in
+                folder.superior = destFolder.id!
+                fileMove.append(self.moveV3Folder(folder: folder, destFolder: destFolder))
+            })
+            fileList.forEach({ (file) in
+                file.folder = destFolder.id!
+                fileMove.append(self.moveV3File(file: file, destFolder: destFolder))
+            })
+            all(fileMove).then({ (results) in
+                results.forEach({ (r) in
+                    DDLogDebug("移动成功， \(r)")
+                })
+                fulfill(true)
+            }).catch({ (error) in
+                reject(error)
+            })
+        }
+    }
+    
     
     
     

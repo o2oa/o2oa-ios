@@ -136,6 +136,8 @@ class CloudFileViewController: CloudFileBaseVC {
         self.dataList = []
         self.checkedFileList = []
         self.checkedFolderList = []
+        self.tableView.reloadData() // 先刷新tableView 防止数组越界的问题
+        
         all(self.cFileVM.folderList(folderId: self.superior), self.cFileVM.fileList(folderId: self.superior)).then { (result) in
             let folderList = result.0
             DDLogInfo("文件夹：\(folderList.count)")

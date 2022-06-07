@@ -638,11 +638,53 @@ class CloudFileListController: CloudFileBaseVC {
     }
     // 共享工作区内文件、文件夹移动
     private func moveV3Inner() {
-        
+        DDLogDebug("企业网盘 文件、文件夹 移动")
+        let totalCount = self.checkedV3FileList.count + self.checkedV3FolderList.count
+        if totalCount > 0 {
+            if let first = self.breadcrumbList.first, let vc = CloudFileMoveFolderV3Controller.chooseFolderV3VC({ folder in
+                self.showLoading()
+                self.cFileVM.moveV3(folderList: self.checkedV3FolderList, fileList: self.checkedV3FileList, destFolder: folder)
+                    .then({ (result) in
+                        DDLogInfo("移动成功，\(result)")
+                        self.hideLoading()
+                        if result {
+                            self.loadListData()
+                        }
+                    }).catch { (error) in
+                        DDLogError(error.localizedDescription)
+                        self.hideLoading()
+                }
+            }, zoneId: first.id ?? "" , zoneName: first.name ?? ""){
+                self.pushVC(vc)
+            }
+        }
     }
     // 将共享工作区的文件、文件夹保存到我的网盘
     private func saveToMyPan() {
-        
+        DDLogDebug("保存到我的网盘")
+        let totalCount = self.checkedV3FileList.count + self.checkedV3FolderList.count
+        if totalCount > 0 {
+            if let vc = CloudFileMoveFolderController.chooseFolderVC({ (folder) in
+                self.showLoading()
+                self.cFileVM.saveToMyPan(parentId: folder.id ?? "", files: self.checkedV3FileList.map({ att in
+                    att.id ?? ""
+                }), folders: self.checkedV3FolderList.map({ fo in
+                    fo.id ?? ""
+                }))
+                    .then({ (result) in
+                        DDLogInfo("保存到我的网盘成功，\(result)")
+                        self.hideLoading()
+                        if result {
+                            self.loadListData()
+                        }
+                    }).catch { (error) in
+                        DDLogError(error.localizedDescription)
+                        self.hideLoading()
+                }
+            }){
+                self.pushVC(vc)
+            }
+        }
     }
    
 }
