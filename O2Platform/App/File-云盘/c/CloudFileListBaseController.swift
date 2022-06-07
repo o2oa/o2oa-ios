@@ -205,6 +205,13 @@ class CloudFileListBaseController: CloudFileBaseVC {
 }
 
 extension CloudFileListBaseController: CloudFileCheckClickDelegate {
+    func clickFolderV3(_ folder: OOFolderV3) {
+        //
+    }
+    
+    func clickFileV3(_ file: OOAttachmentV3) {
+        //
+    }
     func clickFolder(_ folder: OOFolder) {
         //
     }

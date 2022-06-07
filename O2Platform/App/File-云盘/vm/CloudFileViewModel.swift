@@ -343,6 +343,87 @@ class CloudFileViewModel: NSObject {
         }
     }
     
+    // 共享工作区  删除文件
+    func deleteFileV3(id: String) -> Promise<Bool> {
+        return Promise { fulfill, reject in
+            let  completion: Completion = { (result) in
+                let response = OOResult<BaseModelClass<OOCommonValueBoolModel>>(result)
+                if response.isResultSuccess() {
+                    if let id = response.model?.data {
+                        DDLogDebug("删除文件成功：\(id)")
+                    }
+                    fulfill(true)
+                }else {
+                    reject(response.error!)
+                }
+            }
+            self.cFileV3API.request(.deleteFileV3(id), completion: completion)
+            
+        }
+    }
+    
+    // 共享工作区 删除文件夹
+    func deleteFolderV3(id: String) -> Promise<Bool> {
+        return Promise { fulfill, reject in
+            let  completion: Completion = { (result) in
+                let response = OOResult<BaseModelClass<OOCommonValueBoolModel>>(result)
+                if response.isResultSuccess() {
+                    if let id = response.model?.data {
+                        DDLogDebug("删除文件夹成功：\(id)")
+                    }
+                    fulfill(true)
+                }else {
+                    reject(response.error!)
+                }
+            }
+            self.cFileV3API.request(.deleteFolderV3(id), completion: completion)
+        }
+    }
+    
+    // 重命名文件夹
+    func renameFolderV3(id: String, newName: String) -> Promise<Bool> {
+        return Promise { fulfill, reject in
+            let  completion: Completion = { (result) in
+                let response = OOResult<BaseModelClass<OOCommonValueBoolModel>>(result)
+                if response.isResultSuccess() {
+                    if let id = response.model?.data {
+                        DDLogDebug("重命名文件夹成功：\(id)")
+                    }
+                    fulfill(true)
+                }else {
+                    reject(response.error!)
+                }
+            }
+            let body = RenamePost()
+            body.name = newName
+            self.cFileV3API.request(.updateFolderNameV3(id, body), completion: completion)
+        }
+    }
+    
+    // 重命名文件
+    func renameFileV3(id: String, newName: String) -> Promise<Bool> {
+        return Promise { fulfill, reject in
+            let  completion: Completion = { (result) in
+                let response = OOResult<BaseModelClass<OOCommonIdModel>>(result)
+                if response.isResultSuccess() {
+                    if let id = response.model?.data {
+                        DDLogDebug("重命名文件成功：\(id)")
+                    }
+                    fulfill(true)
+                }else {
+                    reject(response.error!)
+                }
+            }
+            let body = RenamePost()
+            body.name = newName
+            self.cFileV3API.request(.updateFileNameV3(id, body), completion: completion)
+        }
+    }
+    
+    
+    
+    
+    
     // MARK: - V2 版本api 根据当前环境查询不同的 网盘模块 x_file_assemble_control ｜ x_pan_assemble_control
     
     //获取图片地址 根据传入的大小进行比例缩放

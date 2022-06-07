@@ -118,6 +118,38 @@ class CloudFileZoneViewController: UITableViewController {
         return UITableViewCell()
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        
+        if let data = self.myZoneData[indexPath.section]?[indexPath.row] {
+            switch data.dataType {
+            case .zone(let zone):
+                if let z = zone as? CloudFileV3Zone {
+                    self.openZoneFileList(id: z.id ?? "", name: z.name ?? "")
+                }
+                break
+            case .favorite(let fav):
+                if let f = fav as? CloudFileV3Favorite {
+                    self.openZoneFileList(id: f.zoneId ?? "", name: f.name ?? "")
+                }
+                break
+            default:
+                break
+            }
+        }
+    }
+    
+    private func openZoneFileList(id: String, name: String) {
+        if let zoneFileVC = self.storyboard?.instantiateViewController(withIdentifier: "cloudFileListMultiModeVC") as? CloudFileListController {
+            zoneFileVC.showMode = .zone
+            let first = OOFolder()
+            first.id = id
+            first.name = name
+            zoneFileVC.breadcrumbList = [first]
+            self.pushVC(zoneFileVC)
+        }
+    }
+    
     
     
     /// Section 圆角背景计算

@@ -26,11 +26,16 @@ class CloudFileViewController: CloudFileBaseVC {
     //底部工具栏
     var toolbarView: UIToolbar!
 
+    var fromV3 = false
 
 
     @IBAction func clickCloseAction(_ sender: UIBarButtonItem) {
         print("点击了关闭按钮。。。。。。。。。。。")
-        self.dismissVC(completion: nil)
+        if fromV3 {
+            self.popVC()
+        } else {
+            self.dismissVC(completion: nil)
+        }
     }
     @IBOutlet weak var listTitleLabel: UILabel!
     
@@ -403,6 +408,14 @@ extension CloudFileViewController: UITableViewDelegate, UITableViewDataSource {
 
 
 extension CloudFileViewController: CloudFileCheckClickDelegate {
+    func clickFolderV3(_ folder: OOFolderV3) {
+        //
+    }
+    
+    func clickFileV3(_ file: OOAttachmentV3) {
+        //
+    }
+    
     func clickFolder(_ folder: OOFolder) {
         if self.checkedFolderList.contains(folder) {
             self.checkedFolderList.removeFirst(folder)

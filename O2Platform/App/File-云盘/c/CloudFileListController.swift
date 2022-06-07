@@ -512,8 +512,6 @@ class CloudFileListController: CloudFileBaseVC {
         }
     }
     
-    
-    
      
      // 共享工作区内 新建文件夹
      private func createFolderV3() {
@@ -551,11 +549,92 @@ class CloudFileListController: CloudFileBaseVC {
      }
     // 共享工作区内文件、文件夹重命名
     private func renameV3() {
-        
+        let rename = L10n.rename // Languager.standardLanguager().string(key: "Rename")
+        if self.checkedV3FileList.count > 0 {
+            let file = self.checkedV3FileList.first!
+            if file.isAdmin == true || file.isEditor == true || file.isCreator == true {
+                let name = file.name ?? ""
+                self.showPromptAlert(title: rename, message: "\(rename) \(name)", inputText: name) { (action, result) in
+                    if result.isBlank {
+                        let msg = L10n.emptyNameErrorMessage // Languager.standardLanguager().string(key: "Empty name Error Message")
+                        self.showError(title: msg)
+                    }else {
+                        self.cFileVM.renameFileV3(id: file.id ?? "", newName: result).then({ (result) in
+                            self.loadListData()
+                        }).catch({ (error) in
+                            DDLogError(error.localizedDescription)
+                            self.showError(title: error.localizedDescription)
+                        })
+                    }
+                }
+            } else {
+                self.showError(title: L10n.cloudFileV3ZoneFileNoPermissionUpdate)
+            }
+        } else if self.checkedV3FolderList.count > 0 {
+            let folder = self.checkedV3FolderList.first!
+            if folder.isAdmin == true || folder.isEditor == true || folder.isCreator == true {
+                let name = folder.name ?? ""
+                self.showPromptAlert(title: rename, message: "\(rename) \(name)", inputText: name) { (action, result) in
+                    if result.isBlank {
+                        let msg = L10n.emptyNameErrorMessage // Languager.standardLanguager().string(key: "Empty name Error Message")
+                        self.showError(title: msg)
+                    }else {
+                        self.cFileVM.renameFolderV3(id: folder.id ?? "", newName: result).then({ (result) in
+                            self.loadListData()
+                        }).catch({ (error) in
+                            DDLogError(error.localizedDescription)
+                            self.showError(title: error.localizedDescription)
+                        })
+                    }
+                }
+            } else {
+                self.showError(title: L10n.cloudFileV3ZoneFileNoPermissionUpdate)
+            }
+        }
     }
     // 共享工作区内文件、文件夹删除
     private func deleteV3() {
-        
+        if self.checkedV3FileList.count > 0 {
+            let file = self.checkedV3FileList.first!
+            if file.isAdmin == true || file.isEditor == true || file.isCreator == true {
+                let alert = L10n.alert
+                let msg = L10n.deleteItemsConfirmMessage
+                self.showDefaultConfirm(title: alert, message: msg) { (action) in
+                    self.cFileVM.deleteFileV3(id: file.id ?? "")
+                        .then({ (result) in
+                            if result {
+                                self.loadListData()
+                            }
+                        }).catch({ (error) in
+                            DDLogError(error.localizedDescription)
+                            self.showError(title: error.localizedDescription)
+                        })
+                }
+                
+                
+            } else {
+                self.showError(title: L10n.cloudFileV3ZoneFileNoPermissionDelete)
+            }
+        } else if self.checkedV3FolderList.count > 0 {
+            let folder = self.checkedV3FolderList.first!
+            if folder.isAdmin == true || folder.isEditor == true || folder.isCreator == true {
+                let alert = L10n.alert
+                let msg = L10n.deleteItemsConfirmMessage
+                self.showDefaultConfirm(title: alert, message: msg) { (action) in
+                    self.cFileVM.deleteFolderV3(id: folder.id ?? "")
+                        .then({ (result) in
+                            if result {
+                                self.loadListData()
+                            }
+                        }).catch({ (error) in
+                            DDLogError(error.localizedDescription)
+                            self.showError(title: error.localizedDescription)
+                        })
+                }
+            } else {
+                self.showError(title: L10n.cloudFileV3ZoneFileNoPermissionDelete)
+            }
+        }
     }
     // 共享工作区内文件、文件夹移动
     private func moveV3Inner() {
