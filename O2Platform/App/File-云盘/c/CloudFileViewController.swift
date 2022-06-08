@@ -26,11 +26,16 @@ class CloudFileViewController: CloudFileBaseVC {
     //底部工具栏
     var toolbarView: UIToolbar!
 
+    var fromV3 = false
 
 
     @IBAction func clickCloseAction(_ sender: UIBarButtonItem) {
         print("点击了关闭按钮。。。。。。。。。。。")
-        self.dismissVC(completion: nil)
+        if fromV3 {
+            self.popVC()
+        } else {
+            self.dismissVC(completion: nil)
+        }
     }
     @IBOutlet weak var listTitleLabel: UILabel!
     
@@ -131,6 +136,8 @@ class CloudFileViewController: CloudFileBaseVC {
         self.dataList = []
         self.checkedFileList = []
         self.checkedFolderList = []
+        self.tableView.reloadData() // 先刷新tableView 防止数组越界的问题
+        
         all(self.cFileVM.folderList(folderId: self.superior), self.cFileVM.fileList(folderId: self.superior)).then { (result) in
             let folderList = result.0
             DDLogInfo("文件夹：\(folderList.count)")
@@ -403,6 +410,14 @@ extension CloudFileViewController: UITableViewDelegate, UITableViewDataSource {
 
 
 extension CloudFileViewController: CloudFileCheckClickDelegate {
+    func clickFolderV3(_ folder: OOFolderV3) {
+        //
+    }
+    
+    func clickFileV3(_ file: OOAttachmentV3) {
+        //
+    }
+    
     func clickFolder(_ folder: OOFolder) {
         if self.checkedFolderList.contains(folder) {
             self.checkedFolderList.removeFirst(folder)

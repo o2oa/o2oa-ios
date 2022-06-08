@@ -168,7 +168,8 @@ class OOLoginViewController: OOBaseViewController {
         self.userNameTextField.themeUpdate(leftImage: O2ThemeManager.image(for: "Icon.icon_user_nor"), leftLightImage: O2ThemeManager.image(for: "Icon.icon_user_sel"), lineColor: baseColor.alpha(0.4), lineLightColor: baseColor)
         
         self.passwordField.isSecureTextEntry = true
-        self.passwordTextField.keyboardType = .numberPad
+        self.passwordTextField.isSecureTextEntry = true
+//        self.passwordTextField.keyboardType = .numberPad // 验证码有可能有其他字符
         self.userNameTextField.returnKeyType = .next
         self.userNameTextField.returnNextDelegate = self
         

@@ -36,6 +36,18 @@ class O2CloudFileManager {
     
     
     // MARK: - 工具服务 获取url 本地文件夹路径等等
+    //本地文件存储路径
+    func cloudFileV3LocalPath(file: OOAttachmentV3) -> URL {
+        let fileName = "\(file.name!).\(file.`extension`!)"
+        if let id = file.id {
+            return O2.cloudFileLocalFolder()
+                .appendingPathComponent(id)
+                .appendingPathComponent(fileName)
+        }
+        return O2.cloudFileLocalFolder()
+            .appendingPathComponent(fileName)
+        
+    }
     
     //本地文件存储路径
     func cloudFileLocalPath(file: OOAttachment) -> URL {
@@ -87,6 +99,24 @@ class O2CloudFileManager {
     
     // MARK: - 文件获取相关操作
     
+    // 下载的是attachment3的文件
+    func getFileUrlAttachment3(fileId: String) ->  Promise<URL> {
+        return Promise { fulfill, reject in
+            self.getFileURLFromDB(id: fileId).then({ (path) in
+                fulfill(path)
+            }).catch({ (error) in
+                DDLogInfo("本地没有这个文件，去服务器获取一次")
+                DDLogError(error.localizedDescription)
+                self.getFileURLFromDownloadAttachment3(fileId: fileId).then({ (path) in
+                    fulfill(path)
+                }).catch({ (err) in
+                    reject(err)
+                })
+            })
+        }
+    }
+    
+    // 下载的是attachment2的文件
     func getFileUrl(fileId: String) -> Promise<URL> {
         return Promise { fulfill, reject in
             self.getFileURLFromDB(id: fileId).then({ (path) in
@@ -130,6 +160,26 @@ class O2CloudFileManager {
     }
     
     // MARK: - private method
+    
+    // attachment3 下载文件
+    private func getFileURLFromDownloadAttachment3(fileId: String)  -> Promise<URL> {
+        return Promise {fulfill, reject in
+            //本地没有 去网络下载
+            self.downloadFile3(id: fileId).then({ (file) -> Promise<O2CloudFileInfo> in
+                return self.storageFile2DBAttachment3(file: file)
+            }).then({ (dbFile)  in
+                if let filePath = dbFile.filePath, !filePath.isBlank {
+                    DDLogDebug("查询到数据 文件路径：\(filePath)")
+                    let url = O2.cloudFileLocalFolder().appendingPathComponent(filePath)
+                    fulfill(url)
+                }else {
+                    reject(O2DBError.EmptyResultError)
+                }
+            }).catch({error in
+                reject(error)
+            })
+        }
+    }
     
     //下载文件 存储本地数据 返回本地文件路径
     private func getFileURLFromDownload(fileId: String)  -> Promise<URL> {
@@ -179,7 +229,7 @@ class O2CloudFileManager {
             let path = "\(file.id!)/\(fileName)"
             DDLogDebug("保存数据库 path:\(path)")
             info.filePath = path
-            info.fileExt = file.extension ?? ""
+            info.fileExt = file.`extension` ?? ""
             DBManager.shared.insertCloudFile(info: info).then({ (result) in
                 if result {
                     fulfill(info)
@@ -193,6 +243,29 @@ class O2CloudFileManager {
         }
     }
     
+    //存储附件对象到数据库
+    private func storageFile2DBAttachment3(file: OOAttachmentV3) -> Promise<O2CloudFileInfo> {
+        return Promise { fulfill, reject in
+            let info = O2CloudFileInfo()
+            info.fileId = file.id!
+            info.fileName = file.name!
+            let fileName = "\(file.name!).\(file.`extension`!)"
+            let path = "\(file.id!)/\(fileName)"
+            DDLogDebug("保存数据库 path:\(path)")
+            info.filePath = path
+            info.fileExt = file.`extension` ?? ""
+            DBManager.shared.insertCloudFile(info: info).then({ (result) in
+                if result {
+                    fulfill(info)
+                }else {
+                    reject(O2DBError.UnkownError)
+                }
+            }).catch({ (error) in
+                DDLogError(error.localizedDescription)
+                reject(error)
+            })
+        }
+    }
     
     
     //网络下载附件
@@ -249,6 +322,32 @@ class O2CloudFileManager {
     }
     
     
+    private func downloadFile3(id: String) -> Promise<OOAttachmentV3> {
+        return Promise { fulfill, reject in
+            self.cFileV3API.request(.getFileV3(id)) { (result) in
+                let response = OOResult<BaseModelClass<OOAttachmentV3>>(result)
+                if response.isResultSuccess() {
+                    if let file = response.model?.data {
+                        self.cFileV3API.request(.downloadFileV3(file), completion: { (downloadResult) in
+                            switch downloadResult {
+                            case .success(_):
+                                //下载文件成功 返回附件对象 需要附件的地方根据固定的文件位置去查找
+                                fulfill(file)
+                                break
+                            case .failure(let err):
+                                reject(err)
+                                break
+                            }
+                        })
+                    }else {
+                        reject(O2APIError.o2ResponseError("没有查询到附件对象， id: \(id)"))
+                    }
+                }else {
+                    reject(response.error!)
+                }
+            }
+        }
+    }
     
     
     

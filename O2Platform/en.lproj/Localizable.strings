@@ -69,6 +69,11 @@
 "Cloud File V3 Zone Form Update Title" = "Update Shared Workspace";
 
 "Cloud File V3 Zone File Save To My Pan" = "Save To My Disk";
+
+
+"Cloud File V3 Zone File No Permission Update" = "There are not enough permissions to be modified!";
+
+"Cloud File V3 Zone File No Permission Delete" = "There are not enough permissions to delete!";
 /* 
   Localizable.strings
   O2Platform

@@ -37,6 +37,8 @@ enum OOCloudFileV3API {
     case moveToMyPan(String, MoveToMyPanPost)
     case moveFolderV3(String, MoveV3Post)
     case moveFileV3(String, MoveV3Post)
+    case getFileV3(String) //
+    case downloadFileV3(OOAttachmentV3)
     
     
     //新版v2
@@ -168,6 +170,10 @@ extension OOCloudFileV3API:TargetType{
             return "/jaxrs/attachment3/\(id)/move"
         case .moveFolderV3(let id, _):
             return "/jaxrs/folder3/\(id)/move"
+        case .getFileV3(let id):
+            return "/jaxrs/attachment3/\(id)"
+        case .downloadFileV3(let file):
+            return "/jaxrs/attachment3/\(file.id!)/download/stream"
             
             
             //v2
@@ -238,7 +244,7 @@ extension OOCloudFileV3API:TargetType{
     var method: Moya.Method {
         switch self {
             //v3
-        case .echo, .myZoneList, .myFavoriteList, .isZoneCreator, .listFileByFolderIdV3(_), .listFolderByFolderIdV3(_):
+        case .echo, .myZoneList, .myFavoriteList, .isZoneCreator, .listFileByFolderIdV3(_), .listFolderByFolderIdV3(_), .getFileV3(_), .downloadFileV3(_):
             return .get
         case .createZone(_), .updateZone(_, _), .createFavorite(_), .updateFavorite(_, _), .createFolderV3(_, _),
                 .uploadFileV3(_, _, _), .updateFileNameV3(_, _), .updateFolderNameV3(_, _), .moveFileV3(_, _),
@@ -280,7 +286,7 @@ extension OOCloudFileV3API:TargetType{
     var task: Task {
         switch self {
             // v3
-        case .echo, .myFavoriteList, .myZoneList, .isZoneCreator, .deleteZone(_), .deleteFavorite(_), .listFileByFolderIdV3(_), .listFolderByFolderIdV3(_):
+        case .echo, .myFavoriteList, .myZoneList, .isZoneCreator, .deleteZone(_), .deleteFavorite(_), .listFileByFolderIdV3(_), .listFolderByFolderIdV3(_), .getFileV3(_):
             return.requestPlain
         case .createZone(let zone), .updateZone(_, let zone):
             return .requestParameters(parameters: zone.toJSON()!, encoding: JSONEncoding.default)
@@ -317,6 +323,9 @@ extension OOCloudFileV3API:TargetType{
             return .downloadDestination(myDest)
         case .downloadAttachment(let attachment):
             let myDest = getDownDest(attachment)
+            return .downloadDestination(myDest)
+        case .downloadFileV3(let attachment3):
+            let myDest = getDownDestV3(attachment3)
             return .downloadDestination(myDest)
         case .renameAttachment(_):
             return .requestPlain
@@ -365,4 +374,11 @@ extension OOCloudFileV3API:TargetType{
         return myDest
     }
     
+    func getDownDestV3(_ attachment:OOAttachmentV3) -> DownloadDestination {
+        let myDest:DownloadDestination = { temporaryURL, response in
+            let fileURL = O2CloudFileManager.shared.cloudFileV3LocalPath(file: attachment)
+            return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
+        }
+        return myDest
+    }
 }

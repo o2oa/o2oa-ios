@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Q1N-Zy-9UT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Q1N-Zy-9UT">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mv0-aF-hEo">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="798"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="j8n-k8-cnF">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="245"/>
@@ -195,7 +195,7 @@
                                 </constraints>
                             </scrollView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ulz-49-0fd">
-                                <rect key="frame" x="0.0" y="44" width="414" height="764"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="754"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                         </subviews>
@@ -230,7 +230,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6XM-Ik-X2M">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="798"/>
                                 <connections>
                                     <segue destination="lIe-hh-Uvg" kind="embed" id="DLP-A2-rdO"/>
                                 </connections>
@@ -403,6 +403,47 @@
             </objects>
             <point key="canvasLocation" x="-435" y="-1037"/>
         </scene>
+        <!--企业网盘文件夹选择器-->
+        <scene sceneID="8Pv-2r-RDc">
+            <objects>
+                <viewController storyboardIdentifier="cloudFileMoveV3Picker" title="企业网盘文件夹选择器" id="RgK-3T-d5U" customClass="CloudFileMoveFolderV3Controller" customModule="O2Platform" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mpD-gy-xKX">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qfQ-Zz-6uZ">
+                                <rect key="frame" x="0.0" y="32" width="414" height="45"/>
+                                <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="JE0-bJ-qDq"/>
+                                </constraints>
+                            </scrollView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1ZS-xO-rUs">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="kas-01-8rG"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="qfQ-Zz-6uZ" firstAttribute="leading" secondItem="kas-01-8rG" secondAttribute="leading" id="2kh-3b-Tzl"/>
+                            <constraint firstItem="1ZS-xO-rUs" firstAttribute="trailing" secondItem="kas-01-8rG" secondAttribute="trailing" id="62U-Th-Mwd"/>
+                            <constraint firstItem="1ZS-xO-rUs" firstAttribute="leading" secondItem="kas-01-8rG" secondAttribute="leading" id="8LM-xV-iE0"/>
+                            <constraint firstItem="1ZS-xO-rUs" firstAttribute="top" secondItem="qfQ-Zz-6uZ" secondAttribute="bottom" id="g3w-7x-mJQ"/>
+                            <constraint firstItem="qfQ-Zz-6uZ" firstAttribute="top" secondItem="kas-01-8rG" secondAttribute="top" id="qhK-dH-4gR"/>
+                            <constraint firstItem="qfQ-Zz-6uZ" firstAttribute="trailing" secondItem="kas-01-8rG" secondAttribute="trailing" id="wjK-wd-qAa"/>
+                            <constraint firstItem="1ZS-xO-rUs" firstAttribute="bottom" secondItem="kas-01-8rG" secondAttribute="bottom" id="zUO-kD-S7w"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="breadcrumbView" destination="qfQ-Zz-6uZ" id="QAh-u6-G5C"/>
+                        <outlet property="tableView" destination="1ZS-xO-rUs" id="CqX-Ma-qzw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mno-LT-fFl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="448" y="-1745"/>
+        </scene>
         <!--企业共享区-->
         <scene sceneID="Pvi-Z3-vJn">
             <objects>
@@ -443,7 +484,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入共享区名称" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="hNi-Pe-oaK">
-                                <rect key="frame" x="15" y="16" width="384" height="42"/>
+                                <rect key="frame" x="15" y="60" width="384" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="CoE-EJ-y45"/>
                                 </constraints>
@@ -452,20 +493,20 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LTp-iB-Nsy" userLabel="split View">
-                                <rect key="frame" x="15" y="63" width="384" height="1"/>
+                                <rect key="frame" x="15" y="107" width="384" height="1"/>
                                 <color key="backgroundColor" red="0.87450980392156863" green="0.87450980392156863" blue="0.87450980392156863" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="Uwi-xM-Yeb"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="描述" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AIS-3b-Ei6">
-                                <rect key="frame" x="15" y="76" width="29" height="17"/>
+                                <rect key="frame" x="15" y="120" width="29" height="17"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="请输入共享区描述" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ASW-Le-E7R">
-                                <rect key="frame" x="24" y="101" width="375" height="84"/>
+                                <rect key="frame" x="24" y="145" width="375" height="84"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="84" id="X8z-Zk-uc6"/>
                                 </constraints>
@@ -474,7 +515,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z7G-fE-fR1">
-                                <rect key="frame" x="15" y="209" width="384" height="34"/>
+                                <rect key="frame" x="15" y="253" width="384" height="34"/>
                                 <color key="backgroundColor" red="0.98431372549999996" green="0.2784313725" blue="0.2784313725" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="6yL-mL-28y"/>
@@ -545,7 +586,7 @@
             <objects>
                 <viewController id="lIe-hh-Uvg" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5Or-os-Q1b">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="798"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="8Wp-P5-6Zd"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

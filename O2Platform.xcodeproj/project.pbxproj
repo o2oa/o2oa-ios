@@ -366,6 +366,7 @@
 		B1DFFAAF235EB1FE00FEF9D6 /* CloudFile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B1DFFAB1235EB1FE00FEF9D6 /* CloudFile.storyboard */; };
 		B1E0BA9F2378FA05001D741F /* JPushDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E0BA9E2378FA05001D741F /* JPushDevice.swift */; };
 		B1E0BAA12378FC01001D741F /* O2JPushManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E0BAA02378FC01001D741F /* O2JPushManager.swift */; };
+		B1E8487C284EF1410000B0FE /* CloudFileMoveFolderV3Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E8487B284EF1410000B0FE /* CloudFileMoveFolderV3Controller.swift */; };
 		B1E95F4E2373DDC4004876B7 /* ZoomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E95F4D2373DDC4004876B7 /* ZoomImageView.swift */; };
 		B1E95F7B23750CC2004876B7 /* CloudFilePreviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E95F7A23750CC2004876B7 /* CloudFilePreviewController.swift */; };
 		B1E95FA72375155F004876B7 /* CloudFileBaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E95FA62375155F004876B7 /* CloudFileBaseVC.swift */; };
@@ -1591,6 +1592,7 @@
 		B1DFFAB3235EB20500FEF9D6 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/CloudFile.strings"; sourceTree = "<group>"; };
 		B1E0BA9E2378FA05001D741F /* JPushDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JPushDevice.swift; sourceTree = "<group>"; };
 		B1E0BAA02378FC01001D741F /* O2JPushManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2JPushManager.swift; sourceTree = "<group>"; };
+		B1E8487B284EF1410000B0FE /* CloudFileMoveFolderV3Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFileMoveFolderV3Controller.swift; sourceTree = "<group>"; };
 		B1E95F4D2373DDC4004876B7 /* ZoomImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomImageView.swift; sourceTree = "<group>"; };
 		B1E95F7A23750CC2004876B7 /* CloudFilePreviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFilePreviewController.swift; sourceTree = "<group>"; };
 		B1E95FA62375155F004876B7 /* CloudFileBaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFileBaseVC.swift; sourceTree = "<group>"; };
@@ -4020,6 +4022,7 @@
 				B1982F7E28445FA700F9D8B7 /* CloudFileV3ViewController.swift */,
 				B1982FB62844A61F00F9D8B7 /* CloudFileZoneViewController.swift */,
 				B182FB4328489DC9007F2E9D /* CloudFileV3ZoneFormViewController.swift */,
+				B1E8487B284EF1410000B0FE /* CloudFileMoveFolderV3Controller.swift */,
 			);
 			path = c;
 			sourceTree = "<group>";
@@ -5738,6 +5741,7 @@
 				E491664E1E03D2C1006133C5 /* O2CountdownButton.swift in Sources */,
 				B168BDC724F5FFA10070329F /* ScanQRViewController.swift in Sources */,
 				E4E212491E74F96400B1544D /* MainTaskSecondViewController.swift in Sources */,
+				B1E8487C284EF1410000B0FE /* CloudFileMoveFolderV3Controller.swift in Sources */,
 				09E02E021F12736C00579887 /* PersonV2.swift in Sources */,
 				B1B0102F23586B34002BF874 /* CFFileTableViewCell.swift in Sources */,
 				B19D55BA25358E8B00CE3B22 /* O2Enum.swift in Sources */,

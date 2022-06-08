@@ -29,14 +29,26 @@ class CloudFileV3ViewController: UIViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showCloudFileV2" {
+            if let vc = segue.destination as? CloudFileViewController {
+                vc.fromV3 = true
+            }
+        }
+    }
+    
     private func openZone() {
         if let myZoneVC = self.storyboard?.instantiateViewController(withIdentifier: "cloudFileV3MyZone") as? CloudFileZoneViewController {
             self.pushVC(myZoneVC)
         }
+        
     }
     
     private func openPan() {
         self.performSegue(withIdentifier: "showCloudFileV2", sender: nil)
+//        if let cloudV2 = self.storyboard?.instantiateViewController(withIdentifier: "CloudFileV2") as? CloudFileViewController {
+//            self.show(cloudV2, sender: nil)
+//        }
     }
  
 
