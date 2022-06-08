@@ -22,7 +22,7 @@ class CloudFilePreviewController: QLPreviewController {
         self.delegate = self
         self.dataSource = self
         if let url = self.currentFileURLS[0].path {
-            if url.lowercased().hasSuffix(".png") || url.lowercased().hasSuffix(".jpg") || url.lowercased().hasSuffix(".jepg") {
+            if url.lowercased().hasSuffix(".png") || url.lowercased().hasSuffix(".jpg") || url.lowercased().hasSuffix(".jpeg") {
                 self.loadImageDownloadBtn()
             }
         }

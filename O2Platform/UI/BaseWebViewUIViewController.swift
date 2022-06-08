@@ -9,6 +9,8 @@
 import UIKit
 import WebKit
 import CocoaLumberjack
+import QuickLook
+
 
 
 protocol BaseWebViewUIViewControllerJSDelegate {
@@ -37,6 +39,7 @@ class BaseWebViewUIViewController: O2BaseForRotateUIViewController {
         o2WKScriptHandlers[key] = handler
     }
     
+   
     
     open func theWebView(){
         let baseJsHandler = O2BaseJsMessageHandler(viewController: self)
@@ -129,6 +132,25 @@ class BaseWebViewUIViewController: O2BaseForRotateUIViewController {
             result += "'; "
         }
         return result
+    }
+    
+    
+    // MARK: - 文件预览
+    //预览文件
+    private lazy var previewVC: CloudFilePreviewController = {
+        return CloudFilePreviewController()
+    }()
+    // 文件预览
+    func previewDoc(path: String) {
+        let currentURL = NSURL(fileURLWithPath: path)
+        if QLPreviewController.canPreview(currentURL) {
+            self.previewVC.currentFileURLS.removeAll()
+            self.previewVC.currentFileURLS.append(currentURL)
+            self.previewVC.reloadData()
+            self.pushVC(self.previewVC)
+        } else {
+            self.showError(title: "当前文件类型不支持预览！")
+        }
     }
     
     

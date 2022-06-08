@@ -52,4 +52,22 @@ extension BBSViewModel {
         }
     }
     
+    // 获取当前用户禁言信息 没有返回就是没有禁言
+    func getMuteInfo() -> Promise<O2BBSMuteInfo> {
+        return Promise { fulfill, reject in
+            self.bbsAPI.request(.getMuteInfo, completion: { result in
+                let response = OOResult<BaseModelClass<O2BBSMuteInfo>>(result)
+                if response.isResultSuccess() {
+                    if let data = response.model?.data {
+                        fulfill(data)
+                    }else {
+                        reject(OOAppError.apiEmptyResultError)
+                    }
+                }else {
+                    reject(response.error!)
+                }
+            })
+        }
+    }
+    
 }

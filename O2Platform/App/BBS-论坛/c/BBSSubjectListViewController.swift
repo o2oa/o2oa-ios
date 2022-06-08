@@ -51,8 +51,12 @@ class BBSSubjectListViewController: UIViewController {
             }
         })
         self.loadFirstData()
-        self.createButton()
-        
+        if !O2AuthSDK.shared.isBBSMute() {
+            self.createButton()
+        } else {
+            DDLogError("当前用户被禁言！")
+        }
+    
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -19,14 +19,12 @@ import CocoaLumberjack
 class CMSItemDetailViewController: BaseWebViewUIViewController {
     
     
-    private let qlController = TaskAttachmentPreviewController()
     
     fileprivate var currentFileURLS:[NSURL] = []
  
     var itemData:CMSCategoryItemData? {
         didSet {
             title = itemData?.title
-            DDLogDebug("readonly \(itemData?.readonly)")
             if itemData?.readonly != nil && itemData?.readonly == false {
                 itemUrl = AppDelegate.o2Collect.genrateURLWithWebContextKey(DesktopContext.DesktopContextKey, query: DesktopContext.cmsItemDetailEditHtml, parameter: ["##documentId##":itemData?.id as AnyObject])!
             } else {
@@ -79,7 +77,7 @@ class CMSItemDetailViewController: BaseWebViewUIViewController {
         self.navigationItem.leftItemsSupplementBackButton = true
         // 底部操作按钮toolbar
         self.toolbarView = UIToolbar(frame: CGRect(x: 0, y: self.view.height - 44, width: self.view.width, height: 44))
-        self.automaticallyAdjustsScrollViewInsets = false
+
 
         
         //先添加js注入
@@ -92,7 +90,6 @@ class CMSItemDetailViewController: BaseWebViewUIViewController {
         addScriptMessageHandler(key: "openDocument", handler: self)
         addScriptMessageHandler(key: "closeDocumentWindow", handler: self)
         self.theWebView()
-        self.qlInit()
     }
 
     override func didReceiveMemoryWarning() {
@@ -124,12 +121,6 @@ class CMSItemDetailViewController: BaseWebViewUIViewController {
         } else {
           self.navigationController?.popViewController(animated: false)
         }
-    }
-    
-    private func qlInit(){
-        // 文档查看器
-        self.qlController.dataSource = qlController
-        self.qlController.delegate = qlController
     }
     
     
@@ -416,8 +407,10 @@ extension CMSItemDetailViewController: O2WKScriptMessageHandlerImplement {
                     AF.download(downURL!, to: destination).response(completionHandler: { (response) in
                         if response.error == nil , let fileurl = response.fileURL?.path {
                             //打开文件
-                            self.hideLoading()
-                            self.previewAttachment(fileurl)
+                            DispatchQueue.main.async {
+                                self.hideLoading()
+                                self.previewDoc(path: fileurl)
+                            }
                         }else{
                             DispatchQueue.main.async {
                                 self.showError(title: "下载文件出错")
@@ -473,8 +466,10 @@ extension CMSItemDetailViewController: O2WKScriptMessageHandlerImplement {
             if response.error == nil , let fileurl = response.fileURL?.path {
                 DDLogDebug("文件地址：\(fileurl)")
                 //打开文件
-                self.hideLoading()
-                self.previewAttachment(fileurl)
+                DispatchQueue.main.async {
+                    self.hideLoading()
+                    self.previewDoc(path: fileurl)
+                }
             }else{
                 let msg = response.error?.localizedDescription ?? ""
                 DDLogError("下载文件出错，\(msg)")
@@ -485,24 +480,24 @@ extension CMSItemDetailViewController: O2WKScriptMessageHandlerImplement {
         })
     }
     
-    private func previewAttachment(_ url:String){
-        let currentURL = NSURL(fileURLWithPath: url)
-        if QLPreviewController.canPreview(currentURL) {
-            self.qlController.currentFileURLS.removeAll(keepingCapacity: true)
-            self.qlController.currentFileURLS.append(currentURL)
-            self.qlController.reloadData()
-            if #available(iOS 10, *) {
-                let navVC = ZLNormalNavViewController(rootViewController: qlController)
-                qlController.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "关闭", style: .plain, target: qlController, action: #selector(qlController.qlCloseWindow))
-                self.presentVC(navVC)
-            }else{
-                self.pushVC(qlController)
-            }
-        }else{
-            self.showError(title: "此文件无法预览，请在PC端查看")
-        }
-        
-    }
+//    private func previewAttachment(_ url:String){
+//        let currentURL = NSURL(fileURLWithPath: url)
+//        if QLPreviewController.canPreview(currentURL) {
+//            self.qlController.currentFileURLS.removeAll(keepingCapacity: true)
+//            self.qlController.currentFileURLS.append(currentURL)
+//            self.qlController.reloadData()
+//            if #available(iOS 10, *) {
+//                let navVC = ZLNormalNavViewController(rootViewController: qlController)
+//                qlController.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "关闭", style: .plain, target: qlController, action: #selector(qlController.qlCloseWindow))
+//                self.presentVC(navVC)
+//            }else{
+//                self.pushVC(qlController)
+//            }
+//        }else{
+//            self.showError(title: "此文件无法预览，请在PC端查看")
+//        }
+//
+//    }
     
     
     private func replaceAttachment(_ site:String,_ attachmentId:String,replaceURL url:String, param: String = ""){

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CocoaLumberjack
 
 extension Date {
     
@@ -66,6 +67,11 @@ extension Date {
         //
         //        return comps.year == 0 && comps.month == 0 && comps.day == 2
         return comps.year == 0 && comps.month == 0 && comps.day == 1
+    }
+    
+    // 当前日期是否小于传入日期
+    func isBefore(date: Date) -> Bool {
+        return self.timeIntervalSince1970 < date.timeIntervalSince1970
     }
     
     /// 判断是否是今天

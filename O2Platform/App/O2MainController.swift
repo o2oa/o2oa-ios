@@ -41,6 +41,10 @@ class O2MainController: O2BaseForRotateUITabBarController, UITabBarControllerDel
     private lazy var cFileVM: CloudFileViewModel = {
         return CloudFileViewModel()
     }()
+    // 论坛
+    private lazy var bbsVm: BBSViewModel = {
+        return BBSViewModel()
+    }()
     
     private let barIm = L10n.mainBarIm
     private let barContact = L10n.mainBarContacts
@@ -85,6 +89,8 @@ class O2MainController: O2BaseForRotateUITabBarController, UITabBarControllerDel
         self.checkAttendanceVersion()
         //检查云盘版本
         self.checkCloudFileVersion()
+        // 论坛禁言问题
+        self.checkBBSMuteInfo()
     }
 
     deinit {
@@ -187,6 +193,15 @@ class O2MainController: O2BaseForRotateUITabBarController, UITabBarControllerDel
             let destVC = OOTabBarHelper.getVC(storyboardName: "task", vcName: nil)
             let nav = ZLNavigationController(rootViewController: destVC)
             return nav
+        }
+    }
+    
+    // MARK: - 论坛 禁言问题查询
+    private func checkBBSMuteInfo() {
+        self.bbsVm.getMuteInfo().then { info in
+            O2AuthSDK.shared.setupMuteInfo(muteInfo: info)
+        }.catch { err in
+            O2AuthSDK.shared.setupMuteInfo(muteInfo: nil)
         }
     }
     

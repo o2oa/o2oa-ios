@@ -282,7 +282,7 @@ extension WorkViewModel {
                         self.api.request(.attachmentDownloadWithWorkId(id, workId, path), completion: { result in
                             switch result {
                                 case .success(_):
-                                    DDLogError("重新下载成功。。。。。")
+                                    DDLogDebug("重新下载成功。。。。。")
                                     fulfill(path)
                                     break
                                 case .failure(let err):
@@ -303,7 +303,7 @@ extension WorkViewModel {
                 self.api.request(.attachmentDownloadWithWorkId(id, workId, path), completion: { result in
                     switch result {
                         case .success(_):
-                            DDLogError("下载成功。。。。。")
+                            DDLogDebug("下载成功。。。。。")
                             fulfill(path)
                             break
                         case .failure(let err):

@@ -70,6 +70,9 @@ class O2JsApiUtil: O2WKScriptMessageHandlerImplement {
                     case "navigation.goBack":
                         navigationGoBack(json: String(json))
                         break
+                    case "navigation.openOtherApp":
+                        navigationOpenOtherApp(json: String(json))
+                        break
                     default:
                         DDLogError("notification类型不正确, type: \(type)")
                     }
@@ -356,6 +359,31 @@ class O2JsApiUtil: O2WKScriptMessageHandlerImplement {
             }
         }else {
             DDLogError("navigationGoBack, 解析json失败")
+        }
+    }
+    
+    // 打开其他app schema方式
+    private func navigationOpenOtherApp(json: String) {
+        if let alert = O2WebViewBaseMessage<O2UtilNavigationOpenOtherApp>.deserialize(from: json) {
+            if let schema = alert.data?.schema {
+                if let url = URL(string: "\(schema)") {
+                    if #available(iOS 10, *) {
+                        if UIApplication.shared.canOpenURL(url) {
+                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                        } else {
+                            DDLogError("无法打开url，\(schema)")
+                        }
+                    } else {
+                        UIApplication.shared.openURL(url)
+                    }
+                }
+            }
+            if alert.callback != nil {
+                let callJs = "\(alert.callback!)()"
+                self.evaluateJs(callBackJs: callJs)
+            }
+        }else {
+            DDLogError("navigationOpenOtherApp, 解析json失败")
         }
     }
     

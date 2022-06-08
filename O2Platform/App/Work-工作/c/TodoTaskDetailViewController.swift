@@ -15,7 +15,7 @@ import AlamofireObjectMapper
 import ObjectMapper
 import CocoaLumberjack
 import Photos
-import QuickLook
+//import QuickLook
 //import IQKeyboardManagerSwift
 
 
@@ -44,7 +44,6 @@ class TodoTaskDetailViewController: BaseWebViewUIViewController {
         return WorkViewModel()
     }()
 
-    var qlController = TaskAttachmentPreviewController()
 
     //是否是已办
     open var isWorkCompeleted: Bool = false
@@ -121,9 +120,9 @@ class TodoTaskDetailViewController: BaseWebViewUIViewController {
         self.navigationItem.hidesBackButton = true
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon_fanhui"), style: .plain, target: self, action: #selector(closeForBackBtn)) //  closeForBackBtn
         self.navigationItem.leftItemsSupplementBackButton = true
-        // 文档查看器
-        self.qlController.dataSource = qlController
-        self.qlController.delegate = qlController
+//        // 文档查看器
+//        self.qlController.dataSource = qlController
+//        self.qlController.delegate = qlController
 
 
         //toolbar
@@ -1008,7 +1007,7 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
             self.showLoading(title: "下载中...")
             self.viewModel.getWorkcompletedAttachment(workcompleted: self.workId!, id: attachmentId).then { path in
                 self.hideLoading()
-                self.previewAttachment(path)
+                self.previewDoc(path: path)
             }.catch { (err) in
                 DDLogError(err.localizedDescription)
                 DispatchQueue.main.async {
@@ -1020,7 +1019,7 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
             self.showLoading(title: "下载中...")
             self.viewModel.getWorkAttachment(workId: self.workId!, id: attachmentId).then { path in
                 self.hideLoading()
-                self.previewAttachment(path)
+                self.previewDoc(path: path)
             }.catch { (err) in
                 DDLogError(err.localizedDescription)
                 DispatchQueue.main.async {
@@ -1052,7 +1051,7 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
                 DDLogDebug("处理过的文件地址：\(newUrl.path)")
                 //打开文件
                 self.hideLoading()
-                self.previewAttachment(newUrl.path)
+                self.previewDoc(path: newUrl.path)
             } else {
                 let msg = response.error?.localizedDescription ?? ""
                 DDLogError("下载文件出错，\(msg)")
@@ -1095,28 +1094,29 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
         }
         
     }
-
-
-    private func previewAttachment(_ url: String) {
-        let currentURL = NSURL(fileURLWithPath: url)
-        if QLPreviewController.canPreview(currentURL) {
-            qlController.currentFileURLS.removeAll(keepingCapacity: true)
-            qlController.currentFileURLS.append(currentURL)
-            qlController.reloadData()
-            if #available(iOS 10, *) {
-                let navVC = ZLNormalNavViewController(rootViewController: qlController)
-                qlController.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "关闭", style: .plain, target: qlController, action: #selector(qlController.qlCloseWindow))
-                self.presentVC(navVC)
-            } else {
-                self.pushVC(qlController)
-            }
-
-
-        } else {
-            self.showError(title: "此文件无法预览，请在PC端查看")
-        }
-
-    }
+//
+//
+//    private func previewAttachment(_ url: String) {
+//        self.previewDoc(path: <#T##String#>)
+//        let currentURL = NSURL(fileURLWithPath: url)
+//        if QLPreviewController.canPreview(currentURL) {
+//            qlController.currentFileURLS.removeAll(keepingCapacity: true)
+//            qlController.currentFileURLS.append(currentURL)
+//            qlController.reloadData()
+//            if #available(iOS 10, *) {
+//                let navVC = ZLNormalNavViewController(rootViewController: qlController)
+//                qlController.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "关闭", style: .plain, target: qlController, action: #selector(qlController.qlCloseWindow))
+//                self.presentVC(navVC)
+//            } else {
+//                self.pushVC(qlController)
+//            }
+//
+//
+//        } else {
+//            self.showError(title: "此文件无法预览，请在PC端查看")
+//        }
+//
+//    }
 
 
 

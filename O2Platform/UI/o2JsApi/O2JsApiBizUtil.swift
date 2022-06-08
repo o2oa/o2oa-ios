@@ -9,6 +9,10 @@
 import UIKit
 import WebKit
 import CocoaLumberjack
+import Alamofire
+import AlamofireImage
+import AlamofireObjectMapper
+import ObjectMapper
 
 
 class O2JsApiBizUtil: O2WKScriptMessageHandlerImplement {
@@ -42,6 +46,9 @@ class O2JsApiBizUtil: O2WKScriptMessageHandlerImplement {
                         break
                     case "contact.complexPicker":
                         complexPicker(json: String(json))
+                        break
+                    case "file.previewDoc":
+                        previewDoc(json: String(json))
                         break
                     default :
                         DDLogError("notification类型不正确, type: \(type)")
@@ -200,6 +207,54 @@ class O2JsApiBizUtil: O2WKScriptMessageHandlerImplement {
             self.viewController.navigationController?.pushViewController(v, animated: true)
         }else {
             self.viewController.showError(title: "选择器生成错误。。。。")
+        }
+    }
+    
+    // 下载并预览文件
+    private func previewDoc(json: String) {
+        if let p = O2WebViewBaseMessage<O2BizPreviewDocMessage>.deserialize(from: json) {
+            if let url = p.data?.url, let fileName = p.data?.fileName {
+                DDLogDebug("开始下载文件，url: \(url) , fileName: \(fileName)")
+                self.viewController.showLoading(title: "下载中...")
+                // 文件地址
+                let localFileDestination: DownloadRequest.Destination = { _, response in
+                    let documentsURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
+                    let fileURL = documentsURL.appendingPathComponent(fileName)
+                    // 有重名文件就删除重建
+                    return (fileURL, [.removePreviousFile, .createIntermediateDirectories])
+                }
+                AF.download(url, to: localFileDestination).response(completionHandler: { (response) in
+                    if response.error == nil, let fileurl = response.fileURL?.path {
+                        DDLogDebug("文件地址：\(fileurl)")
+                        //打开文件
+                        DispatchQueue.main.async {
+                            self.viewController.hideLoading()
+                            self.viewController.previewDoc(path: fileurl)
+                            if let callback = p.callback {
+                                self.evaluateJs(callBackJs: "\(callback)('{\"result\": true, \"message\": \"\"}')")
+                            }
+                        }
+                    } else {
+                        let msg = response.error?.localizedDescription ?? ""
+                        DDLogError("下载文件出错，\(msg)")
+                        DispatchQueue.main.async {
+                            self.viewController.showError(title: "预览文件出错")
+                            if let callback = p.callback {
+                                self.evaluateJs(callBackJs: "\(callback)('{\"result\": true, \"message\": \"\"}')")
+                            }
+                        }
+                    }
+                })
+                
+            } else {
+                DispatchQueue.main.async {
+                    if let callback = p.callback {
+                        self.evaluateJs(callBackJs: "\(callback)('{\"result\": false, \"message\": \"没有传入url 或 fileName！\"}')")
+                    }
+                }
+            }
+        }else {
+            DDLogError("complexPicker, 解析json失败")
         }
     }
     

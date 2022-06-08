@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import Moya
+import CocoaLumberjack
 
 
 
@@ -27,6 +28,27 @@ public class O2AuthSDK: NSObject {
     
     
     //MARK: - public 公开本地对象
+    
+    private var bbsMuteInfo: O2BBSMuteInfo? // 论坛禁言对象
+    
+    func setupMuteInfo(muteInfo: O2BBSMuteInfo?) {
+        self.bbsMuteInfo = muteInfo
+    }
+    
+    // 是否禁言
+    public func isBBSMute() -> Bool {
+        if (self.bbsMuteInfo == nil){
+            return false
+        }
+        guard let expireDate = self.bbsMuteInfo?.unmuteDate else {
+            return false
+        }
+        DDLogDebug(" expireDate \(expireDate)")
+        if let date = Date.date(expireDate, formatter: "yyyy-MM-dd"), !date.isBefore(date: Date()) {
+            return true
+        }
+        return false
+    }
     
     
     /// 当前登录用户信息

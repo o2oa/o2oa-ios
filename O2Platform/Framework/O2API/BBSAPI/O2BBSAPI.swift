@@ -36,6 +36,7 @@ enum O2BBSAPI {
     case uploadAttachForSubject(String)
     case downloadAttachForSubject(O2BBSSubjectAttachmentInfo)
     case getSubjectAttachmentList(String)
+    case getMuteInfo
 }
 
 // MARK:- 上下文实现
@@ -89,6 +90,8 @@ extension O2BBSAPI:TargetType{
             return "/jaxrs/attachment/download/\(att.id!)"
         case .getSubjectAttachmentList(let subjectId):
             return "/jaxrs/subjectattach/list/subject/\(subjectId)"
+        case .getMuteInfo:
+            return "/jaxrs/shutup/get/shutup"
         }
     }
     
@@ -96,7 +99,7 @@ extension O2BBSAPI:TargetType{
         switch self {
         case .getCategoryAndSectionQuery, .getSubjectAttachmentList(_), .getAttachment(_):
             return .get
-        case .getSectionItemQuery(_):
+        case .getSectionItemQuery(_), .getMuteInfo:
             return .get
         case .sectionTopItemQuery(_):
             return .get

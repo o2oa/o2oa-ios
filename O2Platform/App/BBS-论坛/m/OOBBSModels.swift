@@ -233,3 +233,17 @@ class O2BBSSubjectAttachmentInfo: NSObject, DataModel {
         mapper <<< self.desc <-- "description"
     }
 }
+
+// 禁言对象
+class O2BBSMuteInfo: NSObject, DataModel {
+    @objc var id: String?
+    @objc var `operator`: String? // 操作人
+    @objc var person: String? // 被禁言人
+    @objc var unmuteDate: String? // 解禁日期
+    @objc var unmuteDateTime: String?
+    @objc var reason: String? // 禁言理由
+    @objc var createTime: String?
+    @objc var updateTime: String?
+    
+    required override init() {}
+}

@@ -20,6 +20,10 @@ class BBSSubjectDetailViewController: BaseWebViewUIViewController {
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var webViewContainer: UIView!
     @IBOutlet weak var attachmentBtn: UIButton!
+    
+    @IBOutlet weak var replyBtn: UIButton!
+    
+    
     var loadUrl:String?
     
     var subject:BBSSubjectData? {
@@ -66,8 +70,10 @@ class BBSSubjectDetailViewController: BaseWebViewUIViewController {
         }
         
         self.theWebView()
-        self.webViewContainer.addSubview(self.webView)
         
+        if O2AuthSDK.shared.isBBSMute() {
+            self.replyBtn.isHidden = true
+        }
     }
     
     
@@ -98,17 +104,18 @@ class BBSSubjectDetailViewController: BaseWebViewUIViewController {
     
     override func theWebView(){
         super.theWebView()
+        self.webViewContainer.addSubview(self.webView)
+        self.webView.translatesAutoresizingMaskIntoConstraints = false
+        let top = NSLayoutConstraint(item: self.webView!, attribute: NSLayoutConstraint.Attribute.top, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self.webViewContainer, attribute: NSLayoutConstraint.Attribute.top, multiplier: 1, constant: 0)
+        let bottom = NSLayoutConstraint(item: self.webView!, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self.webViewContainer, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1, constant: 0)
+        let trailing = NSLayoutConstraint(item: self.webView!, attribute: NSLayoutConstraint.Attribute.trailing, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self.webViewContainer, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1, constant: 0)
+        let leading = NSLayoutConstraint(item: self.webView!, attribute: NSLayoutConstraint.Attribute.leading, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self.webViewContainer, attribute: NSLayoutConstraint.Attribute.leading, multiplier: 1, constant: 0)
+        self.webViewContainer.addConstraints([top, bottom, trailing, leading])
         
         webView.navigationDelegate = self
-        
         webView.uiDelegate = self
         
-        //self.view.insertSubview(webView, belowSubview: progressView)
-        
         webView.allowsBackForwardNavigationGestures = true
-        
-        //监控进度
-        //self.addObserver(webView, forKeyPath: "estimatedProgress", options: .new, context: nil)
         
         loadDetailSubject()
     }
@@ -128,6 +135,10 @@ class BBSSubjectDetailViewController: BaseWebViewUIViewController {
 
     //写评论
     @IBAction func replaySubject(_ sender: UIButton) {
+        if O2AuthSDK.shared.isBBSMute() {
+            DDLogInfo("当前用户被禁言")
+            return
+        }
         self.performSegue(withIdentifier:"showReplyActionSegue", sender: nil)
     }
     
@@ -169,5 +180,9 @@ extension BBSSubjectDetailViewController:WKNavigationDelegate,WKUIDelegate {
         DDLogError(error.localizedDescription)
     }
     
+    func webViewDidClose(_ webView: WKWebView) {
+        DDLogInfo("h5执行了window.close()")
+        self.dismissVC(completion: nil)
+    }
     
 }

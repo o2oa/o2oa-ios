@@ -28,6 +28,10 @@ class IMChatViewController: UIViewController {
     @IBOutlet weak var bottomBarHeightConstraint: NSLayoutConstraint!
     //底部工具栏
     @IBOutlet weak var bottomBar: UIView!
+    
+    // 底部工具栏 底部约束 输入法弹出的时候使用
+    @IBOutlet weak var bottomBarBottomConstraint: NSLayoutConstraint!
+    
 
     private let emojiBarHeight = 196
     //表情窗口
@@ -149,12 +153,40 @@ class IMChatViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        // websocket 消息监听
         NotificationCenter.default.addObserver(self, selector: #selector(receiveMessageFromWs(notice:)), name: OONotification.websocket.notificationName, object: nil)
+        // 监听 键盘打开
+        NotificationCenter.default.addObserver(self, selector: #selector(openKeyboard(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        // 监听 键盘大小变化
+//        NotificationCenter.default.addObserver(self, selector: #selector(openKeyboard(notification:)), name: UIResponder.keyboardDidChangeFrameNotification, object: nil)
+        // 监听 键盘关闭
+        NotificationCenter.default.addObserver(self, selector: #selector(closeKeyboard(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
     }
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self)
     }
 
+    
+    // 打开键盘的时候
+    @objc private func openKeyboard(notification: Notification) {
+        if let userInfo = notification.userInfo {
+            let v = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue
+            let y = v?.cgRectValue.origin.y ?? 0
+            DDLogDebug("当前键盘高度： \(y)")
+            let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber
+            UIView.animate(withDuration: duration?.doubleValue ?? 0.3, animations: {
+                self.bottomBarBottomConstraint.constant = y
+            })
+            
+        }
+    }
+    // 关闭键盘
+    @objc private func closeKeyboard(notification: Notification) {
+        UIView.animate(withDuration:  0.3, animations: {
+            self.bottomBarBottomConstraint.constant = 0
+        })
+    }
 
     @objc private func receiveMessageFromWs(notice: Notification) {
         DDLogDebug("接收到websocket im 消息")
@@ -565,6 +597,87 @@ class IMChatViewController: UIViewController {
         self.chooseFile()
     }
     
+    // MARK: - UIMenuController 消息操作
+    
+    /// 长按事件
+    @objc private func longpressEvent(gestureRecognizer: UILongPressGestureRecognizer) {
+        if (gestureRecognizer.state == .began) {
+            if let cell = gestureRecognizer.view {
+                if cell.isKind(of: IMChatMessageSendViewCell.self), let myCell = cell as? IMChatMessageSendViewCell {
+                    myCell.becomeFirstResponder()
+                    self.showMenu(frame: myCell.frame, msg: myCell.msgInfo)
+                }
+                if cell.isKind(of: IMChatMessageViewCell.self), let myCell = cell as? IMChatMessageViewCell {
+                    myCell.becomeFirstResponder()
+                    self.showMenu(frame: myCell.frame, msg: myCell.msgInfo)
+                }
+            }
+        }
+    }
+    
+   
+    /// 展现菜单
+    private func showMenu(frame: CGRect, msg: IMMessageInfo?) {
+        //定义菜单
+        var menus:[UIMenuItem] = []
+        if self.imConfig.enableRevokeMsg == true, let cp = msg?.createPerson {
+            if cp == O2AuthSDK.shared.myInfo()?.distinguishedName {
+                //发送者
+                menus.append(UIMenuItem(title: "撤回", action: #selector(revokeMsg)))
+            } else if self.conversation?.type == o2_im_conversation_type_group &&
+                    O2AuthSDK.shared.myInfo()?.distinguishedName == self.conversation?.adminPerson {
+                // 群主
+                menus.append(UIMenuItem(title: "撤回成员消息", action: #selector(revokeMsg)))
+            }
+        }
+        // 文字消息 添加复制按钮
+        if let body = msg?.body, let bodyInfo = IMMessageBodyInfo.deserialize(from: body) {
+            if bodyInfo.type == o2_im_msg_type_text {
+                menus.append(UIMenuItem(title: "复制", action: #selector(copyTextMsg)))
+            }
+        }
+        if menus.count > 0 {
+            self.currentSelectMsg = msg
+            UIMenuController.shared.setTargetRect(frame, in: self.tableView)
+            UIMenuController.shared.menuItems = menus
+            UIMenuController.shared.update()
+            UIMenuController.shared.setMenuVisible(true, animated: true)
+            DDLogDebug("showMenu")
+        }
+    }
+    
+    /// 撤回菜单
+    @objc private func revokeMsg() {
+        DDLogDebug("点击了撤回消息")
+        if let msg = self.currentSelectMsg, let id = msg.id {
+            DDLogDebug("撤回消息，id: \(id)")
+            self.viewModel.revokeChatMsg(msgId:  id).then { result in
+                if result {
+                    self.showMessage(msg: "撤回成功！")
+                    var newList: [IMMessageInfo] = []
+                    for item in self.chatMessageList {
+                        if item.id != id {
+                            newList.append(item)
+                        }
+                    }
+                    self.chatMessageList = newList
+                    self.tableView.reloadData()
+                } else {
+                    self.showError(title: "撤回失败！")
+                }
+            }
+        }
+    }
+    
+    // 复制文字消息
+    @objc private func copyTextMsg() {
+        DDLogDebug("复制文字消息")
+        if let msg = self.currentSelectMsg, let body = msg.body, let bodyInfo = IMMessageBodyInfo.deserialize(from: body) {
+            UIPasteboard.general.string = bodyInfo.body
+            self.showSuccess(title: "复制成功！")
+        }
+    }
+    
 }
 
 // MARK: - 外部文件选择代理
@@ -900,71 +1013,6 @@ extension IMChatViewController: UITableViewDelegate, UITableViewDataSource {
         return UITableViewCell()
     }
     
-    /// 长按事件
-    @objc private func longpressEvent(gestureRecognizer: UILongPressGestureRecognizer) {
-        if (gestureRecognizer.state == .began) {
-            if let cell = gestureRecognizer.view {
-                if cell.isKind(of: IMChatMessageSendViewCell.self), let myCell = cell as? IMChatMessageSendViewCell {
-                    myCell.becomeFirstResponder()
-                    DDLogDebug("点击了发送消息")
-                    self.showMenu(frame: myCell.frame, msg: myCell.msgInfo)
-                }
-                if cell.isKind(of: IMChatMessageViewCell.self), let myCell = cell as? IMChatMessageViewCell {
-                    myCell.becomeFirstResponder()
-                    DDLogDebug("点击了接收消息")
-                    self.showMenu(frame: myCell.frame, msg: myCell.msgInfo)
-                }
-            }
-        }
-    }
-    
-   
-    /// 展现菜单
-    private func showMenu(frame: CGRect, msg: IMMessageInfo?) {
-        //定义菜单
-        var menus:[UIMenuItem] = []
-        if self.imConfig.enableRevokeMsg == true, let cp = msg?.createPerson {
-            if cp == O2AuthSDK.shared.myInfo()?.distinguishedName {
-                //发送者
-                menus.append(UIMenuItem(title: "撤回", action: #selector(revokeMsg)))
-            } else if self.conversation?.type == o2_im_conversation_type_group &&
-                    O2AuthSDK.shared.myInfo()?.distinguishedName == self.conversation?.adminPerson {
-                // 群主
-                menus.append(UIMenuItem(title: "撤回成员消息", action: #selector(revokeMsg)))
-            }
-        }
-        if menus.count > 0 {
-            self.currentSelectMsg = msg
-            UIMenuController.shared.setTargetRect(frame, in: self.tableView)
-            UIMenuController.shared.menuItems = menus
-            UIMenuController.shared.update()
-            UIMenuController.shared.setMenuVisible(true, animated: true)
-            DDLogDebug("showMenu")
-        }
-    }
-    
-    /// 撤回菜单
-    @objc private func revokeMsg() {
-        DDLogDebug("点击了撤回消息")
-        if let msg = self.currentSelectMsg, let id = msg.id {
-            DDLogDebug("撤回消息，id: \(id)")
-            self.viewModel.revokeChatMsg(msgId:  id).then { result in
-                if result {
-                    self.showMessage(msg: "撤回成功！")
-                    var newList: [IMMessageInfo] = []
-                    for item in self.chatMessageList {
-                        if item.id != id {
-                            newList.append(item)
-                        }
-                    }
-                    self.chatMessageList = newList
-                    self.tableView.reloadData()
-                } else {
-                    self.showError(title: "撤回失败！")
-                }
-            }
-        }
-    }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let msg = self.chatMessageList[indexPath.row]

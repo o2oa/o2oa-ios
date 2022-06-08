@@ -167,3 +167,14 @@ struct O2DeviceLocationResult: HandyJSON {
     var longitude: Double?
     var address: String?
 }
+
+
+struct O2BizPreviewDocMessage: HandyJSON {
+    var url: String? // 文件下载地址
+    var fileName: String? // 文件名称
+}
+
+
+struct O2UtilNavigationOpenOtherApp: HandyJSON {
+    var schema: String? // 打开app schema url
+}
