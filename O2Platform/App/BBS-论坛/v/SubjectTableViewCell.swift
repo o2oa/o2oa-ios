@@ -13,8 +13,7 @@ import ObjectMapper
 import CocoaLumberjack
 
 class SubjectTableViewCell: UITableViewCell {
-    
-    @IBOutlet weak var subjectPersonIconImageView: UIImageView!
+     
     
     @IBOutlet weak var topSubjectImageView: UIImageView!
     
@@ -31,30 +30,31 @@ class SubjectTableViewCell: UITableViewCell {
     var bbsSubjectData:BBSSubjectData? {
         didSet {
             self.topSubjectImageView.isHidden = !(bbsSubjectData?.isTopSubject)!
-            self.subjectTitleLabel.text = bbsSubjectData?.title
+            let type = "[\(bbsSubjectData?.type ?? "")]"
+            let allTitle =  "\(type) \(bbsSubjectData?.title ?? "")"
+            let mas = NSMutableAttributedString(string: allTitle)
+            mas.addAttributes([NSAttributedString.Key.foregroundColor:UIColor.hexInt(0x999999)], range: NSRange(location: 0, length: type.length))
+            self.subjectTitleLabel.attributedText = mas
             self.subjectNameLabel.text = (bbsSubjectData?.creatorName?.contains("@"))! ? bbsSubjectData?.creatorName?.split("@")[0] : bbsSubjectData?.creatorName
-            self.subjectPubDateLabel.text = bbsSubjectData?.createTime
             self.subjectViewNumberLabel.text = bbsSubjectData?.viewTotal?.toString
             self.subjectReplyNumberLabel.text = bbsSubjectData?.replyTotal?.toString
+            if let time = bbsSubjectData?.latestReplyTime, let date = Date.date(time) {
+                self.subjectPubDateLabel.text = date.friendlyTime()
+            } else {
+                self.subjectPubDateLabel.text = ""
+            }
+            
+            
             //let urlString = AppDelegate.o2Collect.generateURLWithAppContextKey(ContactContext.contactsContextKey, query: ContactContext.personIconByNameQuery, parameter: ["##name##":bbsSubjectData?.creatorName as AnyObject])
             //let url = URL(string: urlString!)
             
             //self.subjectPersonIconImageView.af_setImage(withURL: url!)
-            let urlstr = AppDelegate.o2Collect.generateURLWithAppContextKey(ContactContext.contactsContextKeyV2, query: ContactContext.personIconByNameQueryV2, parameter: ["##name##":bbsSubjectData?.creatorName as AnyObject], generateTime: false)
-            let url = URL(string: urlstr!)
-            self.subjectPersonIconImageView.hnk_setImageFromURL(url!)
+//            let urlstr = AppDelegate.o2Collect.generateURLWithAppContextKey(ContactContext.contactsContextKeyV2, query: ContactContext.personIconByNameQueryV2, parameter: ["##name##":bbsSubjectData?.creatorName as AnyObject], generateTime: false)
+//            let url = URL(string: urlstr!)
+//            self.subjectPersonIconImageView.hnk_setImageFromURL(url!)
         }
     }
     
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        //图像变圆形
-        self.subjectPersonIconImageView.layer.cornerRadius = 20
-        self.subjectPersonIconImageView.layer.masksToBounds = true
-        self.subjectPersonIconImageView.clipsToBounds = true
-    }
-
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
