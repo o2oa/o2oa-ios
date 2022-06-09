@@ -261,7 +261,6 @@ extension O2AppViewController:ZLCollectionViewDelegate{
                     }
                     destVC.modalPresentationStyle = .fullScreen
                     if destVC.isKind(of: ZLNavigationController.self) {
-                        DDLogInfo("cloudFIle 进来了？")
                         self.show(destVC, sender: nil)
                     }else{
                         self.navigationController?.pushViewController(destVC, animated: true)

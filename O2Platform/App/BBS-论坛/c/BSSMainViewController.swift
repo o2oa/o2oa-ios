@@ -110,7 +110,7 @@ extension BSSMainViewController:UICollectionViewDataSource{
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: reuseHeaderIdentifier, for: indexPath)  as! BBSHeaderCollectionReusableView
             let forumData = bbsForums[(indexPath as NSIndexPath).section]
             headerView.bbsForumData = forumData
-            headerView.backgroundColor = UIColor.white
+//            headerView.backgroundColor = UIColor.white
             headerView.alpha = 0.7
             return headerView
         }else{
@@ -125,11 +125,12 @@ extension BSSMainViewController:UICollectionViewDataSource{
 extension BSSMainViewController:UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: CGFloat(ItemSize-1),height: CGFloat(ItemSize-1))
+        let width = (SCREEN_WIDTH - 45) / 2
+        return CGSize(width: CGFloat(width),height: CGFloat(205))
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
+        return UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {

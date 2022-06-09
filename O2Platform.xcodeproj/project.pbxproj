@@ -134,6 +134,8 @@
 		B1489CB22492045D009EE9FD /* IMChatEmojiItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1489CB02492045D009EE9FD /* IMChatEmojiItemCell.xib */; };
 		B1489CB624935104009EE9FD /* IMInstantMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1489CB424935104009EE9FD /* IMInstantMessageViewController.swift */; };
 		B1489CB724935104009EE9FD /* IMInstantMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1489CB524935104009EE9FD /* IMInstantMessageViewController.xib */; };
+		B14A52C82851A13A00BE7EA6 /* CMSAPPCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14A52C72851A13A00BE7EA6 /* CMSAPPCollectionViewCell.swift */; };
+		B14A52F42851A3DE00BE7EA6 /* CMSApplicationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14A52F32851A3DE00BE7EA6 /* CMSApplicationViewController.swift */; };
 		B14B339F2356EB1500442968 /* CloudFileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14B339E2356EB1500442968 /* CloudFileViewModel.swift */; };
 		B14CCF7B256DEE66003ECC3C /* MeetingFormDatePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14CCF79256DEE66003ECC3C /* MeetingFormDatePickerCell.swift */; };
 		B14CCF7C256DEE66003ECC3C /* MeetingFormDatePickerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B14CCF7A256DEE66003ECC3C /* MeetingFormDatePickerCell.xib */; };
@@ -1328,6 +1330,8 @@
 		B1489CB02492045D009EE9FD /* IMChatEmojiItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IMChatEmojiItemCell.xib; sourceTree = "<group>"; };
 		B1489CB424935104009EE9FD /* IMInstantMessageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMInstantMessageViewController.swift; sourceTree = "<group>"; };
 		B1489CB524935104009EE9FD /* IMInstantMessageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IMInstantMessageViewController.xib; sourceTree = "<group>"; };
+		B14A52C72851A13A00BE7EA6 /* CMSAPPCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSAPPCollectionViewCell.swift; sourceTree = "<group>"; };
+		B14A52F32851A3DE00BE7EA6 /* CMSApplicationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSApplicationViewController.swift; sourceTree = "<group>"; };
 		B14B339E2356EB1500442968 /* CloudFileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFileViewModel.swift; sourceTree = "<group>"; };
 		B14CCF79256DEE66003ECC3C /* MeetingFormDatePickerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFormDatePickerCell.swift; sourceTree = "<group>"; };
 		B14CCF7A256DEE66003ECC3C /* MeetingFormDatePickerCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingFormDatePickerCell.xib; sourceTree = "<group>"; };
@@ -3801,6 +3805,7 @@
 				E4B7819F1DFA9B23007B58A9 /* CMSItemDetailViewController.swift */,
 				E4CB278A1E797B58004A7ACB /* CMSQLViewController.swift */,
 				B1FEDACD22D314F90002ECF4 /* CMSCreateDocViewController.swift */,
+				B14A52F32851A3DE00BE7EA6 /* CMSApplicationViewController.swift */,
 			);
 			path = c;
 			sourceTree = "<group>";
@@ -3829,6 +3834,7 @@
 			children = (
 				E4B7816E1DF8F359007B58A9 /* CMSCategoryItemCell.swift */,
 				E4B781741DF93BD4007B58A9 /* CMSItemTableViewCell.swift */,
+				B14A52C72851A13A00BE7EA6 /* CMSAPPCollectionViewCell.swift */,
 			);
 			path = v;
 			sourceTree = "<group>";
@@ -5436,6 +5442,7 @@
 				B19D55AE25358B2700CE3B22 /* O2RegisterAPI.swift in Sources */,
 				E4BF45EB1E781C15008B52F0 /* CMSPublishInfo.swift in Sources */,
 				09E02E981F16319600579887 /* UIView+Haneke.swift in Sources */,
+				B14A52C82851A13A00BE7EA6 /* CMSAPPCollectionViewCell.swift in Sources */,
 				B13707DD212D3F19002113F1 /* CMSCategoryData.swift in Sources */,
 				E4B888C31D9D48F1002E1A46 /* CollectCodeData.swift in Sources */,
 				E40C41EB1E7F7C0D00568805 /* ZoneMenuViewController.swift in Sources */,
@@ -5550,6 +5557,7 @@
 				E4B888911D9D48F1002E1A46 /* UIViewExt.m in Sources */,
 				B1BA42B824133AC40081CED8 /* TaskCreateData.swift in Sources */,
 				09E02E871F16319600579887 /* DiskCache.swift in Sources */,
+				B14A52F42851A3DE00BE7EA6 /* CMSApplicationViewController.swift in Sources */,
 				B1DE856623603408003C36E2 /* DispatchQueue+Extension.swift in Sources */,
 				E4B69772207630240062F6E8 /* String+Extenstion.swift in Sources */,
 				B175007A233C6908003DA7B9 /* BlockLongPress.swift in Sources */,

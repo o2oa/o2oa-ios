@@ -14,6 +14,11 @@ class BBSForumCell: UICollectionViewCell {
     
     @IBOutlet weak var bbsSectionIconImageView: UIImageView!
     
+    @IBOutlet weak var timeLabel: UILabel!
+    
+    @IBOutlet weak var numberLabel: UILabel!
+    
+    
     var bbsSectionData:BBSectionListData? {
         didSet {
             self.bbsSectionTitleLabel.text = bbsSectionData?.sectionName
@@ -22,18 +27,13 @@ class BBSForumCell: UICollectionViewCell {
             }else {
                 self.bbsSectionIconImageView.image = UIImage(named: "icon_forum_default")
             }
-            
-//            let urlstr = AppDelegate.o2Collect.generateURLWithAppContextKey(BBSContext.bbsContextKey, query: BBSContext.bbsSectionIconQuery, parameter: ["##id##":bbsSectionData?.id as AnyObject], generateTime: false)
-//            let url = URL(string: urlstr!)
-//            self.bbsSectionIconImageView.hnk_setImageFromURL(url!)
+            let time = self.bbsSectionData?.updateTime?.subString(from: 5, to: 10)
+            self.timeLabel.text = "\(time ?? "")"
+            self.numberLabel.text = "\(self.bbsSectionData?.subjectTotal ?? 0)个"
+             
         }
     }
-    
-    override func awakeFromNib() {
-        self.bbsSectionIconImageView.layer.cornerRadius = 5
-        self.bbsSectionIconImageView.layer.masksToBounds = true
-        self.bbsSectionIconImageView.clipsToBounds = true
-    }
+   
     
     
     
