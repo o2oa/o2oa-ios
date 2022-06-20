@@ -194,7 +194,7 @@
 "Login Please enter mobile phone" = "请输入手机号码！";
 "Login Please enter validation code" = "请输入验证码！";
 "Login binding" = "绑定中...";
-"Login Can not get server list" = "没有获取到服务器列表，请确认服务器是否已经注册！";
+"Login Can not get server list" = "验证码过期或没有获取到服务器列表，请确认服务器是否已经注册！";
 "Login Error with info" = "错误！ %@";
 "Login Guide page" = "引导页";
 "Login Next step" = "下一步";
