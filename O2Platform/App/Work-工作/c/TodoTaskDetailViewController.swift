@@ -112,6 +112,14 @@ class TodoTaskDetailViewController: BaseWebViewUIViewController {
     var myControl: [String: AnyObject]?
     var myNewControls: [WorkNewActionItem] = []
     var moreActionMenus: O2WorkMoreActionSheet? = nil
+    
+    // 上传附件使用的两个参数
+    private var uploadSite: String = ""
+    private var uploadParam: String = ""
+    // 替换附件的时候需要用的附件id
+    private var replaceAttachmentId = ""
+    private var isReplaceAttachment = false //是替换还是上传
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -837,6 +845,103 @@ class TodoTaskDetailViewController: BaseWebViewUIViewController {
 
 
 
+    // ios系统文件选择器
+    private func chooseFileWithDocumentPicker() {
+        let documentTypes = ["public.content",
+                                 "public.text",
+                                 "public.source-code",
+                                 "public.image",
+                                 "public.audiovisual-content",
+                                 "com.adobe.pdf",
+                                 "com.apple.keynote.key",
+                                 "com.microsoft.word.doc",
+                                 "com.microsoft.excel.xls",
+                                 "com.microsoft.powerpoint.ppt"]
+        let picker = UIDocumentPickerViewController(documentTypes: documentTypes, in: .open)
+        picker.delegate = self
+        self.present(picker, animated: true, completion: nil)
+    }
+    
+    // 相册选择图片
+    private func chooseImageWithBSImagePicker() {
+        self.choosePhotoWithImagePicker { (fileName, imageData) in
+            if self.isReplaceAttachment {
+                self.replaceAttachmentToO2OA(data: imageData, fileName: fileName)
+            } else {
+                self.uploadAttachmentToO2OA(data: imageData, fileName: fileName)
+            }
+        }
+    }
+    
+   
+    // 上传文件到o2oa服务器
+    private func uploadAttachmentToO2OA(data: Data, fileName: String) {
+        DDLogInfo("开始上传附件，site: \(self.uploadSite) param:\(self.uploadParam)")
+        DispatchQueue.main.async {
+            self.showLoading(title: "上传中...")
+        }
+        self.viewModel.uploadAttachment(workId: self.workId!, site: self.uploadSite, fileName: fileName, fileData: data).then { (idData)  in
+            DispatchQueue.main.async {
+                if self.uploadParam != "" {
+                    DDLogDebug("执行了 layout.appForm.uploadedAttachmentDatagrid")
+                    let callJS = "layout.appForm.uploadedAttachmentDatagrid(\"\(self.uploadSite)\", \"\(idData.id ?? "")\", \"\(self.uploadParam)\")"
+                    self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
+                        
+                    })
+                } else {
+                    DDLogDebug("执行了 layout.appForm.uploadedAttachment")
+                    let callJS = "layout.appForm.uploadedAttachment(\"\(self.uploadSite)\", \"\(idData.id ?? "")\")"
+                    self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
+                        
+                    })
+                }
+                self.showSuccess(title: "上传成功")
+                self.uploadSite = ""
+                self.uploadParam = ""
+            }
+        }.catch { (err) in
+            DDLogError(err.localizedDescription)
+            self.showError(title: "上传失败")
+            self.uploadSite = ""
+            self.uploadParam = ""
+        }
+    }
+    
+    // 替换附件的时候 上传附件到服务器
+    private func replaceAttachmentToO2OA(data: Data, fileName: String) {
+        DispatchQueue.main.async {
+            self.showLoading(title: "上传中...")
+        }
+        self.viewModel.replaceAttachment(id: self.replaceAttachmentId, workId: self.workId!, site: self.uploadSite, fileName: fileName, fileData: data).then { (idData) in
+            DispatchQueue.main.async {
+                if self.uploadParam == "" {
+                    let callJS = "layout.appForm.replacedAttachment(\"\(self.uploadSite)\", \"\(self.replaceAttachmentId)\")"
+                    self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
+                        
+                    })
+                } else {
+                    let callJS = "layout.appForm.replacedAttachmentDatagrid(\"\(self.uploadSite)\", \"\(self.replaceAttachmentId)\", \"\(self.uploadParam)\")"
+                    self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
+                        
+                    })
+                }
+               
+                self.showSuccess(title: "替换成功")
+                self.uploadSite = ""
+                self.uploadParam = ""
+                self.replaceAttachmentId = ""
+            }
+        }.catch { (err) in
+            DispatchQueue.main.async {
+                DDLogError(err.localizedDescription)
+                self.showError(title: "替换失败")
+                self.uploadSite = ""
+                self.uploadParam = ""
+                self.replaceAttachmentId = ""
+            }
+        }
+    }
+    
 }
 
 //MARK: - extension
@@ -872,6 +977,49 @@ extension TodoTaskDetailViewController: WKNavigationDelegate, WKUIDelegate {
 
 }
 
+// MARK: - ios系统文件选择器delegate
+extension TodoTaskDetailViewController: UIDocumentPickerDelegate {
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        if urls.count > 0 {
+            let file = urls[0] //单选
+            if file.startAccessingSecurityScopedResource() { //访问权限
+                let fileName = file.lastPathComponent
+                if let data = try? Data(contentsOf: file) {
+                    if self.isReplaceAttachment {
+                        self.replaceAttachmentToO2OA(data: data, fileName: fileName)
+                    } else {
+                        self.uploadAttachmentToO2OA(data: data, fileName: fileName)
+                    }
+                } else {
+                    self.showError(title: "读取文件失败")
+                }
+            } else {
+                self.showError(title: "没有获取文件的权限")
+            }
+        }
+        
+    }
+}
+
+// MARK: - 拍照delegate
+extension TodoTaskDetailViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        if let image = info[.editedImage] as? UIImage {
+            let fileName = "\(UUID().uuidString).png"
+            let newData = image.pngData()!
+            if self.isReplaceAttachment {
+                self.replaceAttachmentToO2OA(data: newData, fileName: fileName)
+            } else {
+                self.uploadAttachmentToO2OA(data: newData, fileName: fileName)
+            }
+        } else {
+            DDLogError("没有选择到图片！")
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+// MARK: - O2WKScriptMessageHandlerImplement
 extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
     func userController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         let name = message.name
@@ -899,6 +1047,8 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
 //            self.loadDataFromWork()
             break
         case "uploadAttachment":
+            self.uploadSite = ""
+            self.uploadParam = ""
             ZonePermissions.requestImagePickerAuthorization(callback: { (zoneStatus) in
                 if zoneStatus == ZoneAuthorizationStatus.zAuthorizationStatusAuthorized {
 //                    let site = (message.body as! NSDictionary)["site"]
@@ -968,38 +1118,84 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
 
 
     //上传附件
+  
     private func uploadAttachment(_ site: String, param: String = "") {
         DDLogDebug("uploadAttachment site: \(site) param: \(param)")
-        self.choosePhotoWithImagePicker { (fileName, imageData) in
-            DispatchQueue.main.async {
-                self.showLoading(title: "上传中...")
-            }
-            self.viewModel.uploadAttachment(workId: self.workId!, site: site, fileName: fileName, fileData: imageData).then { (idData)  in
-                DispatchQueue.main.async {
-                    //ProgressHUD.showSuccess("上传成功")
-                    if param != "" {
-                        DDLogDebug("执行了 layout.appForm.uploadedAttachmentDatagrid")
-                        let callJS = "layout.appForm.uploadedAttachmentDatagrid(\"\(site)\", \"\(idData.id ?? "")\", \"\(param)\")"
-                        self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
-                            
-                        })
-                    } else {
-                        DDLogDebug("执行了 layout.appForm.uploadedAttachment")
-                        let callJS = "layout.appForm.uploadedAttachment(\"\(site)\", \"\(idData.id ?? "")\")"
-                        self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
-                            
-                        })
-                    }
-                    
-                    self.showSuccess(title: "上传成功")
-                }
-            }.catch { (err) in
-                DDLogError(err.localizedDescription)
-                self.showError(title: "上传失败")
-            }
-        }
+        self.uploadSite = site
+        self.uploadParam = param
+        let arr = [
+            UIAlertAction(title: "文件", style: .default, handler: { (action) in
+                self.isReplaceAttachment = false
+                self.chooseFileWithDocumentPicker()
+            }),
+            UIAlertAction(title: "照片", style: .default, handler: { (action) in
+                self.isReplaceAttachment = false
+                self.chooseImageWithBSImagePicker()
+            }),
+            UIAlertAction(title: "拍照", style: .default, handler: { (action) in
+                self.isReplaceAttachment = false
+                self.takePhoto(delegate: self)
+            }),
+        ]
+        self.showSheetAction(title: L10n.alert, message: "请选择入口", actions: arr)
+//
+//
+//        self.choosePhotoWithImagePicker { (fileName, imageData) in
+//            DispatchQueue.main.async {
+//                self.showLoading(title: "上传中...")
+//            }
+//            self.viewModel.uploadAttachment(workId: self.workId!, site: site, fileName: fileName, fileData: imageData).then { (idData)  in
+//                DispatchQueue.main.async {
+//                    //ProgressHUD.showSuccess("上传成功")
+//                    if param != "" {
+//                        DDLogDebug("执行了 layout.appForm.uploadedAttachmentDatagrid")
+//                        let callJS = "layout.appForm.uploadedAttachmentDatagrid(\"\(site)\", \"\(idData.id ?? "")\", \"\(param)\")"
+//                        self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
+//
+//                        })
+//                    } else {
+//                        DDLogDebug("执行了 layout.appForm.uploadedAttachment")
+//                        let callJS = "layout.appForm.uploadedAttachment(\"\(site)\", \"\(idData.id ?? "")\")"
+//                        self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
+//
+//                        })
+//                    }
+//
+//                    self.showSuccess(title: "上传成功")
+//                }
+//            }.catch { (err) in
+//                DDLogError(err.localizedDescription)
+//                self.showError(title: "上传失败")
+//            }
+//        }
          
     }
+    
+    
+    /// 替换附件
+    private func replaceAttachment(_ attachmentId: String, _ site: String, param: String = "") {
+        DDLogInfo("replaceAttachment attachmentId: \(attachmentId) site: \(site) param: \(param)")
+        self.replaceAttachmentId = attachmentId
+        self.uploadSite = site
+        self.uploadParam = param
+        let arr = [
+            UIAlertAction(title: "文件", style: .default, handler: { (action) in
+                self.isReplaceAttachment = true
+                self.chooseFileWithDocumentPicker()
+            }),
+            UIAlertAction(title: "照片", style: .default, handler: { (action) in
+                self.isReplaceAttachment = true
+                self.chooseImageWithBSImagePicker()
+            }),
+            UIAlertAction(title: "拍照", style: .default, handler: { (action) in
+                self.isReplaceAttachment = true
+                self.takePhoto(delegate: self)
+            }),
+        ]
+        self.showSheetAction(title: L10n.alert, message: "请选择入口", actions: arr)
+    }
+    
+    
 
     //下载预览附件
     private func downloadAttachment(_ attachmentId: String) {
@@ -1061,39 +1257,7 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
             }
         })
     }
-    
-    /// 替换附件
-    private func replaceAttachment(_ attachmentId: String, _ site: String, param: String = "") {
-        
-        self.choosePhotoWithImagePicker { (fileName, imageData) in
-            DispatchQueue.main.async {
-                self.showLoading(title: "上传中...")
-            }
-            self.viewModel.replaceAttachment(id: attachmentId, workId: self.workId!, site: site, fileName: fileName, fileData: imageData).then { (idData) in
-                DispatchQueue.main.async {
-                    if param == "" {
-                        let callJS = "layout.appForm.replacedAttachment(\"\(site)\", \"\(attachmentId)\")"
-                        self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
-                            
-                        })
-                    } else {
-                        let callJS = "layout.appForm.replacedAttachmentDatagrid(\"\(site)\", \"\(attachmentId)\", \"\(attachmentId)\")"
-                        self.webView.evaluateJavaScript(callJS, completionHandler: { (result, err) in
-                            
-                        })
-                    }
-                   
-                    self.showSuccess(title: "替换成功")
-                }
-            }.catch { (err) in
-                DispatchQueue.main.async {
-                    DDLogError(err.localizedDescription)
-                    self.showError(title: "替换失败")
-                }
-            }
-        }
-        
-    }
+   
 //
 //
 //    private func previewAttachment(_ url: String) {

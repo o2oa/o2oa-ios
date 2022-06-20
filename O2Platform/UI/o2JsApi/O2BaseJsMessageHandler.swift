@@ -297,7 +297,7 @@ class O2BaseJsMessageHandler: NSObject, O2WKScriptMessageHandlerImplement {
                     let options = PHImageRequestOptions()
                     options.isSynchronous = true
                     options.deliveryMode = .fastFormat
-                    options.resizeMode = .none
+                    options.resizeMode = .fast //.none
                     var fName = (asset.value(forKey: "filename") as? String) ?? "untitle.png"
                     // 判断是否是heif
                     var isHEIF = false
