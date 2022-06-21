@@ -144,9 +144,13 @@ extension UIViewController {
     ///系统弹出窗 可以输入文字
     ///
     func showPromptAlert(title: String, message: String, inputText: String, okHandler: @escaping ((UIAlertAction, String) -> Void))  {
+        self.showPromptAlert(title: title, message: message, inputText: inputText, placeholder: "请输入...", okHandler: okHandler)
+    }
+ 
+    func showPromptAlert(title: String, message: String, inputText: String, placeholder:String = "请输入...",  okHandler: @escaping ((UIAlertAction, String) -> Void))  {
         let promptController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         promptController.addTextField { (textField) in
-            textField.placeholder = "请输入..."
+            textField.placeholder = placeholder
             textField.text = inputText
         }
         let okAction = UIAlertAction(title: "确定", style: .default) { (ok) in

@@ -150,9 +150,13 @@ class OOAttendanceCheckInNewController: UIViewController {
             if !self.isInWorkPlace {
                 self.checkinForm.isExternal = true
                 self.checkinForm.workAddress = ""
-                self.showDefaultConfirm(title: "提示", message: "当前不在打卡范围内，你确定要进行外勤打卡吗？", okHandler: { action in
+                self.showPromptAlert(title: "提示", message: "当前不在打卡范围内，你确定要进行外勤打卡吗？", inputText: "", placeholder: "请填写备注") { action, text in
+                    self.checkinForm.desc = text
                     self.postMyCheckin(checkinForm: self.checkinForm)
-                })
+                }
+//                self.showDefaultConfirm(title: "提示", message: "当前不在打卡范围内，你确定要进行外勤打卡吗？", okHandler: { action in
+//                    self.postMyCheckin(checkinForm: self.checkinForm)
+//                })
             }else {
                 self.checkinForm.isExternal = false
                 self.checkinForm.workAddress = self.currentWorkPlace?.placeName
