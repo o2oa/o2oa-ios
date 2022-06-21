@@ -81,44 +81,52 @@ class OOAttendanceCheckInNewController: UIViewController {
         
         if self.bmkResult == nil {
             DDLogError("没有获取到当前位置信息，无法打卡。。。。。")
-            self.showError(title: "无法获取到当前位置信息，请稍后再试！")
+            self.showError(title: "无法获取到当前位置信息，请确认是否开启定位权限！")
             return
         }
         
         if let info = scheduleInfo, info.recordId != nil { //更新打卡
-            self.showDefaultConfirm(title: "更新打卡", message: "确定要更新这条打卡数据吗？") { (action) in
-                self.showLoading()
-                self.checkinForm.id = info.recordId
-                self.checkinForm.recordAddress = self.bmkResult?.address
-                self.checkinForm.desc = self.bmkResult?.sematicDescription
-                self.checkinForm.longitude = String(self.bmkResult?.location.longitude ?? 0.0)
-                self.checkinForm.latitude = String(self.bmkResult?.location.latitude ?? 0.0)
-                self.checkinForm.empNo = "" //O2AuthSDK.shared.myInfo()?.employee
-                self.checkinForm.empName = ""// O2AuthSDK.shared.myInfo()?.name
-                let currenDate = Date()
-                self.checkinForm.recordDateString = currenDate.toString("yyyy-MM-dd")
-                self.checkinForm.signTime = currenDate.toString("HH:mm:ss")
-                self.checkinForm.optMachineType = UIDevice.deviceModelReadable()
-                self.checkinForm.optSystemName = "\(UIDevice.systemName()) \(UIDevice.systemVersion())"
-                self.checkinForm.checkin_type = info.checkinType
-                self.checkinForm.isExternal = !self.isInWorkPlace
-                self.checkinForm.workAddress = self.currentWorkPlace?.placeName
-                self.viewModel.postMyCheckin(self.checkinForm) { (result) in
-                    DispatchQueue.main.async {
-                        self.hideLoading()
-                    }
-                    switch result {
-                    case .ok(_):
-                        self.loadMyRecords()
-                        break
-                    case .fail(let errorMessage):
-                        DDLogError(errorMessage)
-                        break
-                    default:
-                        break
+            DDLogDebug("更新打卡。。111")
+            self.checkinForm.id = info.recordId
+            self.checkinForm.recordAddress = self.bmkResult?.address
+            self.checkinForm.desc = self.bmkResult?.sematicDescription
+            self.checkinForm.longitude = String(self.bmkResult?.location.longitude ?? 0.0)
+            self.checkinForm.latitude = String(self.bmkResult?.location.latitude ?? 0.0)
+            self.checkinForm.empNo = "" //O2AuthSDK.shared.myInfo()?.employee
+            self.checkinForm.empName = ""// O2AuthSDK.shared.myInfo()?.name
+            let currenDate = Date()
+            self.checkinForm.recordDateString = currenDate.toString("yyyy-MM-dd")
+            self.checkinForm.signTime = currenDate.toString("HH:mm:ss")
+            self.checkinForm.optMachineType = UIDevice.deviceModelReadable()
+            self.checkinForm.optSystemName = "\(UIDevice.systemName()) \(UIDevice.systemVersion())"
+            self.checkinForm.checkin_type = info.checkinType
+            
+            if !self.isInWorkPlace  {
+                DDLogDebug("外勤打卡。。。")
+                self.checkinForm.isExternal = true
+                self.checkinForm.workAddress = ""
+                self.showPromptAlert(title: "提示", message: "当前不在打卡范围内，你确定要进行外勤打卡吗？", inputText: "", placeholder: "请输入外勤打卡说明") { action, text in
+                    if text.isBlank {
+                        self.showError(title: "请输入外勤打卡说明")
+                    } else {
+                        self.checkinForm.desc = text
+                        self.postMyCheckin(checkinForm: self.checkinForm)
                     }
                 }
+//                self.showDefaultConfirm(title: "提示", message: "当前不在打卡范围内，你确定要进行外勤打卡吗？", okHandler: { action in
+//                    self.postMyCheckin(checkinForm: self.checkinForm)
+//                })
+            }else {
+                DDLogDebug("更新打卡。。。22")
+                self.showDefaultConfirm(title: "更新打卡", message: "确定要更新这条打卡数据吗？") { (action) in
+                    self.checkinForm.isExternal = false
+                    self.checkinForm.workAddress = self.currentWorkPlace?.placeName
+                    self.postMyCheckin(checkinForm: self.checkinForm)
+                }
             }
+            
+            
+           
         } else {
             if !self.needCheckIn {
                 self.showError(title: "当前不需要打卡！")
@@ -150,9 +158,13 @@ class OOAttendanceCheckInNewController: UIViewController {
             if !self.isInWorkPlace {
                 self.checkinForm.isExternal = true
                 self.checkinForm.workAddress = ""
-                self.showPromptAlert(title: "提示", message: "当前不在打卡范围内，你确定要进行外勤打卡吗？", inputText: "", placeholder: "请填写备注") { action, text in
-                    self.checkinForm.desc = text
-                    self.postMyCheckin(checkinForm: self.checkinForm)
+                self.showPromptAlert(title: "提示", message: "当前不在打卡范围内，你确定要进行外勤打卡吗？", inputText: "", placeholder: "请输入外勤打卡说明") { action, text in
+                    if text.isBlank {
+                        self.showError(title: "请输入外勤打卡说明")
+                    } else {
+                        self.checkinForm.desc = text
+                        self.postMyCheckin(checkinForm: self.checkinForm)
+                    }
                 }
 //                self.showDefaultConfirm(title: "提示", message: "当前不在打卡范围内，你确定要进行外勤打卡吗？", okHandler: { action in
 //                    self.postMyCheckin(checkinForm: self.checkinForm)
@@ -343,8 +355,10 @@ extension OOAttendanceCheckInNewController: UICollectionViewDelegate, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        DDLogDebug("点击。。。\(indexPath.row)")
         let s = self.schedules[indexPath.row]
         if let last = self.lastRecord, last.id == s.recordId {
+            DDLogDebug("更新打卡。。。。")
             self.postCheckinButton(s)
         }
     }
