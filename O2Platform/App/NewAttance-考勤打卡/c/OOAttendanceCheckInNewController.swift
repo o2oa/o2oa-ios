@@ -89,7 +89,7 @@ class OOAttendanceCheckInNewController: UIViewController {
             DDLogDebug("更新打卡。。111")
             self.checkinForm.id = info.recordId
             self.checkinForm.recordAddress = self.bmkResult?.address
-            self.checkinForm.desc = self.bmkResult?.sematicDescription
+//            self.checkinForm.desc = self.bmkResult?.sematicDescription
             self.checkinForm.longitude = String(self.bmkResult?.location.longitude ?? 0.0)
             self.checkinForm.latitude = String(self.bmkResult?.location.latitude ?? 0.0)
             self.checkinForm.empNo = "" //O2AuthSDK.shared.myInfo()?.employee
@@ -143,7 +143,7 @@ class OOAttendanceCheckInNewController: UIViewController {
             let checkType = newList.count > 0 ? newList.last!.checkinType : ""
             checkinForm.id = nil
             checkinForm.recordAddress = self.bmkResult?.address
-            checkinForm.desc = self.bmkResult?.sematicDescription
+//            checkinForm.desc = self.bmkResult?.sematicDescription
             checkinForm.longitude = String(self.bmkResult?.location.longitude ?? 0.0)
             checkinForm.latitude = String(self.bmkResult?.location.latitude ?? 0.0)
             checkinForm.empNo = "" //O2AuthSDK.shared.myInfo()?.employee
