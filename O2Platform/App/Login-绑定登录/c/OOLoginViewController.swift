@@ -66,8 +66,12 @@ class OOLoginViewController: OOBaseViewController {
                 
         //delegate
         passwordTextField.buttonDelegate = self
-        setupUI()
         
+        setupUI()
+        // 图片验证码点击刷新
+        self.captchaCodeImage.addTapGesture { tap in
+            self.getCaptchaImage()
+        }
     }
     
     deinit {
@@ -114,15 +118,18 @@ class OOLoginViewController: OOBaseViewController {
         }
     }
     
-    // 查询服务器开启的登录模式
+    // 查询服务器开启的登录模式 codeLogin=true 就是启用了短信验证码 captchaLogin=true启用了图片验证码
     private func loadLoginMode() {
         O2AuthSDK.shared.loginMode { result, error in
             if let result = result {
                 self.useCaptcha = result.captchaLogin ?? false
                 if (result.codeLogin == true) {
                     self.bioAuthLoginBtn.isHidden = false
-                    self.change2PasswordLogin()
+                } else {
+                    self.bioAuthLoginBtn.isHidden = true
                 }
+                // 默认密码登录 如果需要默认显示短信验证码登录 下面那行换成 self.change2PhoneCodeLogin() 前提是上面loginmode返回的result.codeLogin==true
+                self.change2PasswordLogin()
                 if (result.captchaLogin == true) {
                     if self.loginType == 1 && self.useCaptcha == true {
                         if let base64String = self.captchaCodeData?.image, let base64Data = Data(base64Encoded: base64String) {
@@ -140,10 +147,14 @@ class OOLoginViewController: OOBaseViewController {
         }
     }
     
+    // 获取图片验证码
     private func getCaptchaImage() {
         O2AuthSDK.shared.getLoginCaptchaCode{ result, error in
             if let result = result {
                 self.captchaCodeData = result
+                if let base64String = self.captchaCodeData?.image, let base64Data = Data(base64Encoded: base64String) {
+                    self.captchaCodeImage.image = UIImage(data: base64Data)
+                }
             } else {
                 DDLogError("\(error ?? "获取图片验证码错误！")")
             }
@@ -151,6 +162,7 @@ class OOLoginViewController: OOBaseViewController {
         }
     }
     
+    // 界面加载
     private func setupUI(){
         logoImageView.image = OOCustomImageManager.default.loadImage(.login_avatar)
         let backImageView = UIImageView(image: #imageLiteral(resourceName: "pic_beijing"))
@@ -175,19 +187,19 @@ class OOLoginViewController: OOBaseViewController {
         
         // 图片验证码 隐藏
         self.captchaCodeView.isHidden = true
+        // 切换按钮 默认隐藏
+        self.bioAuthLoginBtn.isHidden = true
         
         if O2IsConnect2Collect {
             self.loginType = 0
             self.rebindBtn.isHidden = false
             self.passwordTextField.isHidden = false //验证码
             self.passwordField.isHidden = true //密码
-            self.bioAuthLoginBtn.isHidden = false
         }else {
             self.loginType = 1
             self.rebindBtn.isHidden = true
             self.passwordTextField.isHidden = true
             self.passwordField.isHidden = false
-            self.bioAuthLoginBtn.isHidden = true
         }
         
 //        self.passwordTextField.reactive.isEnabled <~ viewModel.passwordIsValid
@@ -221,12 +233,9 @@ class OOLoginViewController: OOBaseViewController {
         
         self.getCaptchaImage()
     }
+ 
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+    // 官方模式 重新绑定
     @IBAction func btnReBindNodeAction(_ sender: UIButton) {
         self.showDefaultConfirm(title: L10n.Login.rebind, message: L10n.Login.rebindToNewServiceNode) { (action) in
             O2AuthSDK.shared.clearAllInformationBeforeReBind(callback: { (result, msg) in
@@ -240,6 +249,8 @@ class OOLoginViewController: OOBaseViewController {
         
     }
     
+    
+    // 登录方式切换
     @IBAction func bioAuthLoginBtnAction(_ sender: UIButton) {
         //弹出选择登录方式
         var loginActions: [UIAlertAction] = []
@@ -264,10 +275,12 @@ class OOLoginViewController: OOBaseViewController {
 //        self.gotoBioAuthLogin()
     }
     
+    // 切换成密码登录
     private func change2PasswordLogin() {
         self.passwordTextField.isHidden = true //验证码
         self.passwordField.isHidden = false //密码
         self.loginType = 1
+        // 是否开启了图片验证码
         if self.useCaptcha == true {
             if let base64String = self.captchaCodeData?.image, let base64Data = Data(base64Encoded: base64String) {
                 self.captchaCodeImage.image = UIImage(data: base64Data)
@@ -278,6 +291,7 @@ class OOLoginViewController: OOBaseViewController {
         }
     }
     
+    // 切换成短信验证码
     private func change2PhoneCodeLogin() {
         self.passwordTextField.isHidden = false //验证码
         self.passwordField.isHidden = true //密码
@@ -285,6 +299,7 @@ class OOLoginViewController: OOBaseViewController {
         self.captchaCodeView.isHidden = true // 图片验证码
     }
     
+    // 登录提交
     @IBAction func btnLogin(_ sender: OOBaseUIButton) {
         self.view.endEditing(true)
         let credential = userNameTextField.text ?? ""
