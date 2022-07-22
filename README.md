@@ -36,16 +36,6 @@ Xcode版本 使用最新的版本
 
 
 
-### Pod的一个外部包引入的问题
-
-在Podfile文件中 有一个外部包： [AlamofireObjectMapper](https://github.com/tristanhimmelman/AlamofireObjectMapper) ，这个包你会看到是一个本地的地址，你可以通过这个链接下载它的源码（当前源码版本6.3.0）到本地，然后修改Podfile里面的地址指向到你本地的地址，还需要修改下 `AlamofireObjectMapper` 包的根目录下的一个文件 `AlamofireObjectMapper.podspec` , 只要修改一个里面的依赖包Alamofire 的版本号 5.1 
-
-如下图：
-
-![image-20210203100706835](./image/image-20210203100706835.png)
-
-
-
 ### 百度SDK包引入
 
 百度语音的SDK 包，因为比较大，所以没有放到源码里面

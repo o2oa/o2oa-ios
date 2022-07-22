@@ -215,7 +215,7 @@ class O2JsApiBizUtil: O2WKScriptMessageHandlerImplement {
         if let p = O2WebViewBaseMessage<O2BizPreviewDocMessage>.deserialize(from: json) {
             if let url = p.data?.url, let fileName = p.data?.fileName {
                 DDLogDebug("开始下载文件，url: \(url) , fileName: \(fileName)")
-                self.viewController.showLoading(title: "下载中...")
+                self.viewController.showLoading(title: "预览中...")
                 // 文件地址
                 let localFileDestination: DownloadRequest.Destination = { _, response in
                     let documentsURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]

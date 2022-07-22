@@ -54,16 +54,8 @@ class OOLoginViewController: OOBaseViewController {
     }()
     
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //监听截屏通知
-        NotificationCenter.default.addObserver(self, selector: #selector(screenshots),
-                                               name: UIApplication.userDidTakeScreenshotNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
-                
         //delegate
         passwordTextField.buttonDelegate = self
         
@@ -74,12 +66,15 @@ class OOLoginViewController: OOBaseViewController {
         }
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: UIApplication.userDidTakeScreenshotNotification, object: nil)
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        //监听截屏通知
+        NotificationCenter.default.addObserver(self, selector: #selector(screenshots),
+                                               name: UIApplication.userDidTakeScreenshotNotification,
+                                               object: nil)
+        // 进入后台
+        NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        
         let bioAuthUser = AppConfigSettings.shared.bioAuthUser
         //判断是否当前绑定的服务器的
         if !bioAuthUser.isBlank {
@@ -96,6 +91,13 @@ class OOLoginViewController: OOBaseViewController {
         }
         
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.userDidTakeScreenshotNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
+    }
+    
      
     
     @IBAction func unwindFromBioAuthLogin(_ unwindSegue: UIStoryboardSegue) {
@@ -120,6 +122,7 @@ class OOLoginViewController: OOBaseViewController {
     
     // 查询服务器开启的登录模式 codeLogin=true 就是启用了短信验证码 captchaLogin=true启用了图片验证码
     private func loadLoginMode() {
+        DDLogDebug("获取登录模式")
         O2AuthSDK.shared.loginMode { result, error in
             if let result = result {
                 self.useCaptcha = result.captchaLogin ?? false
@@ -149,6 +152,7 @@ class OOLoginViewController: OOBaseViewController {
     
     // 获取图片验证码
     private func getCaptchaImage() {
+        DDLogDebug("获取图片验证码")
         O2AuthSDK.shared.getLoginCaptchaCode{ result, error in
             if let result = result {
                 self.captchaCodeData = result
@@ -322,7 +326,11 @@ class OOLoginViewController: OOBaseViewController {
                 //app 上架用 sample服务器 固定的手机号码和验证码
                 if credential == "13912345678" && codeAnswer == "5678" && O2UserDefaults.shared.unit?.centerHost == "sample.o2oa.net" {
                     DDLogDebug("sample 测试用的。。。。。。。。")
-                    O2AuthSDK.shared.loginWithPassword(username: credential, password: "o2") { (result, msg) in
+                    let form = O2LoginWithCaptchaForm()
+                    form.credential = credential
+                    form.password = "o2"
+//                    O2AuthSDK.shared.loginWithPassword(username: credential, password: "o2") { (result, msg) in
+                    O2AuthSDK.shared.loginWithCaptcha(form: form) { (result, msg) in
                         if result {
                             self.hideLoading()
                             self.gotoMain()

@@ -118,7 +118,7 @@ extension FileMyShareListViewController:UITableViewDelegate,UITableViewDataSourc
             fileLocalURL = folder.appendingPathComponent("\(preName!)_\(timestamp).\(extName!)")
             return (fileLocalURL!,[.removePreviousFile, .createIntermediateDirectories])
         }
-        self.showLoading(title: "下载中..")
+        self.showLoading()
         AF.download(url!, to: destination).downloadProgress { (progress) in
                 if progress.completedUnitCount == progress.totalUnitCount {
                     self.hideLoading()

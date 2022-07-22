@@ -586,7 +586,7 @@ extension MainFileViewController:UITableViewDelegate,UITableViewDataSource{
             fileLocalURL = folder.appendingPathComponent("\(preName!)_\(timestamp).\(extName!)")
             return (fileLocalURL!,[.removePreviousFile, .createIntermediateDirectories])
         }
-        self.showLoading(title: "下载中...")
+        self.showLoading()
         AF.download(fileURL!,to: destination).downloadProgress(closure: { (progress) in
             print("progress.fractionCompleted = \(progress.fractionCompleted)")
             if progress.completedUnitCount == progress.totalUnitCount {
@@ -907,7 +907,7 @@ extension MainFileViewController:FileTableViewCellDelegate{
         }
         
         
-        self.showLoading(title: "下载中...")
+        self.showLoading()
         let utilityQueue = DispatchQueue.global(qos: .utility)
         AF.download(url!, to: destination).downloadProgress(queue: utilityQueue) { (progress) in
             print("progress.fractionCompleted = \(progress.fractionCompleted)")

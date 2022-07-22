@@ -560,9 +560,9 @@ public class O2AuthSDK: NSObject {
         }, onError: { (error) in
             callback(false, "登录失败，\(String(describing: error))")
         }, onCompleted: {
-            print("login completed!")
+            DDLogDebug("login completed!")
         }) {
-            print("login finish!")
+            DDLogDebug("login finish!")
         }
     }
     
@@ -582,13 +582,14 @@ public class O2AuthSDK: NSObject {
         }, onError: { (error) in
             callback(false, "登录失败，\(String(describing: error))")
         }, onCompleted: {
-            print("loginWithScanCode completed!")
+            DDLogDebug("loginWithScanCode completed!")
         }) {
-            print("loginWithScanCode finish!")
+            DDLogDebug("loginWithScanCode finish!")
         }
     }
     
     /// 登录 密码登录
+    @available(*, deprecated, message: "新版后台已经取消了这个方法, 请使用loginWithCaptcha方法登录")
     public func loginWithPassword(username: String, password: String, callback: @escaping (_ result: Bool, _ error: String?) ->()) {
         _ = self.loginWithUsernamePassword(username, password)
             .subscribe(onNext: { (response) in
@@ -606,9 +607,9 @@ public class O2AuthSDK: NSObject {
             }, onError: { (error) in
                 callback(false, "登录失败，\(String(describing: error))")
             }, onCompleted: {
-                print("login completed!")
+                DDLogDebug("login completed!")
             }) {
-                print("login finish!")
+                DDLogDebug("login finish!")
         }
     }
     
@@ -630,9 +631,9 @@ public class O2AuthSDK: NSObject {
             }, onError: { (error) in
                 callback(false, "登录失败，\(String(describing: error))")
             }, onCompleted: {
-                print("loginWithCaptcha completed!")
+                DDLogDebug("loginWithCaptcha completed!")
             }) {
-                print("loginWithCaptcha finish!")
+                DDLogDebug("loginWithCaptcha finish!")
         }
     }
     
@@ -652,9 +653,9 @@ public class O2AuthSDK: NSObject {
             } onError: { (error) in
                 callback(nil, "获取登录模式失败，\(String(describing: error))")
             } onCompleted: {
-                print("loginMode completed!")
+                DDLogDebug("loginMode completed!")
             } onDisposed: {
-                print("loginMode finish!")
+                DDLogDebug("loginMode finish!")
             }
     }
     
@@ -673,9 +674,9 @@ public class O2AuthSDK: NSObject {
             } onError: { (error) in
                 callback(nil, "获取图片验证码失败，\(String(describing: error))")
             } onCompleted: {
-                print("getLoginCaptchaCode completed!")
+                DDLogDebug("getLoginCaptchaCode completed!")
             } onDisposed: {
-                print("getLoginCaptchaCode finish!")
+                DDLogDebug("getLoginCaptchaCode finish!")
             }
     }
     
@@ -858,7 +859,11 @@ public class O2AuthSDK: NSObject {
                 guard let mobile = O2UserDefaults.shared.device?.mobile else {
                     throw O2BindDiscontinue.noLoginError("登录失败！")
                 }
-                return self.loginWithUsernamePassword(mobile, "o2")
+                let form = O2LoginWithCaptchaForm()
+                form.credential = mobile
+                form.password = "o2"
+                return self.loginAPI.rx.request(.loginWithCaptcha(form)).asObservable()
+//                return self.loginWithUsernamePassword(mobile, "o2")
 //                if let token = O2UserDefaults.shared.myInfo?.token {
 //                    return self.loginWithToken(token)
 //                }else {

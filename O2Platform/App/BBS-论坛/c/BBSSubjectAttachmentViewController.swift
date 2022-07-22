@@ -73,7 +73,7 @@ class BBSSubjectAttachmentViewController: UITableViewController {
             }
         }).catch { (err) in
             DDLogError(err.localizedDescription)
-            self.showError(title: "下载文件失败！")
+            self.showError(title: "预览文件失败！")
         }
     }
 

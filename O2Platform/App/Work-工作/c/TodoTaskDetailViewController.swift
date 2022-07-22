@@ -1084,7 +1084,7 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
             if let body = (message.body as? NSDictionary), let attachmentId = body["id"] as? String {
                 self.downloadAttachment(attachmentId)
             }else {
-                self.showError(title: "参数传入错误，无法下载！")
+                self.showError(title: "参数传入错误，无法预览！")
             }
             break
         case "replaceAttachment":
@@ -1200,26 +1200,26 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
     //下载预览附件
     private func downloadAttachment(_ attachmentId: String) {
         if isWorkCompeleted {
-            self.showLoading(title: "下载中...")
+            self.showLoading()
             self.viewModel.getWorkcompletedAttachment(workcompleted: self.workId!, id: attachmentId).then { path in
                 self.hideLoading()
                 self.previewDoc(path: path)
             }.catch { (err) in
                 DDLogError(err.localizedDescription)
                 DispatchQueue.main.async {
-                    self.showError(title: "下载文件出错")
+                    self.showError(title: "预览文件出错")
                 }
             }
             
         } else {
-            self.showLoading(title: "下载中...")
+            self.showLoading()
             self.viewModel.getWorkAttachment(workId: self.workId!, id: attachmentId).then { path in
                 self.hideLoading()
                 self.previewDoc(path: path)
             }.catch { (err) in
                 DDLogError(err.localizedDescription)
                 DispatchQueue.main.async {
-                    self.showError(title: "下载文件出错")
+                    self.showError(title: "预览文件出错")
                 }
             }
         }
@@ -1231,8 +1231,8 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
      * 下载公文 并阅览
      **/
     private func downloadDocumentAndPreview(_ url: String) {
-        DDLogDebug("文档下载地址：\(url)")
-        self.showLoading(title: "下载中...")
+        DDLogDebug("文档预览地址：\(url)")
+        self.showLoading()
         // 文件地址
         let localFileDestination: DownloadRequest.Destination = { _, response in
             let documentsURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]

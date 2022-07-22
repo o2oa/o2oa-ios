@@ -383,14 +383,14 @@ extension CMSItemDetailViewController: O2WKScriptMessageHandlerImplement {
             id = self.itemData?.id
         }
         if id == nil {
-            self.showError(title: "下载文件出错")
+            self.showError(title: "预览文件出错")
             return
         }
         //
         let attachInfoURL = AppDelegate.o2Collect.generateURLWithAppContextKey(CMSContext.cmsContextKey, query: CMSContext.cmsAttachmentGET, parameter: ["##attachId##":attachmentId as AnyObject, "##documentId##": id as AnyObject])
         //附件下载链接
         let downURL = AppDelegate.o2Collect.generateURLWithAppContextKey(CMSContext.cmsContextKey, query: CMSContext.cmsAttachmentDownloadNewQuery, parameter: ["##attachId##":attachmentId as AnyObject])
-        self.showLoading(title: "下载中...")
+        self.showLoading()
         // 先获取附件对象
         AF.request(attachInfoURL!).responseJSON { (response) in
             switch response.result {
@@ -413,20 +413,20 @@ extension CMSItemDetailViewController: O2WKScriptMessageHandlerImplement {
                             }
                         }else{
                             DispatchQueue.main.async {
-                                self.showError(title: "下载文件出错")
+                                self.showError(title: "预览文件出错")
                             }
                         }
                     })
                 }else {
                     DispatchQueue.main.async {
-                        self.showError(title: "下载文件出错")
+                        self.showError(title: "预览文件出错")
                     }
                 }
                 break
             case .failure(let err):
                 DDLogError(err.localizedDescription)
                 DispatchQueue.main.async {
-                    self.showError(title: "下载文件出错")
+                    self.showError(title: "预览文件出错")
                 }
                 break
             }
@@ -454,7 +454,7 @@ extension CMSItemDetailViewController: O2WKScriptMessageHandlerImplement {
      **/
     private func downloadDocumentAndPreview(_ url: String) {
         DDLogDebug("文档下载地址：\(url)")
-        self.showLoading(title: "下载中...")
+        self.showLoading()
         // 文件地址
         let localFileDestination: DownloadRequest.Destination = { _, response in
             let documentsURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
