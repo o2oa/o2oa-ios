@@ -365,21 +365,26 @@ class O2JsApiUtil: O2WKScriptMessageHandlerImplement {
     // 打开其他app schema方式
     private func navigationOpenOtherApp(json: String) {
         if let alert = O2WebViewBaseMessage<O2UtilNavigationOpenOtherApp>.deserialize(from: json) {
+            var backresult = "{\"result\": true, \"message\": \"\"}"
             if let schema = alert.data?.schema {
+                DDLogDebug("打开app schema：\(schema)")
                 if let url = URL(string: "\(schema)") {
                     if #available(iOS 10, *) {
                         if UIApplication.shared.canOpenURL(url) {
                             UIApplication.shared.open(url, options: [:], completionHandler: nil)
                         } else {
                             DDLogError("无法打开url，\(schema)")
+                            backresult = "{\"result\": false, \"message\": \"ios 当前不支持这个app打开，schema:\(schema)\"}"
                         }
                     } else {
                         UIApplication.shared.openURL(url)
                     }
+                } else {
+                    DDLogError("url 为空。。。。。")
                 }
             }
             if alert.callback != nil {
-                let callJs = "\(alert.callback!)()"
+                let callJs = "\(alert.callback!)('\(backresult)')"
                 self.evaluateJs(callBackJs: callJs)
             }
         }else {

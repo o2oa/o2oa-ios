@@ -38,6 +38,48 @@
 		<string>iosamap</string>
 		<string>qqmap</string>
 		<string>baidumap</string>
+        <!--微信 URL Scheme白名单-->
+        <string>wechat</string>
+        <string>weixin</string>
+        <string>weixinULAPI</string>
+        <!-- QQ、Qzone URL Scheme白名单-->
+        <string>mqqopensdklaunchminiapp</string>
+        <string>mqqopensdkminiapp</string>
+        <string>mqqapi</string>
+        <string>mqq</string>
+        <string>mqqOpensdkSSoLogin</string>
+        <string>mqqconnect</string>
+        <string>tim</string>
+        <string>timapi</string>
+        <string>timopensdkfriend</string>
+        <string>timwpa</string>
+        <string>timgamebindinggroup</string>
+        <string>timapiwallet</string>
+        <string>timOpensdkSSoLogin</string>
+        <string>wtlogintim</string>
+        <string>timopensdkgrouptribeshare</string>
+        <string>timopensdkapiV4</string>
+        <string>timgamebindinggroup</string>
+        <string>timopensdkdataline</string>
+        <string>wtlogintimV1</string>
+        <string>timapiV1</string>
+        <!--新浪微博 URL Scheme白名单-->
+        <string>sinaweibohd</string>
+        <string>sinaweibo</string>
+        <string>sinaweibosso</string>
+        <string>weibosdk</string>
+        <string>weibosdk2.5</string>
+        <!--支付宝 URL Scheme白名单-->
+        <string>alipay</string>
+        <string>alipayshare</string>
+        <!--钉钉 URL Scheme白名单-->
+        <string>dingtalk</string>
+        <string>dingtalk-open</string>
+        <!--企业微信-->
+        <string>wxwork</string>
+        <string>wxworkdebug</string>
+        <string>wxworkrdm</string>
+        <string>wxworkrelease</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

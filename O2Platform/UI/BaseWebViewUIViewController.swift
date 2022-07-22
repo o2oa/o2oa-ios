@@ -67,7 +67,7 @@ class BaseWebViewUIViewController: O2BaseForRotateUIViewController {
         addScriptMessageHandler(key: "openDingtalk", handler: baseJsHandler)
         // 关闭当前UIViewController
         addScriptMessageHandler(key:"closeNativeWindow", handler: baseJsHandler)
-        // 上传图片到云盘，放入对应的业务区域
+        // 表单的图片控件
         addScriptMessageHandler(key: "uploadImage2FileStorage", handler: baseJsHandler)
         // 打印日志
         addScriptMessageHandler(key: "o2mLog", handler: baseJsHandler)
