@@ -21,6 +21,10 @@ class O2AppViewController: UIViewController{
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    // 顶部大图
+    @IBOutlet weak var topPic: UIImageView!
+    
+    
     private let reuseIdentifier = "myCell"
        
     fileprivate let collectionViewDelegate = ZLCollectionView()
@@ -36,6 +40,12 @@ class O2AppViewController: UIViewController{
         super.viewDidLoad()
         self.title = L10n.app
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: L10n.edit, style: .plain, target: self, action: #selector(_forwardEditSegue))
+        
+        let appTopImage = OOCustomImageManager.default.loadImage(.application_top)
+        if (appTopImage != nil) {
+            topPic.image = appTopImage
+        }
+        
         self.collectionViewDelegate.delegate = self
         self.collectionView.dataSource = self.collectionViewDelegate
         self.collectionView.delegate = self.collectionViewDelegate

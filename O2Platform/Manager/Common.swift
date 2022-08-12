@@ -308,6 +308,7 @@ enum OOCustomImageKey:NSString {
     case people_avatar_default = "people_avatar_default"
     case process_default = "process_default"
     case setup_about_logo = "setup_about_logo"
+    case application_top = "application_top"
 }
 
 class OOCustomImageManager {
@@ -342,7 +343,7 @@ class OOCustomImageManager {
             if let image = imageCache.object(forKey: key.rawValue) {
                 return image
             }else {
-                return O2ThemeManager.image(for: "Icon.icon_zhuye_pre")
+                return nil
             }
         }
     }
@@ -350,6 +351,7 @@ class OOCustomImageManager {
     //异步获取图片
     func loadImageAsync(key:OOCustomImageKey, block:@escaping (UIImage?)->Void) {
         let item = DispatchWorkItem {
+            var isBlock = false
             if let configInfo = O2AuthSDK.shared.customStyle() {
                 configInfo.images?.forEach({ (ooImage) in
                     let name = ooImage.name! as NSString
@@ -359,8 +361,12 @@ class OOCustomImageManager {
                         let data = Data(base64Encoded: value)
                         let image = UIImage(data: data!)
                         block(image)
+                        isBlock = true
                     }
                 })
+            }
+            if (!isBlock) {
+                block(nil)
             }
         }
         DispatchQueue.main.async(execute: item)
