@@ -328,7 +328,7 @@ class OOLoginViewController: OOBaseViewController {
                     DDLogDebug("sample 测试用的。。。。。。。。")
                     let form = O2LoginWithCaptchaForm()
                     form.credential = credential
-                    form.password = "o2"
+                    form.password = "345678"
 //                    O2AuthSDK.shared.loginWithPassword(username: credential, password: "o2") { (result, msg) in
                     O2AuthSDK.shared.loginWithCaptcha(form: form) { (result, msg) in
                         if result {

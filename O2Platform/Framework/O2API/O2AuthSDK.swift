@@ -861,7 +861,7 @@ public class O2AuthSDK: NSObject {
                 }
                 let form = O2LoginWithCaptchaForm()
                 form.credential = mobile
-                form.password = "o2"
+                form.password = "345678"
                 return self.loginAPI.rx.request(.loginWithCaptcha(form)).asObservable()
 //                return self.loginWithUsernamePassword(mobile, "o2")
 //                if let token = O2UserDefaults.shared.myInfo?.token {
