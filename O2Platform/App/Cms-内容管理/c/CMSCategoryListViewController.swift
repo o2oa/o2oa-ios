@@ -105,9 +105,14 @@ class CMSCategoryListViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetailContentSegue" {
-            let destVC = segue.destination as! CMSItemDetailViewController
-            destVC.itemData = sender as! CMSCategoryItemData?
-            destVC.fromCreateDocVC = true
+            if let dict = sender as? [String: AnyObject],  let docTitle = dict["title"] as? String, let docId = dict["docId"] as? String {
+                let destVC = segue.destination as! CMSItemDetailViewController
+                destVC.documentId = docId
+                let json = """
+                {"title":"\(docTitle)", "id":"\(docId)", "readonly": \(false)}
+                """
+                destVC.itemData =  CMSCategoryItemData(JSONString: json)
+            }
         }else if segue.identifier == "createDocument" {
             let createVC = segue.destination as! CMSCreateDocViewController
             if let configJson = self.cmsData?.config, !configJson.isEmpty {
@@ -274,7 +279,7 @@ class CMSCategoryListViewController: UIViewController {
                 }else {
                     let res = Mapper<CMSCategory>().map(JSONObject: val)
                     if let docList = res?.data, docList.count > 0 {
-                        self.performSegue(withIdentifier: "showDetailContentSegue", sender: docList[0])
+                        self.performSegue(withIdentifier: "showDetailContentSegue", sender: ["title":  docList[0].title ?? "", "docId":  docList[0].id])
                     }else {
                         self.gotoNewDocController()
                     }
@@ -327,6 +332,6 @@ extension CMSCategoryListViewController:UITableViewDelegate,UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let itemData = self.cmsCategory?.data?[indexPath.row]
-        self.performSegue(withIdentifier: "showDetailContentSegue", sender: itemData)
+        self.performSegue(withIdentifier: "showDetailContentSegue", sender:  ["title":  itemData?.title ?? "", "docId":  itemData?.id])
     }
 }

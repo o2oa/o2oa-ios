@@ -53,6 +53,8 @@ class BaseWebViewUIViewController: O2BaseForRotateUIViewController {
         addScriptMessageHandler(key: "openO2WorkSpace", handler: baseJsHandler)
         // 打开cms appId
         addScriptMessageHandler(key: "openO2CmsApplication", handler: baseJsHandler)
+        // 创建cms文档
+        addScriptMessageHandler(key: "createO2CmsDocument", handler: baseJsHandler)
         // 打开cms docId docTitle
         addScriptMessageHandler(key: "openO2CmsDocument", handler: baseJsHandler)
         // 打开meeting

@@ -161,7 +161,7 @@ class CMSCreateDocViewController: FormViewController {
                         let docId = JSON(val)["data"]["id"].string!
                         DispatchQueue.main.async {
                             self.showSuccess(title: "创建文档成功")
-                            self.performSegue(withIdentifier: "openDocument", sender: docId)
+                            self.performSegue(withIdentifier: "openDocument", sender: ["title": title, "docId": docId])
                         }
                     }else{
                         DispatchQueue.main.async {
@@ -246,9 +246,17 @@ class CMSCreateDocViewController: FormViewController {
    */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "openDocument" {
-            let destVC = segue.destination as! CMSItemDetailViewController
-            destVC.documentId = sender as? String
-            destVC.fromCreateDocVC = true
+            
+            if let dict = sender as? [String: AnyObject],  let docTitle = dict["title"] as? String, let docId = dict["docId"] as? String {
+                let destVC = segue.destination as! CMSItemDetailViewController
+                destVC.documentId = docId
+                let json = """
+                {"title":"\(docTitle)", "id":"\(docId)", "readonly": \(false)}
+                """
+                destVC.itemData =  CMSCategoryItemData(JSONString: json)
+                destVC.fromCreateDocVC = true
+            }
+            
         }
     }
  

@@ -91,6 +91,23 @@ class O2BaseJsMessageHandler: NSObject, O2WKScriptMessageHandlerImplement {
                 DDLogError("打开cms栏目失败， appId不存在！！！！！")
             }
             break
+        case "createO2CmsDocument":
+            DDLogDebug("创建cms文档。。。。。")
+            if message.body is NSDictionary {
+               let appBody = message.body as! NSDictionary
+               let appId = appBody["column"] as? String
+               let categoryId = appBody["category"] as? String
+                if appId != nil && !appId!.isBlank {
+                    self.createO2CmsDocument(appId: appId!, categoryId: categoryId)
+                } else {
+                    self.viewController.showError(title: "缺少 column 参数，目前移动端必须传入 column 参数")
+                }
+                
+            }else {
+               DDLogError("创建cms文档失败， appId不存在！！！！！")
+                self.viewController.showError(title: "缺少 column 参数，目前移动端必须传入 column 参数")
+            }
+            break
         case "openO2CmsDocument":
             DDLogDebug("打开cms 文档。。。。。")
             if message.body is NSDictionary {
@@ -217,6 +234,7 @@ class O2BaseJsMessageHandler: NSObject, O2WKScriptMessageHandlerImplement {
         self.viewController.show(destVC, sender: nil)
     }
     
+    /// 打开cms栏目
     private func openCmsApplication(appId: String) {
         DDLogInfo("打开栏目， appId：\(appId)")
         let url = AppDelegate.o2Collect.generateURLWithAppContextKey(CMSContext.cmsContextKey, query: CMSContext.cmsCategoryListQuery, parameter: ["##appId##": appId as AnyObject])
@@ -245,6 +263,111 @@ class O2BaseJsMessageHandler: NSObject, O2WKScriptMessageHandlerImplement {
         
     }
     
+    /// 创建cms文档
+    private var cmsData: CMSData?
+    private var cmsCategoryList: [CMSWrapOutCategoryList] = []
+    private var selectedCategory: CMSWrapOutCategoryList?
+    private func createO2CmsDocument(appId: String, categoryId:String?) {
+        DDLogInfo("打开文档， appId：\(appId) , categoryId:\(String(describing: categoryId)) ")
+        let url = AppDelegate.o2Collect.generateURLWithAppContextKey(CMSContext.cmsContextKey, query: CMSContext.cmsCanPublishCategoryQuery, parameter: ["##appId##": appId as AnyObject])
+        DDLogDebug("查询cms栏目 url： \(String(describing: url))")
+        AF.request(url!, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+            switch response.result {
+            case .success(let val):
+                DDLogDebug(JSON(val).description)
+                let res = Mapper<CMSSingleApplication>().map(JSONObject: val)
+                self.cmsData = res?.data
+                if self.cmsData != nil && self.cmsData?.wrapOutCategoryList != nil && (self.cmsData?.wrapOutCategoryList?.count ?? 0) > 0 {
+                    self.cmsCategoryList = self.cmsData!.wrapOutCategoryList!
+                    if categoryId != nil && categoryId != "" {
+                        for item in self.cmsCategoryList {
+                            if item.id == categoryId || item.categoryName == categoryId || item.categoryAlias == categoryId {
+                                self.selectedCategory = item
+                                break
+                            }
+                        }
+                        if self.selectedCategory != nil {
+                            self.checkDraftThenJump(categoryId: self.selectedCategory!.id)
+                        }
+                    } else {
+                        self.showChooseCategroyList()
+                    }
+                } else {
+                    self.viewController.showError(title: "当前栏目没有分类信息，无法创建文档！")
+                }
+            case .failure(let err):
+                DDLogError(err.localizedDescription)
+                self.viewController.showError(title: "没有栏目信息，无法创建文档！")
+            }
+        }
+    }
+    
+    // 点击新建按钮显示需要发布的分类列表
+    private func showChooseCategroyList() {
+        var actions: [UIAlertAction] = []
+        self.cmsCategoryList.forEach { (category) in
+            let item = UIAlertAction(title: "\(category.categoryName ?? "")", style: .default, handler: { (action) in
+                self.selectedCategory = category
+                self.checkDraftThenJump(categoryId: category.id)
+            })
+            actions.append(item)
+        }
+        self.viewController.showSheetAction(title: "分类", message: "请选择发布的分类", actions: actions)
+    }
+    
+    //检查选择的分类下是否有未完成的草稿， 有草稿就直接跳转到编辑页面，没有就到新建页面
+    private func checkDraftThenJump(categoryId: String?) {
+        let model = CommonPageModel().toDictionary()
+        let url = AppDelegate.o2Collect.generateURLWithAppContextKey(CMSContext.cmsContextKey, query: CMSContext.cmsDocumentDraftQuery, parameter: model as [String : AnyObject]?)
+        var params:[String: Any] = [:]
+        params["categoryIdList"] = [categoryId]
+        if let distinguishedName = O2AuthSDK.shared.myInfo()?.distinguishedName {
+            params["creatorList"] = [distinguishedName]
+        }
+        params["documentType"] = "全部"
+        AF.request(url!, method: .put, parameters: params, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+            switch response.result {
+            case .success(let val):
+                DDLogDebug(JSON(val).description)
+                var needLatest = false
+                if let configJson = self.cmsData?.config, !configJson.isEmpty {
+                    if let config = try? CMSAppConfig(configJson) {
+                        if let latest = config.latest, latest == false {
+                            needLatest = true
+                        }
+                    }
+                }
+                if needLatest {
+                    self.gotoNewDocController()
+                }else {
+                    let res = Mapper<CMSCategory>().map(JSONObject: val)
+                    if let docList = res?.data, docList.count > 0 {
+//                        self.performSegue(withIdentifier: "showDetailContentSegue", sender: docList[0])
+                        self.openCmsDocument(docId: docList[0].id!, docTitle: docList[0].title ?? "", readonly: false)
+                    }else {
+                        self.gotoNewDocController()
+                    }
+                }
+            case .failure(let err):
+                DDLogError(err.localizedDescription)
+                self.gotoNewDocController()
+            }
+        }
+    }
+    
+    private func gotoNewDocController() {
+        let storyBoard = UIStoryboard(name: "information", bundle: nil)
+        let destVC = storyBoard.instantiateViewController(withIdentifier: "CMSDocumentCreateVC") as! CMSCreateDocViewController
+        if let configJson = self.cmsData?.config, !configJson.isEmpty {
+            if let config = try? CMSAppConfig(configJson) {
+                destVC.config = config
+            }
+        }
+        destVC.category = self.selectedCategory
+        self.viewController.show(destVC, sender: nil)
+    }
+    
+    /// 打开cms文档
     private func openCmsDocument(docId: String, docTitle: String, readonly: Bool) {
         DDLogInfo("打开文档， docId：\(docId) , docTitle:\(docTitle) , readonly: \(readonly)")
         let storyBoard = UIStoryboard(name: "information", bundle: nil)

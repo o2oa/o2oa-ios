@@ -117,9 +117,25 @@ class CMSItemDetailViewController: BaseWebViewUIViewController {
     
     @objc func goBack() {
         if self.fromCreateDocVC {//创建文档页面跳过来的 返回的时候就多跳一级
-            self.performSegue(withIdentifier: "back2DocumentListSegue", sender: nil)
+            
+            if let pvs = self.navigationController?.viewControllers, pvs.count >= 3{
+                self.navigationController?.popToViewController(pvs[pvs.count-3], animated: false)
+            } else {
+                self.dismiss(animated: false)
+            }
+            
+//
+//            if let parent = self.presentingViewController, parent is CMSCreateDocViewController {
+//                DDLogDebug("有parent 。。。。。。")
+//                parent.dismiss(animated: false)
+//            } else {
+//                DDLogDebug("没有parent 。。。。。。")
+//                self.dismiss(animated: false)
+//            }
+//            self.performSegue(withIdentifier: "back2DocumentListSegue", sender: nil)
         } else {
-          self.navigationController?.popViewController(animated: false)
+            DDLogDebug("pop 。。。。。。")
+            self.navigationController?.popViewController(animated: false)
         }
     }
     

@@ -304,7 +304,7 @@
         <!--Create Doc View Controller-->
         <scene sceneID="Sr1-t6-CdC">
             <objects>
-                <viewController id="5Uu-WA-8de" customClass="CMSCreateDocViewController" customModule="O2Platform" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CMSDocumentCreateVC" id="5Uu-WA-8de" customClass="CMSCreateDocViewController" customModule="O2Platform" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="PZk-cw-Lo0"/>
                         <viewControllerLayoutGuide type="bottom" id="GlA-GC-LNc"/>
@@ -451,7 +451,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="TNK-Su-KhC"/>
+        <segue reference="uwA-IT-a7g"/>
         <segue reference="tM7-pQ-JV4"/>
     </inferredMetricsTieBreakers>
     <resources>
