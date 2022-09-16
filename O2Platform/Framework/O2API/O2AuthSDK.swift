@@ -801,7 +801,7 @@ public class O2AuthSDK: NSObject {
             unit.pinyin = "yanshizhandian"
             unit.pinyinInitial = "yszd"
             unit.centerHost = "sample.o2oa.net"
-            unit.centerPort = 40030
+            unit.centerPort = 443
             unit.centerContext = "/x_program_center"
             unit.httpProtocol = "https"
             O2UserDefaults.shared.unit = unit
