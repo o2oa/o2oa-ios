@@ -164,6 +164,10 @@
 		B15BE10C249A0EFE008CD1DB /* IMAudioView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15BE10B249A0EFE008CD1DB /* IMAudioView.xib */; };
 		B15BE10E249A107C008CD1DB /* IMAudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15BE10D249A107C008CD1DB /* IMAudioView.swift */; };
 		B15BE111249A6002008CD1DB /* AudioPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15BE110249A6002008CD1DB /* AudioPlayerManager.swift */; };
+		B15C593D28D4640C00680081 /* AttendanceListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15C593B28D4640C00680081 /* AttendanceListTableViewController.swift */; };
+		B15C593E28D4640C00680081 /* AttendanceListTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15C593C28D4640C00680081 /* AttendanceListTableViewController.xib */; };
+		B15C596B28D468F500680081 /* AttendanceDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15C596928D468F500680081 /* AttendanceDetailTableViewCell.swift */; };
+		B15C596C28D468F500680081 /* AttendanceDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15C596A28D468F500680081 /* AttendanceDetailTableViewCell.xib */; };
 		B15D26EC235EF7480092F8B8 /* genstrings.sh in Resources */ = {isa = PBXBuildFile; fileRef = B15D26EB235EF7480092F8B8 /* genstrings.sh */; };
 		B15F80F3210EB93000B81F35 /* OOCalendarMainMonthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15F80F2210EB93000B81F35 /* OOCalendarMainMonthViewController.swift */; };
 		B15F8129210EF15E00B81F35 /* OOCalendarEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15F8128210EF15E00B81F35 /* OOCalendarEventViewController.swift */; };
@@ -256,6 +260,10 @@
 		B17EFC6A276C1DBF00D7B18F /* MindMapNodeDraw.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17EFC69276C1DBF00D7B18F /* MindMapNodeDraw.swift */; };
 		B17EFC6E276C2E5100D7B18F /* O2MindMapCanvasController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17EFC6D276C2E5100D7B18F /* O2MindMapCanvasController.swift */; };
 		B17EFC70276C331800D7B18F /* O2MindMapCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17EFC6F276C331800D7B18F /* O2MindMapCanvasView.swift */; };
+		B1807E1428D84DDA007DE8D9 /* AttendanceAppealListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1807E1228D84DDA007DE8D9 /* AttendanceAppealListViewController.swift */; };
+		B1807E1528D84DDA007DE8D9 /* AttendanceAppealListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1807E1328D84DDA007DE8D9 /* AttendanceAppealListViewController.xib */; };
+		B1807E1828D851B2007DE8D9 /* AttendanceAppealInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1807E1628D851B2007DE8D9 /* AttendanceAppealInfoTableViewCell.swift */; };
+		B1807E1928D851B2007DE8D9 /* AttendanceAppealInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1807E1728D851B2007DE8D9 /* AttendanceAppealInfoTableViewCell.xib */; };
 		B182FB4428489DC9007F2E9D /* CloudFileV3ZoneFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B182FB4328489DC9007F2E9D /* CloudFileV3ZoneFormViewController.swift */; };
 		B183987D249AFF64001C6FAA /* IMLocationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B183987C249AFF64001C6FAA /* IMLocationView.xib */; };
 		B18398AD249B00AA001C6FAA /* IMLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18398AC249B00AA001C6FAA /* IMLocationView.swift */; };
@@ -1372,6 +1380,10 @@
 		B15BE10B249A0EFE008CD1DB /* IMAudioView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IMAudioView.xib; sourceTree = "<group>"; };
 		B15BE10D249A107C008CD1DB /* IMAudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMAudioView.swift; sourceTree = "<group>"; };
 		B15BE110249A6002008CD1DB /* AudioPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerManager.swift; sourceTree = "<group>"; };
+		B15C593B28D4640C00680081 /* AttendanceListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceListTableViewController.swift; sourceTree = "<group>"; };
+		B15C593C28D4640C00680081 /* AttendanceListTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendanceListTableViewController.xib; sourceTree = "<group>"; };
+		B15C596928D468F500680081 /* AttendanceDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceDetailTableViewCell.swift; sourceTree = "<group>"; };
+		B15C596A28D468F500680081 /* AttendanceDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendanceDetailTableViewCell.xib; sourceTree = "<group>"; };
 		B15D26BF235EF0850092F8B8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/CloudFile.storyboard; sourceTree = "<group>"; };
 		B15D26EA235EF0940092F8B8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CloudFile.strings; sourceTree = "<group>"; };
 		B15D26EB235EF7480092F8B8 /* genstrings.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = genstrings.sh; sourceTree = "<group>"; };
@@ -1481,6 +1493,10 @@
 		B17EFC69276C1DBF00D7B18F /* MindMapNodeDraw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MindMapNodeDraw.swift; sourceTree = "<group>"; };
 		B17EFC6D276C2E5100D7B18F /* O2MindMapCanvasController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2MindMapCanvasController.swift; sourceTree = "<group>"; };
 		B17EFC6F276C331800D7B18F /* O2MindMapCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2MindMapCanvasView.swift; sourceTree = "<group>"; };
+		B1807E1228D84DDA007DE8D9 /* AttendanceAppealListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceAppealListViewController.swift; sourceTree = "<group>"; };
+		B1807E1328D84DDA007DE8D9 /* AttendanceAppealListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendanceAppealListViewController.xib; sourceTree = "<group>"; };
+		B1807E1628D851B2007DE8D9 /* AttendanceAppealInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceAppealInfoTableViewCell.swift; sourceTree = "<group>"; };
+		B1807E1728D851B2007DE8D9 /* AttendanceAppealInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendanceAppealInfoTableViewCell.xib; sourceTree = "<group>"; };
 		B182FB4328489DC9007F2E9D /* CloudFileV3ZoneFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFileV3ZoneFormViewController.swift; sourceTree = "<group>"; };
 		B183987C249AFF64001C6FAA /* IMLocationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IMLocationView.xib; sourceTree = "<group>"; };
 		B18398AC249B00AA001C6FAA /* IMLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMLocationView.swift; sourceTree = "<group>"; };
@@ -3360,6 +3376,10 @@
 				E4B2320E20B2A9F60082F30A /* OOAttandanceWorkPlaceController.xib */,
 				B1BB677E24C6D1DD0020BD7D /* OOAttendanceCheckInNewController.swift */,
 				B1BB677F24C6D1DD0020BD7D /* OOAttendanceCheckInNewController.xib */,
+				B15C593B28D4640C00680081 /* AttendanceListTableViewController.swift */,
+				B15C593C28D4640C00680081 /* AttendanceListTableViewController.xib */,
+				B1807E1228D84DDA007DE8D9 /* AttendanceAppealListViewController.swift */,
+				B1807E1328D84DDA007DE8D9 /* AttendanceAppealListViewController.xib */,
 			);
 			path = c;
 			sourceTree = "<group>";
@@ -3395,6 +3415,10 @@
 				E40E246C20B68AF6009F8BE7 /* OOAttandanceTotalHeaderView.xib */,
 				B1BB67B024C6E0320020BD7D /* OOAttendanceScheduleViewCell.swift */,
 				B1BB67B124C6E0320020BD7D /* OOAttendanceScheduleViewCell.xib */,
+				B15C596928D468F500680081 /* AttendanceDetailTableViewCell.swift */,
+				B15C596A28D468F500680081 /* AttendanceDetailTableViewCell.xib */,
+				B1807E1628D851B2007DE8D9 /* AttendanceAppealInfoTableViewCell.swift */,
+				B1807E1728D851B2007DE8D9 /* AttendanceAppealInfoTableViewCell.xib */,
 			);
 			path = v;
 			sourceTree = "<group>";
@@ -5120,11 +5144,13 @@
 				E46E6C9F1DD41F5D00AB7561 /* ZSSrightjustify.png in Resources */,
 				B1302A03259075DA00848637 /* IMAudioViewSend.xib in Resources */,
 				E40E24C620B7DA3C009F8BE7 /* OOMeetingRoomInforCell.xib in Resources */,
+				B15C596C28D468F500680081 /* AttendanceDetailTableViewCell.xib in Resources */,
 				E40E24C820B7DA3C009F8BE7 /* OMeetingPersonActionCell.xib in Resources */,
 				E4C24C4F208D7EDE00E426B0 /* OOContactUnitHeader.xib in Resources */,
 				E45755A71E0BA72E00EC44F4 /* qrcode_scan_titlebar_back_nor@2x.png in Resources */,
 				E46E6C9A1DD41F5D00AB7561 /* ZSSpicker@2x.png in Resources */,
 				E46E6C6C1DD41F5D00AB7561 /* ZSSbold@2x.png in Resources */,
+				B1807E1928D851B2007DE8D9 /* AttendanceAppealInfoTableViewCell.xib in Resources */,
 				B1023F00265CDD1E007D5161 /* O2SearchResultCell.xib in Resources */,
 				E4B888E91D9D48F1002E1A46 /* setting.storyboard in Resources */,
 				E46E6CA11DD41F5D00AB7561 /* ZSSstrikethrough.png in Resources */,
@@ -5150,6 +5176,7 @@
 				E4C24C4D208D7EDE00E426B0 /* OOLinkManInfoHeader.xib in Resources */,
 				E457559E1E0BA72E00EC44F4 /* qrcode_scan_btn_flash_nor@2x.png in Resources */,
 				E40E24DB20B7DA3C009F8BE7 /* meeting.storyboard in Resources */,
+				B15C593E28D4640C00680081 /* AttendanceListTableViewController.xib in Resources */,
 				E46E6C761DD41F5D00AB7561 /* ZSSh1@2x.png in Resources */,
 				E4D23114209C42E700837868 /* OOSelectPersonTableViewCell.xib in Resources */,
 				E45755A11E0BA72E00EC44F4 /* qrcode_scan_btn_photo_down@2x.png in Resources */,
@@ -5202,6 +5229,7 @@
 				E46E6C751DD41F5D00AB7561 /* ZSSh1.png in Resources */,
 				E46E6C8D1DD41F5D00AB7561 /* ZSSkeyboard.png in Resources */,
 				B1C0A172256E2AF800C7041E /* MeetingFormRoomPickerCell.xib in Resources */,
+				B1807E1528D84DDA007DE8D9 /* AttendanceAppealListViewController.xib in Resources */,
 				E40E24B920B7DA3C009F8BE7 /* OOMeetingConfirmHeaderView.xib in Resources */,
 				E4B889071D9D4C7E002E1A46 /* podfile in Resources */,
 				E46E6C841DD41F5D00AB7561 /* ZSSimage@2x.png in Resources */,
@@ -5477,6 +5505,7 @@
 				B175007D233C6908003DA7B9 /* BlockButton.swift in Sources */,
 				E4B888AD1D9D48F1002E1A46 /* UIView+MJExtension.m in Sources */,
 				E457558D1E0BA26000EC44F4 /* NewScanViewController.swift in Sources */,
+				B1807E1428D84DDA007DE8D9 /* AttendanceAppealListViewController.swift in Sources */,
 				E40502CD20722208009A8D30 /* ImageCheckRow.swift in Sources */,
 				E4B781A01DFA9B23007B58A9 /* CMSItemDetailViewController.swift in Sources */,
 				B16E5F3A2769D10500891970 /* O2MindSelectViewController.swift in Sources */,
@@ -5496,11 +5525,13 @@
 				E4B888C01D9D48F1002E1A46 /* LoginViewController.swift in Sources */,
 				B1750085233C8736003DA7B9 /* UIFontExtensions.swift in Sources */,
 				E4B888C71D9D48F1002E1A46 /* UnitDataTableViewCell.swift in Sources */,
+				B1807E1828D851B2007DE8D9 /* AttendanceAppealInfoTableViewCell.swift in Sources */,
 				B1A91668265C9DEB004EE9E2 /* O2SearchEntry.swift in Sources */,
 				09E02E931F16319600579887 /* NSURLResponse+Haneke.swift in Sources */,
 				B108F3FF229E34D400778050 /* LBXScanView.swift in Sources */,
 				E40E24AC20B7DA3C009F8BE7 /* OOMeetingMainViewModel.swift in Sources */,
 				B1982FAB28446F5A00F9D8B7 /* OOCloudFileV3API.swift in Sources */,
+				B15C596B28D468F500680081 /* AttendanceDetailTableViewCell.swift in Sources */,
 				E4B697F2207650DF0062F6E8 /* OOBBSModels.swift in Sources */,
 				B1D1BC8B234C5C49002025DA /* CloudFileShareViewController.swift in Sources */,
 				B12FD1E52283D5B700E636BA /* O2ThemeManager+Plist.swift in Sources */,
@@ -5719,6 +5750,7 @@
 				09E02E8F1F16319600579887 /* Log.swift in Sources */,
 				E4B888701D9D48F1002E1A46 /* ContactPersonInfoController.swift in Sources */,
 				B142B083230FB58B00E7D127 /* Swime.swift in Sources */,
+				B15C593D28D4640C00680081 /* AttendanceListTableViewController.swift in Sources */,
 				E4C24C45208D7EDE00E426B0 /* OOListUnitViewController.swift in Sources */,
 				B1B4EEF32588AC6900E8B7C8 /* IMFileView.swift in Sources */,
 				E4B6970D2075FA560062F6E8 /* OOUISwitch.swift in Sources */,

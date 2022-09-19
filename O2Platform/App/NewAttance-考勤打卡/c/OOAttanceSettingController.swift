@@ -40,11 +40,16 @@ class OOAttanceSettingController: UIViewController {
 //        title = "设置"
 //        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "关闭", style: .plain, target: self, action: #selector(closeWindow))
 //        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "地点管理", style: .plain, target: self, action: #selector(navWorkPlaceManager(_:)))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "关闭", style: .plain, target: self, action: #selector(closeParent))
         loadAdmin()
         //增加mapView
         commonMapView()
         commonDataView()
         
+    }
+    @objc private func closeParent() {
+        // 上级是OONewAttanceController
+        self.navigationController?.parent?.navigationController?.popViewController(animated: true)
     }
     
     

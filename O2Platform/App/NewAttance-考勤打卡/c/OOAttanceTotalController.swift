@@ -35,11 +35,20 @@ class OOAttanceTotalController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(showDatePicker(_:)), name: OONotification.staticsTotal.notificationName, object: nil)
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "关闭", style: .plain, target: self, action: #selector(closeParent))
+
+        
         tableView.register(UINib.init(nibName: "OOAttandanceTotalItemCell", bundle: nil), forCellReuseIdentifier: "OOAttandanceTotalItemCell")
         tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: {
             self.getTotalDetailList()
         })
         getTotalDetailList()
+    }
+    
+    @objc private func closeParent() {
+        // 上级是OONewAttanceController
+        self.navigationController?.parent?.navigationController?.popViewController(animated: true)
     }
     
     @objc private func showDatePicker(_ notification:Notification) {

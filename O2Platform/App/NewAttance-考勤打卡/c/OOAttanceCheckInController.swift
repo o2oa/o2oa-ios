@@ -63,14 +63,18 @@ class OOAttanceCheckInController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib.init(nibName: "OOAttanceItemCell", bundle: nil), forCellReuseIdentifier: "OOAttanceItemCell")
-        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "关闭", style: .plain, target: self, action: #selector(closeParent))
+
         getCurrentCheckinList()
         getMyRecords()
         self.perform(#selector(createButton), with: nil, afterDelay: 0)
         
         getWorkPlace()
     }
-    
+    @objc private func closeParent() {
+        // 上级是OONewAttanceController
+        self.navigationController?.parent?.navigationController?.popViewController(animated: true)
+    }
     
     //创建打卡按钮
     @objc private func createButton() {

@@ -45,6 +45,13 @@ class OOAttendanceCheckInNewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //
+        self.navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(title: "审批", style: .plain, target: self, action: #selector(gotoApproval)),
+            UIBarButtonItem(title: "明细", style: .plain, target: self, action: #selector(gotoCheckList)),
+        ]
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "关闭", style: .plain, target: self, action: #selector(closeParent))
 
         self.schedulesView.delegate = self
         self.schedulesView.dataSource = self
@@ -74,6 +81,22 @@ class OOAttendanceCheckInNewController: UIViewController {
         self.timer?.invalidate()
         self.timer = nil
         self.stopLocationService()
+    }
+    
+    
+    
+    @objc private func closeParent() {
+        // 上级是OONewAttanceController
+        self.navigationController?.parent?.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc private func gotoCheckList() {
+        let detailListVC = AttendanceListTableViewController()
+        self.pushVC(detailListVC)
+    }
+    @objc private func gotoApproval() {
+        let vc = AttendanceAppealListViewController()
+        self.pushVC(vc)
     }
 
     ///打卡

@@ -40,6 +40,49 @@ final class OOAttandanceViewModel: NSObject {
 
 extension OOAttandanceViewModel{
     
+    
+    //考勤审核数据列表
+    func attendanceappealInfoApprovel(form: AppealApprovalFormJson, completedBlock:@escaping CallbackBlockDefine) {
+        ooAttanceAPI.request(.attendanceappealInfoApprovel(form)) { response in
+            let myResult = OOResult<BaseModelClass<AppealApprovalBackInfoJson>>(response)
+            if myResult.isResultSuccess() {
+                let records = myResult.model?.data
+                completedBlock(.ok(records))
+            }else {
+                let errorMessage = myResult.error?.errorDescription ?? ""
+                completedBlock(.fail(errorMessage))
+            }
+        }
+    }
+    
+    //考勤审核数据列表
+    func attendanceAppealInfoList(lastId: String, filter: AppealApprovalQueryFilterJson, completedBlock:@escaping CallbackBlockDefine) {
+        ooAttanceAPI.request(.attendanceAppealInfoList(lastId, filter)) { response in
+            let myResult = OOResult<BaseModelClass<[AppealInfoJson]>>(response)
+            if myResult.isResultSuccess() {
+                let records = myResult.model?.data
+                completedBlock(.ok(records))
+            }else {
+                let errorMessage = myResult.error?.errorDescription ?? ""
+                completedBlock(.fail(errorMessage))
+            }
+        }
+    }
+    
+    // 获取打卡list
+    func attendancedetailList(filter: AttendanceDetailQueryFilterJson,  completedBlock:@escaping CallbackBlockDefine) {
+        ooAttanceAPI.request(.attendancedetailList(filter)) { response in
+            let myResult = OOResult<BaseModelClass<[AttendanceDetailInfoJson]>>(response)
+            if myResult.isResultSuccess() {
+                let records = myResult.model?.data
+                completedBlock(.ok(records))
+            }else {
+                let errorMessage = myResult.error?.errorDescription ?? ""
+                completedBlock(.fail(errorMessage))
+            }
+        }
+    }
+    
     // MARK: - 当天打卡记录和打卡班次情况
     func listMyRecords(_ completedBlock:@escaping CallbackBlockDefine) {
         ooAttanceAPI.request(.listMyRecord) { response in

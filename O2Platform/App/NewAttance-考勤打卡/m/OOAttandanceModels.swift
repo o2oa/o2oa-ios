@@ -27,6 +27,8 @@ class OOAttandanceMobileQueryBean:NSObject,DataModel {
     }
 }
 
+
+
 // MARK:- 移动端打卡数据
 class OOAttandanceMobileDetail:NSObject,DataModel {
 
@@ -261,6 +263,7 @@ class OOAttandanceTotalBean:NSObject,DataModel {
     }
 }
 
+
 // MARK:- cycleDetail
 class OOAttandanceCycleDetail:NSObject,DataModel {
     @objc var id:String? //: "ea55970a-bd18-4388-a40b-b0cc7d6cc576",
@@ -364,6 +367,162 @@ class OOAttandanceAnalyze:NSObject,DataModel {
     }
 }
 
+// 考勤打卡信息查询对象
+class AttendanceDetailQueryFilterJson:NSObject,DataModel {
+    @objc var cycleYear:  String?//年份 如 2016
+    @objc var cycleMonth:  String? //月份 如 04
+    @objc var key:  String? //recordDateString
+    @objc  var order:  String?//排序 desc asc
+    @objc var q_empName:  String?//当前用户
+    required override init() {
+        
+    }
+}
+
+/**
+ * 查询审批的过滤条件
+ */
+
+class AppealApprovalQueryFilterJson:NSObject,DataModel {
+    @objc var status: String? // 0待审批 1审批通过 -1审批未通过 999所有
+    @objc var yearString: String?//年份 2016
+    @objc var monthString: String?
+    @objc var processPerson1: String? //审批人 就是当前用户
+    @objc var appealReason: String?
+    @objc var departmentName: String?
+    @objc var empName: String?
+    
+    required override init() {
+        
+    }
+}
+
+
+/**
+ * 考勤详细信息
+ */
+class AttendanceDetailInfoJson :NSObject,DataModel {
+    @objc var id:   String?
+    @objc var createTime:   String?
+    @objc var updateTime:   String?
+    @objc var sequence:   String?
+    @objc var empNo:   String?
+    @objc var empName:   String?
+    @objc var companyName:   String?
+    @objc var departmentName:   String?
+    @objc var yearString:   String?
+    @objc var monthString:   String?
+    @objc var recordDateString:   String?
+    @objc var recordDate:   String?
+    @objc var cycleYear:   String?
+    @objc var cycleMonth:   String?
+        var isHoliday: Bool?
+        var isWorkday: Bool?
+        var isGetSelfHolidays: Bool?
+    @objc var selfHolidayDayTime:   String?
+    @objc var absentDayTime:   String?
+    @objc var abnormalDutyDayTime:   String?
+        var getSelfHolidayDays: Double?
+        var isWeekend: Bool?
+    @objc var onWorkTime:   String?
+    @objc var offWorkTime:   String?
+    @objc var onDutyTime:   String?
+    @objc var offDutyTime:   String?
+        var isLate: Bool?
+        var lateTimeDuration: Int?
+        var isLeaveEarlier: Bool?
+        var leaveEarlierTimeDuration: Int?
+        var isAbsent: Bool?
+        var isAbnormalDuty: Bool?
+        var isLackOfTime: Bool?
+        var isWorkOvertime: Bool?
+        var workOvertimeTimeDuration: Int?
+        var workTimeDuration: Int?
+        var attendance: Double?
+        var absence: Double?
+        var recordStatus: Int?
+    @objc var batchName:   String?
+//    @objc var description:   String?
+        //申诉相关信息
+    @objc var identity:   String? //多身份的时候选择的身份dn
+        var appealStatus: Int? //申诉状态:0-未申诉，1-申诉中，-1-申诉未通过，9-申诉通过
+    @objc var appealReason:   String? //原因  临时请假  出差 因公外出 其他
+    @objc var appealDescription:   String? //事由
+    @objc var selfHolidayType:   String? //如果原因是临时请假 这里需要选择一个请假类型 ：带薪年休假 带薪病假 带薪福利假 扣薪事假 其他
+    @objc var address:   String? //外出地址
+    @objc var startTime:   String? // yyyy-MM-dd HH:mm
+    @objc var endTime:   String? // yyyy-MM-dd HH:mm
+    @objc var appealProcessor:   String?//申诉审批人
+    @objc var processPerson1 :  String?// 审批人一
+    
+    required override init() {
+        
+    }
+        }
 
 
 
+/**
+ * 申诉对象
+ */
+class AppealInfoJson:NSObject,DataModel {
+    @objc var id: String?
+    @objc var createTime: String?
+    @objc var updateTime: String?
+    @objc var sequence: String?
+    @objc var detailId: String?
+    @objc var empName: String?  //distinguishedName
+    @objc var topUnitName: String?  //distinguishedName
+    @objc var unitName: String?  //distinguishedName
+    @objc var companyName: String?
+    @objc var departmentName: String?
+    @objc var yearString: String?
+    @objc var monthString: String?
+    @objc var appealDateString: String?
+    @objc var recordDateString: String?
+    @objc var recordDate: String?
+     var status: Int?
+    @objc var startTime: String?
+    @objc var endTime: String?
+    @objc var appealReason: String?
+    @objc var selfHolidayType: String?
+    @objc var address: String?
+    @objc var appealDescription: String?
+    @objc var currentProcessor: String?
+    @objc var processPerson1: String?
+    @objc var processPersonDepartment1: String?
+    @objc var processPersonCompany1: String?
+    
+    required override init() {
+        
+    }
+}
+
+
+
+
+/**
+ * 审批申诉对象
+ */
+class AppealApprovalFormJson:NSObject,DataModel {
+    @objc  var ids: [String]?
+    @objc var opinion: String? //审核意见
+    @objc var status: String?//审核状态:1-通过;2-需要进行复核;-1-不通过
+    
+    
+    required override init() {
+        
+    }
+}
+
+/**
+ * 反馈对象 status：SUCCESS
+ */
+class AppealApprovalBackInfoJson: NSObject,DataModel {
+        var message: String?
+        var status: String?
+    
+    required override init() {
+        
+    }
+}

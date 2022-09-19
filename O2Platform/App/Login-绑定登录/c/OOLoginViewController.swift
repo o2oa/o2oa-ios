@@ -369,6 +369,7 @@ class OOLoginViewController: OOBaseViewController {
                         self.gotoMain()
                     }else  {
                         self.showError(title: L10n.Login.loginErrorWith(msg ?? ""))
+                        self.getCaptchaImage()
                     }
                 }
 //
@@ -414,6 +415,7 @@ class OOLoginViewController: OOBaseViewController {
                         self.gotoMain()
                     }else  {
                         self.showError(title: L10n.Login.loginErrorWith(msg ?? ""))
+                        self.getCaptchaImage()
                     }
                 }
             }

@@ -23,6 +23,9 @@ enum OOAttendanceAPI {
     case checkinTotalForMonth(OOAttandanceTotalBean) //考勤统计
     case checkinAnalyze(OOAttandanceTotalBean) //考勤分析
     case listMyRecord //当前用户当前的打卡情况和班次
+    case attendancedetailList(AttendanceDetailQueryFilterJson) // 查询打卡记录
+    case attendanceAppealInfoList(String, AppealApprovalQueryFilterJson) // 审核数据列表
+    case attendanceappealInfoApprovel(AppealApprovalFormJson) // 审核数据
 }
 
 // MARK:- 上下文实现
@@ -72,7 +75,12 @@ extension OOAttendanceAPI:TargetType {
             return "/jaxrs/statisticshow/person/\(bean.q_empName!)/\(bean.q_year!)/\(bean.q_month!)"
         case .listMyRecord:
             return "/jaxrs/attendancedetail/mobile/my"
-        
+        case .attendancedetailList(_):
+            return "/jaxrs/attendancedetail/filter/list/user"
+        case .attendanceAppealInfoList(let id, _):
+            return "/jaxrs/attendanceappealInfo/filter/list/\(id)/next/\(O2.defaultPageSize)"
+        case .attendanceappealInfoApprovel(_):
+            return "/jaxrs/attendanceappealInfo/audit"
         }
     }
     
@@ -98,6 +106,9 @@ extension OOAttendanceAPI:TargetType {
             return .get
         case .listMyRecord:
             return .get
+        case .attendancedetailList(_), .attendanceAppealInfoList(_, _), .attendanceappealInfoApprovel(_):
+            return .put
+        
         }
     }
     
@@ -127,6 +138,12 @@ extension OOAttendanceAPI:TargetType {
             return .requestPlain
         case .listMyRecord:
             return .requestPlain
+        case .attendancedetailList(let filter):
+            return .requestParameters(parameters: filter.toJSON() ?? [:], encoding: JSONEncoding.default)
+        case .attendanceAppealInfoList(_, let filter):
+            return .requestParameters(parameters: filter.toJSON() ?? [:], encoding: JSONEncoding.default)
+        case .attendanceappealInfoApprovel(let form):
+            return .requestParameters(parameters: form.toJSON() ?? [:], encoding: JSONEncoding.default)
         }
     }
     

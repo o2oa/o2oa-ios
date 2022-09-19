@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AttendanceAppealListViewController" customModule="O2Platform" customModuleProvider="target">
+            <connections>
+                <outlet property="AgreeBtn" destination="GpR-fK-h0S" id="fGM-02-V6T"/>
+                <outlet property="DisagreeBtn" destination="Kua-hc-Wj7" id="DWU-0p-rQC"/>
+                <outlet property="bttomToolBar" destination="nuv-Ri-tyH" id="u8v-dI-HYk"/>
+                <outlet property="tableView" destination="Z96-cD-cUH" id="3wS-8B-Nqq"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelection="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Z96-cD-cUH">
+                    <rect key="frame" x="0.0" y="44" width="414" height="776"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
+                <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="nuv-Ri-tyH">
+                    <rect key="frame" x="0.0" y="830" width="414" height="32"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kua-hc-Wj7">
+                            <rect key="frame" x="0.0" y="0.0" width="202" height="32"/>
+                            <color key="tintColor" red="0.3999999463558197" green="0.3999999463558197" blue="0.3999999463558197" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="不同意"/>
+                            <connections>
+                                <action selector="DisagreeClickAction:" destination="-1" eventType="touchUpInside" id="KFD-CW-EQB"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GpR-fK-h0S">
+                            <rect key="frame" x="212" y="0.0" width="202" height="32"/>
+                            <color key="tintColor" red="0.98431372549019602" green="0.27843137254901962" blue="0.27843137254901962" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="同意"/>
+                            <connections>
+                                <action selector="AgreeClickAction:" destination="-1" eventType="touchUpInside" id="42v-Qh-ojm"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="32" id="Pzh-4r-uRo"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="nuv-Ri-tyH" firstAttribute="top" secondItem="Z96-cD-cUH" secondAttribute="bottom" constant="10" id="13c-Xt-ckS"/>
+                <constraint firstItem="Z96-cD-cUH" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="9Cd-d0-0Ns"/>
+                <constraint firstItem="nuv-Ri-tyH" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Hh3-8q-45T"/>
+                <constraint firstItem="Z96-cD-cUH" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="RRY-mr-gbh"/>
+                <constraint firstItem="Z96-cD-cUH" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="aCR-5G-Xr4"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="nuv-Ri-tyH" secondAttribute="bottom" id="bc1-Ot-F9o"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="nuv-Ri-tyH" secondAttribute="trailing" id="oRD-Mg-OIn"/>
+            </constraints>
+            <point key="canvasLocation" x="131.8840579710145" y="130.58035714285714"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
