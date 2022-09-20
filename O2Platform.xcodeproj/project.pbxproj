@@ -61,6 +61,7 @@
 		B108F402229E34D400778050 /* LBXScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B108F3FB229E34D300778050 /* LBXScanViewController.swift */; };
 		B10A2F56233DDA990011CE3D /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10A2F55233DDA990011CE3D /* AdSupport.framework */; };
 		B10A2F58233DDAE10011CE3D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10A2F57233DDAE10011CE3D /* Security.framework */; };
+		B10B94B928D949530071CEEF /* AttendanceAppealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10B94B828D949530071CEEF /* AttendanceAppealViewController.swift */; };
 		B1173A5B2488C546005075F0 /* IMConversationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1173A5A2488C546005075F0 /* IMConversationListViewController.swift */; };
 		B1173A5E2488C5DF005075F0 /* CommunicateAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1173A5D2488C5DF005075F0 /* CommunicateAPI.swift */; };
 		B1173A602488C82F005075F0 /* IMViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1173A5F2488C82F005075F0 /* IMViewModel.swift */; };
@@ -1265,6 +1266,7 @@
 		B108F3FB229E34D300778050 /* LBXScanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LBXScanViewController.swift; sourceTree = "<group>"; };
 		B10A2F55233DDA990011CE3D /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		B10A2F57233DDAE10011CE3D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		B10B94B828D949530071CEEF /* AttendanceAppealViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceAppealViewController.swift; sourceTree = "<group>"; };
 		B1173A5A2488C546005075F0 /* IMConversationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMConversationListViewController.swift; sourceTree = "<group>"; };
 		B1173A5D2488C5DF005075F0 /* CommunicateAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicateAPI.swift; sourceTree = "<group>"; };
 		B1173A5F2488C82F005075F0 /* IMViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMViewModel.swift; sourceTree = "<group>"; };
@@ -1634,7 +1636,7 @@
 		B1FDBE8C22952F0C00BB434E /* O2WorkMoreActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2WorkMoreActionSheet.swift; sourceTree = "<group>"; };
 		B1FEDA9A22D305C90002ECF4 /* CMSSingleApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSSingleApplication.swift; sourceTree = "<group>"; };
 		B1FEDACD22D314F90002ECF4 /* CMSCreateDocViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSCreateDocViewController.swift; sourceTree = "<group>"; };
-		C33461DCBCEEAF5B8597D54E /* Pods______.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "Pods______.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C33461DCBCEEAF5B8597D54E /* Pods______.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods______.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E40502C220722208009A8D30 /* ImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
 		E40502C320722208009A8D30 /* ImageRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageRow.swift; sourceTree = "<group>"; };
 		E40502C420722208009A8D30 /* ImageCheckRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCheckRow.swift; sourceTree = "<group>"; };
@@ -3380,6 +3382,7 @@
 				B15C593C28D4640C00680081 /* AttendanceListTableViewController.xib */,
 				B1807E1228D84DDA007DE8D9 /* AttendanceAppealListViewController.swift */,
 				B1807E1328D84DDA007DE8D9 /* AttendanceAppealListViewController.xib */,
+				B10B94B828D949530071CEEF /* AttendanceAppealViewController.swift */,
 			);
 			path = c;
 			sourceTree = "<group>";
@@ -5352,6 +5355,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftValidator/SwiftValidator.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyTimer/SwiftyTimer.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
+				"${BUILT_PRODUCTS_DIR}/ViewRow/ViewRow.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -5389,6 +5393,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftValidator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyTimer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ViewRow.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -5906,6 +5911,7 @@
 				E4977A0F1E8F4DBC0092EFAD /* O2Application.swift in Sources */,
 				B1750087233C937E003DA7B9 /* IntExtensions.swift in Sources */,
 				E46E6CBD1DD41F5D00AB7561 /* HRColorCursor.m in Sources */,
+				B10B94B928D949530071CEEF /* AttendanceAppealViewController.swift in Sources */,
 				E4B889481D9D6308002E1A46 /* StandDefaultUtil.swift in Sources */,
 				B1982FB92844A81800F9D8B7 /* O2CloudFileV3Models.swift in Sources */,
 				E4B889461D9D6308002E1A46 /* KeychainUtil.swift in Sources */,

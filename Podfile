@@ -67,6 +67,8 @@ target 'O2Platform' do
     
     pod 'BSImagePicker', '~> 3.1.0'
     pod 'Eureka', '~> 5.3.0'
+    # Eureka的一个自定义View的Row
+    pod 'ViewRow'
     pod 'SwiftyTimer'
 
     pod 'Charts'

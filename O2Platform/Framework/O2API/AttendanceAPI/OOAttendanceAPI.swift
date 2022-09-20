@@ -26,6 +26,7 @@ enum OOAttendanceAPI {
     case attendancedetailList(AttendanceDetailQueryFilterJson) // 查询打卡记录
     case attendanceAppealInfoList(String, AppealApprovalQueryFilterJson) // 审核数据列表
     case attendanceappealInfoApprovel(AppealApprovalFormJson) // 审核数据
+    case submitAppealApprove(String, AttendanceDetailInfoJson) // 申诉
 }
 
 // MARK:- 上下文实现
@@ -81,6 +82,8 @@ extension OOAttendanceAPI:TargetType {
             return "/jaxrs/attendanceappealInfo/filter/list/\(id)/next/\(O2.defaultPageSize)"
         case .attendanceappealInfoApprovel(_):
             return "/jaxrs/attendanceappealInfo/audit"
+        case .submitAppealApprove(let id, _):
+            return "/jaxrs/attendanceappealInfo/appeal/\(id)"
         }
     }
     
@@ -106,7 +109,7 @@ extension OOAttendanceAPI:TargetType {
             return .get
         case .listMyRecord:
             return .get
-        case .attendancedetailList(_), .attendanceAppealInfoList(_, _), .attendanceappealInfoApprovel(_):
+        case .attendancedetailList(_), .attendanceAppealInfoList(_, _), .attendanceappealInfoApprovel(_), .submitAppealApprove(_, _):
             return .put
         
         }
@@ -143,6 +146,8 @@ extension OOAttendanceAPI:TargetType {
         case .attendanceAppealInfoList(_, let filter):
             return .requestParameters(parameters: filter.toJSON() ?? [:], encoding: JSONEncoding.default)
         case .attendanceappealInfoApprovel(let form):
+            return .requestParameters(parameters: form.toJSON() ?? [:], encoding: JSONEncoding.default)
+        case .submitAppealApprove(_, let form):
             return .requestParameters(parameters: form.toJSON() ?? [:], encoding: JSONEncoding.default)
         }
     }

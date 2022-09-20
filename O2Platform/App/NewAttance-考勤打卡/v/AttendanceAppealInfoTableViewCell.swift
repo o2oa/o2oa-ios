@@ -34,9 +34,11 @@ class AttendanceAppealInfoTableViewCell: UITableViewCell {
         var address = info.address ?? ""
         var desc = info.appealDescription ?? ""
         
-        if address != "" {
+        if !address.isEmpty {
             address = "地点：\(address)"
-            desc = " , 事由：\(desc)"
+            if !desc.isEmpty {
+                desc = " , 事由：\(desc)"
+            }
         } else {
             address = ""
             desc = "事由：\(desc)"

@@ -40,6 +40,19 @@ final class OOAttandanceViewModel: NSObject {
 
 extension OOAttandanceViewModel{
     
+    //
+    func submitAppealApprove(form: AttendanceDetailInfoJson, completedBlock:@escaping CallbackBlockDefine) {
+        ooAttanceAPI.request(.submitAppealApprove(form.id!, form)) { response in
+            let myResult = OOResult<BaseModelClass<AppealApprovalBackInfoJson>>(response)
+            if myResult.isResultSuccess() {
+                let records = myResult.model?.data
+                completedBlock(.ok(records))
+            }else {
+                let errorMessage = myResult.error?.errorDescription ?? ""
+                completedBlock(.fail(errorMessage))
+            }
+        }
+    }
     
     //考勤审核数据列表
     func attendanceappealInfoApprovel(form: AppealApprovalFormJson, completedBlock:@escaping CallbackBlockDefine) {

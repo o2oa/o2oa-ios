@@ -49,9 +49,12 @@ class AttendanceListTableViewController: UITableViewController {
         self.tableView.tableFooterView = UIView()
         self.view.addSubview(self.emptyView)
         self.emptyView.isHidden = true
-        self.loadListData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.loadListData()
+    }
     
     
     private func loadListData() {
@@ -78,6 +81,16 @@ class AttendanceListTableViewController: UITableViewController {
             }
         })
     }
+    
+    private func gotoAppealAttendance(detail: AttendanceDetailInfoJson) {
+        if (detail.appealStatus == 0) {
+            if (detail.isGetSelfHolidays == false && (detail.isAbsent == true || detail.isLate == true || detail.isAbnormalDuty == true || detail.isLackOfTime == true)) {
+                let aaVC = AttendanceAppealViewController()
+                aaVC.detail = detail
+                self.pushVC(aaVC)
+            }
+        }
+    }
 
     // MARK: - Table view data source
 
@@ -102,6 +115,12 @@ class AttendanceListTableViewController: UITableViewController {
    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 74
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        let detail = self.list[indexPath.row]
+        self.gotoAppealAttendance(detail: detail)
     }
 
     /*
