@@ -154,7 +154,8 @@ class IMChatViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         // websocket 消息监听
-        NotificationCenter.default.addObserver(self, selector: #selector(receiveMessageFromWs(notice:)), name: OONotification.websocket.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(receiveMessageFromWs(notice:)), name: OONotification.imCreate.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(receiveRevokeMsgFromWs(notice:)), name: OONotification.imRevoke.notificationName, object: nil)
         // 监听 键盘打开
         NotificationCenter.default.addObserver(self, selector: #selector(openKeyboard(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         // 监听 键盘大小变化
@@ -187,7 +188,7 @@ class IMChatViewController: UIViewController {
             self.bottomBarBottomConstraint.constant = 0
         })
     }
-
+    // 新消息
     @objc private func receiveMessageFromWs(notice: Notification) {
         DDLogDebug("接收到websocket im 消息")
         if let message = notice.object as? IMMessageInfo {
@@ -195,6 +196,22 @@ class IMChatViewController: UIViewController {
                 self.chatMessageList.append(message)
                 self.scrollMessageToBottom()
                 self.viewModel.readConversation(conversationId: self.conversation?.id)
+            }
+        }
+    }
+    // 撤回消息
+    @objc private func receiveRevokeMsgFromWs(notice: Notification) {
+        DDLogDebug("接收到websocket im 撤回消息")
+        if let message = notice.object as? IMMessageInfo {
+            if message.conversationId == self.conversation?.id {
+                if let index = self.chatMessageList.firstIndex(where: { $0.id == message.id }) {
+                    self.chatMessageList.remove(at: index)
+                    DispatchQueue.main.async {
+                        self.tableView.beginUpdates()
+                        self.tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .none)
+                        self.tableView.endUpdates()
+                    }
+                }
             }
         }
     }

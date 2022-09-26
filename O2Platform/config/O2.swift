@@ -19,6 +19,9 @@ struct O2 {
     public static let O2_Word_draft_mode = "draft"
     public static let O2_First_ID = "(0)"
     
+    public static let O2_MESSAGE_TYPE_IM_CREATE = "im_create"
+    public static let O2_MESSAGE_TYPE_IM_REVOKE = "im_revoke"
+    
     // 通讯录权限查询视图key
     public static let CUSTOM_STYLE_CONTACT_PERMISSION_PREF_KEY = "customStyleContactPermissionViewKey"
     public static let CUSTOM_STYLE_CONTACT_PERMISSION_DEFAULT = "addressPowerView"

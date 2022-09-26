@@ -50,7 +50,7 @@ class IMConversationListViewController: UIViewController {
         view.addSubview(tableview)
         view.addSubview(emptyView)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(receiveMessageFromWs(notice:)), name: OONotification.websocket.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(receiveMessageFromWs(notice:)), name: OONotification.imCreate.notificationName, object: nil)
 
         imConfig.enableClearMsg = false
         viewModel.loadImConfig().then { imConfig in

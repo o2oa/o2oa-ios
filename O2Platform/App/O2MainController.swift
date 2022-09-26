@@ -371,13 +371,21 @@ extension O2MainController: WebSocketDelegate {
                 //判断type im消息就发送通知
                 do {
                     if let dicArr = try JSONSerialization.jsonObject(with: String(text).data(using: .utf8)!, options: .allowFragments) as? [String: AnyObject] {
-                        if let type = dicArr["type"] as? String, type == "im_create" {
+                        guard let type = dicArr["type"] as? String else {
+                            return
+                        }
+                        if type == O2.O2_MESSAGE_TYPE_IM_CREATE {
                             if let messageInfo = WsMessage.deserialize(from: text) {
                                 DDLogDebug("接收到im消息 发送通知。。")
-                                NotificationCenter.post(customeNotification: OONotification.websocket, object: messageInfo.body)
+                                NotificationCenter.post(customeNotification: OONotification.imCreate, object: messageInfo.body)
                             }
                             self.addUnreadNumber()
                             AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+                        } else if type == O2.O2_MESSAGE_TYPE_IM_REVOKE {
+                            if let messageInfo = WsMessage.deserialize(from: text) {
+                                DDLogDebug("接收到im消息 撤回消息")
+                                NotificationCenter.post(customeNotification: OONotification.imRevoke, object: messageInfo.body)
+                            }
                         }
                     }
                 } catch { }

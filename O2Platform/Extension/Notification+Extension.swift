@@ -24,6 +24,10 @@ enum OONotification:String {
     
     //websocket使用
     case websocket
+    // im消息发送
+    case imCreate
+    // im消息撤回
+    case imRevoke
     
     //日程管理Main中使用
     case calendarIds
