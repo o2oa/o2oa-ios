@@ -37,7 +37,7 @@ protocol O2RecordVoiceDelegate {
 }
 
 class O2RecordVoiceManager: NSObject {
-    private let maxRecordTime = 60.0
+    private var maxRecordTime = 60.0
 
     private var startRecordCompleted: O2RecordCompletionCallBack?
     private var recorder: AVAudioRecorder?
@@ -111,6 +111,12 @@ class O2RecordVoiceManager: NSObject {
     private func stopRecord() {
         cancelRecording()
         resetTimer()
+    }
+    
+    /// 给附件录音使用 设置一个比较大的值，可以
+    /// maxTime 秒数 如： 10000秒
+    func setupMaxRecordTime(maxTime: Double) {
+        self.maxRecordTime = maxTime
     }
     
     func startRecordingWithPath(_ path:String, startRecordCompleted:@escaping O2RecordCompletionCallBack) {

@@ -16,12 +16,24 @@ protocol IMChatAudioViewDelegate {
     func hideAudioRecordingView() //关闭录音状态
     func changeRecordingView2uplide() //取消发送的状态
     func changeRecordingView2down()// 可以发送的状态
+    func clickCloseBtn()
+    func clickDoneBtn()
 }
 class IMChatAudioView: UIView {
     
     @IBOutlet weak var audioViewTitle: UILabel!
     @IBOutlet weak var audioRecordBtn: UIButton!
     @IBOutlet weak var audioBtnContainer: UIView!
+    
+    
+    @IBOutlet weak var doneBtn: UIButton!
+    
+    @IBOutlet weak var reloadBtn: UIButton!
+    
+    @IBOutlet weak var closeBtn: UIButton!
+    
+    private var isWindowMode = false // 是否在录音单独的窗口 O2RecordVoiceWindow 中使用的
+    
     
     private var touchBtn: AudioTouchButton?
     
@@ -34,6 +46,8 @@ class IMChatAudioView: UIView {
     }()
     
     var delegate: IMChatAudioViewDelegate?
+    
+    
     
     override func awakeFromNib() {
 //        audioRecordBtn.addTarget(self, action: #selector(startRecord), for: .touchDown)
@@ -66,8 +80,32 @@ class IMChatAudioView: UIView {
         self.touchBtn?.backgroundColor = UIColor(hex: "#F3F3F3")
         self.touchBtn?.layer.cornerRadius = 49
         self.touchBtn?.layer.masksToBounds = true
+        self.closeBtn.setTitle("", for: .normal)
+    }
+    
+    
+    
+    func setWindowMode() {
+        self.isWindowMode = true
+        self.closeBtn.isHidden = false
+        self.recordManager.setupMaxRecordTime(maxTime: 10000.0) // 设置一个很大的值 反正录音超时自动结束
     }
      
+    @IBAction func closeBtnClick(_ sender: UIButton) {
+        delegate?.clickCloseBtn()
+    }
+    
+    
+    @IBAction func doneBtnClick(_ sender: UIButton) {
+        delegate?.clickDoneBtn()
+    }
+    
+    @IBAction func reloadBtnClick(_ sender: UIButton) {
+        self.audioBtnContainer.isHidden = false
+        self.doneBtn.isHidden = true
+        self.reloadBtn.isHidden = true
+    }
+    
     
     @objc private func startRecord() {
         DDLogError("startRecord record...................")
@@ -108,6 +146,11 @@ class IMChatAudioView: UIView {
             recordManager.convertCafToMp3(cafPath: recordManager.recordPath!, mp3Path: filePath)
             let data = try! Data(contentsOf: URL(fileURLWithPath: filePath))
             delegate?.sendVoice(path: filePath, voice: data, duration: recordManager.recordDuration!)
+            if self.isWindowMode {
+                self.audioBtnContainer.isHidden = true
+                self.doneBtn.isHidden = false
+                self.reloadBtn.isHidden = false
+            }
         }else {
             //取消录音
             recordManager.cancelledDeleteWithCompletion()

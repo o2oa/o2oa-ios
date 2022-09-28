@@ -62,6 +62,7 @@
 		B10A2F56233DDA990011CE3D /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10A2F55233DDA990011CE3D /* AdSupport.framework */; };
 		B10A2F58233DDAE10011CE3D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10A2F57233DDAE10011CE3D /* Security.framework */; };
 		B10B94B928D949530071CEEF /* AttendanceAppealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10B94B828D949530071CEEF /* AttendanceAppealViewController.swift */; };
+		B112ECDD28E4116E00EF4761 /* O2RecordVoiceWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B112ECDC28E4116E00EF4761 /* O2RecordVoiceWindow.swift */; };
 		B1173A5B2488C546005075F0 /* IMConversationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1173A5A2488C546005075F0 /* IMConversationListViewController.swift */; };
 		B1173A5E2488C5DF005075F0 /* CommunicateAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1173A5D2488C5DF005075F0 /* CommunicateAPI.swift */; };
 		B1173A602488C82F005075F0 /* IMViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1173A5F2488C82F005075F0 /* IMViewModel.swift */; };
@@ -1274,6 +1275,7 @@
 		B10A2F55233DDA990011CE3D /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		B10A2F57233DDAE10011CE3D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		B10B94B828D949530071CEEF /* AttendanceAppealViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceAppealViewController.swift; sourceTree = "<group>"; };
+		B112ECDC28E4116E00EF4761 /* O2RecordVoiceWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2RecordVoiceWindow.swift; sourceTree = "<group>"; };
 		B1173A5A2488C546005075F0 /* IMConversationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMConversationListViewController.swift; sourceTree = "<group>"; };
 		B1173A5D2488C5DF005075F0 /* CommunicateAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicateAPI.swift; sourceTree = "<group>"; };
 		B1173A5F2488C82F005075F0 /* IMViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMViewModel.swift; sourceTree = "<group>"; };
@@ -3002,6 +3004,7 @@
 				B1A04B82277DAB20007DDB3B /* O2CustomViewProtocol.swift */,
 				B1BEF33827F3FD1C00D4F449 /* WaterMarkView.swift */,
 				B119BC6327F43657001DB15C /* WaterMarkTableViewCell.swift */,
+				B112ECDC28E4116E00EF4761 /* O2RecordVoiceWindow.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -5681,6 +5684,7 @@
 				B168BDCF24F62BA60070329F /* O2CanCopyUILabel.swift in Sources */,
 				B1EE2CD02281771600842F48 /* O2JsApiUtil.swift in Sources */,
 				E4B6975020762EA00062F6E8 /* OOPasswordTextField.swift in Sources */,
+				B112ECDD28E4116E00EF4761 /* O2RecordVoiceWindow.swift in Sources */,
 				E491664C1E03C09C006133C5 /* O2Account.swift in Sources */,
 				B15BE111249A6002008CD1DB /* AudioPlayerManager.swift in Sources */,
 				E46E6CBA1DD41F5D00AB7561 /* CYRToken.m in Sources */,

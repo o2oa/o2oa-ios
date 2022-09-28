@@ -873,6 +873,22 @@ class TodoTaskDetailViewController: BaseWebViewUIViewController {
         }
     }
     
+    // 录音功能
+    private func openRecordVoiceDialog() {
+        let recordTool = O2RecordVoiceWindow()
+        recordTool.openWindow(callback: {(path, voice, duration) in
+            DDLogDebug("录音返回结果： \(String(describing: path)) \(String(describing:duration))")
+            if path != nil && voice != nil {
+                let fileName = path!.split("/").last ?? "MySound.ilbc"
+                if self.isReplaceAttachment {
+                    self.replaceAttachmentToO2OA(data: voice!, fileName: fileName)
+                } else {
+                    self.uploadAttachmentToO2OA(data: voice!, fileName: fileName)
+                }
+            }
+        })
+    }
+    
    
     // 上传文件到o2oa服务器
     private func uploadAttachmentToO2OA(data: Data, fileName: String) {
@@ -1136,6 +1152,10 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
                 self.isReplaceAttachment = false
                 self.takePhoto(delegate: self)
             }),
+            UIAlertAction(title: "录音", style: .default, handler: { (action) in
+                self.isReplaceAttachment = false
+                self.openRecordVoiceDialog()
+            }),
         ]
         self.showSheetAction(title: L10n.alert, message: "请选择入口", actions: arr)
 //
@@ -1190,6 +1210,10 @@ extension TodoTaskDetailViewController: O2WKScriptMessageHandlerImplement {
             UIAlertAction(title: "拍照", style: .default, handler: { (action) in
                 self.isReplaceAttachment = true
                 self.takePhoto(delegate: self)
+            }),
+            UIAlertAction(title: "录音", style: .default, handler: { (action) in
+                self.isReplaceAttachment = true
+                self.openRecordVoiceDialog()
             }),
         ]
         self.showSheetAction(title: L10n.alert, message: "请选择入口", actions: arr)

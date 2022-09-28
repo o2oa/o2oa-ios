@@ -729,6 +729,14 @@ extension IMChatViewController: UIDocumentPickerDelegate {
 
 // MARK: - 录音delegate
 extension IMChatViewController: IMChatAudioViewDelegate {
+    func clickCloseBtn() {
+        // 不需要
+    }
+    
+    func clickDoneBtn() {
+        // 不需要
+    }
+    
     
     private func audioRecordingGif() -> UIImage? {
         let url: URL? = Bundle.main.url(forResource: "listener08_anim", withExtension: "gif")
