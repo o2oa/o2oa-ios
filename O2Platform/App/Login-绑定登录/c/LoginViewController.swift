@@ -115,6 +115,9 @@ class LoginViewController: UIViewController {
                     self.showError(title: msg ?? L10n.Login.UnknownError)
                     break
                 case .loginError:
+                    // 去登录之前先处理应用
+                    self.viewModel._saveAppConfigToDb()
+                    
                     self.forwardToSegue("loginSystemSegue")
                     //自动登录出错
                     break
@@ -140,6 +143,9 @@ class LoginViewController: UIViewController {
                     self.forwardToSegue("bindPhoneSegue")
                     break
                 case .loginError:
+                    // 去登录之前先处理应用
+                    self.viewModel._saveAppConfigToDb()
+                    
                     self.forwardToSegue("loginSystemSegue")
                     //自动登录出错
                     break
