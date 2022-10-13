@@ -186,9 +186,8 @@ class TodoTaskViewController: UITableViewController {
                 self.tableView.reloadData()
             }.always {
                 self.isloading = false
-                if tv.mj_header.isRefreshing(){
-                    tv.mj_header.endRefreshing()
-                }
+                tv.mj_header?.endRefreshing()
+                tv.mj_footer?.endRefreshing()
             }.catch { (err) in
                 DispatchQueue.main.async {
                     DDLogError(err.localizedDescription)
@@ -211,9 +210,8 @@ class TodoTaskViewController: UITableViewController {
                 self.tableView.reloadData()
             }.always {
                 self.isloading = false
-                if tv.mj_header.isRefreshing(){
-                    tv.mj_header.endRefreshing()
-                }
+                tv.mj_header?.endRefreshing()
+                tv.mj_footer?.endRefreshing()
             }.catch { (err) in
                 DispatchQueue.main.async {
                     DDLogError(err.localizedDescription)
@@ -236,9 +234,8 @@ class TodoTaskViewController: UITableViewController {
                 self.tableView.reloadData()
             }.always {
                 self.isloading = false
-                if tv.mj_header.isRefreshing(){
-                    tv.mj_header.endRefreshing()
-                }
+                tv.mj_header?.endRefreshing()
+                tv.mj_footer?.endRefreshing()
             }.catch { (err) in
                 DispatchQueue.main.async {
                     DDLogError(err.localizedDescription)
@@ -261,9 +258,8 @@ class TodoTaskViewController: UITableViewController {
                 self.tableView.reloadData()
             }.always {
                 self.isloading = false
-                if tv.mj_header.isRefreshing(){
-                    tv.mj_header.endRefreshing()
-                }
+                tv.mj_header?.endRefreshing()
+                tv.mj_footer?.endRefreshing()
             }.catch { (err) in
                 DispatchQueue.main.async {
                     DDLogError(err.localizedDescription)
@@ -416,6 +412,10 @@ extension TodoTaskViewController:UISearchResultsUpdating,UISearchControllerDeleg
 extension TodoTaskViewController:SegmentedControlDelegate{
     func segmentedControl(_ segmentedControl: SegmentedControl, didSelectIndex selectedIndex: Int) {
         DDLogDebug("click \(selectedIndex)")
+        // 切换 先清空
+        self.models.removeAll()
+        self.tableView.reloadData()
+        
         AppConfigSettings.shared.taskIndex = selectedIndex
         self.setSearchBarIsShow()
         self.headerLoadData()
