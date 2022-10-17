@@ -2367,7 +2367,7 @@
 				B10AC59521058DAE00179587 /* BSImagePicker */,
 				B10AC59B21058DAE00179587 /* Charts */,
 				B1F79C78233B5F9B004D0AEE /* Chrysan */,
-				B1F79C7A233B5F9B004D0AEE /* Chrysan-Chrysan */,
+				B1F79C7A233B5F9B004D0AEE /* Chrysan.bundle */,
 				B10AC59D21058DAE00179587 /* CocoaLumberjack */,
 				B10AC5A521058DAE00179587 /* EmptyDataSet-Swift */,
 				B10AC5A721058DAE00179587 /* Eureka */,
@@ -5042,10 +5042,9 @@
 			remoteRef = B1F79C77233B5F9B004D0AEE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B1F79C7A233B5F9B004D0AEE /* Chrysan-Chrysan */ = {
+		B1F79C7A233B5F9B004D0AEE /* Chrysan.bundle */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			name = "Chrysan-Chrysan";
 			path = Chrysan.bundle;
 			remoteRef = B1F79C79233B5F9B004D0AEE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -6319,7 +6318,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 126;
+				CURRENT_PROJECT_VERSION = 127;
 				DEVELOPMENT_TEAM = C79YTQHHFY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6344,7 +6343,7 @@
 					"$(PROJECT_DIR)/O2Platform/Framework/lame/opencore-amr/lib",
 					"$(PROJECT_DIR)/O2Platform/Framework/BaiDuASR/BDSClientLib",
 				);
-				MARKETING_VERSION = 6.2.6;
+				MARKETING_VERSION = 6.2.7;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -6422,7 +6421,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 126;
+				CURRENT_PROJECT_VERSION = 127;
 				DEVELOPMENT_TEAM = C79YTQHHFY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6447,7 +6446,7 @@
 					"$(PROJECT_DIR)/O2Platform/Framework/lame/opencore-amr/lib",
 					"$(PROJECT_DIR)/O2Platform/Framework/BaiDuASR/BDSClientLib",
 				);
-				MARKETING_VERSION = 6.2.6;
+				MARKETING_VERSION = 6.2.7;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

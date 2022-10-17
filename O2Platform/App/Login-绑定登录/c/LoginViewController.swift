@@ -58,6 +58,7 @@ class LoginViewController: UIViewController {
             DDLogDebug("启动开始 isFirstTime is true")
             AppConfigSettings.shared.isFirstTime = false
             let pVC = OOGuidePageController(nibName: "OOGuidePageController", bundle: nil)
+            pVC.modalPresentationStyle = .fullScreen
             //let navVC = ZLNavigationController(rootViewController: pVC)
             self.presentVC(pVC)
         }else{
@@ -123,6 +124,7 @@ class LoginViewController: UIViewController {
                     break
                 case .unknownError:
                     self.showError(title: msg ?? L10n.Login.UnknownError)
+                    self.forwardToSegue("loginSystemSegue") // 未知错误也跳转到登录页面
                     break
                 case .success:
                     //处理移动端应用
