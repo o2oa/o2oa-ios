@@ -54,19 +54,19 @@ class LoginViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.showView += 1
-        if AppConfigSettings.shared.isFirstTime == true {
-            DDLogDebug("启动开始 isFirstTime is true")
-            AppConfigSettings.shared.isFirstTime = false
-            let pVC = OOGuidePageController(nibName: "OOGuidePageController", bundle: nil)
-            pVC.modalPresentationStyle = .fullScreen
-            //let navVC = ZLNavigationController(rootViewController: pVC)
-            self.presentVC(pVC)
-        }else{
-            if self.showView == 1 {
+//        if AppConfigSettings.shared.isFirstTime == true {
+//            DDLogDebug("启动开始 isFirstTime is true")
+//            AppConfigSettings.shared.isFirstTime = false
+//            let pVC = OOGuidePageController(nibName: "OOGuidePageController", bundle: nil)
+//            pVC.modalPresentationStyle = .fullScreen
+//            //let navVC = ZLNavigationController(rootViewController: pVC)
+//            self.presentVC(pVC)
+//        }else{
+//            if self.showView == 1 {
                 DDLogDebug("启动开始 isFirstTime is false")
                 self.startFlowForPromise()
-            }
-        }
+//            }
+//        }
     }
 
     func startFlowForPromise() {
