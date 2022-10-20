@@ -23,6 +23,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var startImage: UIImageView!
     var showView = 0
+    // 监听网络
+    var manager: NetworkReachabilityManager?
     
     var viewModel:OOLoginViewModel = {
         return OOLoginViewModel()
@@ -109,6 +111,7 @@ class LoginViewController: UIViewController {
                 return
             }
             
+            
             O2AuthSDK.shared.launchInner(unit: unit) { (state, msg) in
                 switch state {
                 case .bindError:
@@ -123,10 +126,32 @@ class LoginViewController: UIViewController {
                     //自动登录出错
                     break
                 case .unknownError:
-                    self.showError(title: msg ?? L10n.Login.UnknownError)
-                    self.forwardToSegue("loginSystemSegue") // 未知错误也跳转到登录页面
+                    self.showError(title: "请求出错，请检查网络")
+                    //self.forwardToSegue("loginSystemSegue") // 未知错误也跳转到登录页面
+                    // 请求出错， 添加网络监听 ，网络有变化 重新执行开始方法
+                    self.manager = NetworkReachabilityManager(host: "www.o2oa.net")
+                    self.manager?.startListening { status in
+                        DDLogDebug("网络状态: \(status)")
+                        if status == .reachable(.ethernetOrWiFi) { //WIFI
+                            DDLogDebug("网络状态 reachable: wifi")
+                            // 有网络了 重新开始
+                            self.manager?.stopListening()
+                            self.startFlowForPromise()
+                        } else if status == .reachable(.cellular) { // 蜂窝网络
+                            DDLogDebug("网络状态 reachable: 4G")
+                            // 有网络了 重新开始
+                            self.manager?.stopListening()
+                            self.startFlowForPromise()
+                        } else if status == .notReachable { // 无网络
+                            DDLogDebug("无网络！！！！！")
+                        } else { // 其他
+                            DDLogDebug("其他网络！！！！！")
+                        }
+                    }
                     break
                 case .success:
+                    // 关闭监听
+                    self.manager?.stopListening()
                     //处理移动端应用
                     self.viewModel._saveAppConfigToDb()
                     //跳转到主页

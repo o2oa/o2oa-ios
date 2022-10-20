@@ -62,7 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, JPUSHRegisterDelegate, UN
 //        _ = O2Logger.getLogFiles()
         O2Logger.debug("设置运行版本==========,\(PROJECTMODE)")
         //网络检查
-        o2ReachabilityManager.startListening()
+//        o2ReachabilityManager.startListening()
         //Alamofire
         NetworkActivityIndicatorManager.shared.isEnabled = true
         
@@ -206,7 +206,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, JPUSHRegisterDelegate, UN
     
     
     deinit {
-        o2ReachabilityManager.stopListening()
+//        o2ReachabilityManager.stopListening()
     }
     
    
