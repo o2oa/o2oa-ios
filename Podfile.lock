@@ -67,6 +67,9 @@ PODS:
   - SnapKit (4.0.1)
   - Starscream (4.0.4)
   - SwiftValidator (4.0.0)
+  - SwiftyRSA (1.5.0):
+    - SwiftyRSA/ObjC (= 1.5.0)
+  - SwiftyRSA/ObjC (1.5.0)
   - SwiftyTimer (2.1.0)
   - SwiftyUserDefaults (3.0.1)
   - ViewRow (0.8):
@@ -108,6 +111,7 @@ DEPENDENCIES:
   - SnapKit (~> 4.0)
   - Starscream (~> 4.0.3)
   - SwiftValidator (from `https://github.com/jpotts18/SwiftValidator.git`, branch `master`)
+  - SwiftyRSA
   - SwiftyTimer
   - SwiftyUserDefaults (~> 3.0)
   - ViewRow
@@ -150,6 +154,7 @@ SPEC REPOS:
     - SDWebImage
     - SnapKit
     - Starscream
+    - SwiftyRSA
     - SwiftyTimer
     - SwiftyUserDefaults
     - ViewRow
@@ -205,10 +210,11 @@ SPEC CHECKSUMS:
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
   SwiftValidator: 25ded5ca1f10c05adf57f6ac82a72d28ac8d91af
+  SwiftyRSA: 6e528fb1b1a87d5111c48081083b141d6d65f1cf
   SwiftyTimer: 02dd6cf10cbc71cbf67cec494f6e5eb782102543
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
   ViewRow: 8da541e9c019f3be63f4e28f311a62cac2045ecf
 
-PODFILE CHECKSUM: be5e6c2d7d49f0c6611fe5f1f7a45e1cf947c698
+PODFILE CHECKSUM: 191eb9bfa8a5745486db27521c82a934d61f64e6
 
 COCOAPODS: 1.11.2

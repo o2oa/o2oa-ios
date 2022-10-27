@@ -26,6 +26,8 @@ public class O2AuthSDK: NSObject {
        return O2MoyaProvider<O2LoginAPI>()
     }()
     
+    private var rsaPublicKey: RSAPublicKeyData? // rsa 加密对象
+    
     
     //MARK: - public 公开本地对象
     
@@ -615,8 +617,15 @@ public class O2AuthSDK: NSObject {
     
     /// 登录 密码登录
     public func loginWithCaptcha(form: O2LoginWithCaptchaForm, callback: @escaping (_ result: Bool, _ error: String?) ->()) {
-        _ = loginAPI.rx.request(.loginWithCaptcha(form)).asObservable()
-            .subscribe(onNext: { (response) in
+        _ = self.getRsaPublicKey().flatMap({ publicKey -> Observable<Response> in
+            // rsa 加密
+            if publicKey.rsaEnable == true && publicKey.publicKey != nil {
+                form.password = RSAUtils.rsa_encrypt(form.password!, publicKey: publicKey.publicKey!)
+                form.isEncrypted = "y"
+                DDLogDebug("加密后 password:\(String(describing: form.password))")
+            }
+            return self.loginAPI.rx.request(.loginWithCaptcha(form)).asObservable()
+        }).subscribe(onNext: { (response) in
                 let account = response.mapObject(BaseO2ResponseData<O2LoginAccountModel>.self)
                 if account?.isSuccess() == true {
                     if let myInfo = account?.data, myInfo.name != "anonymous" {
@@ -853,29 +862,28 @@ public class O2AuthSDK: NSObject {
                     throw O2BindDiscontinue.noLoginError("检查移动端配置是否需要更新时出错， 没有获取到hash值")
                 }
             }
-        }.flatMap { (result) -> Observable<Response> in
+        }.flatMap { (result) -> Observable<RSAPublicKeyData> in
             if result {
-                //sample的默认密码
-                guard let mobile = O2UserDefaults.shared.device?.mobile else {
-                    throw O2BindDiscontinue.noLoginError("登录失败！")
-                }
-                let form = O2LoginWithCaptchaForm()
-                form.credential = mobile
-                form.password = "345678"
-                return self.loginAPI.rx.request(.loginWithCaptcha(form)).asObservable()
-//                return self.loginWithUsernamePassword(mobile, "o2")
-//                if let token = O2UserDefaults.shared.myInfo?.token {
-//                    return self.loginWithToken(token)
-//                }else {
-//                    guard let mobile = O2UserDefaults.shared.device?.mobile, let code = O2UserDefaults.shared.device?.code else {
-//                        throw O2BindDiscontinue.noLoginError("登录失败！")
-//                    }
-//                    return self.loginWithPhoneCode(mobile, code)
-//                }
+                return self.getRsaPublicKey()
             }else {
                 throw O2BindDiscontinue.noLoginError("下载移动端配置时出错！！！")
             }
-        }.flatMap { (response) -> Observable<Bool> in
+        }.flatMap({ publicKey -> Observable<Response> in
+            //sample的默认密码
+            guard let mobile = O2UserDefaults.shared.device?.mobile else {
+                throw O2BindDiscontinue.noLoginError("登录失败！")
+            }
+            let form = O2LoginWithCaptchaForm()
+            form.credential = mobile
+            form.password = "345678"
+            // rsa 加密
+            if publicKey.rsaEnable == true && publicKey.publicKey != nil {
+                form.password = RSAUtils.rsa_encrypt(form.password!, publicKey: publicKey.publicKey!)
+                form.isEncrypted = "y"
+                DDLogDebug("加密后 password:\(String(describing: form.password))")
+            }
+            return self.loginAPI.rx.request(.loginWithCaptcha(form)).asObservable()
+        }).flatMap { (response) -> Observable<Bool> in
             let account = response.mapObject(BaseO2ResponseData<O2LoginAccountModel>.self)
             if account?.isSuccess() == true {
                 if let myInfo = account?.data, myInfo.name != "anonymous" {
@@ -1325,6 +1333,33 @@ public class O2AuthSDK: NSObject {
     /// - Returns:
     private func loginWithPhoneCode(_ mobile: String, _ code: String) -> Observable<Response> {
         return loginAPI.rx.request(.loginWithCredntial(mobile, code)).asObservable()
+    }
+    
+    ///
+    /// 获取rsa public key
+    private func getRsaPublicKey() -> Observable<RSAPublicKeyData> {
+        if self.rsaPublicKey == nil {
+            return loginAPI.rx.request(.getRSAPublicKey).asObservable().flatMap { (response) -> Observable<RSAPublicKeyData> in
+                let result = response.mapObject(BaseO2ResponseData<RSAPublicKeyData>.self)
+                if (result?.isSuccess() == true && result?.data != nil) {
+                    self.rsaPublicKey = result!.data!
+                    return  Observable<RSAPublicKeyData>.create({ (observer) -> Disposable in
+                        observer.on(.next(result!.data!))
+                        observer.on(.completed)
+                        return Disposables.create()
+                    })
+                }else {
+                    throw O2AuthError.blockError("获取加密key失败， \(result?.message ?? "")")
+                }
+            }
+        } else {
+            return  Observable<RSAPublicKeyData>.create({ (observer) -> Disposable in
+                observer.on(.next(self.rsaPublicKey!))
+                observer.on(.completed)
+                return Disposables.create()
+            })
+        }
+        
     }
     
     

@@ -106,6 +106,9 @@ target 'O2Platform' do
     # websocket
     pod 'Starscream', '~> 4.0.3'
     
+    # rsa 加密库 https://github.com/TakeScoop/SwiftyRSA
+    pod 'SwiftyRSA'
+    
     
     
 end

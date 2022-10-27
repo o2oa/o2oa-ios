@@ -26,6 +26,8 @@ enum O2LoginAPI {
     case loginMode
     // 获取图片验证码
     case getCaptchaCodeImg(Int, Int)
+    // 获取服务器加密用的public key
+    case getRSAPublicKey
 }
 
 
@@ -88,12 +90,14 @@ extension O2LoginAPI: TargetType {
             return "/jaxrs/authentication/captcha/width/\(width)/height/\(height)"
         case .loginWithCaptcha(_):
             return "/jaxrs/authentication/captcha"
+        case .getRSAPublicKey:
+            return "/jaxrs/authentication/captchaRSAPublicKey"
         }
     }
     
     public var method: Moya.Method {
         switch self {
-        case .createLoginCode(_):
+        case .createLoginCode(_), .getRSAPublicKey:
             return .get
         case .loginWithCredntial(_,_):
             return .post
@@ -123,7 +127,7 @@ extension O2LoginAPI: TargetType {
     
     public var task: Task {
         switch self {
-        case .createLoginCode(_), .loginMode, .getCaptchaCodeImg(_, _):
+        case .createLoginCode(_), .loginMode, .getCaptchaCodeImg(_, _), .getRSAPublicKey:
             return .requestPlain
         case .loginWithCredntial(let username, let codeAnswer):
             return .requestParameters(parameters: ["credential":username,"codeAnswer":codeAnswer], encoding: JSONEncoding.default)

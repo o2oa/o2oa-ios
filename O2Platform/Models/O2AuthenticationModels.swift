@@ -474,6 +474,35 @@ public class O2LoginCaptchaImgData: HandyJSON, CustomStringConvertible, NSCoding
         return toJSONString(prettyPrint: true) ?? ""
     }
 }
+
+///
+/// rsa加密 public key 对象
+///
+public class RSAPublicKeyData: HandyJSON, CustomStringConvertible, NSCoding {
+    var publicKey: String? //公钥
+    var rsaEnable: Bool? //是否启用
+    
+    public func encode(with aCoder: NSCoder) {
+        if publicKey != nil {
+            aCoder.encode(publicKey, forKey: "publicKey")
+        }
+        if rsaEnable != nil {
+            aCoder.encode(rsaEnable, forKey: "rsaEnable")
+        }
+        
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        publicKey = aDecoder.decodeObject(forKey: "publicKey") as? String
+        rsaEnable = aDecoder.decodeObject(forKey: "rsaEnable") as? Bool
+    }
+    
+    required public  init() {}
+    
+    public var description: String {
+        return toJSONString(prettyPrint: true) ?? ""
+    }
+}
  
 
 ///

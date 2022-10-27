@@ -330,6 +330,7 @@
 		B1B144EE2564C74A00CD7D2B /* OOMeetingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B144ED2564C74A00CD7D2B /* OOMeetingDetailViewController.swift */; };
 		B1B145222564FFE100CD7D2B /* PersonListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B145202564FFE100CD7D2B /* PersonListCell.swift */; };
 		B1B145232564FFE100CD7D2B /* PersonListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1B145212564FFE100CD7D2B /* PersonListCell.xib */; };
+		B1B15A42290A54D900DDFB57 /* RSAUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B15A41290A54D900DDFB57 /* RSAUtils.swift */; };
 		B1B2148F216073B400D9CA7E /* ScanHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B21459216073B400D9CA7E /* ScanHelper.swift */; };
 		B1B214912160A69E00D9CA7E /* Tuling123API.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B214902160A69E00D9CA7E /* Tuling123API.swift */; };
 		B1B214932160A8A300D9CA7E /* TulingPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B214922160A8A300D9CA7E /* TulingPostModel.swift */; };
@@ -1156,6 +1157,13 @@
 			remoteGlobalIDString = B9084FE779702931E8DF1D00A2D725FB;
 			remoteInfo = ObjectMapper;
 		};
+		B1B15A6F290A54DA00DDFB57 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E4E7755421017DB4006ED7FC /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0DA4828908E30CE4A29CB9AD3A405635;
+			remoteInfo = SwiftyRSA;
+		};
 		B1F79C77233B5F9B004D0AEE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E4E7755421017DB4006ED7FC /* Pods.xcodeproj */;
@@ -1574,6 +1582,7 @@
 		B1B144ED2564C74A00CD7D2B /* OOMeetingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOMeetingDetailViewController.swift; sourceTree = "<group>"; };
 		B1B145202564FFE100CD7D2B /* PersonListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonListCell.swift; sourceTree = "<group>"; };
 		B1B145212564FFE100CD7D2B /* PersonListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PersonListCell.xib; sourceTree = "<group>"; };
+		B1B15A41290A54D900DDFB57 /* RSAUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSAUtils.swift; sourceTree = "<group>"; };
 		B1B21459216073B400D9CA7E /* ScanHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanHelper.swift; sourceTree = "<group>"; };
 		B1B214902160A69E00D9CA7E /* Tuling123API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tuling123API.swift; sourceTree = "<group>"; };
 		B1B214922160A8A300D9CA7E /* TulingPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TulingPostModel.swift; sourceTree = "<group>"; };
@@ -2367,7 +2376,7 @@
 				B10AC59521058DAE00179587 /* BSImagePicker */,
 				B10AC59B21058DAE00179587 /* Charts */,
 				B1F79C78233B5F9B004D0AEE /* Chrysan */,
-				B1F79C7A233B5F9B004D0AEE /* Chrysan.bundle */,
+				B1F79C7A233B5F9B004D0AEE /* Chrysan-Chrysan */,
 				B10AC59D21058DAE00179587 /* CocoaLumberjack */,
 				B10AC5A521058DAE00179587 /* EmptyDataSet-Swift */,
 				B10AC5A721058DAE00179587 /* Eureka */,
@@ -2393,6 +2402,7 @@
 				B10AC5DF21058DAE00179587 /* SnapKit */,
 				B1173A592488C3DD005075F0 /* Starscream */,
 				B10AC5E321058DAE00179587 /* SwiftValidator */,
+				B1B15A70290A54DA00DDFB57 /* SwiftyRSA */,
 				B10AC5E721058DAE00179587 /* SwiftyTimer */,
 				B10AC5E921058DAE00179587 /* SwiftyUserDefaults */,
 				B1688FC728E184BA00CB6256 /* ViewRow */,
@@ -4481,6 +4491,7 @@
 				E4B8893B1D9D6308002E1A46 /* StandDefaultUtil.swift */,
 				E4B8893C1D9D6308002E1A46 /* StringUtil.swift */,
 				B19441EE277C325800B7E66A /* UIRotateUtils.swift */,
+				B1B15A41290A54D900DDFB57 /* RSAUtils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -5034,6 +5045,14 @@
 			remoteRef = B17B49052535468400D74EBF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		B1B15A70290A54DA00DDFB57 /* SwiftyRSA */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			name = SwiftyRSA;
+			path = SwiftyRSA.framework;
+			remoteRef = B1B15A6F290A54DA00DDFB57 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		B1F79C78233B5F9B004D0AEE /* Chrysan */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -5042,9 +5061,10 @@
 			remoteRef = B1F79C77233B5F9B004D0AEE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B1F79C7A233B5F9B004D0AEE /* Chrysan.bundle */ = {
+		B1F79C7A233B5F9B004D0AEE /* Chrysan-Chrysan */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
+			name = "Chrysan-Chrysan";
 			path = Chrysan.bundle;
 			remoteRef = B1F79C79233B5F9B004D0AEE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -5371,6 +5391,7 @@
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftValidator/SwiftValidator.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyTimer/SwiftyTimer.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
 				"${BUILT_PRODUCTS_DIR}/ViewRow/ViewRow.framework",
@@ -5409,6 +5430,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftValidator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyRSA.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyTimer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ViewRow.framework",
@@ -5653,6 +5675,7 @@
 				B14E07882301419500AE85A0 /* ContactIdentityPickerViewController.swift in Sources */,
 				E4AA17171EE189FE0030D9AB /* LogFileTableViewCell.swift in Sources */,
 				E4B6976E207630240062F6E8 /* UIButton+Extension.swift in Sources */,
+				B1B15A42290A54D900DDFB57 /* RSAUtils.swift in Sources */,
 				E4BF45D91E750B6B008B52F0 /* NewMainAppCollectionViewCell.swift in Sources */,
 				E4B888821D9D48F1002E1A46 /* FileFolderItemCell.swift in Sources */,
 				B1A04B54277DA70B007DDB3B /* O2MindMapCanvasBottomBar.swift in Sources */,
@@ -6318,7 +6341,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 127;
+				CURRENT_PROJECT_VERSION = 128;
 				DEVELOPMENT_TEAM = C79YTQHHFY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6343,7 +6366,7 @@
 					"$(PROJECT_DIR)/O2Platform/Framework/lame/opencore-amr/lib",
 					"$(PROJECT_DIR)/O2Platform/Framework/BaiDuASR/BDSClientLib",
 				);
-				MARKETING_VERSION = 6.2.7;
+				MARKETING_VERSION = 6.2.8;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -6421,7 +6444,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 127;
+				CURRENT_PROJECT_VERSION = 128;
 				DEVELOPMENT_TEAM = C79YTQHHFY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6446,7 +6469,7 @@
 					"$(PROJECT_DIR)/O2Platform/Framework/lame/opencore-amr/lib",
 					"$(PROJECT_DIR)/O2Platform/Framework/BaiDuASR/BDSClientLib",
 				);
-				MARKETING_VERSION = 6.2.7;
+				MARKETING_VERSION = 6.2.8;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

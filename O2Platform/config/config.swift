@@ -11,7 +11,7 @@ import Foundation
 
 //是否连接到collect服务器 直连版本false 需要在Info.plist配置服务器信息
 #if DEBUG
-let O2IsConnect2Collect = false
+let O2IsConnect2Collect = true
 #else
 let O2IsConnect2Collect = true
 #endif
