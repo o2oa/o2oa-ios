@@ -47,6 +47,7 @@ public class O2AccessTokenPlugin:PluginType {
         //加上token
         let tokenName = O2AuthSDK.shared.tokenName()
         request.addValue(tokenVal, forHTTPHeaderField: tokenName)
+        request.timeoutInterval = 20 //20秒超时 
         return request
     }
     

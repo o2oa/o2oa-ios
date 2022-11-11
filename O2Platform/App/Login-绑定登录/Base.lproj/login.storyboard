@@ -213,7 +213,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dnx-pt-seb">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="583"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                                 <prototypes>
@@ -266,16 +266,27 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pYu-uy-xvk">
+                                <rect key="frame" x="0.0" y="583" width="375" height="84"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="84" id="Ngn-I5-Fld"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="dnx-pt-seb" firstAttribute="leading" secondItem="xoM-4c-VPc" secondAttribute="leading" id="1dK-o5-Mxg"/>
-                            <constraint firstItem="r53-28-RdP" firstAttribute="top" secondItem="dnx-pt-seb" secondAttribute="bottom" id="4j3-Ja-xbw"/>
+                            <constraint firstItem="pYu-uy-xvk" firstAttribute="leading" secondItem="xoM-4c-VPc" secondAttribute="leading" id="6RD-wv-eUY"/>
                             <constraint firstAttribute="trailing" secondItem="dnx-pt-seb" secondAttribute="trailing" id="7lf-X7-E8I"/>
+                            <constraint firstItem="pYu-uy-xvk" firstAttribute="top" secondItem="dnx-pt-seb" secondAttribute="bottom" id="H2t-rm-VHe"/>
+                            <constraint firstAttribute="bottom" secondItem="pYu-uy-xvk" secondAttribute="bottom" id="Hdf-Iu-ZYt"/>
+                            <constraint firstAttribute="trailing" secondItem="pYu-uy-xvk" secondAttribute="trailing" id="a9H-VD-P00"/>
                             <constraint firstItem="dnx-pt-seb" firstAttribute="top" secondItem="xoM-4c-VPc" secondAttribute="top" id="nU3-HT-gYj"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="footerBar" destination="pYu-uy-xvk" id="GXn-TI-Evn"/>
                         <outlet property="tableView" destination="dnx-pt-seb" id="V2c-6e-l1z"/>
                         <segue destination="UjQ-yB-fOD" kind="unwind" identifier="backBindComplete" unwindAction="unBindComplete:" id="Xzk-St-buE"/>
                     </connections>
@@ -283,7 +294,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SY4-sf-leY" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="UjQ-yB-fOD" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1879" y="-796"/>
+            <point key="canvasLocation" x="1877.5999999999999" y="-796.55172413793105"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="uwt-1a-0iu">

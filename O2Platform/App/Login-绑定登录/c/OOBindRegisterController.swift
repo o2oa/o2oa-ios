@@ -39,10 +39,10 @@ class OOBindRegisterController: OOBaseViewController {
         ////
         let headerView = Bundle.main.loadNibNamed("OORegisterTableView", owner: self, options: nil)?.first as! OORegisterTableView
         headerView.configTitle(title: L10n.Login.mobilePhoneValidate, actionTitle: nil)
-        headerView.frame = CGRect(x: 0, y: 0, width: kScreenW, height: 66)
+        headerView.frame = CGRect(x: 0, y: 0, width: kScreenW, height: safeAreaTopHeight)
         headerView.theme_backgroundColor = ThemeColorPicker(keyPath: "Base.base_color")
         view.addSubview(headerView)
-        self.topGapConstraint.constant = CGFloat(66 - IOS11_TOP_STATUSBAR_HEIGHT)
+        self.topGapConstraint.constant = CGFloat(safeAreaTopHeight - CGFloat(IOS11_TOP_STATUSBAR_HEIGHT))
         setupUI()
     }
     
@@ -148,7 +148,8 @@ class OOBindRegisterController: OOBaseViewController {
                     self.performSegue(withIdentifier: "nextSelectNodeSegue", sender: unitList)
                     break
                 case .goToLogin:
-                    self.showError(title: L10n.Login.errorWithInfo(msg ?? ""))
+//                    self.showError(title: L10n.Login.errorWithInfo(msg ?? ""))
+                    self.forwardDestVC("login", "loginVC")
                     break
                 case .noUnitCanBindError:
                     self.showError(title: L10n.Login.canNotGetServerList)

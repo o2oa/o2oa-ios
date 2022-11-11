@@ -124,8 +124,8 @@ public class OOTimerButton: UIButton {
             self.stopTiming()
         }else{
             timeredLabel.text = "\(count)s \(L10n.Login.recapture)"
-            self.layoutIfNeeded()
         }
+        self.layoutIfNeeded()
     }
     
     

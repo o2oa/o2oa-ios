@@ -111,7 +111,7 @@ class LoginViewController: UIViewController {
                 return
             }
             
-            
+            self.showLoading()
             O2AuthSDK.shared.launchInner(unit: unit) { (state, msg) in
                 switch state {
                 case .bindError:
@@ -160,9 +160,11 @@ class LoginViewController: UIViewController {
                     UIApplication.shared.keyWindow?.rootViewController = destVC
                     UIApplication.shared.keyWindow?.makeKeyAndVisible()
                 }
+                self.hideLoading()
             }
         }else {
             //本地 -> 校验 -> 下载NodeAPI -> 下载configInfo -> 自动登录
+            self.showLoading()
             O2AuthSDK.shared.launch { (state, msg) in
                 switch state {
                 case .bindError:
@@ -172,7 +174,6 @@ class LoginViewController: UIViewController {
                 case .loginError:
                     // 去登录之前先处理应用
                     self.viewModel._saveAppConfigToDb()
-                    
                     self.forwardToSegue("loginSystemSegue")
                     //自动登录出错
                     break
@@ -189,6 +190,7 @@ class LoginViewController: UIViewController {
                     UIApplication.shared.keyWindow?.rootViewController = destVC
                     UIApplication.shared.keyWindow?.makeKeyAndVisible()
                 }
+                self.hideLoading()
             }
         }
     }

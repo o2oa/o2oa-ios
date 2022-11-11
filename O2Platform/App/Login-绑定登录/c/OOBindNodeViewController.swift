@@ -20,26 +20,13 @@ class OOBindNodeViewController:OOBaseViewController,UITableViewDataSource,UITabl
     
     private let headerFrame = CGRect(x: 0, y: 0, width: kScreenW, height: 164)
     
-    private let footerFrame = CGRect(x: 0, y: 0, width: kScreenW, height: 100)
+//    private let footerFrame = CGRect(x: 0, y: 0, width: kScreenW, height: 100)
     
     lazy var headerView:UIImageView = {
         return UIImageView(image: O2ThemeManager.image(for: "Icon.pic_xzzz_bj"))
     }()
     
-    lazy var footerView:UIView = {
-        
-        let containerView = UIView(frame: self.footerFrame)
-        let buttonFrame = CGRect(x: 25, y: (self.footerFrame.height - 44) / 2, width: self.footerFrame.width - 25 * 2, height: 44)
-        let nextButton = OOBaseUIButton(frame: buttonFrame)
-        nextButton.theme_backgroundColor = ThemeColorPicker(keyPath: "Base.base_color")
-        nextButton.configUI()
-        //下一步
-        let attrits = NSAttributedString(string: L10n.Login.nextStep, attributes: [NSAttributedString.Key.foregroundColor:UIColor.white,NSAttributedString.Key.font:UIFont(name:"PingFangSC-Regular",size:17)!])
-        nextButton.setAttributedTitle(attrits, for: .normal)
-        nextButton.addTarget(self, action: #selector(nextButtonClick(_:)), for: .touchUpInside)
-        containerView.addSubview(nextButton)
-        return containerView
-    }()
+    
     
     public var nodes:[O2BindUnitModel] = []
     
@@ -49,24 +36,38 @@ class OOBindNodeViewController:OOBaseViewController,UITableViewDataSource,UITabl
     
     private var selectedNode:O2BindUnitModel?
     
+    @IBOutlet weak var footerBar: UIView!
+    
     @IBOutlet weak var tableView: UITableView!
+    
+    
+//    lazy var footerView:UIView = {
+//        let containerView = UIView(frame: self.footerBar.frame)
+//        let buttonFrame = CGRect(x: 25, y: (self.footerBar.frame.height - 44) / 2, width: self.footerBar.frame.width - 25 * 2, height: 44)
+//
+//        containerView.addSubview(nextButton)
+//        return containerView
+//    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //下一步 按钮
+        let nextButton = OOBaseUIButton(frame: CGRect(x: 25, y: (self.footerBar.bounds.height - 44) / 2, width: (kScreenW - (25 * 2)), height: 44))
+        nextButton.theme_backgroundColor = ThemeColorPicker(keyPath: "Base.base_color")
+        nextButton.configUI()
+        let attrits = NSAttributedString(string: L10n.Login.nextStep, attributes: [NSAttributedString.Key.foregroundColor:UIColor.white,NSAttributedString.Key.font:UIFont(name:"PingFangSC-Regular",size:17)!])
+        nextButton.setAttributedTitle(attrits, for: .normal)
+        nextButton.addTarget(self, action: #selector(nextButtonClick(_:)), for: .touchUpInside)
+        self.footerBar.addSubview(nextButton)
+        //
         let headerView1 = Bundle.main.loadNibNamed("OORegisterTableView", owner: self, options: nil)?.first as! OORegisterTableView
         headerView1.configTitle(title: L10n.Login.selectServiceNode, actionTitle: nil)
         headerView1.frame = CGRect(x: 0, y: 0, width: kScreenW, height: 66)
         headerView1.theme_backgroundColor = ThemeColorPicker(keyPath: "Base.base_color")
-//        if #available(iOS 11, *) {
-//            self.tableView.contentInsetAdjustmentBehavior = .never
-//            self.view.addSubview(headerView1)
-//        }else{
-//
-//        }
         self.view.addSubview(headerView1)
         self.tableView.tableHeaderView = headerView
         headerView.contentMode = .scaleAspectFill
-        self.tableView.tableFooterView = footerView
+//        self.tableView.tableFooterView = footerView
         self.tableView.dataSource = self
         self.tableView.delegate = self
     }
@@ -107,17 +108,19 @@ class OOBindNodeViewController:OOBaseViewController,UITableViewDataSource,UITabl
                 case .goToChooseBindServer(_):
                     //多于一个节点到节点列表
                     //self.performSegue(withIdentifier: "nextSelectNodeSegue", sender: unitList)
-                    self.showError(title: L10n.Login.UnknownError)
+//                    self.showError(title: L10n.Login.UnknownError)
+                    self.alertError(msg: L10n.Login.UnknownError)
                     break
                 case .goToLogin:
 //                    self.showError(title: "错误！\(msg ?? "")")
                     self.forwardDestVC("login", "loginVC")
                     break
                 case .noUnitCanBindError:
-                    self.showError(title: L10n.Login.canNotGetServerList)
+//                    self.showError(title: L10n.Login.canNotGetServerList)
+                    self.alertError(msg: L10n.Login.canNotGetServerList)
                     break
                 case .unknownError:
-                    self.showError(title: L10n.Login.errorWithInfo(msg ?? ""))
+                    self.alertError(msg: L10n.Login.errorWithInfo(msg ?? ""))
                     break
                 case .success:
                     //处理移动端应用
@@ -144,6 +147,12 @@ class OOBindNodeViewController:OOBaseViewController,UITableViewDataSource,UITabl
     
     @objc func nextButtonClick(_ sender:Any) {
         nextAction()
+    }
+    
+    private func alertError(msg: String) {
+        self.showSystemAlert(title: L10n.alert, message: msg) { action in
+            self.dismissVC(completion: nil) // 关闭当前页面
+        }
     }
     
     
