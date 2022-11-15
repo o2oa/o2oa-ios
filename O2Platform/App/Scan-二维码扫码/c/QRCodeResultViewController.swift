@@ -145,36 +145,80 @@ class QRCodeResultViewController: UIViewController {
     //会议签到
     private func meetingCheck(url: String) {
         self.title = "会议签到"
+        DDLogInfo("会议签到 url： \(url)")
         let account = O2AuthSDK.shared.myInfo()
         let tokenName = O2AuthSDK.shared.tokenName()
-        AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: [tokenName:(account?.token)!]).responseJSON(completionHandler: {(response) in
-            switch response.result {
-            case .success(let val):
-                DispatchQueue.main.async {
-                    self.hideLoading()
-                    DDLogDebug(String(describing:val))
-                    let alertController = UIAlertController(title: "提示", message: "签到成功", preferredStyle: .alert)
-                    let okAction = UIAlertAction(title: "确定", style: .default) {
-                        action in
-                        self.popVC()
+        if let meetingId = self.getMeetingIdFromUrl(url: url) {
+            DDLogInfo("会议签到 id： \(meetingId)")
+            let meetingCheckUrl = AppDelegate.o2Collect.generateURLWithAppContextKey(MeetingContext.meetingContextKey, query: MeetingContext.meetingCheckInQuery, parameter: ["##id##": meetingId as AnyObject])
+            DDLogInfo("会议签到 meetingCheckUrl： \(meetingCheckUrl!)")
+            self.showLoading()
+            AF.request(meetingCheckUrl!, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: [tokenName:(account?.token)!]).responseJSON(completionHandler: {(response) in
+                switch response.result {
+                case .success(let val):
+                    DispatchQueue.main.async {
+                        self.hideLoading()
+                        DDLogDebug(String(describing:val))
+                        let alertController = UIAlertController(title: "提示", message: "签到成功", preferredStyle: .alert)
+                        let okAction = UIAlertAction(title: "确定", style: .default) {
+                            action in
+                            self.popVC()
+                        }
+                        alertController.addAction(okAction)
+                        self.presentVC(alertController)
                     }
-                    alertController.addAction(okAction)
-                    self.presentVC(alertController)
-                }
-            case .failure(let err):
-                DispatchQueue.main.async {
-                    self.hideLoading()
-                    DDLogError(err.localizedDescription)
-                    let alertController = UIAlertController(title: "提示", message: "签到失败", preferredStyle: .alert)
-                    let okAction = UIAlertAction(title: "确定", style: .destructive) {
-                        action in
-                        self.popVC()
+                case .failure(let err):
+                    DispatchQueue.main.async {
+                        self.hideLoading()
+                        DDLogError(err.localizedDescription)
+                        let alertController = UIAlertController(title: "提示", message: "签到失败", preferredStyle: .alert)
+                        let okAction = UIAlertAction(title: "确定", style: .destructive) {
+                            action in
+                            self.popVC()
+                        }
+                        alertController.addAction(okAction)
+                        self.presentVC(alertController)
                     }
-                    alertController.addAction(okAction)
-                    self.presentVC(alertController)
                 }
+            })
+        }else {
+            DispatchQueue.main.async {
+                let alertController = UIAlertController(title: "提示", message: "参数获取异常！", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "确定", style: .destructive) {
+                    action in
+                    self.popVC()
+                }
+                alertController.addAction(okAction)
+                self.presentVC(alertController)
             }
-        })
+        }
+        
+    }
+    
+    private func getMeetingIdFromUrl(url: String) -> String? {
+        do {
+            let re = try NSRegularExpression(pattern: "x_meeting_assemble_control\\/jaxrs\\/meeting\\/(.*?)\\/checkin", options: [])
+            let matches = re.matches(in: url, range: NSRange(location: 0, length: url.count))
+            if !matches.isEmpty {
+                let m = matches[0]
+                if m.numberOfRanges == 2 {
+                    let range = m.range(at: 1)
+                    if let r = Range(range, in: url) {
+                        return  url.substring(with: r)
+                    }
+                }
+//                for n in 0..<m.numberOfRanges {
+//                   let range = m.range(at: n)
+//                   if let r = Range(range, in: url) {
+//                       let a = url.substring(with: r)
+//                       print(a)
+//                   }
+//                }
+            }
+        }catch {
+            DDLogError(error.localizedDescription)
+        }
+        return nil
     }
     
 

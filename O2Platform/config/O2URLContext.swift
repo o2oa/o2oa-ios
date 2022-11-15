@@ -208,6 +208,8 @@ struct MeetingContext {
     static let meetingItemConfirmDenyIdQuery = "jaxrs/meeting/##id##/confirm/deny"
     static let meetingItemCompletedIdQuery = "jaxrs/meeting/##id##/manual/completed"
     static let meetingItemRejectIdQuery = "jaxrs/meeting/##id##/reject"
+    
+    static let meetingCheckInQuery = "jaxrs/meeting/##id##/checkin"
 
 }
 
