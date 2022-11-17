@@ -48,13 +48,12 @@ class O2MindSelectViewController: UITableViewController {
             self.tableView.reloadData()
         }.catch { error in
             DDLogError(error.localizedDescription)
-            self.showError(title: "请求数据异常！")
+//            self.showError(title: "请求数据异常！")
+            self.hideLoading()
         }
     }
   
-    
-    
-   
+
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return folderList.count
@@ -69,6 +68,7 @@ class O2MindSelectViewController: UITableViewController {
                 model.selected = false
             }
             cell.setFolderModel(folder: model)
+            cell.delegate = self
             return cell
         }
         return UITableViewCell()
@@ -84,5 +84,90 @@ class O2MindSelectViewController: UITableViewController {
         self.popVC()
     }
     
+    private func showEditMenu(folder: MindFolder) {
+        var menus :[UIAlertAction] = []
+        let chooseImg = UIAlertAction(title: "重命名", style: .default) { (ok) in
+            self.renameFolder(folder: folder)
+        }
+        menus.append(chooseImg)
+        let camera = UIAlertAction(title: "删除目录", style: .default) { (ok) in
+            self.deleteFolder(folder: folder)
+        }
+        menus.append(camera)
+        self.showSheetAction(title: "菜单", message: "", actions: menus)
+    }
+    
+    private func deleteFolder(folder: MindFolder) {
+        DDLogInfo("删除目录")
+        self.showDefaultConfirm(title: "提示", message: "确定要删除目录【\(folder.name ?? "")】?") { action in
+            self.showLoading()
+            self.viewModel.deleteFolder(id: folder.id!)
+                .then { id in
+                    DDLogDebug("删除成功，\(id)")
+                    self.hideLoading()
+                    if self.currentFolder.id == folder.id {
+                        if let first = self.folderList.first(where: { f in
+                            f.id != self.currentFolder.id
+                        }) {
+                            self.delegate?(first)
+                            
+                        }
+                    }
+                    DispatchQueue.main.async {
+                        self.popVC()
+                    }
+                }.catch { err in
+                    DDLogError("删除目录失败，\(err.localizedDescription)")
+                    self.hideLoading()
+                    if self.currentFolder.id == folder.id {
+                        if let first = self.folderList.first(where: { f in
+                            f.id != self.currentFolder.id
+                        }) {
+                            self.delegate?(first)
+                            
+                        }
+                    }
+                    DispatchQueue.main.async {
+                        self.popVC()
+                    }
+                }
+        }
+    }
+    private func renameFolder(folder: MindFolder) {
+        DDLogInfo("重命名")
+        self.showPromptAlert(title: "重命名", message: "请输入目录名称", inputText: folder.name ?? "") { action, result in
+            if result == "" || result.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+                self.showError(title: "请输入目录名称！")
+                return
+            }
+            self.showLoading()
+            self.viewModel.renameFolder(name: result, folder: folder)
+                .then { id in
+                    DDLogDebug("重命名成功，\(id)")
+                    self.hideLoading()
+                    if self.currentFolder.id == id {
+                        self.currentFolder.name = result
+                        self.delegate?(self.currentFolder)
+                    }
+                    DispatchQueue.main.async {
+                        self.popVC()
+                    }
+                }.catch { err in
+                    DDLogError("重命名目录失败，\(err.localizedDescription)")
+                    self.showError(title: "重命名目录失败！")
+                }
+        }
+    }
+    
 }
  
+
+extension O2MindSelectViewController: FolderTreeTableViewCellDelegate {
+    
+    func editFolder(_ folder: MindFolder) {
+        DDLogDebug("操作目录： \(folder.name ?? "")")
+        self.showEditMenu(folder: folder)
+    }
+    
+    
+}

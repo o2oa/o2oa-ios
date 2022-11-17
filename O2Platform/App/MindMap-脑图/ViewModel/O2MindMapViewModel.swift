@@ -72,6 +72,41 @@ class O2MindMapViewModel  {
             }
         }
     }
+    // 重命名目录
+    func renameFolder(name: String, folder: MindFolder)-> Promise<String> {
+        return Promise { fulfill, reject in
+            folder.name = name
+            self.mindMapAPI.request(.createFolder(folder)) { result in
+                let response = OOResult<BaseModelClass<O2IdDataModel>>(result)
+                if response.isResultSuccess() {
+                    if let id = response.model?.data?.id {
+                        fulfill(id)
+                    } else {
+                        reject(OOAppError.apiEmptyResultError)
+                    }
+                } else {
+                    reject(response.error!)
+                }
+            }
+        }
+    }
+    // 删除目录
+    func deleteFolder(id: String) -> Promise<String> {
+        return Promise { fulfill, reject in
+            self.mindMapAPI.request(.deleteFolder(id)) { result in
+                let response = OOResult<BaseModelClass<O2IdDataModel>>(result)
+                if response.isResultSuccess() {
+                    if let id = response.model?.data?.id {
+                        fulfill(id)
+                    } else {
+                        reject(OOAppError.apiEmptyResultError)
+                    }
+                } else {
+                    reject(response.error!)
+                }
+            }
+        }
+    }
     
     // 保存脑图
     func saveMindMap(mind: MindMapItem)-> Promise<String> {
@@ -90,6 +125,43 @@ class O2MindMapViewModel  {
             }
         }
     }
+    // 重命名脑图
+    func renameMindMap(name: String, mind: MindMapItem)-> Promise<String> {
+        return Promise { fulfill, reject in
+            mind.name = name
+            self.mindMapAPI.request(.saveMindMap(mind)) { result in
+                let response = OOResult<BaseModelClass<O2IdDataModel>>(result)
+                if response.isResultSuccess() {
+                    if let id = response.model?.data?.id {
+                        fulfill(id)
+                    } else {
+                        reject(OOAppError.apiEmptyResultError)
+                    }
+                } else {
+                    reject(response.error!)
+                }
+            }
+        }
+    }
+    
+    // 删除脑图
+    func deleteMindMap(id: String) -> Promise<String> {
+        return Promise { fulfill, reject in
+            self.mindMapAPI.request(.deleteMindMap(id)) { result in
+                let response = OOResult<BaseModelClass<O2IdDataModel>>(result)
+                if response.isResultSuccess() {
+                    if let id = response.model?.data?.id {
+                        fulfill(id)
+                    } else {
+                        reject(OOAppError.apiEmptyResultError)
+                    }
+                } else {
+                    reject(response.error!)
+                }
+            }
+        }
+    }
+    
     // 上传缩略图
     func saveMindMapThumb(image: UIImage, id: String)-> Promise<String> {
         return Promise { fulfill, reject in

@@ -9,6 +9,10 @@
 import UIKit
 
 
+protocol MindMapItemTableViewCellDelegate {
+    func editMindmap(_ map: MindMapItem?)
+}
+
 class MindMapItemTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -19,14 +23,25 @@ class MindMapItemTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
+    var delegate: MindMapItemTableViewCellDelegate?
+    var item: MindMapItem?
     
     @IBOutlet weak var preViewImage: UIImageView! //预览图
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var versionLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     
+    @IBOutlet weak var moreBtnView: UIButton!
+    
+    @IBAction func moreBtn(_ sender: UIButton) {
+        self.delegate?.editMindmap(self.item)
+    }
+    
     
     func setItem(item: MindMapItem) {
+        self.moreBtnView.setTitle("", for: .normal)
+        self.moreBtnView.tintColor = UIColor(hex: "#999999")
+        self.item = item
         self.titleLabel.text = item.name
         self.versionLabel.text = "版本：\(item.fileVersion ?? 1)"
         self.timeLabel.text = timeFormat(time: item.updateTime)

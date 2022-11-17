@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="U5G-Wj-uPt">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="U5G-Wj-uPt">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -56,11 +56,11 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="4aZ-I6-eij">
-                                <rect key="frame" x="0.0" y="88" width="414" height="710"/>
+                                <rect key="frame" x="0.0" y="92" width="414" height="706"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MindMapItemTableViewCell" rowHeight="64" id="dxB-U4-3Gf" customClass="MindMapItemTableViewCell" customModule="O2Platform" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="64"/>
+                                        <rect key="frame" x="0.0" y="50" width="414" height="64"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dxB-U4-3Gf" id="ivp-mC-Vnk">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="64"/>
@@ -86,25 +86,40 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12-04 09:11" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iwX-cN-E9E">
-                                                    <rect key="frame" x="332.5" y="24.5" width="67.5" height="15"/>
+                                                    <rect key="frame" x="291.5" y="41.5" width="67.5" height="14.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" red="0.60000008344650269" green="0.60000008344650269" blue="0.60000008344650269" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3XE-s1-EGl">
+                                                    <rect key="frame" x="361" y="8" width="48" height="48"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="48" id="gze-h5-9j9"/>
+                                                        <constraint firstAttribute="width" constant="48" id="pcQ-uz-090"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" image="icon_more_s"/>
+                                                    <connections>
+                                                        <action selector="moreBtn:" destination="dxB-U4-3Gf" eventType="touchUpInside" id="EeD-JF-9gR"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="tMq-w0-Ha9" secondAttribute="bottom" constant="8" id="2CU-8u-u4P"/>
-                                                <constraint firstAttribute="trailing" secondItem="iwX-cN-E9E" secondAttribute="trailing" constant="14" id="AcC-vx-I7M"/>
+                                                <constraint firstAttribute="bottom" secondItem="iwX-cN-E9E" secondAttribute="bottom" constant="8" id="BOb-Wg-afb"/>
+                                                <constraint firstItem="3XE-s1-EGl" firstAttribute="centerY" secondItem="ivp-mC-Vnk" secondAttribute="centerY" id="D2e-TT-L3K"/>
                                                 <constraint firstItem="ovk-oj-PA0" firstAttribute="leading" secondItem="tMq-w0-Ha9" secondAttribute="trailing" constant="12" id="EIQ-SG-A7e"/>
+                                                <constraint firstAttribute="trailing" secondItem="3XE-s1-EGl" secondAttribute="trailing" constant="5" id="I5R-sL-5Au"/>
                                                 <constraint firstItem="CM1-61-yBc" firstAttribute="leading" secondItem="tMq-w0-Ha9" secondAttribute="trailing" constant="12" id="ZuZ-EN-Q9C"/>
                                                 <constraint firstItem="tMq-w0-Ha9" firstAttribute="top" secondItem="ivp-mC-Vnk" secondAttribute="top" constant="8" id="eMc-fD-uYu"/>
                                                 <constraint firstItem="CM1-61-yBc" firstAttribute="top" secondItem="ivp-mC-Vnk" secondAttribute="top" constant="8" id="eWy-Tx-caV"/>
-                                                <constraint firstItem="iwX-cN-E9E" firstAttribute="centerY" secondItem="ivp-mC-Vnk" secondAttribute="centerY" id="heA-P5-ry1"/>
                                                 <constraint firstItem="tMq-w0-Ha9" firstAttribute="leading" secondItem="ivp-mC-Vnk" secondAttribute="leading" constant="14" id="i6i-CF-JNA"/>
+                                                <constraint firstItem="3XE-s1-EGl" firstAttribute="leading" secondItem="iwX-cN-E9E" secondAttribute="trailing" constant="2" id="n1B-42-TRj"/>
                                                 <constraint firstAttribute="bottom" secondItem="ovk-oj-PA0" secondAttribute="bottom" constant="8" id="ola-6r-R9S"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="moreBtnView" destination="3XE-s1-EGl" id="jcx-c5-iFI"/>
                                             <outlet property="preViewImage" destination="tMq-w0-Ha9" id="HR4-kO-1pt"/>
                                             <outlet property="timeLabel" destination="iwX-cN-E9E" id="7Jm-L7-vWy"/>
                                             <outlet property="titleLabel" destination="CM1-61-yBc" id="lEY-hA-RAU"/>
@@ -165,7 +180,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="coT-IH-d9u">
-                                <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="50" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="coT-IH-d9u" id="i4Q-uT-O7O">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -190,7 +205,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="U5G-Wj-uPt" customClass="ZLNavigationController" customModule="O2Platform" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="1Ff-XP-8AS">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -205,8 +220,9 @@
     </scenes>
     <resources>
         <image name="default_image" width="63" height="63"/>
-        <image name="folder.fill" catalog="system" width="128" height="97"/>
+        <image name="folder.fill" catalog="system" width="128" height="96"/>
         <image name="icon_arrow_up" width="22" height="22"/>
+        <image name="icon_more_s" width="22" height="22"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

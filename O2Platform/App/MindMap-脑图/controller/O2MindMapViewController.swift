@@ -216,6 +216,62 @@ class O2MindMapViewController: UIViewController {
         self.performSegue(withIdentifier: "showMindMapCanvas", sender: id)
     }
 
+    private func showEditMenu(item: MindMapItem) {
+        var menus :[UIAlertAction] = []
+        let chooseImg = UIAlertAction(title: "重命名脑图", style: .default) { (ok) in
+            self.renameMindMap(item: item)
+        }
+        menus.append(chooseImg)
+        let camera = UIAlertAction(title: "删除脑图", style: .default) { (ok) in
+            self.deleteMindMap(item: item)
+        }
+        menus.append(camera)
+        self.showSheetAction(title: "菜单", message: "", actions: menus)
+    }
+    // 重命名脑图
+    private func renameMindMap(item: MindMapItem) {
+        self.showPromptAlert(title: "重命名", message: "请输入脑图名称", inputText: item.name ?? "") { action, result in
+            if result == "" || result.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+                self.showError(title: "请输入脑图名称！")
+                return
+            }
+            self.showLoading()
+            self.viewModel.renameMindMap(name: result, mind: item)
+                .then { id in
+                    DDLogDebug("重命名成功，打开脑图 \(id)")
+                    self.hideLoading()
+                    // 重新查询列表
+                    self.nextId = O2.O2_First_ID
+                    self.loadMindMapList()
+                }.catch { err in
+                    DDLogError("创建脑图失败，\(err.localizedDescription)")
+                    self.hideLoading()
+                    // 重新查询列表
+                    self.nextId = O2.O2_First_ID
+                    self.loadMindMapList()
+                }
+        }
+    }
+    // 删除脑图
+    private func deleteMindMap(item: MindMapItem) {
+        self.showDefaultConfirm(title: "提示", message: "确定要删除脑图【\(item.name ?? "")】?") { action in
+            self.showLoading()
+            self.viewModel.deleteMindMap(id: item.id!)
+                .then { id in
+                    DDLogDebug("删除成功，\(id)")
+                    self.hideLoading()
+                    // 重新查询列表
+                    self.nextId = O2.O2_First_ID
+                    self.loadMindMapList()
+                }.catch { err in
+                    DDLogError("删除目录失败，\(err.localizedDescription)")
+                    self.hideLoading()
+                    // 重新查询列表
+                    self.nextId = O2.O2_First_ID
+                    self.loadMindMapList()
+                }
+        }
+    }
 }
 
 
@@ -228,6 +284,7 @@ extension O2MindMapViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "MindMapItemTableViewCell", for: indexPath) as? MindMapItemTableViewCell {
             cell.setItem(item: mindMapList[indexPath.row])
+            cell.delegate = self
             return cell
         }
         return UITableViewCell()
@@ -239,6 +296,14 @@ extension O2MindMapViewController: UITableViewDelegate, UITableViewDataSource {
             self.openMindMapView(id: id)
         } else {
             DDLogError("mind map item id 为空。。。。。")
+        }
+    }
+}
+
+extension O2MindMapViewController: MindMapItemTableViewCellDelegate {
+    func editMindmap(_ map: MindMapItem?) {
+        if let map = map {
+            self.showEditMenu(item: map)
         }
     }
 }
