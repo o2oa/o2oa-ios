@@ -59,10 +59,6 @@ class OOAttendanceCheckInNewController: UIViewController {
         self.checkInBtnView.addTapGesture { (tap) in
             self.postCheckinButton(nil)
         }
-
-        
-        //获取数据
-        self.loadMyRecords()
        
     }
 
@@ -72,6 +68,8 @@ class OOAttendanceCheckInNewController: UIViewController {
             self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timeTick), userInfo: nil, repeats: true)
         }
         self.timer?.fire()
+        //获取数据
+        self.loadMyRecords()
         //工作地址
         self.loadWorkPlace()
         
