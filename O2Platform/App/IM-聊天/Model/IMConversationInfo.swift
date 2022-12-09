@@ -159,8 +159,10 @@ struct  O2LocationData {
 
 /// IM聊天的配置文件
 open class IMConfig: NSObject, HandyJSON, NSCoding {
-    open var enableClearMsg: Bool?
-    open var enableRevokeMsg: Bool?
+    open var enableClearMsg: Bool? // 是否开启清空消息 老版本的用法
+    open var enableRevokeMsg: Bool? // 是否开启撤回消息功能
+    open var versionNo: Int?  // 版本号
+    open var changelog: String? // 更新说明
     
     public func encode(with aCoder: NSCoder) {
         if enableClearMsg != nil {
@@ -169,12 +171,20 @@ open class IMConfig: NSObject, HandyJSON, NSCoding {
         if enableRevokeMsg != nil {
             aCoder.encode(enableRevokeMsg, forKey: "enableRevokeMsg")
         }
+        if versionNo != nil {
+            aCoder.encode(versionNo, forKey: "versionNo")
+        }
+        if changelog != nil {
+            aCoder.encode(changelog, forKey: "changelog")
+        }
         
     }
     
     public required init?(coder aDecoder: NSCoder) {
         enableClearMsg = aDecoder.decodeObject(forKey: "enableClearMsg") as? Bool
         enableRevokeMsg = aDecoder.decodeObject(forKey: "enableRevokeMsg") as? Bool
+        versionNo = aDecoder.decodeObject(forKey: "versionNo") as? Int
+        changelog = aDecoder.decodeObject(forKey: "changelog") as? String
     }
     
     required public override init() {}

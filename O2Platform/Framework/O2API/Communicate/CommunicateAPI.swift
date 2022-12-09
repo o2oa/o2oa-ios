@@ -25,6 +25,8 @@ enum CommunicateAPI {
     case clearAllChatMsg(String)
     case revokeMsg(String)
     case getImConfig
+    case deleteGroupConversation(String)
+    case deleteSingleConversation(String)
     
     
 }
@@ -79,6 +81,10 @@ extension CommunicateAPI: TargetType {
             return "/jaxrs/im/msg/revoke/\(msgId)"
         case .getImConfig:
             return "/jaxrs/im/manager/config"
+        case .deleteGroupConversation(let conversationId):
+            return "/jaxrs/im/conversation/\(conversationId)/group"
+        case .deleteSingleConversation(let conversationId):
+            return "/jaxrs/im/conversation/\(conversationId)/single"
         }
     }
     
@@ -90,7 +96,7 @@ extension CommunicateAPI: TargetType {
             return .post
         case .readConversation(_), .updateConversationPeople(_, _), .updateConversationTitle(_, _):
             return .put
-        case .clearAllChatMsg(_):
+        case .clearAllChatMsg(_), .deleteGroupConversation(_), .deleteSingleConversation(_):
             return .delete
         }
     }
@@ -101,7 +107,8 @@ extension CommunicateAPI: TargetType {
     
     var task: Task {
         switch self {
-        case .myConversationList, .instantMessageList(_), .readConversation(_), .clearAllChatMsg(_), .revokeMsg(_), .getImConfig:
+        case .myConversationList, .instantMessageList(_), .readConversation(_), .clearAllChatMsg(_),
+                .revokeMsg(_), .getImConfig, .deleteGroupConversation(_), .deleteSingleConversation(_):
             return .requestPlain
         case .msgListByPaging(_, _, let conversationId):
             let form = IMMessageRequestForm()

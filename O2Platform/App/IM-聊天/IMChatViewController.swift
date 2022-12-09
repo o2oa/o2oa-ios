@@ -141,7 +141,9 @@ class IMChatViewController: UIViewController {
 
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "修改", style: .plain, target: self, action: #selector(clickUpdate))
         } else if self.conversation?.type == o2_im_conversation_type_single {
-            if imConfig.enableClearMsg == true {
+            if let vNo = imConfig.versionNo, vNo >= 200 {
+                navigationItem.rightBarButtonItem = UIBarButtonItem(title: "删除会话", style: .plain, target: self, action: #selector(deleteSingleChat))
+            } else if imConfig.enableClearMsg == true {
                 navigationItem.rightBarButtonItem = UIBarButtonItem(title: "清除聊天记录", style: .plain, target: self, action: #selector(clearAllChatMsg))
             }
         }
@@ -225,12 +227,49 @@ class IMChatViewController: UIViewController {
                 self.updatePeople()
             })
         ]
-        if imConfig.enableClearMsg == true {
+        
+        if let vNo = imConfig.versionNo, vNo >= 200 {
+            arr.append(UIAlertAction(title: "删除群聊", style: .default, handler: { (action) in
+                self.deleteGroupChat()
+            }))
+        } else if imConfig.enableClearMsg == true {
             arr.append(UIAlertAction(title: "清除聊天记录", style: .default, handler: { (action) in
                 self.clearAllChatMsg()
             }))
         }
+        
         self.showSheetAction(title: "", message: "选择要修改的项", actions: arr)
+    }
+    
+    // 删除群聊
+    @objc private func deleteGroupChat() {
+        self.showDefaultConfirm(title: "提示", message: "确定要删除当前群聊吗，删除后会解散当前群并清空所有聊天记录？") { action in
+            if let id = self.conversation?.id {
+                self.viewModel.deleteGroupConversation(conversationId:  id).then { result in
+                    if result {
+                        DDLogDebug("删除成功！")
+                        self.popVC()
+                    } else {
+                        self.showError(title: "删除失败！")
+                    }
+                }
+            }
+        }
+    }
+    // 单聊 删除当前会话 个人删除
+    @objc private func deleteSingleChat() {
+        self.showDefaultConfirm(title: "提示", message: "确定要删除当前会话吗，删除后会清空所有聊天记录？") { action in
+            if let id = self.conversation?.id {
+                self.viewModel.deleteSingleConversation(conversationId:  id).then { result in
+                    if result {
+                        DDLogDebug("删除成功！")
+                        self.popVC()
+                    } else {
+                        self.showError(title: "删除失败！")
+                    }
+                }
+            }
+        }
     }
     
     @objc private func clearAllChatMsg() {

@@ -277,4 +277,32 @@ extension IMViewModel {
             })
         }
     }
+    
+    // 删除群聊
+    func deleteGroupConversation(conversationId: String) -> Promise<Bool> {
+        return Promise {fulfill, reject in
+            self.communicateAPI.request(.deleteGroupConversation(conversationId), completion: {result in
+                let response = OOResult<BaseModelClass<OOCommonValueBoolModel>>(result)
+                if response.isResultSuccess() {
+                    fulfill(true)
+                }else {
+                    fulfill(false)
+                }
+            })
+        }
+    }
+    
+    // 删除单聊会话 个人侧的
+    func deleteSingleConversation(conversationId: String) -> Promise<Bool> {
+        return Promise {fulfill, reject in
+            self.communicateAPI.request(.deleteSingleConversation(conversationId), completion: {result in
+                let response = OOResult<BaseModelClass<OOCommonValueBoolModel>>(result)
+                if response.isResultSuccess() {
+                    fulfill(true)
+                }else {
+                    fulfill(false)
+                }
+            })
+        }
+    }
 }
