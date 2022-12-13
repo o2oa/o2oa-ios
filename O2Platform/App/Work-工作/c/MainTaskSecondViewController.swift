@@ -40,8 +40,8 @@ class MainTaskSecondViewController: UIViewController {
                 let imageShowView = self.tableView.tableHeaderView?.subviews[0] as? ImageSlidesShowView
                 imageShowView?.imageshowEntitys = taskImageshowEntitys
 //                self.tableView.reloadData()
-            }else {
-                self.tableView.tableHeaderView = self.initTableHeaderImageView()
+            } else {
+                // self.tableView.tableHeaderView = self.initTableHeaderImageView()
             }
         }
     }
@@ -125,7 +125,7 @@ class MainTaskSecondViewController: UIViewController {
 
         self.seguementControl = initSegumentControl()
         self.tableView.dataSource = self
-        self.tableView.tableHeaderView = self.initTableHeaderImageView()
+        // 默认滚动大图不显示 有数据才显示 self.tableView.tableHeaderView = self.initTableHeaderImageView()
         self.tableView.separatorStyle = .none //分割线
 //        if #available(iOS 11.0, *) {
 //            let topConstant = CGFloat(0 - IOS11_TOP_STATUSBAR_HEIGHT)
