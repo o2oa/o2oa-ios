@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Yna-g7-LKp">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Yna-g7-LKp">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -25,7 +25,7 @@
                                 <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NewMainAppTableViewCell" id="uHm-nK-NDr" customClass="NewMainAppTableViewCell" customModule="O2Platform" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="44.666666030883789" width="414" height="100"/>
+                                        <rect key="frame" x="0.0" y="50" width="414" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uHm-nK-NDr" id="ho7-3Z-4SQ">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
@@ -60,9 +60,27 @@
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_daiban" translatesAutoresizingMaskIntoConstraints="NO" id="hBu-p1-1i2">
                                                                         <rect key="frame" x="18" y="25" width="38" height="38"/>
                                                                     </imageView>
+                                                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fhb-NX-BL5">
+                                                                        <rect key="frame" x="42" y="15" width="24" height="24"/>
+                                                                        <color key="backgroundColor" red="0.98431372549999996" green="0.2784313725" blue="0.2784313725" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="height" constant="24" id="Jdv-Lf-fOr"/>
+                                                                            <constraint firstAttribute="width" constant="24" id="Nns-92-JDp"/>
+                                                                        </constraints>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                                                <real key="value" value="12"/>
+                                                                            </userDefinedRuntimeAttribute>
+                                                                        </userDefinedRuntimeAttributes>
+                                                                    </label>
                                                                 </subviews>
                                                             </view>
                                                             <constraints>
+                                                                <constraint firstItem="fhb-NX-BL5" firstAttribute="top" secondItem="hBu-p1-1i2" secondAttribute="top" constant="-10" id="8BJ-pE-agE"/>
+                                                                <constraint firstItem="fhb-NX-BL5" firstAttribute="trailing" secondItem="hBu-p1-1i2" secondAttribute="trailing" constant="10" id="8vc-Yr-UWA"/>
                                                                 <constraint firstItem="5l8-N8-iM6" firstAttribute="top" secondItem="hBu-p1-1i2" secondAttribute="bottom" constant="3" id="MPD-Nf-zp4"/>
                                                                 <constraint firstItem="hBu-p1-1i2" firstAttribute="centerX" secondItem="5l8-N8-iM6" secondAttribute="centerX" id="YP5-e4-07w"/>
                                                                 <constraint firstItem="5l8-N8-iM6" firstAttribute="trailing" secondItem="rIu-9W-KHp" secondAttribute="trailingMargin" id="gtO-Bj-13k"/>
@@ -72,6 +90,7 @@
                                                             <connections>
                                                                 <outlet property="appIconImageView" destination="hBu-p1-1i2" id="rdz-CS-Tgb"/>
                                                                 <outlet property="appNameLabel" destination="5l8-N8-iM6" id="cZl-L7-WA3"/>
+                                                                <outlet property="numberLabel" destination="fhb-NX-BL5" id="n1Z-05-K99"/>
                                                             </connections>
                                                         </collectionViewCell>
                                                     </cells>
@@ -91,7 +110,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NewMainItemTableViewCell" rowHeight="95" id="2lo-9G-gYt" customClass="NewMainItemTableViewCell" customModule="O2Platform" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="144.66666603088379" width="414" height="95"/>
+                                        <rect key="frame" x="0.0" y="150" width="414" height="95"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2lo-9G-gYt" id="2l6-Rz-BBm">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="95"/>
@@ -360,7 +379,7 @@
                         <color key="separatorColor" red="0.8666666666666667" green="0.8666666666666667" blue="0.8666666666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="todoedActionCell" rowHeight="60" id="dh0-qn-yzU" customClass="TodoedActionCell" customModule="O2Platform" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="49" width="414" height="60"/>
+                                <rect key="frame" x="0.0" y="55.333332061767578" width="414" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dh0-qn-yzU" id="UrS-UP-zep">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
@@ -404,7 +423,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="todoedStatusCell" rowHeight="100" id="upI-yA-6nk" customClass="TodoedStatusCell" customModule="O2Platform" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="109" width="414" height="100"/>
+                                <rect key="frame" x="0.0" y="115.33333206176758" width="414" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="upI-yA-6nk" id="FMH-Ke-HJw">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
@@ -510,7 +529,7 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TodoTaskTableViewCell" rowHeight="70" id="wLO-f2-jz3" customClass="TodoTaskTableViewCell" customModule="O2Platform" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44.666666030883789" width="414" height="70"/>
+                                <rect key="frame" x="0.0" y="50" width="414" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wLO-f2-jz3" id="3D0-U7-9Ot">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
@@ -608,7 +627,7 @@
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="ZoneMainCategoryTableViewCell" focusStyle="custom" id="6v7-AE-Kng" customClass="ZoneMainCategoryTableViewCell" customModule="O2Platform" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44.666666030883789" width="414" height="50"/>
+                                <rect key="frame" x="0.0" y="50" width="414" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6v7-AE-Kng" id="n1h-VE-hxv">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
@@ -665,7 +684,7 @@
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ZoneSubCategoryTableViewCell" id="dZa-XQ-nqt" customClass="ZoneSubCategoryTableViewCell" customModule="O2Platform" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44.666666030883789" width="414" height="50"/>
+                                <rect key="frame" x="0.0" y="50" width="414" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dZa-XQ-nqt" id="lkT-PO-rBt">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>

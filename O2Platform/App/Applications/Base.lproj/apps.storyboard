@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Ll3-s1-0Ow">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Ll3-s1-0Ow">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -121,13 +121,31 @@
                                                         <constraint firstAttribute="height" constant="20" id="uWh-k4-Gvk"/>
                                                     </constraints>
                                                 </imageView>
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fJk-9q-0LX">
+                                                    <rect key="frame" x="48" y="8" width="24" height="24"/>
+                                                    <color key="backgroundColor" red="0.98431372549999996" green="0.2784313725" blue="0.2784313725" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="24" id="NEQ-Mk-XXw"/>
+                                                        <constraint firstAttribute="height" constant="24" id="j2l-oj-7wf"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="12"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </label>
                                             </subviews>
                                         </view>
                                         <constraints>
+                                            <constraint firstItem="fJk-9q-0LX" firstAttribute="top" secondItem="lYT-yw-S0m" secondAttribute="topMargin" id="B72-Sw-iDa"/>
                                             <constraint firstItem="R2n-3i-RZ5" firstAttribute="trailing" secondItem="lYT-yw-S0m" secondAttribute="trailingMargin" id="I2X-s9-oUS"/>
                                             <constraint firstItem="R2n-3i-RZ5" firstAttribute="bottom" secondItem="lYT-yw-S0m" secondAttribute="bottomMargin" id="JBM-B7-bvc"/>
                                             <constraint firstItem="3Zl-R7-De9" firstAttribute="centerX" secondItem="R2n-3i-RZ5" secondAttribute="centerX" id="JrO-2C-N9h"/>
                                             <constraint firstAttribute="trailing" secondItem="bUc-Wt-8FT" secondAttribute="trailing" id="Myq-Vv-QJT"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="fJk-9q-0LX" secondAttribute="trailing" id="Yno-5Y-h9e"/>
                                             <constraint firstItem="3Zl-R7-De9" firstAttribute="top" secondItem="lYT-yw-S0m" secondAttribute="topMargin" id="q9H-7d-ZbV"/>
                                             <constraint firstItem="bUc-Wt-8FT" firstAttribute="top" secondItem="lYT-yw-S0m" secondAttribute="top" id="w7H-dA-dvC"/>
                                             <constraint firstItem="R2n-3i-RZ5" firstAttribute="leading" secondItem="lYT-yw-S0m" secondAttribute="leadingMargin" id="yXr-6Q-ofM"/>
@@ -135,6 +153,7 @@
                                         <connections>
                                             <outlet property="appIconImageView" destination="3Zl-R7-De9" id="87V-iQ-OFH"/>
                                             <outlet property="appTitle" destination="R2n-3i-RZ5" id="zPM-IK-CPl"/>
+                                            <outlet property="numberLabel" destination="fJk-9q-0LX" id="2V8-0p-Frs"/>
                                             <outlet property="opIconImageView" destination="bUc-Wt-8FT" id="weU-8P-UiM"/>
                                         </connections>
                                     </collectionViewCell>
@@ -248,7 +267,7 @@
                         <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="OOAppEditCell" id="aQ3-y4-hh4" customClass="OOAppEditCell" customModule="O2Platform" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44.5" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="50" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="aQ3-y4-hh4" id="7OI-2t-O0e">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>

@@ -8,6 +8,9 @@
 
 import UIKit
 import CocoaLumberjack
+import Alamofire
+import AlamofireObjectMapper
+import ObjectMapper
 
 class O2CollectionViewCell: UICollectionViewCell {
    
@@ -22,6 +25,9 @@ class O2CollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var appTitle: UILabel!
     
+    @IBOutlet weak var numberLabel: UILabel!
+    
+    
     private var nowData:O2App?
     
     override func prepareForReuse() {
@@ -32,6 +38,7 @@ class O2CollectionViewCell: UICollectionViewCell {
     // editIcon 0 不编辑 1 选中的应用显示删除icon 2 选中的应用显示已选择的icon 3未选中的应用显示可选择的icon
     func setAppData(app: O2App, editIcon: Int) {
         self.nowData = app
+        self.numberLabel.isHidden = true
         if editIcon == 0 {
             self.opIconImageView.isHidden  = true
         } else {
@@ -69,6 +76,42 @@ class O2CollectionViewCell: UICollectionViewCell {
         } else{
             self.appIconImageView.image = UIImage(named: app.normalIcon!)
             self.appIconImageView.highlightedImage = UIImage(named: app.selectedIcon!)
+            if let dn = O2AuthSDK.shared.myInfo()?.distinguishedName, editIcon == 0  {
+                DDLogDebug("这里进来了。。。。。dn：\(dn)")
+                if app.appId == "task" || app.appId == "read" {
+                    if let countUrl = AppDelegate.o2Collect.generateURLWithAppContextKey(ApplicationContext.applicationContextKey, query: ApplicationContext.countByPerson, parameter: ["##credential##": dn as AnyObject]) {
+                        DDLogDebug("这里进来了。。。。。countUrl：\(countUrl)")
+                        AF.request(countUrl, method: .get, parameters:nil, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+                            switch response.result {
+                            case .success(let val):
+//                                DDLogDebug("这里进来了。。。。。val：\(val)")
+                                let json = JSON(val)["data"]
+                                let type = JSON(val)["type"]
+                                if type == "success" {
+                                    let pInfos = Mapper<WorkNumbersData>().map(JSONString: json.description)
+                                    DispatchQueue.main.async {
+                                        if let uPInfos = pInfos, self.nowData?.appId == app.appId {
+                                            if app.appId == "task" {
+                                                self.numberLabel.text = "\(uPInfos.task ?? 0)"
+                                                self.numberLabel.isHidden = false
+                                            }
+                                            if app.appId == "read" {
+                                                self.numberLabel.text = "\(uPInfos.read ?? 0)"
+                                                self.numberLabel.isHidden = false
+                                            }
+                                        }
+                                    }
+                                }
+                                break
+                            case .failure(let err):
+                                DDLogDebug("这里进来了。。。。 错误。了")
+                                DDLogError(err.localizedDescription)
+                                break
+                            }
+                        }
+                    }
+                }
+            }
         }
         self.appTitle.text = app.title
     }

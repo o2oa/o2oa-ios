@@ -358,6 +358,7 @@
 		B1C19025211437E200935829 /* OOCalendarLeftMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C19024211437E200935829 /* OOCalendarLeftMenuController.swift */; };
 		B1C1905D2114410D00935829 /* CalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C1905C2114410D00935829 /* CalendarTableViewCell.swift */; };
 		B1C303E622D58C1A00C17E5A /* CMSAttachmentInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C303E522D58C1A00C17E5A /* CMSAttachmentInfoResponse.swift */; };
+		B1CD04E32949C4EA00A40414 /* WorkNumbersData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CD04E22949C4EA00A40414 /* WorkNumbersData.swift */; };
 		B1D14739258C8F610053DB4F /* listener08_anim.gif in Resources */ = {isa = PBXBuildFile; fileRef = B1D14736258C8F610053DB4F /* listener08_anim.gif */; };
 		B1D1473A258C8F610053DB4F /* chat_play_left.gif in Resources */ = {isa = PBXBuildFile; fileRef = B1D14737258C8F610053DB4F /* chat_play_left.gif */; };
 		B1D1473B258C8F610053DB4F /* chat_play_right.gif in Resources */ = {isa = PBXBuildFile; fileRef = B1D14738258C8F610053DB4F /* chat_play_right.gif */; };
@@ -1610,6 +1611,7 @@
 		B1C19024211437E200935829 /* OOCalendarLeftMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOCalendarLeftMenuController.swift; sourceTree = "<group>"; };
 		B1C1905C2114410D00935829 /* CalendarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTableViewCell.swift; sourceTree = "<group>"; };
 		B1C303E522D58C1A00C17E5A /* CMSAttachmentInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSAttachmentInfoResponse.swift; sourceTree = "<group>"; };
+		B1CD04E22949C4EA00A40414 /* WorkNumbersData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkNumbersData.swift; sourceTree = "<group>"; };
 		B1D14736258C8F610053DB4F /* listener08_anim.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = listener08_anim.gif; sourceTree = "<group>"; };
 		B1D14737258C8F610053DB4F /* chat_play_left.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = chat_play_left.gif; sourceTree = "<group>"; };
 		B1D14738258C8F610053DB4F /* chat_play_right.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = chat_play_right.gif; sourceTree = "<group>"; };
@@ -4437,6 +4439,7 @@
 				B1908E1322685E8F00D75632 /* O2WebViewModels.swift */,
 				B1BA42B724133AC40081CED8 /* TaskCreateData.swift */,
 				B1B1302F25021EAC003B99DF /* WorkInfoResData.swift */,
+				B1CD04E22949C4EA00A40414 /* WorkNumbersData.swift */,
 			);
 			path = m;
 			sourceTree = "<group>";
@@ -5495,6 +5498,7 @@
 				B15116042567951B005A1019 /* OOMeetingFormViewController.swift in Sources */,
 				E4B888751D9D48F1002E1A46 /* Department.swift in Sources */,
 				B190923521071777009A7906 /* OOCalendarModels.swift in Sources */,
+				B1CD04E32949C4EA00A40414 /* WorkNumbersData.swift in Sources */,
 				B17BF43022B23758009E36E0 /* SkinViewController.swift in Sources */,
 				E40E24D520B7DA3C009F8BE7 /* OMeetingPersonActionCell.swift in Sources */,
 				B1C0A1A2256E3EEA00C7041E /* MeetingFormChoosePersonCell.swift in Sources */,

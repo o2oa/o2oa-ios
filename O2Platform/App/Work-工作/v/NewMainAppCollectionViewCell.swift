@@ -7,12 +7,19 @@
 //
 
 import UIKit
+import Alamofire
+import AlamofireObjectMapper
+import ObjectMapper
+import CocoaLumberjack
 
 class NewMainAppCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var appIconImageView: UIImageView!
     
     @IBOutlet weak var appNameLabel: UILabel!
+    
+    @IBOutlet weak var numberLabel: UILabel!
+    
     
     private var nowData:O2App?
     
@@ -44,6 +51,42 @@ class NewMainAppCollectionViewCell: UICollectionViewCell {
                 }
             } else {
                 self.appIconImageView.image = UIImage(named: app.normalIcon!)
+            }
+        } else {
+            
+            self.numberLabel.isHidden = true
+            if let dn = O2AuthSDK.shared.myInfo()?.distinguishedName {
+                if app.appId == "task" || app.appId == "read" {
+                    if let countUrl = AppDelegate.o2Collect.generateURLWithAppContextKey(ApplicationContext.applicationContextKey, query: ApplicationContext.countByPerson, parameter: ["##credential##": dn as AnyObject]) {
+                        AF.request(countUrl, method: .get, parameters:nil, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+                            switch response.result {
+                            case .success(let val):
+                                let json = JSON(val)["data"]
+                                let type = JSON(val)["type"]
+                                if type == "success" {
+                                    let pInfos = Mapper<WorkNumbersData>().map(JSONString: json.description)
+                                    DispatchQueue.main.async {
+                                        if let uPInfos = pInfos, self.nowData?.appId == app.appId {
+                                            if app.appId == "task" {
+                                                self.numberLabel.text = "\(uPInfos.task ?? 0)"
+                                                self.numberLabel.isHidden = false
+                                            }
+                                            if app.appId == "read" {
+                                                self.numberLabel.text = "\(uPInfos.read ?? 0)"
+                                                self.numberLabel.isHidden = false
+                                            }
+                                        }
+                                    }
+                                }
+                                break
+                            case .failure(let err):
+                                DDLogDebug("这里进来了。。。。 错误。了")
+                                DDLogError(err.localizedDescription)
+                                break
+                            }
+                        }
+                    }
+                }
             }
         }
     }

@@ -114,6 +114,7 @@ struct ApplicationContext {
     static let applicationListQuery2 = "application.json"
     static let applicationListQueryForPortal = "jaxrs/portal/list"
     static let applicationIconQuery = "jaxrs/portal/##applicationId##/icon"
+    static let countByPerson = "jaxrs/work/count/##credential##"
 }
 
 //首页图片
