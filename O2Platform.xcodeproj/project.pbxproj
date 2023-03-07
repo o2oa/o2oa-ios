@@ -6341,8 +6341,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = O2Platform/O2Platform.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development: guodong lou (JDB49W26VS)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development: guodong lou (JDB49W26VS)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 129;
 				DEVELOPMENT_TEAM = C79YTQHHFY;
