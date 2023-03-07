@@ -30,7 +30,7 @@ class CMSAPPCollectionViewCell: UICollectionViewCell {
             }
             self.appNameLabel.text = cmsData?.appName
             self.descLabel.text = cmsData?.descriptionField
-            self.numberLabel.text =  "分类: \(cmsData?.categoryList?.count ?? 0)"
+            self.numberLabel.text =  "分类: \(cmsData?.wrapOutCategoryList?.count ?? 0)"
         }
     }
     

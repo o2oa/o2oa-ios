@@ -6341,7 +6341,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = O2Platform/O2Platform.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 129;
@@ -6446,11 +6446,12 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = O2Platform/O2Platform.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tianjin Lanmo Innovative Cloud Data Internet Technology Co., Ltd. (C79YTQHHFY)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tianjin Lanmo Innovative Cloud Data Internet Technology Co., Ltd. (C79YTQHHFY)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 129;
 				DEVELOPMENT_TEAM = C79YTQHHFY;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = C79YTQHHFY;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6527,7 +6528,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.o2oa.app.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "b23067fd-fb08-4b85-8255-d8f3d25abc8a";
-				PROVISIONING_PROFILE_SPECIFIER = O2OA_Official_Distribution;
+				PROVISIONING_PROFILE_SPECIFIER = "2023-ad-hoc";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "2023-ad-hoc";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_ENFORCE_EXCLUSIVE_ACCESS = none;
 				SWIFT_OBJC_BRIDGING_HEADER = "O2Platform/O2Platform-Bridging-Header.h";

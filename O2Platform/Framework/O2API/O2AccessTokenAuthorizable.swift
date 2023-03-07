@@ -39,6 +39,8 @@ public class O2AccessTokenPlugin:PluginType {
     
     public func prepare(_ request: URLRequest, target: TargetType) -> URLRequest {
         var request = request
+        // 测试头
+//        request.addValue("", forHTTPHeaderField: "If-None-Match")
         //加上通用头
         request.addValue(clientVal, forHTTPHeaderField: "x-client")
         if let authorizable = target as? O2AccessTokenAuthorizable,authorizable.shouldAuthorize ==  false {
