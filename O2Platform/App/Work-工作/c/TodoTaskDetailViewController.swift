@@ -255,6 +255,27 @@ class TodoTaskDetailViewController: BaseWebViewUIViewController {
         webView.removeObserver(self, forKeyPath: "estimatedProgress")
 //        IQKeyboardManager.shared.enable = true
     }
+    
+    
+    //1.第一次push进来的时候两个方法都会调用，parent的值不为空。
+    //2.当开始使用系统侧滑的时候，会先调用willMove，而parent的值为空；
+    //3.当滑动结束后返回了上个页面，则会调用didMove，parent的值也为空，如果滑动结束没有返回上个页面，也就是轻轻划了一下还在当前页面，那么则不会调用didMove方法。
+    //想要在侧滑返回后在上个页面做一些操作的话，可以在didMove方法中根据parent的值来判断。
+    override func willMove(toParent parent: UIViewController?) {
+        //
+    }
+    // 侧滑关闭当前页面 如果parent==nil就是关闭
+    override func didMove(toParent parent: UIViewController?) {
+        if parent == nil {
+            DDLogDebug("侧滑关闭当前工作页面？？？")
+            //调用 js的 关闭当前工作的 函数 js会做新建检查工作
+            self.webView.evaluateJavaScript(TodoTaskJS.CLOSE_WORK, completionHandler: { (data, err) in
+                DDLogDebug("执行关闭js了。。 data:\(String(describing: data)) err:\(String(describing: err))")
+            })
+        } else {
+            DDLogDebug("进入当前工作页面！！！！！！！！")
+        }
+    }
 
 
     override func theWebView() {
@@ -989,6 +1010,12 @@ extension TodoTaskDetailViewController: WKNavigationDelegate, WKUIDelegate {
     func webViewDidClose(_ webView: WKWebView) {
         DDLogInfo("h5执行了window.close()")
         self.goBack()
+    }
+    // window.alert();
+    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
+        self.showSystemAlert(title: "提示", message: message) { action in
+            completionHandler()
+        }
     }
 
 }
