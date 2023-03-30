@@ -345,11 +345,18 @@ public class O2AuthSDK: NSObject {
                 if let centerServer = result?.data {
                     let unit = O2UserDefaults.shared.unit
                     let httpProtocol = unit?.httpProtocol ?? "http"
+                    let standalone = centerServer.standalone ?? false
                     centerServer.assembles?.forEach({ (key,value) in
                         value.httpProtocol = httpProtocol
+                        if standalone { // 是否统一端口服务器
+                            value.port = unit?.centerPort
+                        }
                         centerServer.assembles![key] = value
                     })
                     centerServer.webServer?.httpProtocol = httpProtocol
+                    if standalone { // 是否统一端口服务器
+                        centerServer.webServer?.port = unit?.centerPort
+                    }
                     // 保存中心服务器数据
                     O2UserDefaults.shared.centerServer = centerServer
                     return self.checkCustomStyleNeedUpdate(unit: unit!)
@@ -450,10 +457,17 @@ public class O2AuthSDK: NSObject {
             let result = response.mapObject(BaseO2ResponseData<O2CenterServerModel>.self)
             if let centerServer = result?.data {
                 let httpProtocol = unit.httpProtocol ?? "http"
+                let standalone = centerServer.standalone ?? false
                 centerServer.assembles?.forEach({ (key,value) in
                     value.httpProtocol = httpProtocol
+                    if standalone { // 是否统一端口服务器
+                        value.port = unit.centerPort
+                    }
                     centerServer.assembles![key] = value
                 })
+                if standalone { // 是否统一端口服务器
+                    centerServer.webServer?.port = unit.centerPort
+                }
                 centerServer.webServer?.httpProtocol = httpProtocol
                 // 保存中心服务器数据
                 O2UserDefaults.shared.centerServer = centerServer
@@ -831,10 +845,17 @@ public class O2AuthSDK: NSObject {
             if let centerServer = result?.data {
                 let unit = O2UserDefaults.shared.unit
                 let httpProtocol = unit?.httpProtocol ?? "http"
+                let standalone = centerServer.standalone ?? false
                 centerServer.assembles?.forEach({ (key,value) in
                     value.httpProtocol = httpProtocol
+                    if standalone { // 是否统一端口服务器
+                        value.port = unit?.centerPort
+                    }
                     centerServer.assembles![key] = value
                 })
+                if standalone { // 是否统一端口服务器
+                    centerServer.webServer?.port = unit?.centerPort
+                }
                 centerServer.webServer?.httpProtocol = httpProtocol
                 // 保存中心服务器数据
                 O2UserDefaults.shared.centerServer = centerServer
@@ -972,10 +993,17 @@ public class O2AuthSDK: NSObject {
                 if let centerServer = result?.data {
                     let unit = O2UserDefaults.shared.unit
                     let httpProtocol = unit?.httpProtocol ?? "http"
+                    let standalone = centerServer.standalone ?? false
                     centerServer.assembles?.forEach({ (key,value) in
                         value.httpProtocol = httpProtocol
+                        if standalone { // 是否统一端口服务器
+                            value.port = unit?.centerPort
+                        }
                         centerServer.assembles![key] = value
                     })
+                    if standalone { // 是否统一端口服务器
+                        centerServer.webServer?.port = unit?.centerPort
+                    }
                     centerServer.webServer?.httpProtocol = httpProtocol
                     // 保存中心服务器数据
                     O2UserDefaults.shared.centerServer = centerServer
@@ -1090,10 +1118,17 @@ public class O2AuthSDK: NSObject {
                 if let centerServer = result?.data {
                     let unit = O2UserDefaults.shared.unit
                     let httpProtocol = unit?.httpProtocol ?? "http"
+                    let standalone = centerServer.standalone ?? false
                     centerServer.assembles?.forEach({ (key,value) in
                         value.httpProtocol = httpProtocol
+                        if standalone { // 是否统一端口服务器
+                            value.port = unit?.centerPort
+                        }
                         centerServer.assembles![key] = value
                     })
+                    if standalone { // 是否统一端口服务器
+                        centerServer.webServer?.port = unit?.centerPort
+                    }
                     centerServer.webServer?.httpProtocol = httpProtocol
                     // 保存中心服务器数据
                     O2UserDefaults.shared.centerServer = centerServer

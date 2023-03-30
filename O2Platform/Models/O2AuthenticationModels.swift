@@ -375,6 +375,8 @@ public protocol IO2CenterServerModel: HandyJSON, CustomStringConvertible  {
     var webServer: O2WebServerModel? { get set }
     
     var tokenName: String? { get set }
+    
+    var standalone: Bool? { get set }
 }
 open class O2CenterServerModel: NSObject, DataModel, NSCoding, IO2CenterServerModel {
     @objc open var assembles:[String: O2APIServerModel]?
@@ -382,6 +384,8 @@ open class O2CenterServerModel: NSObject, DataModel, NSCoding, IO2CenterServerMo
     @objc open var webServer: O2WebServerModel?
     
     @objc open var tokenName: String? // tokenName是可修改的 x-token是默认值
+    
+    open var standalone: Bool? // 是否统一端口服务器
     
     
     public func encode(with aCoder: NSCoder) {
@@ -395,12 +399,16 @@ open class O2CenterServerModel: NSObject, DataModel, NSCoding, IO2CenterServerMo
         if tokenName != nil {
             aCoder.encode(tokenName, forKey: "tokenName")
         }
+        if standalone != nil {
+            aCoder.encode(standalone, forKey: "standalone")
+        }
     }
     
     public required init?(coder aDecoder: NSCoder) {
         assembles = aDecoder.decodeObject(forKey: "assembles") as? [String : O2APIServerModel]
         webServer = aDecoder.decodeObject(forKey: "webServer") as? O2WebServerModel
         tokenName = aDecoder.decodeObject(forKey: "tokenName") as? String
+        standalone = aDecoder.decodeObject(forKey: "standalone") as? Bool
     }
     
     required public override init() {}
