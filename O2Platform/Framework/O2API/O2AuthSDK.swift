@@ -949,6 +949,7 @@ public class O2AuthSDK: NSObject {
                         bindDevice.name = O2UserDefaults.shared.deviceToken
                         bindDevice.mobile = mobile
                         bindDevice.code = code
+                        bindDevice.deviceType = "ios"
                         return self.bindToCollect(device: bindDevice)
                     }
                 }else {

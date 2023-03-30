@@ -92,7 +92,7 @@ target 'O2Platform' do
 
     
     # 日历控件
-    pod 'JTCalendar', '~> 2.0'
+    pod 'JTCalendar', '2.2.3'
     
     #百度地图SDK
     pod 'BaiduMapKit'
