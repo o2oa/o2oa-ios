@@ -178,3 +178,9 @@ struct O2BizPreviewDocMessage: HandyJSON {
 struct O2UtilNavigationOpenOtherApp: HandyJSON {
     var schema: String? // 打开app schema url
 }
+
+
+struct O2UtilNavigationOpenWindow: HandyJSON {
+    var url: String? // 新窗口打开网页
+}
+

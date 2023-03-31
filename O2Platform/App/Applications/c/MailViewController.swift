@@ -16,6 +16,7 @@ import CocoaLumberjack
 
 class MailViewController: BaseWebViewUIViewController {
     
+    var openUrl: String? // 网页地址
     var app:O2App?
     // 首页显示门户 默认没有NavigationBar
     var isIndexShow:Bool = false
@@ -93,15 +94,23 @@ class MailViewController: BaseWebViewUIViewController {
   
     @objc func loadDetailSubject(){
         if let url = self.app?.vcName?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
-            DDLogDebug("url: " + url)
-            if let urlR = URL(string: url) {
-                let req = URLRequest(url: urlR)
-                self.webView?.load(req)
-            }else {
-                self.showError(title: L10n.applicationsUrlRequestError)
-            }
+            self.loadUrl(url: url)
         }else {
-            self.showError(title: L10n.applicationsUrlIsEmpty)
+            if let url = self.openUrl {
+                self.loadUrl(url: url)
+            } else {
+                self.showError(title: L10n.applicationsUrlIsEmpty)
+            }
+        }
+    }
+    
+    private func loadUrl(url: String) {
+        DDLogDebug("url: " + url)
+        if let urlR = URL(string: url) {
+            let req = URLRequest(url: urlR)
+            self.webView?.load(req)
+        }else {
+            self.showError(title: L10n.applicationsUrlRequestError)
         }
     }
     

@@ -73,6 +73,9 @@ class O2JsApiUtil: O2WKScriptMessageHandlerImplement {
                     case "navigation.openOtherApp":
                         navigationOpenOtherApp(json: String(json))
                         break
+                    case "navigation.openWindow":
+                        navigationOpenWindow(json: String(json))
+                        break
                     default:
                         DDLogError("notification类型不正确, type: \(type)")
                     }
@@ -389,6 +392,34 @@ class O2JsApiUtil: O2WKScriptMessageHandlerImplement {
             }
         }else {
             DDLogError("navigationOpenOtherApp, 解析json失败")
+        }
+    }
+    // 新窗口打开网页
+    private func navigationOpenWindow(json: String) {
+        if let alert = O2WebViewBaseMessage<O2UtilNavigationOpenWindow>.deserialize(from: json) {
+            var backresult = "{\"result\": true, \"message\": \"\"}"
+            if let url = alert.data?.url {
+                DDLogDebug("打开 网页 ：\(url)")
+                if let _ = URL(string: "\(url)") {
+                    let destVC = OOTabBarHelper.getVC(storyboardName: "apps", vcName: "OOMainWebVC")
+                    if let mail = destVC as? MailViewController {
+                        mail.openUrl = url
+                        let nav = ZLNavigationController(rootViewController: mail)
+                        self.viewController.present(nav, animated: true, completion: nil)
+                    } else {
+                        DDLogDebug("没有webview ？？？？？？")
+                    }
+                } else {
+                    DDLogError("url 为空。。。。。")
+                    backresult = "{\"result\": false, \"message\": \"url不能为空！\"}"
+                }
+            }
+            if alert.callback != nil {
+                let callJs = "\(alert.callback!)('\(backresult)')"
+                self.evaluateJs(callBackJs: callJs)
+            }
+        }else {
+            DDLogError("navigationOpenWindow, 解析json失败")
         }
     }
     

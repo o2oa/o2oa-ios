@@ -45,7 +45,7 @@ class OOAttendanceCheckInNewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(backForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         //
         self.navigationItem.rightBarButtonItems = [
             UIBarButtonItem(title: "审批", style: .plain, target: self, action: #selector(gotoApproval)),
@@ -63,6 +63,7 @@ class OOAttendanceCheckInNewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        DDLogDebug("回到viewWillAppear。。。。。。。")
         if self.timer == nil {
             //初始化定时器
             self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timeTick), userInfo: nil, repeats: true)
@@ -79,8 +80,16 @@ class OOAttendanceCheckInNewController: UIViewController {
         self.timer?.invalidate()
         self.timer = nil
         self.stopLocationService()
+        NotificationCenter.default.removeObserver(self)
     }
     
+    @objc private func backForeground() {
+        DDLogDebug("回到前端。。重新请求数据，防止数据错误。")
+        //获取数据
+        self.loadMyRecords()
+        //工作地址
+        self.loadWorkPlace()
+    }
     
     
     @objc private func closeParent() {
@@ -154,14 +163,14 @@ class OOAttendanceCheckInNewController: UIViewController {
                 return
             }
             
-            let reversed = self.schedules.reversed()
+//            let reversed = self.schedules.reversed()
             var newList: [OOAttandanceMobileScheduleInfo] = []
-            reversed.forEach { (info) in
+            self.schedules.forEach { (info) in
                 if info.checkinStatus == "未打卡" {
                     newList.append(info)
                 }
             }
-            let checkType = newList.count > 0 ? newList.last!.checkinType : ""
+            let checkType = newList.count > 0 ? newList.first!.checkinType : ""
             checkinForm.id = nil
             checkinForm.recordAddress = self.bmkResult?.address
 //            checkinForm.desc = self.bmkResult?.sematicDescription
