@@ -7,6 +7,12 @@ import ObjectMapper
 import HandyJSON
 
 
+// 根据分类显示应用列表
+struct O2AppByCategory {
+    var category: String?
+    var app: O2Application?
+}
+
 class O2Application : NSObject, DataModel {
 
 	@objc var alias : String?

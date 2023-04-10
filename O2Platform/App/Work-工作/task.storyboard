@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Yna-g7-LKp">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Yna-g7-LKp">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -633,6 +633,12 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="41n-lz-3Yn">
+                                            <rect key="frame" x="20" y="11" width="42" height="28"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.66666668653488159" green="0.66666668653488159" blue="0.66666668653488159" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_daiban" translatesAutoresizingMaskIntoConstraints="NO" id="jgu-Xz-Ycy">
                                             <rect key="frame" x="20" y="12" width="30" height="26"/>
                                             <constraints>
@@ -649,10 +655,13 @@
                                     <constraints>
                                         <constraint firstItem="WdK-jS-ZrS" firstAttribute="trailing" secondItem="n1h-VE-hxv" secondAttribute="trailingMargin" id="1fv-IX-Qba"/>
                                         <constraint firstItem="WdK-jS-ZrS" firstAttribute="top" secondItem="n1h-VE-hxv" secondAttribute="topMargin" id="4Gc-54-rux"/>
+                                        <constraint firstItem="41n-lz-3Yn" firstAttribute="top" secondItem="n1h-VE-hxv" secondAttribute="topMargin" id="5uB-jM-O8G"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="41n-lz-3Yn" secondAttribute="bottom" id="AkX-e8-78F"/>
                                         <constraint firstItem="jgu-Xz-Ycy" firstAttribute="centerY" secondItem="n1h-VE-hxv" secondAttribute="centerY" id="HUc-fA-i47"/>
                                         <constraint firstItem="jgu-Xz-Ycy" firstAttribute="leading" secondItem="n1h-VE-hxv" secondAttribute="leadingMargin" id="Pab-05-l2b"/>
                                         <constraint firstItem="WdK-jS-ZrS" firstAttribute="centerY" secondItem="n1h-VE-hxv" secondAttribute="centerY" id="kUA-9F-Iki"/>
                                         <constraint firstItem="WdK-jS-ZrS" firstAttribute="leading" secondItem="jgu-Xz-Ycy" secondAttribute="trailing" constant="8" symbolic="YES" id="qcX-dm-Sc2"/>
+                                        <constraint firstItem="41n-lz-3Yn" firstAttribute="leading" secondItem="n1h-VE-hxv" secondAttribute="leadingMargin" id="uop-0K-QQb"/>
                                         <constraint firstItem="jgu-Xz-Ycy" firstAttribute="top" secondItem="n1h-VE-hxv" secondAttribute="topMargin" constant="1" id="w5b-p0-hCf"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -660,6 +669,7 @@
                                 <connections>
                                     <outlet property="appIconImageView" destination="jgu-Xz-Ycy" id="0QF-HE-6xq"/>
                                     <outlet property="appNameLabel" destination="WdK-jS-ZrS" id="6Ou-2n-CfG"/>
+                                    <outlet property="categoryNameLabel" destination="41n-lz-3Yn" id="YtY-gG-26H"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

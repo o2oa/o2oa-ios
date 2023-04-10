@@ -158,7 +158,8 @@ class ZoneMenuViewController: UIViewController {
                 let list = response.model?.data
                 if let apps = list {
                     //这里要把不在移动端显示的流程清除掉
-                    var newAppList:[O2Application] = []
+//                    var newAppList:[O2Application] = []
+                    var appMap =  [String: [O2Application]]()
                     for app in apps {
                         var newProcessList:[O2ApplicationProcess] = []
                         if let pList = app.processList {
@@ -169,13 +170,28 @@ class ZoneMenuViewController: UIViewController {
                             }
                         }
                         if newProcessList.count > 0 {
+                            var category = app.applicationCategory ?? ""
+                            if category == "" {
+                                category = "未分类"
+                            }
+                            var newAppList = appMap[category] ?? []
                             app.processList = newProcessList
                             newAppList.append(app)
+                            appMap[category] = newAppList
+                        }
+                    }
+                    var appList: [O2AppByCategory] = []
+                    if !appMap.isEmpty {
+                        for (key, list) in appMap {
+                            appList.append(O2AppByCategory(category: key, app: nil))
+                            for app in list {
+                                appList.append(O2AppByCategory(category: nil, app: app))
+                            }
                         }
                     }
                     DispatchQueue.main.async {
                         self.showSuccess(title: "加载完成")
-                        self.mainVC.apps = newAppList
+                        self.mainVC.appList = appList
                     }
                 }else {
                    DispatchQueue.main.async { self.showError(title: "没有应用数据！") }

@@ -14,6 +14,7 @@ class ZoneMainCategoryTableViewCell: UITableViewCell {
     
     @IBOutlet weak var appNameLabel: UILabel!
     
+    @IBOutlet weak var categoryNameLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
