@@ -110,6 +110,10 @@ struct O2UtilPhoneInfo: HandyJSON {
     var netInfo: String?
     var operatorType: String?
 }
+// 扫码返回结果
+struct O2UtilScanResult: HandyJSON {
+    var text: String?
+}
 //身份选择传入参数对象
 struct O2BizIdentityPickerMessage: HandyJSON {
     var topList: [String]?
