@@ -276,9 +276,11 @@ class O2JsApiUtil: O2WKScriptMessageHandlerImplement {
             if alert.callback != nil {
                 //扫一扫 。。。返回结果
                 ScanHelper.openScan(vc: self.viewController, callbackResult: { (result) in
-                    let resultCode = result.replacingOccurrences(of: "'", with: #"\u0027"#) // 单引号冲突
-                    let resultData = O2UtilScanResult(text: resultCode).toJSONString() ?? "{}"
-                    let callJs = "\(alert.callback!)('\(resultData)')"
+                    var resultCode = result.replacingOccurrences(of: "'", with: #"\u0027"#) // 单引号冲突
+                    resultCode = resultCode.replacingOccurrences(of: "\n", with: "") // 换行
+                    resultCode = resultCode.replacingOccurrences(of: "\r", with: "") // 回车
+//                    let resultData = O2UtilScanResult(text: resultCode).toJSONString() ?? "{}"
+                    let callJs = "\(alert.callback!)('\(resultCode)')"
                     self.evaluateJs(callBackJs: callJs)
                 })
             }
