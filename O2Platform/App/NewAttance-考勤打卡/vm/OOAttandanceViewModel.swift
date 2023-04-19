@@ -26,6 +26,8 @@ public enum OOAttandanceCustomError:Error {
 final class OOAttandanceViewModel: NSObject {
     //HTTP API
     private let ooAttanceAPI = OOMoyaProvider<OOAttendanceAPI>()
+    // 流程api
+    private let o2ProcessAPI = OOMoyaProvider<OOApplicationAPI>()
     //当天我的所有打卡记录
     private var myAttanceDetailList:[OOAttandanceMobileDetail] = []
     //回调块类型定义
@@ -352,6 +354,120 @@ extension OOAttandanceViewModel{
             }
         }
     }
+    
+    /// 查询考勤配置文件
+    func v2Config() -> Promise<AttendanceV2Config> {
+        return Promise { fulfill, reject in
+            self.ooAttanceAPI.request(.v2Config) { result in
+                let myResult = OOResult<BaseModelClass<AttendanceV2Config>>(result)
+                if myResult.isResultSuccess() {
+                    if let data =  myResult.model?.data {
+                        fulfill(data)
+                    }else{
+                        reject(OOAppError.common(type: "configError", message: "获取配置文件失败！", statusCode: 5002))
+                    }
+                }else{
+                    reject(myResult.error!)
+                }
+            }
+        }
+    }
+    /// 检查是否能够启动流程 有可能申诉次数超过限制了
+    func appealCheckCanStartProcess(id: String) -> Promise<OOCommonValueBoolModel> {
+        return Promise { fulfill, reject in
+            self.ooAttanceAPI.request(.v2CheckAppeal(id)) { result in
+                let myResult = OOResult<BaseModelClass<OOCommonValueBoolModel>>(result)
+                if myResult.isResultSuccess() {
+                    if let data =  myResult.model?.data {
+                        fulfill(data)
+                    }else{
+                        reject(OOAppError.common(type: "appealError", message: "申请申诉失败！", statusCode: 5002))
+                    }
+                }else{
+                    reject(myResult.error!)
+                }
+            }
+        }
+    }
+    /// 申诉流程启动后 修改状态
+    func appealStartProcess(id: String) -> Promise<OOCommonValueBoolModel> {
+        return Promise { fulfill, reject in
+            self.ooAttanceAPI.request(.v2AppealStartProcess(id)) { result in
+                let myResult = OOResult<BaseModelClass<OOCommonValueBoolModel>>(result)
+                if myResult.isResultSuccess() {
+                    if let data =  myResult.model?.data {
+                        fulfill(data)
+                    }else{
+                        reject(OOAppError.common(type: "appealError", message: "申请申诉失败！", statusCode: 5002))
+                    }
+                }else{
+                    reject(myResult.error!)
+                }
+            }
+        }
+    }
+    
+    /// 申诉流程对应的身份信息
+    func loadAppealProcessAvailableIdentity(processId: String) -> Promise<[OOMeetingProcessIdentity]> {
+        return Promise { fulfill, reject in
+            self.o2ProcessAPI.request(.availableIdentityWithProcess(processId), completion: { (result) in
+                let myResult = OOResult<BaseModelClass<[OOMeetingProcessIdentity]>>(result)
+                if myResult.isResultSuccess() {
+                    if let item = myResult.model?.data {
+                        fulfill(item)
+                    }else{
+                        let customError = OOAppError.common(type: "appealError", message: "流程身份读取错误！", statusCode: 7001)
+                        reject(customError)
+                    }
+                }else{
+                    reject(myResult.error!)
+                }
+            })
+        }
+    }
+    
+    /// 启动申诉流程
+    func startProcess(processId: String, identity: String) -> Promise<[TodoTaskData]> {
+        return Promise { fulfill, reject in
+            self.o2ProcessAPI.request(.startProcess(processId, identity, ""), completion: { (result) in
+                let myResult = OOResult<BaseModelClass<[StartProcessData]>>(result)
+                if myResult.isResultSuccess() {
+                     if let item = myResult.model?.data {
+                        if let taskList = item[0].taskList {
+                            fulfill(taskList)
+                        }else {
+                            // 有可能当前启动人没有拟稿的待办
+                            fulfill([])
+                        }
+                     } else {
+                         fulfill([])
+                    }
+                } else {
+                     reject(myResult.error!)
+                }
+            })
+        }
+    }
+    /// 根据job查询工作列表
+    func loadWorkByJob(jobId: String) -> Promise<WorkOrWorkcompleted> {
+        return Promise { fulfill, reject in
+            self.o2ProcessAPI.request(.workOrWorkcompletedByJob(jobId)) { result in
+                let myResult = OOResult<BaseModelClass<WorkOrWorkcompleted>>(result)
+                if myResult.isResultSuccess() {
+                     if let item = myResult.model?.data {
+                         fulfill(item)
+                     } else {
+                         let customError = OOAppError.common(type: "processError", message: "job读取工作错误！", statusCode: 7001)
+                         reject(customError)
+                    }
+                } else {
+                     reject(myResult.error!)
+                }
+            }
+        }
+    }
+    
+    
 }
 
 

@@ -34,6 +34,9 @@ enum OOAttendanceAPI {
     case v2CheckIn(AttendanceV2CheckInBody)
     case V2MyStatistic(AttendanceV2StatisticBody)
     case v2AppealListByPage(Int, Int, AttendanceV2AppealPageListFilter)
+    case v2Config
+    case v2CheckAppeal(String)
+    case v2AppealStartProcess(String)
 }
 
 // MARK:- 上下文实现
@@ -102,6 +105,12 @@ extension OOAttendanceAPI:TargetType {
             return "/jaxrs/v2/my/statistic"
         case .v2AppealListByPage(let page, let size, _):
             return "/jaxrs/v2/appeal/list/\(page)/size/\(size)"
+        case .v2Config:
+            return "/jaxrs/v2/config"
+        case .v2CheckAppeal(let id):
+            return "/jaxrs/v2/appeal/\(id)/start/check"
+        case .v2AppealStartProcess(let id):
+            return "/jaxrs/v2/appeal/\(id)/start/process"
         }
     }
     
@@ -130,7 +139,7 @@ extension OOAttendanceAPI:TargetType {
         case .attendancedetailList(_), .attendanceAppealInfoList(_, _), .attendanceappealInfoApprovel(_), .submitAppealApprove(_, _):
             return .put
         // v2 版本
-        case .versionCheck, .v2PreCheckIn:
+        case .versionCheck, .v2PreCheckIn, .v2Config, .v2CheckAppeal(_), .v2AppealStartProcess(_):
             return .get
         case .v2CheckIn(_), .V2MyStatistic(_), .v2AppealListByPage(_, _, _):
             return .post
@@ -173,7 +182,7 @@ extension OOAttendanceAPI:TargetType {
         case .submitAppealApprove(_, let form):
             return .requestParameters(parameters: form.toJSON() ?? [:], encoding: JSONEncoding.default)
         // v2 版本
-        case .versionCheck, .v2PreCheckIn:
+        case .versionCheck, .v2PreCheckIn, .v2Config, .v2CheckAppeal(_), .v2AppealStartProcess(_):
             return .requestPlain
         case .v2CheckIn(let form):
             return .requestParameters(parameters: form.toJSON() ?? [:], encoding: JSONEncoding.default)

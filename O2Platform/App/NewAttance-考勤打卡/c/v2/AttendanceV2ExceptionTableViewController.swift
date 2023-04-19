@@ -19,6 +19,8 @@ class AttendanceV2ExceptionTableViewController: UITableViewController {
     private var page = 1 //
     private var isLoading = false
     
+    private var config: AttendanceV2Config? = nil
+    
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +43,7 @@ class AttendanceV2ExceptionTableViewController: UITableViewController {
             self.page += 1
             self.loadData()
         })
+        self.loadConfig()
     }
     override func viewWillAppear(_ animated: Bool) {
         self.tableView.mj_header.beginRefreshing()
@@ -73,8 +76,18 @@ class AttendanceV2ExceptionTableViewController: UITableViewController {
         let item = self.list[indexPath.row]
         if item.status == 0 {
             DDLogInfo("发起流程")
+            self.startCheck(appeal: item)
         } else if !item.jobId.isEmpty {
             DDLogInfo("查看流程")
+            self.loadWorkWithJob(job: item.jobId)
+        }
+    }
+    
+    private func loadConfig() {
+        self.viewModel.v2Config().then { config in
+            self.config = config
+        }.catch { error in
+            DDLogError("\(error.localizedDescription)")
         }
     }
     
@@ -109,5 +122,123 @@ class AttendanceV2ExceptionTableViewController: UITableViewController {
         self.isLoading = false
     }
      
+    
+    /// 检查是否能够申诉
+    private func startCheck(appeal: AttendanceV2AppealInfo) {
+        if self.config != nil  && self.config?.appealEnable == true && !self.config!.processId.isEmpty {
+            self.viewModel.appealCheckCanStartProcess(id: appeal.id).then { result in
+                if result.value == true {
+                    self.loadIdentityWithProcess(processId: self.config!.processId)
+                } else {
+                    self.showError(title: "当前无法申诉！")
+                }
+            }.catch { error in
+                if error is OOAppError, let msg = (error as? OOAppError)?.errorDescription {
+                    self.showError(title: "\(msg)")
+                } else {
+                    self.showError(title: "当前无法申诉！")
+                }
+            }
+        }
+    }
+    /// 当前流程 当前用户的可启动的身份列表
+    private func loadIdentityWithProcess(processId: String)  {
+        self.showLoading()
+        self.viewModel.loadAppealProcessAvailableIdentity(processId: processId).then { identities in
+            self.hideLoading()
+            if identities.count == 1 {
+                self.startProcess(processId: processId, identity: identities[0].distinguishedName!)
+            } else {
+                var actions: [UIAlertAction] = []
+                identities.forEach({ (identity) in
+                    let action = UIAlertAction(title: "\(identity.name!)(\(identity.unitName!))", style: .default, handler: { (a) in
+                        self.startProcess(processId: processId, identity: identity.distinguishedName!)
+                    })
+                    actions.append(action)
+                })
+                self.showSheetAction(title: "提示", message: "请选择启动流程的身份", actions: actions)
+            }
+        }.catch { error in
+            DDLogError("\(error.localizedDescription)")
+            if error is OOAppError, let msg = (error as? OOAppError)?.errorDescription {
+                self.showError(title: "\(msg)")
+            } else {
+                self.showError(title: "请求身份出错！")
+            }
+        }
+    }
+    /// 启动流程
+    private func startProcess(processId: String, identity: String) {
+        self.showLoading()
+        self.viewModel.startProcess(processId: processId, identity: identity).then { (taskList) in
+            if taskList.count > 0 {
+                self.hideLoading()
+                self.openWork(task:  taskList[0].copyToTodoTask() )
+            } else {
+                self.showSuccess(title: "启动流程成功！")
+            }
+            self.tableView.mj_header.beginRefreshing()
+            }.catch { (error) in
+                self.showError(title: "启动流程出错！")
+        }
+    }
+    /// 根据job获取工作列表
+    private func loadWorkWithJob(job: String) {
+        self.viewModel.loadWorkByJob(jobId: job).then { workData in
+            var workList: [WorkData] = []
+            if !workData.workList.isEmpty {
+                for work in workData.workList {
+                    work.completed = false
+                    workList.append(work)
+                }
+            }
+            if !workData.workCompletedList.isEmpty {
+                for workCompleted in workData.workCompletedList {
+                    workCompleted.completed = true
+                    workList.append(workCompleted)
+                }
+            }
+            if !workList.isEmpty {
+                if workList.count > 1 {
+                    var actions: [UIAlertAction] = []
+                    for work in workList {
+                        let action = UIAlertAction(title: "\(work.title ?? "")【\(work.processName ?? "")】\(work.completed == true ? "已完成": "")", style: .default, handler: { (a) in
+                            var task = TodoTask.init(JSON: [:])
+                            if work.completed == true {
+                                task?.work = work.id
+                            } else {
+                                task?.workCompleted = work.id
+                            }
+                            self.openWork(task: task)
+                        })
+                        actions.append(action)
+                    }
+                    self.showSheetAction(title: "提示", message: "请选择需要打开的工作", actions: actions)
+                } else {
+                    var task = TodoTask.init(JSON: [:])
+                    if workList[0].completed == true {
+                        task?.work = workList[0].id
+                    } else {
+                        task?.workCompleted = workList[0].id
+                    }
+                    self.openWork(task: task)
+                }
+            }
+        }
+    }
+    
+    /// 打开工作
+    private func openWork(task: TodoTask?) {
+        if task != nil {
+            DispatchQueue.main.async {
+                let taskStoryboard = UIStoryboard(name: "task", bundle: Bundle.main)
+                let todoTaskDetailVC = taskStoryboard.instantiateViewController(withIdentifier: "todoTaskDetailVC") as! TodoTaskDetailViewController
+                todoTaskDetailVC.todoTask = task
+                todoTaskDetailVC.backFlag = 3
+                self.pushVC(todoTaskDetailVC)
+            }
+        }
+    }
+    
     
 }

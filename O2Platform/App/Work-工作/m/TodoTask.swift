@@ -266,6 +266,8 @@ class TaskCompletedData: NSObject,DataModel {
     }
 }
 
+
+
 ///
 class WorkData: NSObject,DataModel {
     
@@ -297,6 +299,15 @@ class WorkData: NSObject,DataModel {
         
     }
     
+}
+
+/// 通过job查询工作的返回对象
+class WorkOrWorkcompleted: NSObject,DataModel {
+    @objc var workList:[WorkData] = []
+    @objc var workCompletedList:[WorkData] = []
+    required override init() {
+        
+    }
 }
 
 /// 活动任务

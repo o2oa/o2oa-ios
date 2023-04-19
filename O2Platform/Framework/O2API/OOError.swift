@@ -40,8 +40,8 @@ extension OOAppError:LocalizedError {
             return "Moya.Error:underlying,error=\(err)"
         case .requestMapping(let msg):
             return "Moya.Error:requestMapping,msg=\(msg)"
-        case .common(let type, let msg, let statusCode):
-            return "App.Error:type=\(type),msg=\(msg),statusCode=\(statusCode)"
+        case .common(let _, let msg, let statusCode):
+            return "msg=\(msg),statusCode=\(statusCode)"
         case .objectMapping(let err, let resp):
             return "Moya.Error:objectMapping,error=\(err),resp=\(resp)"
         case .encodableMapping(let err):

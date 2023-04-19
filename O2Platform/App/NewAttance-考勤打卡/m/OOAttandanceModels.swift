@@ -211,6 +211,23 @@ class AttendanceV2AppealInfo: NSObject, DataModel {
 
 }
 
+/// 配置文件
+class AttendanceV2Config: NSObject, DataModel {
+    var holidayList: [String] = []
+        var workDayList: [String] = []
+        var appealEnable: Bool  = false
+        var appealMaxTimes: Int = 0
+    @objc var processId: String = ""
+    @objc var processName: String = ""
+        var onDutyFastCheckInEnable: Bool = false
+        var offDutyFastCheckInEnable: Bool = false
+        var checkInAlertEnable: Bool = false
+        var exceptionAlertEnable: Bool = false
+    override required init() {
+        
+    }
+}
+
 
 
 // MARK:- 移动端获到打卡记录Bean

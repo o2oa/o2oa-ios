@@ -40,6 +40,7 @@ enum OOApplicationAPI {
     case readcompletedListNextFilter(String, Int, String) //分页查询已阅列表
     case readcompletedV2ListNext(String, Int, String) //分页查询已阅列表
     case taskcompletedGetReference(String) //已办的所有的相关的待办已办列表数据
+    case workOrWorkcompletedByJob(String) // 传入jobId 查询work和workcompleted
 }
 
 // MARK:- 上下文实现
@@ -125,6 +126,8 @@ extension OOApplicationAPI:TargetType {
             return "/jaxrs/readcompleted/v2/list/\(lastId)/next/\(count)"
         case .taskcompletedGetReference(let id):
             return "/jaxrs/taskcompleted/\(id)/reference"
+        case .workOrWorkcompletedByJob(let job):
+            return "/jaxrs/job/\(job)/find/work/workcompleted"
         }
     }
     
