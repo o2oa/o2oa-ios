@@ -207,24 +207,13 @@ class O2MainController: O2BaseForRotateUITabBarController, UITabBarControllerDel
     
     // MARK: - 考勤判断版本
     private func checkAttendanceVersion() {
-        self.attendanceViewModel.listMyRecords { (result) in
-            switch result {
-            case .ok(let data):
-                let model = data as? OOMyAttandanceRecords
-                if let s = model?.scheduleInfos, s.count > 0 {
-                    StandDefaultUtil.share.userDefaultCache(value: true as AnyObject, key: O2.O2_Attendance_version_key)
-                    DDLogDebug("考勤打卡新版。。。。。。。。。。。。。。。。。。")
-                }else {
-                    StandDefaultUtil.share.userDefaultCache(value: false as AnyObject, key: O2.O2_Attendance_version_key)
-                }
-                break
-            case .fail(let err):
-                DDLogError(err)
-                StandDefaultUtil.share.userDefaultCache(value: false as AnyObject, key: O2.O2_Attendance_version_key)
-                break
-            default:
-                StandDefaultUtil.share.userDefaultCache(value: false as AnyObject, key: O2.O2_Attendance_version_key)
-                break
+        self.attendanceViewModel.checkVersion { version in
+            if let v = version?.version, v == "2" {
+                StandDefaultUtil.share.userDefaultCache(value: "2" as AnyObject, key: O2.O2_Attendance_version_key)
+                DDLogInfo("考勤v2")
+            } else {
+                DDLogInfo("老版考勤")
+                StandDefaultUtil.share.userDefaultCache(value: "1" as AnyObject, key: O2.O2_Attendance_version_key)
             }
         }
     }

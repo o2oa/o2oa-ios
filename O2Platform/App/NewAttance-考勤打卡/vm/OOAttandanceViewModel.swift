@@ -9,6 +9,7 @@
 import Foundation
 import Moya
 import Promises
+import CocoaLumberjack
 
 
 public enum OOAttandanceResultType {
@@ -258,6 +259,97 @@ extension OOAttandanceViewModel{
                 }
             })
             
+        }
+    }
+    
+    
+    // MARK: - V2
+    // 检查版本
+    func checkVersion(_ completedBlock:@escaping ((OOAttendanceV2Version?) -> Void)) {
+        ooAttanceAPI.request(.versionCheck) { response in
+            let myResult = OOResult<BaseModelClass<OOAttendanceV2Version>>(response)
+            if myResult.isResultSuccess() {
+                let version = myResult.model?.data
+                completedBlock(version)
+            }else {
+                let errorMessage = myResult.error?.errorDescription ?? ""
+                DDLogError("检查错误： \(errorMessage)")
+                completedBlock(nil)
+            }
+        }
+    }
+    // 预打卡数据 打开打卡页面的时候请求
+    func preCheckIn() -> Promise<AttendanceV2PreCheckData>   {
+        return Promise { fulfill,reject in
+            self.ooAttanceAPI.request(.v2PreCheckIn) { result in
+                let res = OOResult<BaseModelClass<AttendanceV2PreCheckData>>(result)
+                if res.isResultSuccess()  {
+                    if let data =  res.model?.data {
+                        fulfill(data)
+                    }else{
+                        reject(OOAppError.common(type: "checkinError", message: "获取打卡数据异常！", statusCode: 5002))
+                    }
+                } else {
+                    reject(res.error!)
+                }
+            }
+        }
+    }
+    // 打卡
+    func checkIn(body: AttendanceV2CheckInBody) -> Promise<AttendanceV2CheckResponse> {
+        return Promise { fulfill, reject in
+            self.ooAttanceAPI.request(.v2CheckIn(body)) { result in
+                let myResult = OOResult<BaseModelClass<AttendanceV2CheckResponse>>(result)
+                if myResult.isResultSuccess() {
+                    if let data =  myResult.model?.data {
+                        fulfill(data)
+                    }else{
+                        reject(OOAppError.common(type: "checkinError", message: "打卡失败！", statusCode: 5002))
+                    }
+                }else{
+                    reject(myResult.error!)
+                }
+            }
+        }
+    }
+    
+    // 我的统计页面数据 查询当前一个月的统计数据
+    func myStatistic() -> Promise<AttendanceV2StatisticResponse> {
+        return Promise { fulfill, reject in
+            let body = AttendanceV2StatisticBody()
+            let currentDate = Date()
+            body.startDate = currentDate.firstDayInThisMonth.formatterDate(formatter: "yyyy-MM-dd")
+            body.endDate = currentDate.lastDayInThisMonth.formatterDate(formatter: "yyyy-MM-dd")
+
+            self.ooAttanceAPI.request(.V2MyStatistic(body)) { result in
+                let myResult = OOResult<BaseModelClass<AttendanceV2StatisticResponse>>(result)
+                if myResult.isResultSuccess() {
+                    if let data =  myResult.model?.data {
+                        fulfill(data)
+                    }else{
+                        reject(OOAppError.common(type: "statisticError", message: "获取统计信息失败！", statusCode: 5002))
+                    }
+                }else{
+                    reject(myResult.error!)
+                }
+            }
+        }
+    }
+    /// 分页查询打卡异常数据
+    func appealListByPage(page: Int) -> Promise<[AttendanceV2AppealInfo]> {
+        return Promise{ fulfill, reject in
+            self.ooAttanceAPI.request(.v2AppealListByPage(page, O2.defaultPageSize, AttendanceV2AppealPageListFilter())) { result in
+                let myResult = OOResult<BaseModelClass<[AttendanceV2AppealInfo]>>(result)
+                if myResult.isResultSuccess() {
+                    if let data =  myResult.model?.data {
+                        fulfill(data)
+                    }else{
+                        reject(OOAppError.common(type: "appealListError", message: "获取打卡异常数据失败！", statusCode: 5002))
+                    }
+                }else{
+                    reject(myResult.error!)
+                }
+            }
         }
     }
 }

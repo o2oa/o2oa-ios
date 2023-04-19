@@ -18,6 +18,7 @@ enum OONotification:String {
     case location
     case newWorkPlace
     case staticsTotal
+    case reloadAttendance
     
     //重载门户webview
     case reloadPortal

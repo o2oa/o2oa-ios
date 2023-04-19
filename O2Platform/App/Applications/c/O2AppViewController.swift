@@ -52,6 +52,12 @@ class O2AppViewController: UIViewController{
         self.o2ALLApps = []
         self.apps2 = [[], [], []]
         //self.loadAppConfigDb()
+        // 添加监听
+        NotificationCenter.default.addObserver(self, selector: #selector(restartAttendance), name: OONotification.reloadAttendance.notificationName, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -175,6 +181,22 @@ class O2AppViewController: UIViewController{
 //        self.present(flutterViewController, animated: false, completion: nil)
     }
     
+    
+    @objc private func restartAttendance() {
+        let storyBoard = UIStoryboard(name: "checkin", bundle: nil)
+        if let destVC = storyBoard.instantiateInitialViewController() {
+            destVC.modalPresentationStyle = .fullScreen
+            if destVC.isKind(of: ZLNavigationController.self) {
+                DDLogDebug("show 了考勤")
+                self.show(destVC, sender: nil)
+            }else{
+                DDLogDebug("push 了考勤")
+                self.navigationController?.pushViewController(destVC, animated: true)
+            }
+            
+        }
+    }
+
 
 }
 

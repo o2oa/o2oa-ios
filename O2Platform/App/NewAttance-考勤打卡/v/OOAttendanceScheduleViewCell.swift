@@ -37,5 +37,18 @@ class OOAttendanceScheduleViewCell: UICollectionViewCell {
         }
         
     }
+    
+    func setDataV2(data: AttendanceV2CheckItemData) {
+        var status = data.recordTime ?? ""
+        if data.isRecord == true {
+            status = data.recordTime ?? ""
+        } else {
+            status = "待打卡"
+        }
+        self.checkInStatusLabel.text = status
+        self.checkInTypeLabel.text = data.checkInTypeString ?? ""
+        self.checkInTimeLabel.text = data.preDutyTime ?? ""
+        self.updateCheckInBtn.isHidden = !(data.isLastRecord == true)
+    }
 
 }

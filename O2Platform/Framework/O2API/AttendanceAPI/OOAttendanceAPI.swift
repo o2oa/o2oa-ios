@@ -27,6 +27,13 @@ enum OOAttendanceAPI {
     case attendanceAppealInfoList(String, AppealApprovalQueryFilterJson) // 审核数据列表
     case attendanceappealInfoApprovel(AppealApprovalFormJson) // 审核数据
     case submitAppealApprove(String, AttendanceDetailInfoJson) // 申诉
+    
+    // v2 版本
+    case versionCheck
+    case v2PreCheckIn
+    case v2CheckIn(AttendanceV2CheckInBody)
+    case V2MyStatistic(AttendanceV2StatisticBody)
+    case v2AppealListByPage(Int, Int, AttendanceV2AppealPageListFilter)
 }
 
 // MARK:- 上下文实现
@@ -84,6 +91,17 @@ extension OOAttendanceAPI:TargetType {
             return "/jaxrs/attendanceappealInfo/audit"
         case .submitAppealApprove(let id, _):
             return "/jaxrs/attendanceappealInfo/appeal/\(id)"
+        // v2 版本
+        case .versionCheck:
+            return "/jaxrs/v2/my/version"
+        case .v2PreCheckIn:
+            return "/jaxrs/v2/mobile/check/pre"
+        case .v2CheckIn(_):
+            return "/jaxrs/v2/mobile/check"
+        case .V2MyStatistic(_):
+            return "/jaxrs/v2/my/statistic"
+        case .v2AppealListByPage(let page, let size, _):
+            return "/jaxrs/v2/appeal/list/\(page)/size/\(size)"
         }
     }
     
@@ -111,6 +129,11 @@ extension OOAttendanceAPI:TargetType {
             return .get
         case .attendancedetailList(_), .attendanceAppealInfoList(_, _), .attendanceappealInfoApprovel(_), .submitAppealApprove(_, _):
             return .put
+        // v2 版本
+        case .versionCheck, .v2PreCheckIn:
+            return .get
+        case .v2CheckIn(_), .V2MyStatistic(_), .v2AppealListByPage(_, _, _):
+            return .post
         
         }
     }
@@ -148,6 +171,15 @@ extension OOAttendanceAPI:TargetType {
         case .attendanceappealInfoApprovel(let form):
             return .requestParameters(parameters: form.toJSON() ?? [:], encoding: JSONEncoding.default)
         case .submitAppealApprove(_, let form):
+            return .requestParameters(parameters: form.toJSON() ?? [:], encoding: JSONEncoding.default)
+        // v2 版本
+        case .versionCheck, .v2PreCheckIn:
+            return .requestPlain
+        case .v2CheckIn(let form):
+            return .requestParameters(parameters: form.toJSON() ?? [:], encoding: JSONEncoding.default)
+        case .V2MyStatistic(let form):
+            return .requestParameters(parameters: form.toJSON() ?? [:], encoding: JSONEncoding.default)
+        case .v2AppealListByPage(_, _, let form):
             return .requestParameters(parameters: form.toJSON() ?? [:], encoding: JSONEncoding.default)
         }
     }

@@ -9,6 +9,210 @@
 import Foundation
 import HandyJSON
 
+
+
+
+// MARK: - V2
+
+//版本检查
+class OOAttendanceV2Version: NSObject, DataModel {
+   
+    @objc var version:String?
+    
+    required override init() {
+        
+    }
+}
+
+// 打卡记录
+class AttendanceV2CheckItemData: NSObject, DataModel {
+    @objc  var id: String?
+    @objc var userId: String?
+    @objc  var recordDateString: String?
+    @objc  var recordDate: String?
+    @objc var preDutyTime: String?
+    @objc var preDutyTimeBeforeLimit: String?
+    @objc  var preDutyTimeAfterLimit: String?
+    @objc var sourceType: String?
+    @objc  var checkInResult: String?
+    @objc var checkInType: String?
+    @objc  var sourceDevice: String?
+    @objc  var desc: String?
+    @objc var groupId: String?
+    @objc  var groupName: String?
+    @objc var shiftId: String?
+    @objc var shiftName: String?
+    var fieldWork: Bool = false
+   
+
+    // 是否最后一条已经打卡过的数据
+    var isLastRecord: Bool = false
+    var isRecord: Bool = false
+    @objc var recordTime: String? // 已打卡的显示内容
+    @objc var checkInTypeString: String? // 打卡类型
+    
+    override required init() {
+        
+    }
+    func mapping(mapper: HelpingMapper) {
+        mapper <<< self.desc <-- "description"
+    }
+    
+    
+    func resultText()-> String {
+        if self.checkInResult == "Normal" {
+            return "正常"
+        } else if self.checkInResult == "Early" {
+            return "早退"
+        } else if self.checkInResult == "Late" {
+            return "迟到"
+        } else if self.checkInResult == "SeriousLate" {
+            return "严重迟到"
+        } else if self.checkInResult == "Absenteeism" {
+            return "旷工迟到"
+        } else if self.checkInResult == "NotSigned" {
+            return "未打卡"
+        } else {
+            return ""
+        }
+    }
+}
+// 工作场所
+class AttendanceV2WorkPlace: NSObject, DataModel {
+    @objc var id: String?
+    @objc  var placeName: String?
+    @objc  var placeAlias: String?
+    @objc  var creator: String?
+    @objc  var longitude: String?
+    @objc  var latitude: String?
+    var errorRange: Int?
+    @objc  var desc: String?
+    override required init() {
+        
+    }
+    func mapping(mapper: HelpingMapper) {
+        mapper <<< self.desc <-- "description"
+    }
+
+}
+// 预打卡记录
+class AttendanceV2PreCheckData: NSObject, DataModel {
+    var allowFieldWork:Bool? 
+    var requiredFieldWorkRemarks: Bool?
+    var canCheckIn: Bool?
+    @objc var checkItemList: [AttendanceV2CheckItemData] = []
+    @objc var workPlaceList: [AttendanceV2WorkPlace] = []
+    override required init() {
+        
+    }
+}
+
+// 打卡提交对象
+class AttendanceV2CheckInBody: NSObject, DataModel {
+    @objc var recordId: String?
+    @objc var checkInType: String?
+    @objc  var workPlaceId: String?
+    var fieldWork: Bool? // 是否外勤打卡
+    @objc var signDescription: String? //打卡说明:上班打卡，下班打卡, 可以为空.
+    @objc var sourceDevice: String? //操作设备类别：Mac|Windows|IOS|Android|其他, 可以为空.
+    @objc  var recordAddress: String? //打卡地点描述, 可以为空.
+    @objc var longitude: String? //经度
+    @objc var latitude: String? //纬度
+    @objc var sourceType: String = "USER_CHECK" // FAST_CHECK
+    
+    override required init() {
+        
+    }
+}
+// 打卡返回结果
+class AttendanceV2CheckResponse: NSObject, DataModel {
+    @objc var checkInRecordId: String?
+    @objc   var checkInResult: String?
+    @objc  var recordDate: String?
+    override required init() {
+        
+    }
+}
+// 统计查询提交对象
+class AttendanceV2StatisticBody: NSObject, DataModel {
+    @objc var startDate: String? // 开始日期 yyyy-MM-dd
+    @objc var endDate: String? // 结束日期 yyyy-MM-dd
+    
+    override required init() {
+        
+    }
+}
+// 统计查询返回对象
+class AttendanceV2StatisticResponse: NSObject, DataModel {
+    @objc var userId: String?
+    var workTimeDuration: Int = 0
+    @objc var averageWorkTimeDuration: String = "0.0"
+    var attendance: Int = 0
+    var rest: Int = 0
+    var absenteeismDays: Int = 0
+    var lateTimes: Int = 0
+    var leaveEarlierTimes: Int = 0
+    var absenceTimes: Int = 0
+    var fieldWorkTimes: Int = 0
+    var leaveDays: Int = 0
+    var appealNums: Int = 0
+    
+    override required init() {
+        
+    }
+}
+
+class AttendanceV2AppealPageListFilter: NSObject, DataModel {
+    @objc var recordDate: String = ""
+    override required init() {
+        
+    }
+}
+
+// 打卡异常信息对象
+class AttendanceV2AppealInfo: NSObject, DataModel {
+
+    @objc var id: String = ""
+    @objc var recordId: String = ""
+    @objc var userId: String = ""
+    @objc var recordDateString: String = ""
+    @objc var recordDate: String = ""
+    @objc var startTime: String = ""
+    @objc var endTime: String = ""
+    @objc var reason: String = ""
+
+//public static final Integer status_TYPE_INIT = 0; // 待处理
+//public static final Integer status_TYPE_PROCESSING = 1; // 审批中
+//public static final Integer status_TYPE_PROCESS_AGREE = 2; // 审批通过
+//public static final Integer status_TYPE_PROCESS_DISAGREE = 3; // 审批不通过
+    var status: Int = 0
+    @objc var jobId: String = ""
+    @objc var record: AttendanceV2CheckItemData?
+    
+    override required init() {
+        
+    }
+ 
+
+    func statsText() -> String {
+        switch status {
+        case 0:
+            return "待处理"
+        case 1:
+            return "审批中"
+        case 2:
+            return "审批通过"
+        case 3:
+            return "审批不通过"
+        default:
+            return ""
+        }
+    }
+
+}
+
+
+
 // MARK:- 移动端获到打卡记录Bean
 class OOAttandanceMobileQueryBean:NSObject,DataModel {
     

@@ -112,6 +112,10 @@
 		B130A7832281565F00282AD1 /* DeviceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B130A7822281565F00282AD1 /* DeviceTableViewCell.swift */; };
 		B130A7852281597000282AD1 /* DeviceManagerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B130A7842281597000282AD1 /* DeviceManagerViewModel.swift */; };
 		B13707DD212D3F19002113F1 /* CMSCategoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13707DC212D3F19002113F1 /* CMSCategoryData.swift */; };
+		B137EA9829EE35CA009D5B91 /* AttendanceV2CheckInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B137EA9629EE35CA009D5B91 /* AttendanceV2CheckInViewController.swift */; };
+		B137EA9929EE35CA009D5B91 /* AttendanceV2CheckInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B137EA9729EE35CA009D5B91 /* AttendanceV2CheckInViewController.xib */; };
+		B137EA9C29EE3879009D5B91 /* AttendanceV2StatisticViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B137EA9A29EE3879009D5B91 /* AttendanceV2StatisticViewController.swift */; };
+		B137EA9D29EE3879009D5B91 /* AttendanceV2StatisticViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B137EA9B29EE3879009D5B91 /* AttendanceV2StatisticViewController.xib */; };
 		B13A010F236924BE00025F3B /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13A010E236924BE00025F3B /* UIImageView+Extension.swift */; };
 		B13A011123692A8B00025F3B /* O2CloudFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13A011023692A8B00025F3B /* O2CloudFileManager.swift */; };
 		B13A01162369310E00025F3B /* O2RunUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B13A01132369310E00025F3B /* O2RunUserInfo.swift */; };
@@ -155,6 +159,10 @@
 		B153112F2654F35C00B59447 /* OORegisterTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15311312654F35C00B59447 /* OORegisterTableView.xib */; };
 		B1534E3F21F712EA00CC8C35 /* O2DemoAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1534E3E21F712EA00CC8C35 /* O2DemoAlertView.swift */; };
 		B158E95E215DD3F500AB2727 /* AIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B158E95D215DD3F500AB2727 /* AIConstants.swift */; };
+		B15B1EBA29EF9646002C63A5 /* AttendanceV2ExceptionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15B1EB829EF9646002C63A5 /* AttendanceV2ExceptionTableViewController.swift */; };
+		B15B1EBB29EF9646002C63A5 /* AttendanceV2ExceptionTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15B1EB929EF9646002C63A5 /* AttendanceV2ExceptionTableViewController.xib */; };
+		B15B1EEB29EF988D002C63A5 /* AttendanceV2ExceptionDataViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15B1EE929EF988D002C63A5 /* AttendanceV2ExceptionDataViewCell.swift */; };
+		B15B1EEC29EF988D002C63A5 /* AttendanceV2ExceptionDataViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15B1EEA29EF988D002C63A5 /* AttendanceV2ExceptionDataViewCell.xib */; };
 		B15BE0BE2499BCEF008CD1DB /* O2RecordVoiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15BE0BD2499BCEF008CD1DB /* O2RecordVoiceManager.swift */; };
 		B15BE0EE2499DD7E008CD1DB /* IMChatAudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15BE0ED2499DD7E008CD1DB /* IMChatAudioView.swift */; };
 		B15BE0F02499DD90008CD1DB /* IMChatAudioView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15BE0EF2499DD90008CD1DB /* IMChatAudioView.xib */; };
@@ -1334,6 +1342,10 @@
 		B130A7822281565F00282AD1 /* DeviceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTableViewCell.swift; sourceTree = "<group>"; };
 		B130A7842281597000282AD1 /* DeviceManagerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManagerViewModel.swift; sourceTree = "<group>"; };
 		B13707DC212D3F19002113F1 /* CMSCategoryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSCategoryData.swift; sourceTree = "<group>"; };
+		B137EA9629EE35CA009D5B91 /* AttendanceV2CheckInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceV2CheckInViewController.swift; sourceTree = "<group>"; };
+		B137EA9729EE35CA009D5B91 /* AttendanceV2CheckInViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendanceV2CheckInViewController.xib; sourceTree = "<group>"; };
+		B137EA9A29EE3879009D5B91 /* AttendanceV2StatisticViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceV2StatisticViewController.swift; sourceTree = "<group>"; };
+		B137EA9B29EE3879009D5B91 /* AttendanceV2StatisticViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendanceV2StatisticViewController.xib; sourceTree = "<group>"; };
 		B13A010E236924BE00025F3B /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		B13A011023692A8B00025F3B /* O2CloudFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2CloudFileManager.swift; sourceTree = "<group>"; };
 		B13A01132369310E00025F3B /* O2RunUserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = O2RunUserInfo.swift; sourceTree = "<group>"; };
@@ -1381,6 +1393,10 @@
 		B15311352654F3C100B59447 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/OORegisterTableView.strings"; sourceTree = "<group>"; };
 		B1534E3E21F712EA00CC8C35 /* O2DemoAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2DemoAlertView.swift; sourceTree = "<group>"; };
 		B158E95D215DD3F500AB2727 /* AIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIConstants.swift; sourceTree = "<group>"; };
+		B15B1EB829EF9646002C63A5 /* AttendanceV2ExceptionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceV2ExceptionTableViewController.swift; sourceTree = "<group>"; };
+		B15B1EB929EF9646002C63A5 /* AttendanceV2ExceptionTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendanceV2ExceptionTableViewController.xib; sourceTree = "<group>"; };
+		B15B1EE929EF988D002C63A5 /* AttendanceV2ExceptionDataViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceV2ExceptionDataViewCell.swift; sourceTree = "<group>"; };
+		B15B1EEA29EF988D002C63A5 /* AttendanceV2ExceptionDataViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttendanceV2ExceptionDataViewCell.xib; sourceTree = "<group>"; };
 		B15BE0BD2499BCEF008CD1DB /* O2RecordVoiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2RecordVoiceManager.swift; sourceTree = "<group>"; };
 		B15BE0ED2499DD7E008CD1DB /* IMChatAudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMChatAudioView.swift; sourceTree = "<group>"; };
 		B15BE0EF2499DD90008CD1DB /* IMChatAudioView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IMChatAudioView.xib; sourceTree = "<group>"; };
@@ -2516,6 +2532,19 @@
 			path = SwiftTheme;
 			sourceTree = "<group>";
 		};
+		B137EA6929EE3520009D5B91 /* v2 */ = {
+			isa = PBXGroup;
+			children = (
+				B137EA9629EE35CA009D5B91 /* AttendanceV2CheckInViewController.swift */,
+				B137EA9729EE35CA009D5B91 /* AttendanceV2CheckInViewController.xib */,
+				B137EA9A29EE3879009D5B91 /* AttendanceV2StatisticViewController.swift */,
+				B137EA9B29EE3879009D5B91 /* AttendanceV2StatisticViewController.xib */,
+				B15B1EB829EF9646002C63A5 /* AttendanceV2ExceptionTableViewController.swift */,
+				B15B1EB929EF9646002C63A5 /* AttendanceV2ExceptionTableViewController.xib */,
+			);
+			path = v2;
+			sourceTree = "<group>";
+		};
 		B13A0112236930D800025F3B /* db */ = {
 			isa = PBXGroup;
 			children = (
@@ -2542,6 +2571,15 @@
 				B14B339E2356EB1500442968 /* CloudFileViewModel.swift */,
 			);
 			path = vm;
+			sourceTree = "<group>";
+		};
+		B15B1EE829EF9863002C63A5 /* v2 */ = {
+			isa = PBXGroup;
+			children = (
+				B15B1EE929EF988D002C63A5 /* AttendanceV2ExceptionDataViewCell.swift */,
+				B15B1EEA29EF988D002C63A5 /* AttendanceV2ExceptionDataViewCell.xib */,
+			);
+			path = v2;
 			sourceTree = "<group>";
 		};
 		B15BE0F1249A06BE008CD1DB /* lame */ = {
@@ -3389,6 +3427,7 @@
 		E428AF3920A95DDD00D964B9 /* c */ = {
 			isa = PBXGroup;
 			children = (
+				B137EA6929EE3520009D5B91 /* v2 */,
 				E428AF3D20A95E1600D964B9 /* OONewAttanceController.swift */,
 				E428AF4320A95FE800D964B9 /* OOAttanceTotalController.swift */,
 				E428AF4420A95FE800D964B9 /* OOAttanceTotalController.xib */,
@@ -3421,6 +3460,7 @@
 		E428AF3B20A95DE400D964B9 /* v */ = {
 			isa = PBXGroup;
 			children = (
+				B15B1EE829EF9863002C63A5 /* v2 */,
 				E428AF4F20AA7A1500D964B9 /* OOAttanceHeaderView.swift */,
 				E428AF5120AA7A2400D964B9 /* OOAttanceHeaderView.xib */,
 				E428AF5320AA7A7500D964B9 /* OOAttanceItemCell.swift */,
@@ -5086,12 +5126,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B15B1EBB29EF9646002C63A5 /* AttendanceV2ExceptionTableViewController.xib in Resources */,
 				E46E6CA81DD41F5D00AB7561 /* ZSStable@2x.png in Resources */,
 				E46E6CA61DD41F5D00AB7561 /* ZSSsuperscript@2x.png in Resources */,
 				E4B697DD20764A2D0062F6E8 /* myshareEditorList.json in Resources */,
 				E428AF4A20A9600B00D964B9 /* OOAttanceSettingController.xib in Resources */,
 				E46E6C771DD41F5D00AB7561 /* ZSSh2.png in Resources */,
 				E4C24C54208D7EDE00E426B0 /* Contacts_new.storyboard in Resources */,
+				B15B1EEC29EF988D002C63A5 /* AttendanceV2ExceptionDataViewCell.xib in Resources */,
 				E46E6C7A1DD41F5D00AB7561 /* ZSSh3@2x.png in Resources */,
 				B1BB67B324C6E0320020BD7D /* OOAttendanceScheduleViewCell.xib in Resources */,
 				E46E6C681DD41F5D00AB7561 /* editor.html in Resources */,
@@ -5129,6 +5171,7 @@
 				E40E24B620B7DA3C009F8BE7 /* OOMeetingAcceptCell.xib in Resources */,
 				E46E6CA21DD41F5D00AB7561 /* ZSSstrikethrough@2x.png in Resources */,
 				E4F4544D208F0401002FBC32 /* OOContactPersonCell.xib in Resources */,
+				B137EA9929EE35CA009D5B91 /* AttendanceV2CheckInViewController.xib in Resources */,
 				E4B697D120764A2D0062F6E8 /* folder.json in Resources */,
 				B1B0102C23586831002BF874 /* CFFolderTableViewCell.xib in Resources */,
 				E428AF6920AEA5EE00D964B9 /* OOAttandanceSettingDataView.xib in Resources */,
@@ -5315,6 +5358,7 @@
 				E4CB27851E793AE6004A7ACB /* ZoneFileListCell.xib in Resources */,
 				E4B888DA1D9D48F1002E1A46 /* 005.jpg in Resources */,
 				E46E6C931DD41F5D00AB7561 /* ZSSorderedlist.png in Resources */,
+				B137EA9D29EE3879009D5B91 /* AttendanceV2StatisticViewController.xib in Resources */,
 				B104303721464C690011B08E /* ai.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5625,6 +5669,7 @@
 				B1908E1422685E8F00D75632 /* O2WebViewModels.swift in Sources */,
 				B1F6CDF024A89836005CB1E0 /* BBSSubjectAttachmentViewCell.swift in Sources */,
 				B1843F272788104000A028B9 /* O2MindMapAddIconDialog.swift in Sources */,
+				B137EA9C29EE3879009D5B91 /* AttendanceV2StatisticViewController.swift in Sources */,
 				B1F6CDEE24A893B6005CB1E0 /* BBSSubjectAttachmentViewController.swift in Sources */,
 				E4B69738207602A40062F6E8 /* OOAccessTokenAuthorizable.swift in Sources */,
 				E4B8889C1D9D48F1002E1A46 /* MJRefreshBackFooter.m in Sources */,
@@ -5637,6 +5682,7 @@
 				B1BA42B824133AC40081CED8 /* TaskCreateData.swift in Sources */,
 				09E02E871F16319600579887 /* DiskCache.swift in Sources */,
 				B14A52F42851A3DE00BE7EA6 /* CMSApplicationViewController.swift in Sources */,
+				B15B1EBA29EF9646002C63A5 /* AttendanceV2ExceptionTableViewController.swift in Sources */,
 				B1DE856623603408003C36E2 /* DispatchQueue+Extension.swift in Sources */,
 				E4B69772207630240062F6E8 /* String+Extenstion.swift in Sources */,
 				B175007A233C6908003DA7B9 /* BlockLongPress.swift in Sources */,
@@ -5844,6 +5890,7 @@
 				E4B697A920764A2D0062F6E8 /* OOContactAPI.swift in Sources */,
 				B14CCFAC256DF630003ECC3C /* MeetingFormTimeDuringCell.swift in Sources */,
 				E40E24B720B7DA3C009F8BE7 /* OOMeetingAcceptCell.swift in Sources */,
+				B15B1EEB29EF988D002C63A5 /* AttendanceV2ExceptionDataViewCell.swift in Sources */,
 				E40E24D620B7DA3C009F8BE7 /* OOMeetingPersonTableViewCell.swift in Sources */,
 				09E02E081F131F1800579887 /* OrgUnit.swift in Sources */,
 				E4B2321320B2AA1D0082F30A /* OOAttandanceWorkPlaceCell.swift in Sources */,
@@ -6119,6 +6166,7 @@
 				B1982FB72844A61F00F9D8B7 /* CloudFileZoneViewController.swift in Sources */,
 				E4B888DE1D9D48F1002E1A46 /* SettingHeaderView.swift in Sources */,
 				E4B888781D9D48F1002E1A46 /* Identity.swift in Sources */,
+				B137EA9829EE35CA009D5B91 /* AttendanceV2CheckInViewController.swift in Sources */,
 				E40E24B520B7DA3C009F8BE7 /* OOFormModels.swift in Sources */,
 				E46E6CC51DD41F5D00AB7561 /* ZSSTextView.m in Sources */,
 				E4B697ED20764A2D0062F6E8 /* OOTaskAPI.swift in Sources */,

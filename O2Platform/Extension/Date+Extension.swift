@@ -189,6 +189,23 @@ extension Date {
         }
     }
     
+    /// 当前月份第一天
+    var firstDayInThisMonth: Date {
+        let calendar = Calendar.current
+        // 获取当前月份的第一天
+        return calendar.date(from: calendar.dateComponents([.year, .month], from: calendar.startOfDay(for: self)))!
+    }
+    /// 当前月份最后一天
+    var lastDayInThisMonth: Date {
+        let calendar = Calendar.current
+        // 获取当前月份的第一天
+        let firstDayOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: calendar.startOfDay(for: self)))!
+        // 获取当前月份下个月的第一天
+        let firstDayOfNextMonth = calendar.date(byAdding: .month, value: 1, to: firstDayOfMonth)!
+        // 获取当前月份的最后一天
+        return calendar.date(byAdding: .day, value: -1, to: firstDayOfNextMonth)!
+    }
+    
     /// 当前时间的月份的第一天是周几
     var firstWeekDayInThisMonth: Int {
         var calendar = Calendar.current

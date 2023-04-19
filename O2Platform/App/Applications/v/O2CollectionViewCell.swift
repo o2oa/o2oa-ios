@@ -77,10 +77,10 @@ class O2CollectionViewCell: UICollectionViewCell {
             self.appIconImageView.image = UIImage(named: app.normalIcon!)
             self.appIconImageView.highlightedImage = UIImage(named: app.selectedIcon!)
             if let dn = O2AuthSDK.shared.myInfo()?.distinguishedName, editIcon == 0  {
-                DDLogDebug("这里进来了。。。。。dn：\(dn)")
+//                DDLogDebug("这里进来了。。。。。dn：\(dn)")
                 if app.appId == "task" || app.appId == "read" {
                     if let countUrl = AppDelegate.o2Collect.generateURLWithAppContextKey(ApplicationContext.applicationContextKey, query: ApplicationContext.countByPerson, parameter: ["##credential##": dn as AnyObject]) {
-                        DDLogDebug("这里进来了。。。。。countUrl：\(countUrl)")
+//                        DDLogDebug("这里进来了。。。。。countUrl：\(countUrl)")
                         AF.request(countUrl, method: .get, parameters:nil, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
                             switch response.result {
                             case .success(let val):
@@ -104,7 +104,7 @@ class O2CollectionViewCell: UICollectionViewCell {
                                 }
                                 break
                             case .failure(let err):
-                                DDLogDebug("这里进来了。。。。 错误。了")
+                                DDLogError("获取待办已办数量的请求错误了！！！！")
                                 DDLogError(err.localizedDescription)
                                 break
                             }

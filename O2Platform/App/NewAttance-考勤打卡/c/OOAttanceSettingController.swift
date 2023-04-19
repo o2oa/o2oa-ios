@@ -176,10 +176,16 @@ class OOAttanceSettingController: UIViewController {
     
     
     deinit {
-        mapView.delegate = nil
-        locService.delegate = nil
-        locService.stopUpdatingLocation()
-        searchAddress.delegate = nil
+        if mapView != nil {
+            mapView.delegate = nil
+        }
+        if locService != nil {
+            locService.delegate = nil
+            locService.stopUpdatingLocation()
+        }
+        if searchAddress != nil {
+            searchAddress.delegate = nil
+        }
     }
     
 
