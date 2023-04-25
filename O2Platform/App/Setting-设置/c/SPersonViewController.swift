@@ -218,14 +218,14 @@ class SPersonViewController: FormViewController {
     }
     
     func logout()  {
+        // 人员登录信息清除
         O2AuthSDK.shared.logout { (result, msg) in
             DDLogInfo("O2 登出 \(result), msg：\(msg ?? "")")
         }
+        // 退出极光推送
         O2JPushManager.shared.O2JPushUnBind()
-//        if O2IsConnect2Collect == false {
-//            //解除绑定 设备号 内网直连版本
-//            
-//        }
+        // 退出极速打卡
+        FastCheckInManager.shared.stop()
         
         self.forwardDestVC("login", "loginVC")
     }
