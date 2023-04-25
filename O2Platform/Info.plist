@@ -254,7 +254,7 @@
 		<key>centerHost</key>
 		<string>qywx.o2oa.net</string>
 		<key>centerPort</key>
-		<integer>20030</integer>
+		<integer>80</integer>
 		<key>httpProtocol</key>
 		<string>http</string>
 		<key>id</key>

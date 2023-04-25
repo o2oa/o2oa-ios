@@ -54,6 +54,8 @@ class O2MainController: O2BaseForRotateUITabBarController, UITabBarControllerDel
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        // 回到前端 执行下极速打卡
+        NotificationCenter.default.addObserver(self, selector: #selector(doFastCheckIn), name: UIApplication.willEnterForegroundNotification, object: nil)
         if UIDevice.deviceModelReadable() != "Simulator" {
             self.checkAppVersion()
         }
@@ -91,9 +93,13 @@ class O2MainController: O2BaseForRotateUITabBarController, UITabBarControllerDel
         self.checkCloudFileVersion()
         // 论坛禁言问题
         self.checkBBSMuteInfo()
+        
+        // 极速打卡
+        self.doFastCheckIn()
     }
 
     deinit {
+        NotificationCenter.default.removeObserver(self)
         //关闭websocket
         self._stopWebsocket()
     }
@@ -216,6 +222,10 @@ class O2MainController: O2BaseForRotateUITabBarController, UITabBarControllerDel
                 StandDefaultUtil.share.userDefaultCache(value: "1" as AnyObject, key: O2.O2_Attendance_version_key)
             }
         }
+    }
+    /// 极速打卡
+    @objc private func doFastCheckIn() {
+        FastCheckInManager.shared.start()
     }
     
     // MARK: - 云盘判断是否v3版本

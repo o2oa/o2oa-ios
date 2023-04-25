@@ -154,6 +154,7 @@
 		B14E078C230141BE00AE85A0 /* ContactPersonPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14E078B230141BE00AE85A0 /* ContactPersonPickerViewController.swift */; };
 		B14E07C523025C6A00AE85A0 /* OOContactExpressAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14E07C423025C6A00AE85A0 /* OOContactExpressAPI.swift */; };
 		B14E0C0C2484F1F0008AF6AE /* O2WebsocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14E0C0B2484F1F0008AF6AE /* O2WebsocketManager.swift */; };
+		B14F35A429F107F50049A2BB /* FastCheckInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14F35A329F107F50049A2BB /* FastCheckInManager.swift */; };
 		B15116042567951B005A1019 /* OOMeetingFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15116032567951B005A1019 /* OOMeetingFormViewController.swift */; };
 		B15310FB2654D50E00B59447 /* login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B15310FD2654D50E00B59447 /* login.storyboard */; };
 		B153112F2654F35C00B59447 /* OORegisterTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15311312654F35C00B59447 /* OORegisterTableView.xib */; };
@@ -1384,6 +1385,7 @@
 		B14E078B230141BE00AE85A0 /* ContactPersonPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactPersonPickerViewController.swift; sourceTree = "<group>"; };
 		B14E07C423025C6A00AE85A0 /* OOContactExpressAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOContactExpressAPI.swift; sourceTree = "<group>"; };
 		B14E0C0B2484F1F0008AF6AE /* O2WebsocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2WebsocketManager.swift; sourceTree = "<group>"; };
+		B14F35A329F107F50049A2BB /* FastCheckInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastCheckInManager.swift; sourceTree = "<group>"; };
 		B15116032567951B005A1019 /* OOMeetingFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOMeetingFormViewController.swift; sourceTree = "<group>"; };
 		B15310FC2654D50E00B59447 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/login.storyboard; sourceTree = "<group>"; };
 		B153112C2654D51F00B59447 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/login.strings; sourceTree = "<group>"; };
@@ -2541,6 +2543,7 @@
 				B137EA9B29EE3879009D5B91 /* AttendanceV2StatisticViewController.xib */,
 				B15B1EB829EF9646002C63A5 /* AttendanceV2ExceptionTableViewController.swift */,
 				B15B1EB929EF9646002C63A5 /* AttendanceV2ExceptionTableViewController.xib */,
+				B14F35A329F107F50049A2BB /* FastCheckInManager.swift */,
 			);
 			path = v2;
 			sourceTree = "<group>";
@@ -5882,6 +5885,7 @@
 				B1B0102F23586B34002BF874 /* CFFileTableViewCell.swift in Sources */,
 				B19D55BA25358E8B00CE3B22 /* O2Enum.swift in Sources */,
 				E40E24AE20B7DA3C009F8BE7 /* OOMeetingAcceptController.swift in Sources */,
+				B14F35A429F107F50049A2BB /* FastCheckInManager.swift in Sources */,
 				B15BE107249A06BF008CD1DB /* ConvertMp3.m in Sources */,
 				09E02E041F127CAF00579887 /* IdentityV2.swift in Sources */,
 				B1A91662265C9895004EE9E2 /* O2SearchViewModel.swift in Sources */,
@@ -6392,7 +6396,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development: guodong lou (JDB49W26VS)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development: guodong lou (JDB49W26VS)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 130;
+				CURRENT_PROJECT_VERSION = 131;
 				DEVELOPMENT_TEAM = C79YTQHHFY;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = C79YTQHHFY;
 				ENABLE_BITCODE = NO;
@@ -6418,7 +6422,7 @@
 					"$(PROJECT_DIR)/O2Platform/Framework/lame/opencore-amr/lib",
 					"$(PROJECT_DIR)/O2Platform/Framework/BaiDuASR/BDSClientLib",
 				);
-				MARKETING_VERSION = 6.3.0;
+				MARKETING_VERSION = 6.3.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -6497,7 +6501,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Tianjin Lanmo Innovative Cloud Data Internet Technology Co., Ltd. (C79YTQHHFY)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tianjin Lanmo Innovative Cloud Data Internet Technology Co., Ltd. (C79YTQHHFY)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 130;
+				CURRENT_PROJECT_VERSION = 131;
 				DEVELOPMENT_TEAM = C79YTQHHFY;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = C79YTQHHFY;
 				ENABLE_BITCODE = NO;
@@ -6523,7 +6527,7 @@
 					"$(PROJECT_DIR)/O2Platform/Framework/lame/opencore-amr/lib",
 					"$(PROJECT_DIR)/O2Platform/Framework/BaiDuASR/BDSClientLib",
 				);
-				MARKETING_VERSION = 6.3.0;
+				MARKETING_VERSION = 6.3.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

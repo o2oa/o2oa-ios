@@ -45,7 +45,7 @@ class OOAttendanceCheckInNewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(backForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(backForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         //
         self.navigationItem.rightBarButtonItems = [
             UIBarButtonItem(title: "审批", style: .plain, target: self, action: #selector(gotoApproval)),
@@ -80,7 +80,7 @@ class OOAttendanceCheckInNewController: UIViewController {
         self.timer?.invalidate()
         self.timer = nil
         self.stopLocationService()
-        NotificationCenter.default.removeObserver(self)
+//        NotificationCenter.default.removeObserver(self)
     }
     
     @objc private func backForeground() {

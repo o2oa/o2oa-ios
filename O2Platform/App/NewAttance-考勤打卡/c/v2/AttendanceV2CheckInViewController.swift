@@ -49,7 +49,6 @@ class AttendanceV2CheckInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(backForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "关闭", style: .plain, target: self, action: #selector(closeParent))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "返回老版", style: .plain, target: self, action: #selector(closeSelfOpenOld))
         // 列表
@@ -78,7 +77,6 @@ class AttendanceV2CheckInViewController: UIViewController {
         self.timer?.invalidate()
         self.timer = nil
         self.stopLocationService()
-        NotificationCenter.default.removeObserver(self)
     }
  
     // 关闭考勤
@@ -294,10 +292,10 @@ class AttendanceV2CheckInViewController: UIViewController {
     private func locationReceive(bmkResult: BMKReverseGeoCodeSearchResult, isIn: Bool, workPlace: AttendanceV2WorkPlace?) {
         self.isInWorkPlace = isIn
         self.bmkResult = bmkResult
+        self.currentWorkPlace = workPlace
         if isIn {
             self.locationLabel.text = workPlace?.placeName
             self.locationIcon.image = UIImage(named: "icon__ok2_click")
-            self.currentWorkPlace = workPlace
         } else {
             self.locationLabel.text = bmkResult.address
             self.locationIcon.image = UIImage(named: "icon_delete_1")
