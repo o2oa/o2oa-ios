@@ -227,6 +227,14 @@ class AttendanceV2Config: NSObject, DataModel {
         
     }
 }
+/// 启动流程的时候提交给流程的 data 数据
+class AttendanceV2AppealInfoToProcessData: NSObject, DataModel {
+    @objc var appealId: String = ""
+              @objc var record: AttendanceV2CheckItemData?
+    override required init() {
+        
+    }
+}
 
 
 

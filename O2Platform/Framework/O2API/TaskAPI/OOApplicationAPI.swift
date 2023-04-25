@@ -17,7 +17,7 @@ enum OOApplicationAPI {
     case applicationItem(String) // 更加应用获取流程列表
     case applicationItemWithFilter(String) //新版 根据应用获取流程列表 有移动端过滤 仅pc的流程不出现在这里
     case availableIdentityWithProcess(String)
-    case startProcess(String, String, String) // processId identity title
+    case startProcess(String, String, String, [String: Any]) // processId identity title data
     case icon(String)
     case workDelete(String)
     case dataUpdateWithWork(String,[String:AnyObject])
@@ -80,7 +80,7 @@ extension OOApplicationAPI:TargetType {
             return "/jaxrs/process/list/application/\(appId)/filter"
         case .availableIdentityWithProcess(let processId):
             return "/jaxrs/process/list/available/identity/process/\(processId)"
-        case .startProcess(let processId, _, _):
+        case .startProcess(let processId, _, _, _):
             return "/jaxrs/work/process/\(processId)"
         case .icon(let applicationId):
             return "/jaxrs/application/\(applicationId)/icon"
@@ -133,7 +133,7 @@ extension OOApplicationAPI:TargetType {
     
     var method: Moya.Method {
         switch self {
-        case .startProcess(_, _, _), .applicationItemWithFilter(_), .attachmentUpload(_, _, _, _), .attachmentReplace(_, _, _, _, _),
+        case .startProcess(_, _, _, _), .applicationItemWithFilter(_), .attachmentUpload(_, _, _, _), .attachmentReplace(_, _, _, _, _),
              .taskV2ListNext(_, _, _), .taskcompletedV2ListNext(_, _, _), .readV2ListNext(_, _, _), .readcompletedV2ListNext(_, _, _), .taskcompletedListNext(_,_,_)
             , .taskListNextFilter(_, _, _), .readListNextFilter(_, _, _), .readcompletedListNextFilter(_, _, _):
             return .post
@@ -152,8 +152,8 @@ extension OOApplicationAPI:TargetType {
     
     var task: Task {
         switch self {
-        case .startProcess(_, let identity, let title):
-            return .requestParameters(parameters: ["identity": identity, "title": title], encoding: JSONEncoding.default)
+        case .startProcess(_, let identity, let title, let data):
+            return .requestParameters(parameters: ["identity": identity, "title": title, "data": data], encoding: JSONEncoding.default)
         case .applicationItemWithFilter(_):
             let filter = O2ProcessFilter()
             filter.startableTerminal = "mobile" //移动端过滤 仅pc的流程不出现在这里

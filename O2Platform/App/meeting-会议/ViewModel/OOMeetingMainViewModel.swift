@@ -99,7 +99,7 @@ extension OOMeetingMainViewModel {
     //启动会议流程
     func startProcess(processId: String, identity: String) -> Promise<[TodoTaskData]> {
         return Promise { fulfill, reject in
-            self.o2ProcessAPI.request(.startProcess(processId, identity, ""), completion: { (result) in
+            self.o2ProcessAPI.request(.startProcess(processId, identity, "", [:]), completion: { (result) in
                 let myResult = OOResult<BaseModelClass<[StartProcessData]>>(result)
                 if myResult.isResultSuccess() {
                      if let item = myResult.model?.data {

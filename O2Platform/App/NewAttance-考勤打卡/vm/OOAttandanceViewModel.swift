@@ -427,9 +427,9 @@ extension OOAttandanceViewModel{
     }
     
     /// 启动申诉流程
-    func startProcess(processId: String, identity: String) -> Promise<[TodoTaskData]> {
+    func startProcess(processId: String, identity: String, processData: AttendanceV2AppealInfoToProcessData) -> Promise<[TodoTaskData]> {
         return Promise { fulfill, reject in
-            self.o2ProcessAPI.request(.startProcess(processId, identity, ""), completion: { (result) in
+            self.o2ProcessAPI.request(.startProcess(processId, identity, "", processData.toJSON() ?? [:]), completion: { (result) in
                 let myResult = OOResult<BaseModelClass<[StartProcessData]>>(result)
                 if myResult.isResultSuccess() {
                      if let item = myResult.model?.data {
