@@ -129,7 +129,7 @@ class FastCheckInManager: NSObject {
                 })
                 self.canCheckIn = self.nextCheckInRecord != nil
             }
-            if self.canCheckIn {
+            if self.canCheckIn && self.nextCheckInRecord?.groupCheckType == "1" { // 极速打卡需要固定班制
                 if (self.nextCheckInRecord?.checkInType == "OnDuty" && self.onDutyFastCheckInEnable)
                     || (self.nextCheckInRecord?.checkInType == "OffDuty" && self.offDutyFastCheckInEnable) {
                     DDLogInfo("开始启动定位并打卡！")

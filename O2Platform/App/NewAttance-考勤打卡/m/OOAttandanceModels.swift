@@ -40,6 +40,7 @@ class AttendanceV2CheckItemData: NSObject, DataModel {
     @objc  var desc: String?
     @objc var groupId: String?
     @objc  var groupName: String?
+    @objc var groupCheckType: String? // 考勤组的类型，1：固定班制
     @objc var shiftId: String?
     @objc var shiftName: String?
     var fieldWork: Bool = false
