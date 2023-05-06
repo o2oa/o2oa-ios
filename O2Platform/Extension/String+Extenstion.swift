@@ -107,6 +107,11 @@ extension String {
     }
         
     
+    // MARK: - 字符串是否 url
+    func isUrl() -> Bool {
+        let regex = try! NSRegularExpression(pattern: "^https?://(?:www\\.|(?!www))[\\w\\d][\\w\\d-]+[\\w\\d]\\.[^\\s]{2,}|www\\.[\\w\\d][\\w\\d-]+[\\w\\d]\\.[^\\s]{2,}|https?://(?:www\\.|(?!www))[\\w\\d]\\.[^\\s]{2,}|www\\.[\\w\\d]\\.[^\\s]{2,}$", options: .caseInsensitive)
+        return regex.firstMatch(in: self, options: [], range: NSMakeRange(0, self.count)) != nil
+    }
     
     
     // MARK:- 获取字符串的CGSize

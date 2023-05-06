@@ -7,12 +7,18 @@
 //
 
 import UIKit
+import CocoaLumberjack
+import QuickLook
 
 class IMInstantMessageViewController: UITableViewController {
         
     private lazy var viewModel: IMViewModel = {
            return IMViewModel()
        }()
+    //预览文件
+    private lazy var previewVC: CloudFilePreviewController = {
+        return CloudFilePreviewController()
+    }()
     
     var instantMsgList: [InstantMessage] = []
     
@@ -64,8 +70,23 @@ class IMInstantMessageViewController: UITableViewController {
     }
     
     func cellHeightForInstant(item: InstantMessage) -> CGFloat {
-        if let msg = item.title {
-            let size = msg.getSizeWithMaxWidth(fontSize: 16, maxWidth: messageWidth)
+        var content = ""
+        if let appMsg = item.customO2AppMsg(), item.isCustomType() {
+            if appMsg.msgType() == CustomO2AppMsgType.text {
+                content = appMsg.text?.content ?? ""
+            }
+            if appMsg.msgType() == CustomO2AppMsgType.image {
+                return 69 + 192 + 20 + 10
+            }
+            if appMsg.msgType() == CustomO2AppMsgType.textcard {
+                return 69 + IMTextCardView.IMTextCardView_height + 20 + 10
+            }
+        }
+        if content == "" {
+            content = item.title ?? ""
+        }
+        if content != "" {
+            let size = content.getSizeWithMaxWidth(fontSize: 16, maxWidth: messageWidth)
             // 上边距 69 + 文字高度 + 内边距 + 底部空白高度
             return 69 + size.height + 28 + 10
         }
@@ -78,8 +99,60 @@ class IMInstantMessageViewController: UITableViewController {
 }
 
 extension IMInstantMessageViewController : IMChatMessageDelegate {
+    func openWebview(url: String) {
+        let destVC = OOTabBarHelper.getVC(storyboardName: "apps", vcName: "OOMainWebVC")
+        if let mail = destVC as? MailViewController {
+            mail.openUrl = url
+            let nav = ZLNavigationController(rootViewController: mail)
+            self.present(nav, animated: true, completion: nil)
+        }
+    }
+    
+    func openHttpImage(imageUrl: String) {
+        let md5FileName = imageUrl.MD5Filename()
+        var imagePath =  FileUtil.share.cacheDir()
+        imagePath.appendPathComponent("netImage") // 在线图片目录 netImage
+        //目录不存在就创建
+        FileUtil.share.createDirectory(path: imagePath.path)
+        imagePath.appendPathComponent(md5FileName)
+        DDLogDebug("文件路径：\(imagePath.path)")
+        if FileManager.default.fileExists(atPath: imagePath.path) {
+            self.openPreview(path: imagePath)
+        } else {
+            let request = URLRequest(url: URL(string: imageUrl)!)
+            let downloadTask = URLSession.shared.downloadTask(with: request,
+                   completionHandler: { (location:URL?, response:URLResponse?, error:Error?)
+                    -> Void in
+                if let loc = location {
+                    print("location:\(loc)")
+                    let locationPath = loc.path
+                    let fileManager = FileManager.default
+                    try! fileManager.moveItem(atPath: locationPath, toPath: imagePath.path)
+                    self.openPreview(path: imagePath)
+                }
+            })
+            downloadTask.resume()
+        }
+    }
+    
+    private func openPreview(path: URL) {
+        let currentURL = NSURL(fileURLWithPath: path.path)
+        DDLogDebug(path.path)
+        DispatchQueue.main.async {
+            if QLPreviewController.canPreview(currentURL) {
+                self.previewVC.currentFileURLS.removeAll()
+                self.previewVC.currentFileURLS.append(currentURL)
+                self.previewVC.reloadData()
+                self.pushVC(self.previewVC)
+            } else {
+                self.showError(title: "当前文件类型不支持预览！")
+            }
+        }
+    }
+    
+    
     func playAudio(info: IMMessageBodyInfo, id: String?) {
-        
+        //无需实现
     }
     func openImageOrFileMessage(info: IMMessageBodyInfo) {
         //无需实现

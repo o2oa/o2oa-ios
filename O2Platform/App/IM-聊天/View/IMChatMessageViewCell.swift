@@ -15,6 +15,8 @@ protocol IMChatMessageDelegate {
     func openLocatinMap(info: IMMessageBodyInfo)
     func openApplication(storyboard: String)
     func openWork(workId: String)
+    func openWebview(url: String)
+    func openHttpImage(imageUrl: String)
 }
 
 class IMChatMessageViewCell: UITableViewCell {
@@ -53,6 +55,13 @@ class IMChatMessageViewCell: UITableViewCell {
         view.frame = CGRect(x: 0, y: 0, width: IMProcessCardView.IMProcessCardView_width, height: IMProcessCardView.IMProcessCardView_height)
         return view
     }()
+    
+    // 卡片消息
+    private lazy var textcardView: IMTextCardView = {
+        let view = Bundle.main.loadNibNamed("IMTextCardView", owner: self, options: nil)?.first as! IMTextCardView
+        view.frame = CGRect(x: 0, y: 0, width: IMTextCardView.IMTextCardView_width, height: IMTextCardView.IMTextCardView_height)
+        return view
+    }()
 
     var delegate: IMChatMessageDelegate?
     //是否正在播放音频 音频消息使用
@@ -76,15 +85,46 @@ class IMChatMessageViewCell: UITableViewCell {
 
     //普通通知消息
     func setInstantContent(item: InstantMessage) {
+        // 消息时间
         if let time = item.createTime {
             let date = time.toDate(formatter: "yyyy-MM-dd HH:mm:ss")
             self.timeLabel.text = date.friendlyTime()
         }
         self.messageBackgroundView.removeSubviews()
-        if let msg = item.title {
+        // 格式化 custom 消息
+        var isRender = false
+        if let appMsg = item.customO2AppMsg(), item.isCustomType() {
+            if appMsg.msgType() == CustomO2AppMsgType.text {
+                if let text = appMsg.text, let content = text.content {
+                    let msgLabel = textMsgRender(msg: content)
+                    isRender = true
+                    if let url = text.url, url.isUrl() {
+                        setcc(label: msgLabel) { tap in
+                            self.delegate?.openWebview(url: url)
+                        }
+                    }
+                }
+                
+            }
+            if appMsg.msgType() == CustomO2AppMsgType.image {
+                if let image = appMsg.image, let imageUrl = image.url {
+                    self.imageMsgRenderForUrl(imageUrl: imageUrl)
+                    isRender = true
+                }
+            }
+            if appMsg.msgType() == CustomO2AppMsgType.textcard {
+                if let textcard = appMsg.textcard, let title = textcard.title, let url = textcard.url {
+                    self.textCardMsgRender(title: title, desc: textcard.desc ?? title, url: url)
+                    isRender = true
+                }
+            }
+        }
+        // 普通消息
+        if let msg = item.title, !isRender {
             let msgLabel = textMsgRender(msg: msg)
             setColorAndClickEvent(item: item, label: msgLabel)
         }
+        // 头像和消息类型
         if let type = item.type {
             if type.starts(with: "task_") {
                 self.avatarImage.image = UIImage(named: "icon_daiban")
@@ -298,6 +338,19 @@ class IMChatMessageViewCell: UITableViewCell {
         }
     }
     
+    // 卡片消息
+    private func textCardMsgRender(title: String, desc: String, url: String) {
+        self.messageBackgroundWidth.constant = IMTextCardView.IMTextCardView_width + 20
+        self.messageBackgroundHeight.constant =  IMTextCardView.IMTextCardView_height + 20
+        self.textcardView.translatesAutoresizingMaskIntoConstraints = false
+        self.messageBackgroundView.addSubview(self.textcardView)
+        self.textcardView.setupTextCard(title: title, desc: desc)
+        self.constraintWithContent(contentView: self.textcardView)
+        self.textcardView.addTapGesture { tap in
+            self.delegate?.openWebview(url: url)
+        }
+    }
+    
     // 流程工作卡片消息
     private func processMsgRender(info: IMMessageBodyInfo) {
         self.messageBackgroundWidth.constant = IMProcessCardView.IMProcessCardView_width + 20
@@ -417,6 +470,26 @@ class IMChatMessageViewCell: UITableViewCell {
         }
         self.constraintWithContent(contentView: imageView)
 
+    }
+    
+    private func imageMsgRenderForUrl(imageUrl: String) {
+        let width: CGFloat = 144
+        let height: CGFloat = 192
+        self.messageBackgroundWidth.constant = width + 20
+        self.messageBackgroundHeight.constant = height + 20
+        //图片
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: width, height: height))
+        if imageUrl.isUrl(), let url = URL(string: imageUrl) {
+            imageView.hnk_setImageFromURL(url)
+        } else {
+            imageView.image = UIImage(named: "chat_image")
+        }
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        self.messageBackgroundView.addSubview(imageView)
+        imageView.addTapGesture { (tap) in
+            self.delegate?.openHttpImage(imageUrl: imageUrl)
+        }
+        self.constraintWithContent(contentView: imageView)
     }
 
     private func emojiMsgRender(emoji: String) {

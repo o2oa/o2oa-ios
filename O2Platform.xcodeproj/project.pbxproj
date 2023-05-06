@@ -366,6 +366,8 @@
 		B1C0A1A8256E552D00C7041E /* MeetingFormAttachmentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1C0A1A6256E552D00C7041E /* MeetingFormAttachmentCell.xib */; };
 		B1C19025211437E200935829 /* OOCalendarLeftMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C19024211437E200935829 /* OOCalendarLeftMenuController.swift */; };
 		B1C1905D2114410D00935829 /* CalendarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C1905C2114410D00935829 /* CalendarTableViewCell.swift */; };
+		B1C196CC2A05096C00C454F6 /* IMTextCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B1C196CB2A05096C00C454F6 /* IMTextCardView.xib */; };
+		B1C196FA2A050A0800C454F6 /* IMTextCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C196F92A050A0800C454F6 /* IMTextCardView.swift */; };
 		B1C303E622D58C1A00C17E5A /* CMSAttachmentInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C303E522D58C1A00C17E5A /* CMSAttachmentInfoResponse.swift */; };
 		B1CD04E32949C4EA00A40414 /* WorkNumbersData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CD04E22949C4EA00A40414 /* WorkNumbersData.swift */; };
 		B1D14739258C8F610053DB4F /* listener08_anim.gif in Resources */ = {isa = PBXBuildFile; fileRef = B1D14736258C8F610053DB4F /* listener08_anim.gif */; };
@@ -1628,6 +1630,8 @@
 		B1C0A1A6256E552D00C7041E /* MeetingFormAttachmentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingFormAttachmentCell.xib; sourceTree = "<group>"; };
 		B1C19024211437E200935829 /* OOCalendarLeftMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOCalendarLeftMenuController.swift; sourceTree = "<group>"; };
 		B1C1905C2114410D00935829 /* CalendarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTableViewCell.swift; sourceTree = "<group>"; };
+		B1C196CB2A05096C00C454F6 /* IMTextCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IMTextCardView.xib; sourceTree = "<group>"; };
+		B1C196F92A050A0800C454F6 /* IMTextCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMTextCardView.swift; sourceTree = "<group>"; };
 		B1C303E522D58C1A00C17E5A /* CMSAttachmentInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMSAttachmentInfoResponse.swift; sourceTree = "<group>"; };
 		B1CD04E22949C4EA00A40414 /* WorkNumbersData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkNumbersData.swift; sourceTree = "<group>"; };
 		B1D14736258C8F610053DB4F /* listener08_anim.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = listener08_anim.gif; sourceTree = "<group>"; };
@@ -2491,6 +2495,8 @@
 				B1B4EEF22588AC6900E8B7C8 /* IMFileView.swift */,
 				B126588427E1CBDE00365C9A /* IMProcessCardView.swift */,
 				B12658B027E1CBE800365C9A /* IMProcessCardView.xib */,
+				B1C196CB2A05096C00C454F6 /* IMTextCardView.xib */,
+				B1C196F92A050A0800C454F6 /* IMTextCardView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -5261,6 +5267,7 @@
 				B1DFFAAF235EB1FE00FEF9D6 /* CloudFile.storyboard in Resources */,
 				E46E6C851DD41F5D00AB7561 /* ZSSimageDevice.png in Resources */,
 				E46E6C8C1DD41F5D00AB7561 /* ZSSitalic@2x.png in Resources */,
+				B1C196CC2A05096C00C454F6 /* IMTextCardView.xib in Resources */,
 				B165CD5E2242093500373B66 /* AlertViewController.xib in Resources */,
 				E4C24C4D208D7EDE00E426B0 /* OOLinkManInfoHeader.xib in Resources */,
 				E457559E1E0BA72E00EC44F4 /* qrcode_scan_btn_flash_nor@2x.png in Resources */,
@@ -5535,6 +5542,7 @@
 				E4C24C42208D7EDE00E426B0 /* OOLinkeManViewController.swift in Sources */,
 				E40E24DA20B7DA3C009F8BE7 /* OOMeetingRoomInforCell.swift in Sources */,
 				E4A0791020CF5D2100B8AA84 /* OOVoiceAIController.swift in Sources */,
+				B1C196FA2A050A0800C454F6 /* IMTextCardView.swift in Sources */,
 				E4C24C46208D7EDE00E426B0 /* OOContactSearchResultController.swift in Sources */,
 				E4B888831D9D48F1002E1A46 /* FileShareTableViewCell.swift in Sources */,
 				E4B888741D9D48F1002E1A46 /* CompanyDuty.swift in Sources */,

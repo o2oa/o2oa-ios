@@ -95,7 +95,7 @@ class MailViewController: BaseWebViewUIViewController {
     @objc func loadDetailSubject(){
         if let url = self.app?.vcName?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
             self.loadUrl(url: url)
-        }else {
+        } else {
             if let url = self.openUrl {
                 self.loadUrl(url: url)
             } else {

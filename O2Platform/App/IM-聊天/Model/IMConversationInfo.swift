@@ -146,7 +146,76 @@ class InstantMessage: NSObject, DataModel {
     func mapping(mapper: HelpingMapper) {
 
     }
+    
+    /**
+     * 是否 custom 消息
+    */
+   func isCustomType()-> Bool {
+       return type != nil && type?.starts(with: "custom") == true
+   }
 
+   /**
+    * custom  消息体
+    */
+   func customO2AppMsg() -> CustomO2AppMsg? {
+       if (isCustomType() &&  body != nil) {
+           guard let cBody = CustomO2AppMsgBody.deserialize(from: body!) else {
+               return nil
+           }
+           return cBody.o2AppMsg
+       }
+       return nil
+   }
+
+}
+
+// 自定义消息
+class CustomO2AppTextMsg: NSObject, DataModel {
+    @objc var content: String?
+              @objc var url: String?
+    required override init() { }
+}
+class CustomO2AppImageMsg: NSObject, DataModel {
+    @objc var url: String?
+    required override init() { }
+}
+class CustomO2AppCardMsg: NSObject, DataModel {
+    @objc var title: String?
+    @objc var desc: String?
+    @objc var url: String?
+    required override init() { }
+}
+enum CustomO2AppMsgType{
+    case text
+    case image
+    case textcard
+    case unknown
+}
+class CustomO2AppMsg: NSObject, DataModel {
+    @objc var msgtype: String? // text image textcard
+    @objc var text: CustomO2AppTextMsg?
+    @objc var image: CustomO2AppImageMsg?
+    @objc var textcard: CustomO2AppCardMsg?
+        
+        required override init() { }
+
+    func msgType()-> CustomO2AppMsgType {
+        switch (msgtype) {
+        case "text":
+            return CustomO2AppMsgType.text
+        case "image" :
+            return CustomO2AppMsgType.image
+        case "textcard" :
+            return CustomO2AppMsgType.textcard
+        default:
+            return CustomO2AppMsgType.unknown
+        }
+    }
+}
+
+class CustomO2AppMsgBody: NSObject, DataModel {
+    @objc var o2AppMsg: CustomO2AppMsg?
+    required override init() { }
 }
 
 
