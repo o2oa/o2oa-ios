@@ -126,20 +126,23 @@ class AttendanceV2ExceptionTableViewController: UITableViewController {
     /// 检查是否能够申诉
     private func startCheck(appeal: AttendanceV2AppealInfo) {
         if self.config != nil  && self.config?.appealEnable == true && !self.config!.processId.isEmpty {
-            self.viewModel.appealCheckCanStartProcess(id: appeal.id).then { result in
-                if result.value == true {
-                    let processData = AttendanceV2AppealInfoToProcessData()
-                    processData.appealId = appeal.id
-                    processData.record = appeal.record
-                    self.loadIdentityWithProcess(processId: self.config!.processId, processData: processData)
-                } else {
-                    self.showError(title: "当前无法申诉！")
-                }
-            }.catch { error in
-                if error is OOAppError, let msg = (error as? OOAppError)?.errorDescription {
-                    self.showError(title: "\(msg)")
-                } else {
-                    self.showError(title: "当前无法申诉！")
+            
+            self.showDefaultConfirm(title: "提示", message: "确定要发起申诉流程？") { action in
+                self.viewModel.appealCheckCanStartProcess(id: appeal.id).then { result in
+                    if result.value == true {
+                        let processData = AttendanceV2AppealInfoToProcessData()
+                        processData.appealId = appeal.id
+                        processData.record = appeal.record
+                        self.loadIdentityWithProcess(processId: self.config!.processId, processData: processData)
+                    } else {
+                        self.showError(title: "当前无法申诉！")
+                    }
+                }.catch { error in
+                    if error is OOAppError, let msg = (error as? OOAppError)?.errorDescription {
+                        self.showError(title: "\(msg)")
+                    } else {
+                        self.showError(title: "当前无法申诉！")
+                    }
                 }
             }
         }

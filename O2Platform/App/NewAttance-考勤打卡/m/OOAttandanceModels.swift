@@ -77,6 +77,26 @@ class AttendanceV2CheckItemData: NSObject, DataModel {
             return ""
         }
     }
+    
+    func resultTextColor() -> UIColor {
+        if self.fieldWork == true {
+            return UIColor(hex: "#E233FF")
+        } else {
+            if self.checkInResult == "Normal" {
+                return UIColor(hex: "#4A90E2")
+            } else if self.checkInResult == "Early" {
+                return UIColor(hex: "#8B572A")
+            } else if self.checkInResult == "Late" {
+                return UIColor(hex: "#F5A623")
+            } else if self.checkInResult == "SeriousLate" {
+                return UIColor(hex: "#FF8080")
+            }else if self.checkInResult == "NotSigned" {
+                return UIColor(hex: "#fb4747")
+            } else {
+                return  UIColor(hex: "#4A90E2")
+            }
+        }
+    }
 }
 // 工作场所
 class AttendanceV2WorkPlace: NSObject, DataModel {

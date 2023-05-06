@@ -17,12 +17,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="386" height="70"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="早退" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G62-TV-lL5">
-                        <rect key="frame" x="14" y="10" width="33" height="20"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                        <color key="textColor" red="0.19999998807907104" green="0.19999998807907104" blue="0.19999998807907104" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="审批中" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7vB-op-HOj">
                         <rect key="frame" x="323" y="10" width="49" height="20"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -40,15 +34,31 @@
                         <state key="normal" title="Button"/>
                         <buttonConfiguration key="configuration" style="plain" title="处理"/>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kDl-u8-7vR">
+                        <rect key="frame" x="14" y="10" width="38.666666666666657" height="27"/>
+                        <color key="backgroundColor" red="0.98431372549999996" green="0.2784313725" blue="0.2784313725" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <inset key="contentEdgeInsets" minX="5" minY="0.0" maxX="5" maxY="0.0"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" title="早退">
+                            <fontDescription key="titleFontDescription" type="system" pointSize="14"/>
+                            <directionalEdgeInsets key="contentInsets" top="5" leading="5" bottom="5" trailing="5"/>
+                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </buttonConfiguration>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="4"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="7vB-op-HOj" secondAttribute="trailing" constant="14" id="0UN-hW-QfL"/>
                     <constraint firstItem="CTz-LV-LPK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="14" id="2J4-K8-9KQ"/>
+                    <constraint firstItem="kDl-u8-7vR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="14" id="Acx-hZ-hEI"/>
+                    <constraint firstItem="kDl-u8-7vR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="K9g-Nb-Jor"/>
                     <constraint firstAttribute="trailing" secondItem="koI-HG-8A0" secondAttribute="trailing" constant="10" id="SsO-RD-pw1"/>
-                    <constraint firstItem="G62-TV-lL5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="WrH-SA-JyZ"/>
                     <constraint firstAttribute="bottom" secondItem="CTz-LV-LPK" secondAttribute="bottom" constant="10" id="aA8-Vh-bYI"/>
                     <constraint firstAttribute="bottom" secondItem="koI-HG-8A0" secondAttribute="bottom" id="j3b-GZ-h4B"/>
-                    <constraint firstItem="G62-TV-lL5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="14" id="nvu-E9-UXC"/>
                     <constraint firstItem="7vB-op-HOj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="zbO-su-IAD"/>
                 </constraints>
             </tableViewCellContentView>
@@ -57,7 +67,7 @@
                 <outlet property="appealStatusLabel" destination="7vB-op-HOj" id="80w-Nh-WXl"/>
                 <outlet property="processBtn" destination="koI-HG-8A0" id="epi-Uh-ooN"/>
                 <outlet property="recordDateLabel" destination="CTz-LV-LPK" id="vhC-jk-hN1"/>
-                <outlet property="recordResultLabel" destination="G62-TV-lL5" id="sR8-dx-te0"/>
+                <outlet property="recordResultBtn" destination="kDl-u8-7vR" id="78U-y4-TYI"/>
             </connections>
             <point key="canvasLocation" x="180.15267175572518" y="-2.4647887323943665"/>
         </tableViewCell>

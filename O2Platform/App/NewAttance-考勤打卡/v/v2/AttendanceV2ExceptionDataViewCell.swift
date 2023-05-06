@@ -10,7 +10,9 @@ import UIKit
 
 class AttendanceV2ExceptionDataViewCell: UITableViewCell {
 
-    @IBOutlet weak var recordResultLabel: UILabel!
+ 
+    
+    @IBOutlet weak var recordResultBtn: UIButton!
     
     @IBOutlet weak var appealStatusLabel: UILabel!
     
@@ -38,12 +40,15 @@ class AttendanceV2ExceptionDataViewCell: UITableViewCell {
         } else{
             duty = "下班打卡"
         }
-        var showText = "\(time) (\(duty))"
+        let showText = "\(time) (\(duty))"
         var result = appeal.record?.resultText() ?? ""
         if (appeal.record?.fieldWork == true) {
             result = "外勤打卡"
         }
-        self.recordResultLabel.text = result
+        self.recordResultBtn.setTitle(result, for: .normal)
+        self.recordResultBtn.setTitleColor(UIColor.white, for: .normal)
+        self.recordResultBtn.backgroundColor = appeal.record?.resultTextColor()
+        
         self.recordDateLabel.text = showText
         self.appealStatusLabel.text = appeal.statsText()
         self.processBtn.isHidden = true
