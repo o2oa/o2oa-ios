@@ -284,5 +284,6 @@ struct DesktopContext {
     static let cmsItemDetailEditHtml = "cmsdocmobilewithaction.html?id=##documentId##&readonly=false"
     static let appDetailQuery = "appMobile.html?app=portal.Portal&status=##status##"
     static let portalMobileQuery = "portalmobile.html?id=##portalId##"
+    static let portalMobileWithPageQuery = "portalmobile.html?id=##portalId##&page=##page##"
 }
 

@@ -73,6 +73,9 @@ class O2JsApiUtil: O2WKScriptMessageHandlerImplement {
                     case "navigation.openOtherApp":
                         navigationOpenOtherApp(json: String(json))
                         break
+                    case "navigation.openInnerApp":
+                        navigationOpenInnerApp(json: String(json))
+                        break
                     case "navigation.openWindow":
                         navigationOpenWindow(json: String(json))
                         break
@@ -398,6 +401,124 @@ class O2JsApiUtil: O2WKScriptMessageHandlerImplement {
             DDLogError("navigationOpenOtherApp, 解析json失败")
         }
     }
+    // 打开内部应用
+    private func navigationOpenInnerApp(json: String) {
+        if let alert = O2WebViewBaseMessage<O2UtilNavigationOpenInnerApp>.deserialize(from: json) {
+            let backresult = "{\"result\": true, \"message\": \"\"}"
+            if let appKey = alert.data?.appKey {
+                DDLogDebug("打开app appKey：\(appKey)")
+                switch appKey {
+                case "task":
+                    self.openNative(appKey: appKey, storyBoardName: "task", "todoTask")
+                    break
+                case "taskcompleted":
+                    self.openNative(appKey: appKey, storyBoardName: "task", "todoTask")
+                    break
+                case "read":
+                    self.openNative(appKey: appKey, storyBoardName: "task", "todoTask")
+                    break
+                case "readcompleted":
+                    self.openNative(appKey: appKey, storyBoardName: "task", "todoTask")
+                    break
+                case "meeting":
+                    self.openNative(appKey: appKey, storyBoardName: "meeting")
+                    break
+                case "clouddisk":
+                    self.openNative(appKey: appKey, storyBoardName: "CloudFile")
+                    break
+                case "bbs":
+                    self.openNative(appKey: appKey, storyBoardName: "bbs")
+                    break
+                case "cms":
+                    self.openNative(appKey: appKey, storyBoardName: "information")
+                    break
+                case "attendance":
+                    self.openNative(appKey: appKey, storyBoardName: "checkin")
+                    break
+                case "calendar":
+                    self.openNative(appKey: appKey, storyBoardName: "calendar")
+                    break
+                case "mindMap":
+                    let storyBoard = UIStoryboard(name: "mindMap", bundle: nil)
+                    if let destVC = storyBoard.instantiateInitialViewController() {
+                        destVC.modalPresentationStyle = .fullScreen
+                        self.viewController.show(destVC, sender: nil)
+                    } else {
+                        DDLogError("没有找到view controller。。。。")
+                    }
+                    break
+                case "portal":
+                    if let portalId = alert.data?.portalFlag {
+                        let title = alert.data?.portalTitle
+                        let page = alert.data?.portalPage
+                        var webUrl: String? = nil
+                        if let page = page, page.isEmpty == false {
+                            webUrl = AppDelegate.o2Collect.genrateURLWithWebContextKey(DesktopContext.DesktopContextKey, query: DesktopContext.portalMobileWithPageQuery, parameter: ["##portalId##":portalId  as AnyObject, "##page##":page  as AnyObject],covertd:false)
+                        } else {
+                            webUrl = AppDelegate.o2Collect.genrateURLWithWebContextKey(DesktopContext.DesktopContextKey, query: DesktopContext.portalMobileQuery, parameter: ["##portalId##":portalId  as AnyObject],covertd:false)
+                        }
+                        let destVC = OOTabBarHelper.getVC(storyboardName: "apps", vcName: "OOMainWebVC")
+                        if let mail = destVC as? MailViewController {
+                            let o2app = O2App()
+                            o2app.title = title
+                            o2app.vcName = webUrl
+                            mail.app = o2app
+                            let nav = ZLNavigationController(rootViewController: mail)
+                            self.viewController.present(nav, animated: true, completion: nil)
+                        } else {
+                            DDLogDebug("没有webview ？？？？？？")
+                        }
+                    }else {
+                        DDLogDebug("没有portalFlag ？？？？？？")
+                    }
+                    break
+                default:
+                    DDLogError("navigationOpenOtherApp, 解析json失败")
+                    break
+                }
+            }
+            if alert.callback != nil {
+                let callJs = "\(alert.callback!)('\(backresult)')"
+                self.evaluateJs(callBackJs: callJs)
+            }
+        }else {
+            DDLogError("navigationOpenOtherApp, 解析json失败")
+        }
+    }
+    
+    private func openNative(appKey: String, storyBoardName: String, _ vcName: String? = nil) {
+        DDLogDebug("storyboard: \(storyBoardName) , app:\(appKey), vcName: \(vcName ?? "")")
+        let storyBoard = UIStoryboard(name: storyBoardName, bundle: nil)
+        //let storyBoard = UIStoryboard(name: app.storyBoard!, bundle: nil)
+        var destVC:UIViewController!
+        /// 云盘v3版本 入口换了
+        if let value = StandDefaultUtil.share.userDefaultGetValue(key: O2.O2CloudFileVersionKey) as? Bool, value == true, storyBoardName == "CloudFile" {
+            destVC = storyBoard.instantiateViewController(withIdentifier: "cloudFileV3") // v3 入口
+            DDLogDebug("网盘V3版本")
+        } else if let vc = vcName, vc.isEmpty == false {
+            if vc == "todoTask" {
+                if "taskcompleted" == appKey {
+                    AppConfigSettings.shared.taskIndex = 2
+                }else if "read" == appKey {
+                    AppConfigSettings.shared.taskIndex = 1
+                }else if "readcompleted" == appKey {
+                    AppConfigSettings.shared.taskIndex = 3
+                }else {
+                    AppConfigSettings.shared.taskIndex = 0
+                }
+            }
+            destVC = storyBoard.instantiateViewController(withIdentifier: vc)
+        }else{
+            destVC = storyBoard.instantiateInitialViewController()
+        }
+        
+        if destVC.isKind(of: ZLNavigationController.self) {
+            self.viewController.show(destVC, sender: nil)
+        }else{
+            self.viewController.navigationController?.pushViewController(destVC, animated: false)
+        }
+    }
+    
     // 新窗口打开网页
     private func navigationOpenWindow(json: String) {
         if let alert = O2WebViewBaseMessage<O2UtilNavigationOpenWindow>.deserialize(from: json) {

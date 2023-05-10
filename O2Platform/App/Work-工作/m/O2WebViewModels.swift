@@ -188,3 +188,11 @@ struct O2UtilNavigationOpenWindow: HandyJSON {
     var url: String? // 新窗口打开网页
 }
 
+
+struct O2UtilNavigationOpenInnerApp: HandyJSON {
+    var appKey: String? // 如果是portal，则需要传入  portalFlag：门户标识
+    var portalFlag: String? // 门户标识
+    var portalTitle: String? // 门户标题
+    var portalPage: String? // 门户页面 id
+}
+
