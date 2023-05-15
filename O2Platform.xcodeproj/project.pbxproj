@@ -6404,7 +6404,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development: guodong lou (JDB49W26VS)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Apple Development: guodong lou (JDB49W26VS)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 131;
+				CURRENT_PROJECT_VERSION = 132;
 				DEVELOPMENT_TEAM = C79YTQHHFY;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = C79YTQHHFY;
 				ENABLE_BITCODE = NO;
@@ -6430,7 +6430,7 @@
 					"$(PROJECT_DIR)/O2Platform/Framework/lame/opencore-amr/lib",
 					"$(PROJECT_DIR)/O2Platform/Framework/BaiDuASR/BDSClientLib",
 				);
-				MARKETING_VERSION = 6.3.1;
+				MARKETING_VERSION = 6.3.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -6509,7 +6509,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Tianjin Lanmo Innovative Cloud Data Internet Technology Co., Ltd. (C79YTQHHFY)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tianjin Lanmo Innovative Cloud Data Internet Technology Co., Ltd. (C79YTQHHFY)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 131;
+				CURRENT_PROJECT_VERSION = 132;
 				DEVELOPMENT_TEAM = C79YTQHHFY;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = C79YTQHHFY;
 				ENABLE_BITCODE = NO;
@@ -6535,7 +6535,7 @@
 					"$(PROJECT_DIR)/O2Platform/Framework/lame/opencore-amr/lib",
 					"$(PROJECT_DIR)/O2Platform/Framework/BaiDuASR/BDSClientLib",
 				);
-				MARKETING_VERSION = 6.3.1;
+				MARKETING_VERSION = 6.3.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
