@@ -15,6 +15,9 @@ class IMInstantMessageViewController: UITableViewController {
     private lazy var viewModel: IMViewModel = {
            return IMViewModel()
        }()
+    private lazy var meetingViewModel: OOMeetingMainViewModel = {
+        return OOMeetingMainViewModel()
+    }()
     //预览文件
     private lazy var previewVC: CloudFilePreviewController = {
         return CloudFilePreviewController()
@@ -96,6 +99,46 @@ class IMInstantMessageViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
     }
+    
+    // MARK: - private
+    
+    private func getMeetingInfo(id: String) {
+        self.showLoading()
+        self.meetingViewModel.getMeetingById(id: id).then { meeting in
+            self.hideLoading()
+            // 打开在线会议
+            if let link = meeting.roomLink, let mode = meeting.mode, !link.isEmpty, mode == "online" {
+                guard let url = URL(string: link) else {
+                    DDLogError("url地址不正确，\(link)")
+                    return
+                }
+                if #available(iOS 10, *) {
+                    if UIApplication.shared.canOpenURL(url) {
+                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                    } else {
+                        DDLogError("无法打开url，\(link)")
+                    }
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
+            } else {
+                // 打开会议详情
+                let storyBoard = UIStoryboard(name: "meeting", bundle: nil)
+                guard let destVC = storyBoard.instantiateViewController(withIdentifier: "meetingDetailVC") as? OOMeetingDetailViewController else {
+                    return
+                }
+                destVC.meetingInfo = meeting
+                destVC.modalPresentationStyle = .fullScreen
+                if destVC.isKind(of: ZLNavigationController.self) {
+                    self.show(destVC, sender: nil)
+                }else{
+                    self.navigationController?.pushViewController(destVC, animated: true)
+                }
+            }
+        }.catch { error in
+            self.showError(title: "\(error.localizedDescription)")
+        }
+    }
 }
 
 extension IMInstantMessageViewController : IMChatMessageDelegate {
@@ -162,24 +205,24 @@ extension IMInstantMessageViewController : IMChatMessageDelegate {
         //无需实现
     }
     
-    func openApplication(storyboard: String) {
-        if storyboard == "mind" {
-//            let flutterViewController = O2FlutterViewController()
-//            flutterViewController.setInitialRoute("mindMap")
-//            flutterViewController.modalPresentationStyle = .fullScreen
-//            self.present(flutterViewController, animated: false, completion: nil)
-        }else {
-            let storyBoard = UIStoryboard(name: storyboard, bundle: nil)
-            guard let destVC = storyBoard.instantiateInitialViewController() else {
-                return
-            }
-            destVC.modalPresentationStyle = .fullScreen
-            if destVC.isKind(of: ZLNavigationController.self) {
-                self.show(destVC, sender: nil)
-            }else{
-                self.navigationController?.pushViewController(destVC, animated: true)
-            }
+    func openApplication(storyboard: String, msgBody: String?) {
+        // 会议管理特殊处理
+        if storyboard == "meeting", let body = msgBody, let jsonData = String(body).data(using: .utf8), let dicArr = try? JSONSerialization.jsonObject(with: jsonData, options: .allowFragments) as? [String:AnyObject], let id = dicArr["id"] as? String {
+            self.getMeetingInfo(id: id)
+            return
         }
+        
+        let storyBoard = UIStoryboard(name: storyboard, bundle: nil)
+        guard let destVC = storyBoard.instantiateInitialViewController() else {
+            return
+        }
+        destVC.modalPresentationStyle = .fullScreen
+        if destVC.isKind(of: ZLNavigationController.self) {
+            self.show(destVC, sender: nil)
+        }else{
+            self.navigationController?.pushViewController(destVC, animated: true)
+        }
+        
     }
     
     func openWork(workId: String) {

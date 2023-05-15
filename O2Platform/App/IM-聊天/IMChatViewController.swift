@@ -920,23 +920,16 @@ extension IMChatViewController: IMChatMessageDelegate {
     }
     
     
-    func openApplication(storyboard: String) {
-        if storyboard == "mind" {
-//            let flutterViewController = O2FlutterViewController()
-//            flutterViewController.setInitialRoute("mindMap")
-//            flutterViewController.modalPresentationStyle = .fullScreen
-//            self.present(flutterViewController, animated: false, completion: nil)
-        }else {
-            let storyBoard = UIStoryboard(name: storyboard, bundle: nil)
-            guard let destVC = storyBoard.instantiateInitialViewController() else {
-                return
-            }
-            destVC.modalPresentationStyle = .fullScreen
-            if destVC.isKind(of: ZLNavigationController.self) {
-                self.show(destVC, sender: nil)
-            }else{
-                self.navigationController?.pushViewController(destVC, animated: true)
-            }
+    func openApplication(storyboard: String, msgBody: String?) {
+        let storyBoard = UIStoryboard(name: storyboard, bundle: nil)
+        guard let destVC = storyBoard.instantiateInitialViewController() else {
+            return
+        }
+        destVC.modalPresentationStyle = .fullScreen
+        if destVC.isKind(of: ZLNavigationController.self) {
+            self.show(destVC, sender: nil)
+        }else{
+            self.navigationController?.pushViewController(destVC, animated: true)
         }
     }
     

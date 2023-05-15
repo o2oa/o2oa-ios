@@ -174,11 +174,31 @@ class OOMeetingInforController: UIViewController {
         }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    private func openMeetingDetail(item: OOMeetingInfo) {
+        if let id = item.id {
+            self.viewModel.getMeetingById(id: id).then { meeting in
+                if let link = meeting.roomLink, let mode = meeting.mode, !link.isEmpty, mode == "online" {
+                    guard let url = URL(string: link) else {
+                        DDLogError("url地址不正确，\(link)")
+                        return
+                    }
+                    if #available(iOS 10, *) {
+                        if UIApplication.shared.canOpenURL(url) {
+                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                        } else {
+                            DDLogError("无法打开url，\(link)")
+                        }
+                    } else {
+                        UIApplication.shared.openURL(url)
+                    }
+                } else {
+                    self.performSegue(withIdentifier: "showMeetingDetail", sender: meeting)
+                }
+            }.catch { error in
+                self.showError(title: "\(error.localizedDescription)")
+            }
+        }
     }
-   
 
 }
 
@@ -283,6 +303,6 @@ extension OOMeetingInforController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = viewModel.nodeForIndexPath(indexPath)
-        self.performSegue(withIdentifier: "showMeetingDetail", sender: item)
+        self.openMeetingDetail(item: item)
     }
 }

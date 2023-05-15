@@ -13,7 +13,7 @@ protocol IMChatMessageDelegate {
     func playAudio(info: IMMessageBodyInfo, id: String?)
     func openImageOrFileMessage(info: IMMessageBodyInfo)
     func openLocatinMap(info: IMMessageBodyInfo)
-    func openApplication(storyboard: String)
+    func openApplication(storyboard: String, msgBody: String?)
     func openWork(workId: String)
     func openWebview(url: String)
     func openHttpImage(imageUrl: String)
@@ -260,32 +260,32 @@ class IMChatMessageViewCell: UITableViewCell {
             } else if type.starts(with: "meeting_") {
                 setcc(label: label) { tap in
                     //打开会议模块
-                    self.delegate?.openApplication(storyboard: "meeting")
+                    self.delegate?.openApplication(storyboard: "meeting", msgBody: item.body)
                 }
             } else if type.starts(with: "attachment_") {
                 setcc(label: label) { tap in
                     //打开云盘
-                    self.delegate?.openApplication(storyboard: "CloudFile")
+                    self.delegate?.openApplication(storyboard: "CloudFile", msgBody: item.body)
                 }
             } else if type.starts(with: "calendar_") {
                 setcc(label: label) { tap in
                     //打开日历
-                    self.delegate?.openApplication(storyboard: "calendar")
+                    self.delegate?.openApplication(storyboard: "calendar", msgBody: item.body)
                 }
             } else if type.starts(with: "cms_") {
                 setcc(label: label) { tap in
                     //打开cms
-                    self.delegate?.openApplication(storyboard: "information")
+                    self.delegate?.openApplication(storyboard: "information", msgBody: item.body)
                 }
             } else if type.starts(with: "bbs_") {
                setcc(label: label) { tap in
                     //打开论坛
-                self.delegate?.openApplication(storyboard: "bbs")
+                self.delegate?.openApplication(storyboard: "bbs", msgBody: item.body)
                 }
             } else if type.starts(with: "mind_") {
                 setcc(label: label) { tap in
                     //打开脑图
-                    self.delegate?.openApplication(storyboard: "mind")
+                    self.delegate?.openApplication(storyboard: "mind", msgBody: item.body)
                 }
             } else {
                 

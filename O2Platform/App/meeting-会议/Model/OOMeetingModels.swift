@@ -178,6 +178,10 @@ class OOMeetingInfo :NSObject,DataModel{
     @objc var hostUnit: String?// 承办部门
     @objc var hostPerson: String?// 主持人
     @objc var type: String? // 会议类型
+    // 新增字段 2023-05
+    @objc var mode: String? // online
+    @objc var roomId: String? // 在线会议房间号
+    @objc var roomLink: String? // 在线会议链接
     
     required override init() {
         

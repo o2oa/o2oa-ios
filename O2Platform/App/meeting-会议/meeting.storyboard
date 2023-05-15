@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wSi-n3-2Nh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="wSi-n3-2Nh">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -51,11 +51,11 @@
             <objects>
                 <viewController storyboardIdentifier="OOMeetingMeetingRoomManageController" title="会议室" useStoryboardIdentifierAsRestorationIdentifier="YES" id="VTD-mP-cJf" customClass="OOMeetingMeetingRoomManageController" customModule="O2Platform" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="E6n-Cm-FfL">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" sectionIndexMinimumDisplayRowCount="-1" rowHeight="118" estimatedRowHeight="-1" sectionHeaderHeight="40" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="YEG-o9-FXA">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                             </tableView>
@@ -115,7 +115,7 @@
         <!--Meeting Detail View Controller-->
         <scene sceneID="5hn-7t-lPp">
             <objects>
-                <viewController id="Stp-Kt-FSy" customClass="OOMeetingDetailViewController" customModule="O2Platform" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="meetingDetailVC" storyboardIdentifier="meetingDetailVC" id="Stp-Kt-FSy" customClass="OOMeetingDetailViewController" customModule="O2Platform" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mq1-RB-IAS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -209,9 +209,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="vuy-SZ-f1L"/>
+        <segue reference="Ivm-Lu-l8X"/>
         <segue reference="RwV-B2-gpp"/>
-        <segue reference="fbd-Za-66E"/>
+        <segue reference="i02-wa-pKi"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="icon_huiyi_nor" width="22" height="22"/>

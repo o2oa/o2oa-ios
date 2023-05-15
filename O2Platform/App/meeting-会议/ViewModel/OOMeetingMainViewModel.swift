@@ -221,6 +221,24 @@ extension OOMeetingMainViewModel {
         }
     }
     
+    /// 查询会议对象
+    func getMeetingById(id: String) -> Promise<OOMeetingInfo> {
+        return Promise { fulfill,  reject in
+            self.o2MeetingAPI.request(.meetingItemById(id)) { result in
+                let myResult = OOResult<BaseModelClass<OOMeetingInfo>>(result)
+                if myResult.isResultSuccess() {
+                    if let meeting = myResult.model?.data {
+                        fulfill(meeting)
+                    } else {
+                        reject(O2APIError.o2ResponseError("数据为空"))
+                    }
+                } else {
+                    reject(myResult.error!)
+                }
+            }
+        }
+    }
+    
 //    //读取指定日期的会议列表
 //    func getMeetingByTheDay(_ theDate:Date){
 //        let strYear = String(theDate.year)
