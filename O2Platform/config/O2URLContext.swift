@@ -237,7 +237,8 @@ struct CMSContext {
     static let cmsCategoryQuery  = "jaxrs/appinfo/list/user/view"
     static let cmsCanPublishCategoryQuery  = "jaxrs/appinfo/get/user/publish/##appId##" //GET 查询app下当前用户能发布的category，返回的是app对象
     static let cmsCategoryListQuery = "jaxrs/categoryinfo/list/publish/app/##appId##"
-    static let cmsCategoryDetailQuery = "jaxrs/document/filter/list/##id##/next/##count##"
+    static let cmsCategoryDetailQuery = "jaxrs/document/filter/list/##id##/next/##count##" // 老分页接口
+    static let cmsCategoryDetailNewQuery = "jaxrs/document/filter/list/##page##/size/##size##" // 新分页接口
     static let cmsDocumentDraftQuery = "jaxrs/document/draft/list/##id##/next/##count##" //PUT 查询草稿 {"categoryIdList":["36783507-3109-4701-a1bd-487e12340af5"],"creatorList":["楼国栋@louguodong@P"],"documentType":"全部"}
     static let cmsDocumentPost = "jaxrs/document" //保存修改文档 POST
     static let cmsAttachmentListQuery = "jaxrs/fileinfo/list/document/##documentId##"

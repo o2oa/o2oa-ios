@@ -298,12 +298,12 @@ class MainTaskSecondViewController: UIViewController {
     fileprivate func loadNewPublish(_ pageModel:CommonPageModel,_ isFirst:Bool = true){
         DDLogDebug("loadNewPublish ...........................")
         self.showLoading(title: "加载中...")
-        let npURL = AppDelegate.o2Collect.generateURLWithAppContextKey(CMSContext.cmsContextKey, query: CMSContext.cmsCategoryDetailQuery, parameter: pageModel.toDictionary() as[String:AnyObject]?)
+        let npURL = AppDelegate.o2Collect.generateURLWithAppContextKey(CMSContext.cmsContextKey, query: CMSContext.cmsCategoryDetailNewQuery, parameter: pageModel.toNewDictionary() as[String:AnyObject]?)
         if isFirst {
             self.newPublishInfos.removeAll()
         }
-        AF.request(npURL!, method: .put, parameters:[String:Any](), encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
-//            DDLogDebug(response.debugDescription)
+        // justData true 不查询count 速度可以快点
+        AF.request(npURL!, method: .put, parameters: ["justData": true], encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
             switch response.result {
             case .success(let val):
                 let json = JSON(val)["data"]
@@ -312,9 +312,6 @@ class MainTaskSecondViewController: UIViewController {
                     let pInfos = Mapper<CMS_PublishInfo>().mapArray(JSONString: json.description)
                     if let uPInfos = pInfos {
                         self.newPublishInfos.append(contentsOf: uPInfos)
-                        let count:Int = JSON(val)["count"].int ?? 0
-                        self.newPublishPageModel.setPageTotal(count)
-                        
                     }
                     DispatchQueue.main.async {
                         //ZoneHUD.dismissNormalHUD()

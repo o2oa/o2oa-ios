@@ -163,10 +163,12 @@ class TaskImageshowEntity : NSObject, NSCoding, Mappable{
 
 //任务分页分页模型
 struct CommonPageModel {
-    var pageNumber:Int = 0
+    var pageNumber:Int = 1
     var pageSize:Int = 20
     var pageTotal:Int = 0
     var nextPageId:String = "(0)"
+    
+    var hasMoreData = false // 根据返回条数设置
     
     init() {
         
@@ -192,7 +194,13 @@ struct CommonPageModel {
         return ["##id##":nextPageId,"##count##":pageSize.toString]
     }
     
+    func toNewDictionary() -> Dictionary<String,String>{
+        return ["##page##": "\(pageNumber)","##size##": pageSize.toString]
+    }
+    
     func isLast() -> Bool {
         return  pageNumber * pageSize >= pageTotal
     }
+    
+    
 }

@@ -78,9 +78,8 @@ class CMSCategoryListViewController: UIViewController {
         
         tableview.mj_footer = MJRefreshAutoFooter(refreshingBlock: {
             //先生成下一页的页号
-            if self.pageModel.isLast() == false {
-                self.pageModel.nextPageId = (self.cmsCategory?.data?.last?.id)!
-                self.pageModel.nextPage()
+            if self.pageModel.hasMoreData {
+                self.pageModel.pageNumber = self.pageModel.pageNumber + 1
                 self.loadNextPageData()
             }else{
                 self.showSuccess(title: "最后一页了，没有帖子了")
@@ -173,15 +172,19 @@ class CMSCategoryListViewController: UIViewController {
     }
     
     func loadFirstData(){
-        let url = AppDelegate.o2Collect.generateURLWithAppContextKey(CMSContext.cmsContextKey, query: CMSContext.cmsCategoryDetailQuery, parameter: self.pageModel.toDictionary() as [String : AnyObject]?)
-        var params:[String:Array<String>] = [:]
-        params["categoryIdList"] = [currentCategoryId]
+        let url = AppDelegate.o2Collect.generateURLWithAppContextKey(CMSContext.cmsContextKey, query: CMSContext.cmsCategoryDetailNewQuery, parameter: self.pageModel.toNewDictionary() as [String : AnyObject]?)
+        let params:[String: Any] = ["categoryIdList": [currentCategoryId], "justData": true]
+//        params["categoryIdList"] = [currentCategoryId]
         AF.request(url!, method: .put, parameters: params, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
             switch response.result {
             case .success(let val):
                 DDLogDebug(JSON(val).description)
                 self.cmsCategory = Mapper<CMSCategory>().map(JSONObject: val)
-                self.pageModel.setPageTotal((self.cmsCategory?.count)!)
+                if let size = self.cmsCategory?.data?.count, size == self.pageModel.pageSize {
+                    self.pageModel.hasMoreData = true
+                } else {
+                    self.pageModel.hasMoreData = false
+                }
             case .failure(let err):
                 DDLogError(err.localizedDescription)
             }
@@ -197,15 +200,19 @@ class CMSCategoryListViewController: UIViewController {
     }
     
     func loadNextPageData(){
-        let url = AppDelegate.o2Collect.generateURLWithAppContextKey(CMSContext.cmsContextKey, query: CMSContext.cmsCategoryDetailQuery, parameter: self.pageModel.toDictionary() as [String : AnyObject]?)
-        var params:[String:Array<String>] = [:]
-        params["categoryIdList"] = [currentCategoryId]
+        let url = AppDelegate.o2Collect.generateURLWithAppContextKey(CMSContext.cmsContextKey, query: CMSContext.cmsCategoryDetailNewQuery, parameter: self.pageModel.toNewDictionary() as [String : AnyObject]?)
+        let params:[String: Any] = ["categoryIdList": [currentCategoryId], "justData": true]
         AF.request(url!, method: .put, parameters: params, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
             switch response.result {
             case .success(let val):
                 DDLogDebug(JSON(val).description)
                 let cmsObjs = Mapper<CMSCategory>().map(JSONObject: val)
                 self.cmsCategory?.data?.append(contentsOf: (cmsObjs?.data)!)
+                if let size = cmsObjs?.data?.count, size == self.pageModel.pageSize {
+                    self.pageModel.hasMoreData = true
+                } else {
+                    self.pageModel.hasMoreData = false
+                }
             case .failure(let err):
                 DDLogError(err.localizedDescription)
             }
