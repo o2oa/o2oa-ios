@@ -70,5 +70,39 @@ class O2PersonalViewModel: NSObject {
         }
     }
     
+    ///
+    /// 我的委托
+    ///
+    func empowerList() -> Promise<[EmpowerData]> {
+        return Promise<[EmpowerData]> { fulfill, reject in
+            self.personalAPI.request(.empowerList) { result in
+                let response = OOResult<BaseModelClass<[EmpowerData]>>(result)
+                if response.isResultSuccess() {
+                    let list = response.model?.data ?? []
+                    fulfill(list)
+                }else {
+                    reject(response.error!)
+                }
+            }
+        }
+    }
+    
+    ///
+    /// 收到的委托
+    /// 
+    func empowerListTo() -> Promise<[EmpowerData]> {
+        return Promise<[EmpowerData]> { fulfill, reject in
+            self.personalAPI.request(.empowerListTo) { result in
+                let response = OOResult<BaseModelClass<[EmpowerData]>>(result)
+                if response.isResultSuccess() {
+                    let list = response.model?.data ?? []
+                    fulfill(list)
+                }else {
+                    reject(response.error!)
+                }
+            }
+        }
+    }
+    
     
 }

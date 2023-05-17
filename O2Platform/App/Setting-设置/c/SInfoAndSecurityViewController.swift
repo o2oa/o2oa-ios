@@ -54,6 +54,12 @@ class SInfoAndSecurityViewController: FormViewController {
                 }.onCellSelection({ (cell,row) in
                     self.performSegue(withIdentifier: "showPassworChangeSegue", sender: nil)
                 })
+            <<< LabelRow(){
+                $0.title = "外出授权"
+                $0.value = ""
+                }.onCellSelection({ (cell,row) in
+                    self.performSegue(withIdentifier: "showEmpowerLIst", sender: nil)
+                })
         form +++ Section()
             <<< LabelRow("bioAuthRow"){
                     $0.title = typeTitle

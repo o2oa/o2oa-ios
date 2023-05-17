@@ -15,6 +15,8 @@ enum PersonalAPI {
     case updatePersonInfo(O2PersonInfo)
     case updatePersonIcon(UIImage)
     case meetingConfig
+    case empowerList
+    case empowerListTo
 }
 
 extension PersonalAPI: OOAPIContextCapable {
@@ -42,19 +44,23 @@ extension PersonalAPI: TargetType {
     var path: String {
         switch self {
         case .personInfo:
-            return "jaxrs/person"
+            return "/jaxrs/person"
         case .updatePersonInfo(_):
-            return "jaxrs/person"
+            return "/jaxrs/person"
         case .updatePersonIcon(_):
-            return "jaxrs/person/icon"
+            return "/jaxrs/person/icon"
         case .meetingConfig:
-            return "jaxrs/definition/meetingConfig"
+            return "/jaxrs/definition/meetingConfig"
+        case .empowerList:
+            return "/jaxrs/empower/list/currentperson"
+        case .empowerListTo:
+            return "/jaxrs/empower/list/to"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .personInfo, .meetingConfig:
+        case .personInfo, .meetingConfig, .empowerListTo, .empowerList:
             return .get
         case .updatePersonInfo(_), .updatePersonIcon(_):
             return .put
@@ -67,7 +73,7 @@ extension PersonalAPI: TargetType {
     
     var task: Task {
         switch self {
-        case .personInfo, .meetingConfig:
+        case .personInfo, .meetingConfig, .empowerList, .empowerListTo:
             return .requestPlain
         case .updatePersonInfo(let person):
             return .requestParameters(parameters: person.toJSON() ?? [:], encoding: JSONEncoding.default)

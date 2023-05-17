@@ -155,6 +155,10 @@
 		B14E07C523025C6A00AE85A0 /* OOContactExpressAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14E07C423025C6A00AE85A0 /* OOContactExpressAPI.swift */; };
 		B14E0C0C2484F1F0008AF6AE /* O2WebsocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14E0C0B2484F1F0008AF6AE /* O2WebsocketManager.swift */; };
 		B14F35A429F107F50049A2BB /* FastCheckInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14F35A329F107F50049A2BB /* FastCheckInManager.swift */; };
+		B15037A82A1466EA001D3032 /* SEmpowerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15037A72A1466EA001D3032 /* SEmpowerListViewController.swift */; };
+		B15037D62A146AA2001D3032 /* EmpowerItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15037D52A146AA2001D3032 /* EmpowerItemTableViewCell.swift */; };
+		B15037D82A146C87001D3032 /* EmpowerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15037D72A146C87001D3032 /* EmpowerData.swift */; };
+		B15037DA2A147133001D3032 /* EmpowerTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15037D92A147133001D3032 /* EmpowerTypeEnum.swift */; };
 		B15116042567951B005A1019 /* OOMeetingFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15116032567951B005A1019 /* OOMeetingFormViewController.swift */; };
 		B15310FB2654D50E00B59447 /* login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B15310FD2654D50E00B59447 /* login.storyboard */; };
 		B153112F2654F35C00B59447 /* OORegisterTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15311312654F35C00B59447 /* OORegisterTableView.xib */; };
@@ -1388,6 +1392,10 @@
 		B14E07C423025C6A00AE85A0 /* OOContactExpressAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOContactExpressAPI.swift; sourceTree = "<group>"; };
 		B14E0C0B2484F1F0008AF6AE /* O2WebsocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = O2WebsocketManager.swift; sourceTree = "<group>"; };
 		B14F35A329F107F50049A2BB /* FastCheckInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastCheckInManager.swift; sourceTree = "<group>"; };
+		B15037A72A1466EA001D3032 /* SEmpowerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SEmpowerListViewController.swift; sourceTree = "<group>"; };
+		B15037D52A146AA2001D3032 /* EmpowerItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmpowerItemTableViewCell.swift; sourceTree = "<group>"; };
+		B15037D72A146C87001D3032 /* EmpowerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmpowerData.swift; sourceTree = "<group>"; };
+		B15037D92A147133001D3032 /* EmpowerTypeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmpowerTypeEnum.swift; sourceTree = "<group>"; };
 		B15116032567951B005A1019 /* OOMeetingFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOMeetingFormViewController.swift; sourceTree = "<group>"; };
 		B15310FC2654D50E00B59447 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/login.storyboard; sourceTree = "<group>"; };
 		B153112C2654D51F00B59447 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/login.strings; sourceTree = "<group>"; };
@@ -2362,6 +2370,8 @@
 			isa = PBXGroup;
 			children = (
 				B107453B21A52FA00015F1B2 /* O2PersonInfo.swift */,
+				B15037D72A146C87001D3032 /* EmpowerData.swift */,
+				B15037D92A147133001D3032 /* EmpowerTypeEnum.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -4420,6 +4430,7 @@
 				E4AA17141EE158E70030D9AB /* LogListViewController.swift */,
 				B130A74E2281559900282AD1 /* DeviceListViewController.swift */,
 				B17BF42F22B23758009E36E0 /* SkinViewController.swift */,
+				B15037A72A1466EA001D3032 /* SEmpowerListViewController.swift */,
 			);
 			path = c;
 			sourceTree = "<group>";
@@ -4439,6 +4450,7 @@
 				E4B888301D9D48F1002E1A46 /* SettingHeaderView.swift */,
 				E4B888311D9D48F1002E1A46 /* SettingHomeCell.swift */,
 				B130A7822281565F00282AD1 /* DeviceTableViewCell.swift */,
+				B15037D52A146AA2001D3032 /* EmpowerItemTableViewCell.swift */,
 			);
 			path = v;
 			sourceTree = "<group>";
@@ -5659,6 +5671,7 @@
 				B165CD602242093500373B66 /* AlertViewController.swift in Sources */,
 				B1173A5E2488C5DF005075F0 /* CommunicateAPI.swift in Sources */,
 				E441994A206C8A100050AE0C /* OORegisterTableView.swift in Sources */,
+				B15037DA2A147133001D3032 /* EmpowerTypeEnum.swift in Sources */,
 				E40E24A920B7DA3C009F8BE7 /* OOMeetingCreateViewModel.swift in Sources */,
 				E40C41ED1E7F7C0D00568805 /* ZoneSubCategoryViewController.swift in Sources */,
 				E4B889431D9D6308002E1A46 /* FileUtil.swift in Sources */,
@@ -5767,6 +5780,7 @@
 				B1EE2CD02281771600842F48 /* O2JsApiUtil.swift in Sources */,
 				E4B6975020762EA00062F6E8 /* OOPasswordTextField.swift in Sources */,
 				B112ECDD28E4116E00EF4761 /* O2RecordVoiceWindow.swift in Sources */,
+				B15037D82A146C87001D3032 /* EmpowerData.swift in Sources */,
 				E491664C1E03C09C006133C5 /* O2Account.swift in Sources */,
 				B15BE111249A6002008CD1DB /* AudioPlayerManager.swift in Sources */,
 				E46E6CBA1DD41F5D00AB7561 /* CYRToken.m in Sources */,
@@ -5949,6 +5963,7 @@
 				B165CD582242093500373B66 /* CoverVerticalAnimation.swift in Sources */,
 				B13A010F236924BE00025F3B /* UIImageView+Extension.swift in Sources */,
 				B165CD672242093500373B66 /* CrossDissolveAnimation.swift in Sources */,
+				B15037A82A1466EA001D3032 /* SEmpowerListViewController.swift in Sources */,
 				B174DDF026B7D33D00A3B503 /* PersonAttribute.swift in Sources */,
 				E4B7816B1DF8F2B2007B58A9 /* CMSApplication.swift in Sources */,
 				E4C24C51208D7EDE00E426B0 /* OOLinkManInfoCell.swift in Sources */,
@@ -5980,6 +5995,7 @@
 				B12FD1D32283D5B700E636BA /* ThemeCGFloatPicker.swift in Sources */,
 				E4B8893F1D9D6308002E1A46 /* BaseCoreData.swift in Sources */,
 				B12FD1DE2283D5B700E636BA /* O2ThemeManager+Index.swift in Sources */,
+				B15037D62A146AA2001D3032 /* EmpowerItemTableViewCell.swift in Sources */,
 				B12FD1EB2283D62B00E636BA /* O2ThemeManager.swift in Sources */,
 				09E02E891F16319600579887 /* Fetch.swift in Sources */,
 				09E02E851F16319600579887 /* CryptoSwiftMD5.swift in Sources */,
