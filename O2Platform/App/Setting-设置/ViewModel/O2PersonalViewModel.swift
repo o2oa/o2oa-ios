@@ -9,15 +9,15 @@
 import CocoaLumberjack
 import Promises
 
-class O2PersonalViewModel: NSObject {
+class O2PersonalViewModel {
     
     private let personalAPI = OOMoyaProvider<PersonalAPI>()
     
     
     
+    ///
     /// 获取个人信息
     ///
-    /// - Returns: O2PersonInfo
     func loadMyInfo() -> Promise<O2PersonInfo> {
         return Promise<O2PersonInfo> { fulfill,reject in
             self.personalAPI.request(.personInfo, completion: { (result) in

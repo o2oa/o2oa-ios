@@ -36,8 +36,13 @@ class SEmpowerListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "外出授权"
+        
+        //右边按钮
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "新建", style: .plain, target: self, action: #selector(self.gotoCreate))
+        
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.tableView.tableFooterView = UIView()
         self.myEmpowerTabView.addTapGesture { tap in
             self.changeType(emType: EmpowerTypeEnum.empowerList)
         }
@@ -46,6 +51,10 @@ class SEmpowerListViewController: UIViewController {
         }
         
         self.changeType(emType: EmpowerTypeEnum.empowerList)
+    }
+    
+    @objc private func gotoCreate() {
+        self.performSegue(withIdentifier: "showEmpowerCreate", sender: nil)
     }
     
     ///

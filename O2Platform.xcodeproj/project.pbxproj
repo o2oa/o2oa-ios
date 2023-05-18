@@ -159,6 +159,7 @@
 		B15037D62A146AA2001D3032 /* EmpowerItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15037D52A146AA2001D3032 /* EmpowerItemTableViewCell.swift */; };
 		B15037D82A146C87001D3032 /* EmpowerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15037D72A146C87001D3032 /* EmpowerData.swift */; };
 		B15037DA2A147133001D3032 /* EmpowerTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15037D92A147133001D3032 /* EmpowerTypeEnum.swift */; };
+		B15037DE2A14AEA2001D3032 /* SEmpowerCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15037DD2A14AEA2001D3032 /* SEmpowerCreateViewController.swift */; };
 		B15116042567951B005A1019 /* OOMeetingFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15116032567951B005A1019 /* OOMeetingFormViewController.swift */; };
 		B15310FB2654D50E00B59447 /* login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B15310FD2654D50E00B59447 /* login.storyboard */; };
 		B153112F2654F35C00B59447 /* OORegisterTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B15311312654F35C00B59447 /* OORegisterTableView.xib */; };
@@ -1396,6 +1397,7 @@
 		B15037D52A146AA2001D3032 /* EmpowerItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmpowerItemTableViewCell.swift; sourceTree = "<group>"; };
 		B15037D72A146C87001D3032 /* EmpowerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmpowerData.swift; sourceTree = "<group>"; };
 		B15037D92A147133001D3032 /* EmpowerTypeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmpowerTypeEnum.swift; sourceTree = "<group>"; };
+		B15037DD2A14AEA2001D3032 /* SEmpowerCreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SEmpowerCreateViewController.swift; sourceTree = "<group>"; };
 		B15116032567951B005A1019 /* OOMeetingFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OOMeetingFormViewController.swift; sourceTree = "<group>"; };
 		B15310FC2654D50E00B59447 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/login.storyboard; sourceTree = "<group>"; };
 		B153112C2654D51F00B59447 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/login.strings; sourceTree = "<group>"; };
@@ -4431,6 +4433,7 @@
 				B130A74E2281559900282AD1 /* DeviceListViewController.swift */,
 				B17BF42F22B23758009E36E0 /* SkinViewController.swift */,
 				B15037A72A1466EA001D3032 /* SEmpowerListViewController.swift */,
+				B15037DD2A14AEA2001D3032 /* SEmpowerCreateViewController.swift */,
 			);
 			path = c;
 			sourceTree = "<group>";
@@ -6196,6 +6199,7 @@
 				E4B888781D9D48F1002E1A46 /* Identity.swift in Sources */,
 				B137EA9829EE35CA009D5B91 /* AttendanceV2CheckInViewController.swift in Sources */,
 				E40E24B520B7DA3C009F8BE7 /* OOFormModels.swift in Sources */,
+				B15037DE2A14AEA2001D3032 /* SEmpowerCreateViewController.swift in Sources */,
 				E46E6CC51DD41F5D00AB7561 /* ZSSTextView.m in Sources */,
 				E4B697ED20764A2D0062F6E8 /* OOTaskAPI.swift in Sources */,
 				E4CB27731E78D5B1004A7ACB /* AppearanceConfigurator.swift in Sources */,
