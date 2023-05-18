@@ -104,5 +104,53 @@ class O2PersonalViewModel {
         }
     }
     
+    ///
+    /// 创建授权
+    ///
+    func empowerCreate(body: EmpowerData) -> Promise<Bool> {
+        return Promise<Bool> { fulfill, reject in
+            self.personalAPI.request(.empowerCreate(body)) { result in
+                let response = OOResult<BaseModelClass<O2IdDataModel>>(result)
+                if response.isResultSuccess() {
+                    fulfill(true)
+                }else {
+                    reject(response.error!)
+                }
+            }
+        }
+    }
+    
+    ///
+    /// 删除授权
+    func empowerDelete(id: String) -> Promise<Bool> {
+        return Promise<Bool> { fulfill, reject in
+            self.personalAPI.request(.empowerDelete(id)) { result in
+                let response = OOResult<BaseModelClass<OOCommonValueBoolModel>>(result)
+                if response.isResultSuccess() {
+                    fulfill(true)
+                }else {
+                    reject(response.error!)
+                }
+            }
+        }
+    }
+    
+    func newMyInfo() -> Promise<O2PersonInfo> {
+        return Promise<O2PersonInfo> { fulfill, reject in
+            self.personalAPI.request(.personInfo) { result in
+                let response = OOResult<BaseModelClass<O2PersonInfo>>(result)
+                if response.isResultSuccess() {
+                    if let person = response.model?.data {
+                        fulfill(person)
+                    } else {
+                        reject(OOAppError.apiEmptyResultError)
+                    }
+                     
+                }else {
+                    reject(response.error!)
+                }
+            }
+        }
+    }
     
 }

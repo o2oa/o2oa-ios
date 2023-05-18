@@ -17,6 +17,8 @@ enum PersonalAPI {
     case meetingConfig
     case empowerList
     case empowerListTo
+    case empowerCreate(EmpowerData)
+    case empowerDelete(String)
 }
 
 extension PersonalAPI: OOAPIContextCapable {
@@ -55,6 +57,10 @@ extension PersonalAPI: TargetType {
             return "/jaxrs/empower/list/currentperson"
         case .empowerListTo:
             return "/jaxrs/empower/list/to"
+        case .empowerCreate(_):
+            return "/jaxrs/empower"
+        case .empowerDelete(let id):
+            return "/jaxrs/empower/\(id)"
         }
     }
     
@@ -64,6 +70,10 @@ extension PersonalAPI: TargetType {
             return .get
         case .updatePersonInfo(_), .updatePersonIcon(_):
             return .put
+        case .empowerCreate(_):
+            return .post
+        case .empowerDelete(_):
+            return .delete
         }
     }
     
@@ -73,8 +83,10 @@ extension PersonalAPI: TargetType {
     
     var task: Task {
         switch self {
-        case .personInfo, .meetingConfig, .empowerList, .empowerListTo:
+        case .personInfo, .meetingConfig, .empowerList, .empowerListTo, .empowerDelete(_):
             return .requestPlain
+        case .empowerCreate(let data):
+            return .requestParameters(parameters: data.toJSON() ?? [:], encoding: JSONEncoding.default)
         case .updatePersonInfo(let person):
             return .requestParameters(parameters: person.toJSON() ?? [:], encoding: JSONEncoding.default)
         case .updatePersonIcon(let image):

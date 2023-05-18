@@ -15,6 +15,16 @@ import ObjectMapper
 import Promises
 import CocoaLumberjack
 
+///
+/// 选择器模式
+enum ProcessApplicationChooseMode {
+    case taskCreateProcess // 默认的 工作创建的时候选择流程
+    case application // 选择应用 返回结果
+    case process // 选择流程 返回结果
+}
+
+typealias ProcessApplicationChooseBack = ( O2Application?, O2ApplicationProcess?) -> Void
+
 class ZoneMenuViewController: UIViewController {
     
     
@@ -23,11 +33,11 @@ class ZoneMenuViewController: UIViewController {
     private var subVC:ZoneSubCategoryViewController!
     
     private let o2ProcessAPI = OOMoyaProvider<OOApplicationAPI>()
-//    fileprivate var apps:[Application] = [] {
-//        didSet {
-//            self.mainVC.apps = apps
-//        }
-//    }
+    
+    
+    var chooseMode: ProcessApplicationChooseMode = ProcessApplicationChooseMode.taskCreateProcess
+    
+    var callback: ProcessApplicationChooseBack?
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,22 +57,37 @@ class ZoneMenuViewController: UIViewController {
     }
     
     private func commonInit(){
-        
-        self.automaticallyAdjustsScrollViewInsets = false
-        //mainMenu
-        if let mainVC = self.storyboard?.instantiateViewController(withIdentifier: "mainMenu") {
-            self.mainVC = mainVC as? ZoneMainCategoryViewController
-            self.addChild(mainVC)
-            mainVC.view.frame = CGRect(x: 0, y: 0, width: view.bounds.width * 0.4, height: view.bounds.height)
-            self.view.addSubview(mainVC.view)
+        if self.chooseMode == ProcessApplicationChooseMode.taskCreateProcess {
+            self.title = "发起工作"
+        } else {
+            self.title = "选择"
         }
-        if let subVC = self.storyboard?.instantiateViewController(withIdentifier: "subMenu") {
-            self.subVC = subVC as? ZoneSubCategoryViewController
-            self.addChild(subVC)
-            subVC.view.frame = CGRect(x: view.bounds.width * 0.4, y: 0, width: view.bounds.width * 0.6, height: view.bounds.height)
-            //let tView = subVC.view as! UITableView
-            //tView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-            self.view.addSubview(subVC.view)
+        self.automaticallyAdjustsScrollViewInsets = false
+        if self.chooseMode == ProcessApplicationChooseMode.taskCreateProcess
+            || self.chooseMode == ProcessApplicationChooseMode.process {
+            //mainMenu
+            if let mainVC = self.storyboard?.instantiateViewController(withIdentifier: "mainMenu") {
+                self.mainVC = mainVC as? ZoneMainCategoryViewController
+                self.addChild(mainVC)
+                mainVC.view.frame = CGRect(x: 0, y: 0, width: view.bounds.width * 0.4, height: view.bounds.height)
+                self.view.addSubview(mainVC.view)
+            }
+            if let subVC = self.storyboard?.instantiateViewController(withIdentifier: "subMenu") {
+                self.subVC = subVC as? ZoneSubCategoryViewController
+                self.addChild(subVC)
+                subVC.view.frame = CGRect(x: view.bounds.width * 0.4, y: 0, width: view.bounds.width * 0.6, height: view.bounds.height)
+                //let tView = subVC.view as! UITableView
+                //tView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                self.view.addSubview(subVC.view)
+            }
+        } else {
+            if let mainVC = self.storyboard?.instantiateViewController(withIdentifier: "mainMenu") {
+                self.mainVC = mainVC as? ZoneMainCategoryViewController
+                self.mainVC.initChoose = false
+                self.addChild(mainVC)
+                mainVC.view.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
+                self.view.addSubview(mainVC.view)
+            }
         }
     }
     
@@ -71,81 +96,32 @@ class ZoneMenuViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(receiveSubNotification(_:)), name: ZoneSubCategoryViewController.SELEC_SUB_ITEM, object: nil)
     }
     
+    /// 点击了应用
     @objc private func reveiveCategoryNotification(_ notification:NSNotification){
+        DDLogDebug("选择了 应用")
         let obj = notification.object
-        if let app = obj as? O2Application {
-            DispatchQueue.main.async {
-//                self.showLoading()
-                self.subVC.processList = app.processList ?? []
+        if self.chooseMode == ProcessApplicationChooseMode.application {
+            self.callback?(obj as? O2Application, nil)
+            self.popVC()
+        } else  {
+            if let app = obj as? O2Application {
+                DispatchQueue.main.async {
+                    self.subVC.processList = app.processList ?? []
+                }
             }
-//            self.loadProcessList(appId: app.id!).then { (list)  in
-//                self.hideLoading()
-//                self.subVC.processList = list
-//            }.catch { (err) in
-//                DDLogError(err.localizedDescription)
-//                DispatchQueue.main.async {
-//                    self.showError(title: "没有获取到流程列表！")
-//                }
-//            }
         }
     }
     
-    /// 查询流程列表。如果新接口没有 就用老接口
-//    private func loadProcessList(appId: String) -> Promise<[AppProcess]> {
-//        return Promise {fulfill, reject in
-//            self.loadProcessListWithFilter(appId: appId).then { (list)  in
-//                fulfill(list)
-//            }.catch { (err) in
-//                DDLogError(err.localizedDescription)
-//                //可能新接口不存在 查询老接口
-//                self.loadProcessListOld(appId: appId).then { (oldList) in
-//                    fulfill(oldList)
-//                }.catch { (err) in
-//                    reject(err)
-//                }
-//            }
-//        }
-//    }
-    
-    ///新接口 过滤仅pc的流程
-//    private func loadProcessListWithFilter(appId: String) -> Promise<[AppProcess]> {
-//        return Promise {fulfill, reject in
-//            self.o2ProcessAPI.request(.applicationItemWithFilter(appId), completion: {result in
-//                let response = OOResult<BaseModelClass<[AppProcess]>>(result)
-//                if response.isResultSuccess() {
-//                    if let list = response.model?.data {
-//                        fulfill(list)
-//                    }else {
-//                        reject(OOAppError.apiEmptyResultError)
-//                    }
-//                }else {
-//                    reject(response.error!)
-//                }
-//            })
-//        }
-//    }
-    
-    /// 老接口 不过滤
-//    private func loadProcessListOld(appId: String) -> Promise<[AppProcess]> {
-//        return Promise {fulfill, reject in
-//            self.o2ProcessAPI.request(.applicationItem(appId), completion: {result in
-//                let response = OOResult<BaseModelClass<[AppProcess]>>(result)
-//                if response.isResultSuccess() {
-//                    if let list = response.model?.data {
-//                        fulfill(list)
-//                    }else {
-//                        reject(OOAppError.apiEmptyResultError)
-//                    }
-//                }else {
-//                    reject(response.error!)
-//                }
-//            })
-//        }
-//    }
-    
+    /// 点击了流程
     @objc private func receiveSubNotification(_ notification:NSNotification){
+        DDLogDebug("选择了 流程")
         let obj = notification.object
-        loadDepartAndIdentity(process: obj as? O2ApplicationProcess)
+        if self.chooseMode == ProcessApplicationChooseMode.taskCreateProcess {
+            loadDepartAndIdentity(process: obj as? O2ApplicationProcess)
+        } else {
+            self.callback?(nil, obj as? O2ApplicationProcess)
+            self.popVC()
+        }
     }
     
     

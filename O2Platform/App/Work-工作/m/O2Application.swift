@@ -68,6 +68,12 @@ class O2ApplicationProcess: NSObject, DataModel {
     @objc var defaultStartMode: String?
     @objc var startableTerminal: String? // client,mobile,all 有可能没有值 没有值就是all
     
+    /// 版本号
+    @objc var edition: String?
+    @objc var editionName: String?
+    var editionEnable: Bool?
+    @objc var editionNumber: String?
+    
     required override init(){}
     
 }

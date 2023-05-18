@@ -24,11 +24,13 @@ class ZoneMainCategoryViewController: UITableViewController {
 //        }
 //    }
     private var selectedIndex: IndexPath?
+    
+    var initChoose = true // 默认是否选中 当用作选择器选择应用的时候 不需要默认选中
     // 改成分类显示
     public var appList: [O2AppByCategory] = [] {
         didSet {
             self.tableView.reloadData()
-            if (appList.count > 1) {
+            if (initChoose && appList.count > 1) {
                 let indexPath = IndexPath(row: 1, section: 0)
                 self.selectedIndex  = indexPath
                 self.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .top)

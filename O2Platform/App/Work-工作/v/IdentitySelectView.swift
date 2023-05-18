@@ -18,11 +18,21 @@ class IdentitySelectView: UIView {
     
     var selected = false
     var id : IdentityV2? = nil
+    var o2Id: O2IdentityInfo? = nil
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
     }
     
+    func setUpO2Id(identity: O2IdentityInfo) {
+        self.o2Id = identity
+        self.identityLabel.text = "\(identity.name ?? "")(\(identity.unitName ?? ""))"
+        self.identityLabel.textColor = text_primary_color
+        self.identityUnitLabel.text = "\(identity.unitLevelName ?? "")"
+        self.identityUnitLabel.textColor = text_normal_color
+        self.backgroundColor = .white
+    }
     
     func setUp(identity: IdentityV2) {
         self.id = identity

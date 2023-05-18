@@ -50,6 +50,9 @@ class SEmpowerListViewController: UIViewController {
             self.changeType(emType: EmpowerTypeEnum.empowerListTo)
         }
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         self.changeType(emType: EmpowerTypeEnum.empowerList)
     }
     
@@ -104,6 +107,20 @@ class SEmpowerListViewController: UIViewController {
             }
         }
     }
+    
+    private func deleteEmpowerConfirm(item: EmpowerData) {
+        self.showDefaultConfirm(title: "提示", message: "确定要删除这个授权吗？") { action in
+            self.deleteEmpower(id: item.id)
+        }
+    }
+    
+    private func deleteEmpower(id: String?) {
+        if let id = id {
+            self.viewModel.empowerDelete(id: id).then { result in
+                self.loadData()
+            }
+        }
+    }
 
 }
 
@@ -125,6 +142,12 @@ extension SEmpowerListViewController: UITableViewDelegate, UITableViewDataSource
         return UITableViewCell()
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if self.type == EmpowerTypeEnum.empowerList {
+            self.deleteEmpowerConfirm(item: self.empowerList[indexPath.row])
+        }
+    }
     
     
 }

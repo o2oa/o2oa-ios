@@ -8,6 +8,7 @@
 
 import Foundation
 import ObjectMapper
+
 class IdentityV2:NSObject,Mappable{
     var createTime : String?
     var department : String?

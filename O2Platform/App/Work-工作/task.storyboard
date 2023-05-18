@@ -269,7 +269,7 @@
         <!--发起工作-->
         <scene sceneID="NjP-HA-PbM">
             <objects>
-                <viewController title="发起工作" hidesBottomBarWhenPushed="YES" id="Lit-tA-usI" customClass="ZoneMenuViewController" customModule="O2Platform" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="processApplicationChooseVC" storyboardIdentifier="processApplicationChooseVC" title="发起工作" hidesBottomBarWhenPushed="YES" id="Lit-tA-usI" customClass="ZoneMenuViewController" customModule="O2Platform" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hnU-lW-Yfw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
