@@ -292,6 +292,7 @@ class SEmpowerCreateViewController: UIViewController {
             form.process = process.id
             form.processName = process.name
             form.processAlias = process.alias
+            form.edition = process.edition
         }
     
         DDLogDebug("type \(self.type)")
