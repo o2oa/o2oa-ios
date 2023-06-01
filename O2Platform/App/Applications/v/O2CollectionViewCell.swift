@@ -92,12 +92,18 @@ class O2CollectionViewCell: UICollectionViewCell {
                                     DispatchQueue.main.async {
                                         if let uPInfos = pInfos, self.nowData?.appId == app.appId {
                                             if app.appId == "task" {
-                                                self.numberLabel.text = "\(uPInfos.task ?? 0)"
-                                                self.numberLabel.isHidden = false
+                                                let taskNumber = uPInfos.task ?? 0
+                                                if taskNumber > 0 {
+                                                    self.numberLabel.text = "\(taskNumber)"
+                                                    self.numberLabel.isHidden = false
+                                                }
                                             }
                                             if app.appId == "read" {
-                                                self.numberLabel.text = "\(uPInfos.read ?? 0)"
-                                                self.numberLabel.isHidden = false
+                                                let readNumber = uPInfos.read ?? 0
+                                                if readNumber > 0 {
+                                                    self.numberLabel.text = "\(readNumber)"
+                                                    self.numberLabel.isHidden = false
+                                                }
                                             }
                                         }
                                     }

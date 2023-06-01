@@ -511,7 +511,7 @@ class O2JsApiUtil: O2WKScriptMessageHandlerImplement {
         }else{
             destVC = storyBoard.instantiateInitialViewController()
         }
-        
+        destVC.modalPresentationStyle = .fullScreen
         if destVC.isKind(of: ZLNavigationController.self) {
             self.viewController.show(destVC, sender: nil)
         }else{

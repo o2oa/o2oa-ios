@@ -98,7 +98,7 @@ DEPENDENCIES:
   - JCore (= 2.1.2)
   - JMessage
   - JPush (= 3.2.4)
-  - JTCalendar (~> 2.0)
+  - JTCalendar (= 2.2.3)
   - MBProgressHUD (~> 1.0.0)
   - MJRefresh
   - Moya (~> 14.0)
@@ -215,6 +215,6 @@ SPEC CHECKSUMS:
   SwiftyUserDefaults: 3d273b1739b68ada3145dc754a70ec775bc5c8be
   ViewRow: 8da541e9c019f3be63f4e28f311a62cac2045ecf
 
-PODFILE CHECKSUM: 4b8cbb1033fe7383bb53115695c1160d8d375627
+PODFILE CHECKSUM: 4bb461661a0a3fe5a794842dfbe601937b55b8f7
 
 COCOAPODS: 1.11.2

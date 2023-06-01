@@ -128,30 +128,19 @@ class ZoneMenuViewController: UIViewController {
     func loadAppList(){
         self.showLoading(title: "应用加载中...")
         // 这个接口查询当前用户能看到的全部的应用（包含流程）
-        self.o2ProcessAPI.request(.applicationList, completion: {result in
+        self.o2ProcessAPI.request(.applicationListByTerminal, completion: {result in
             let response = OOResult<BaseModelClass<[O2Application]>>(result)
             if response.isResultSuccess() {
                 let list = response.model?.data
                 if let apps = list {
-                    //这里要把不在移动端显示的流程清除掉
-//                    var newAppList:[O2Application] = []
                     var appMap =  [String: [O2Application]]()
                     for app in apps {
-                        var newProcessList:[O2ApplicationProcess] = []
-                        if let pList = app.processList {
-                            for process in pList {
-                                if "client" != process.startableTerminal { // client 是单独pc上的 这里不需要
-                                    newProcessList.append(process)
-                                }
-                            }
-                        }
-                        if newProcessList.count > 0 {
+                        if let pList = app.processList, pList.count > 0 {
                             var category = app.applicationCategory ?? ""
                             if category == "" {
                                 category = "未分类"
                             }
                             var newAppList = appMap[category] ?? []
-                            app.processList = newProcessList
                             newAppList.append(app)
                             appMap[category] = newAppList
                         }

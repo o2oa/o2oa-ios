@@ -108,6 +108,11 @@ class O2AppViewController: UIViewController{
     @objc private func _forwardEditSegue() {
 //        self.performSegue(withIdentifier: "showAppEditSegue", sender: nil)
         if self.collectionViewDelegate.isEdit {
+            let mainApps = self.apps2[0]
+            if mainApps.count > 4 {
+                self.showError(title: "首页快捷方式不能超过4个！")
+                return
+            }
             self.collectionViewDelegate.isEdit = false
             self.navigationItem.rightBarButtonItem?.title = L10n.edit
             self._saveUpdate()

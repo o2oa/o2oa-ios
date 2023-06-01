@@ -12,6 +12,7 @@ import Moya
 
 // MARK:- 所有调用的API枚举
 enum OOApplicationAPI {
+    case applicationListByTerminal
     case applicationList
     case applicationOnlyList
     case applicationItem(String) // 更加应用获取流程列表
@@ -70,6 +71,8 @@ extension OOApplicationAPI:TargetType {
     
     var path: String {
         switch self {
+        case .applicationListByTerminal:
+            return "/jaxrs/application/list/terminal/mobile"
         case .applicationList:
             return "/jaxrs/application/list/complex"
         case .applicationOnlyList:
