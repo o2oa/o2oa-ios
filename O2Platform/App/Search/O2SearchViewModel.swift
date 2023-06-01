@@ -16,6 +16,8 @@ class O2SearchViewModel: NSObject {
     
 
     private let api = OOMoyaProvider<O2QuerySurfaceAPI>()
+    // 流程api
+    private let o2ProcessAPI = OOMoyaProvider<OOApplicationAPI>()
     
     
     private var searchResultIds:[String] = []
@@ -23,6 +25,40 @@ class O2SearchViewModel: NSObject {
     private var page = 1
     private var totalPage = 1
     
+    
+    func searchV2(key: String, page: Int) -> Promise<O2SearchV2PageModel?> {
+        return Promise { fulfill, reject in
+            let form = O2SearchV2Form()
+            form.page = page
+            form.query = key
+            self.api.request(.search(form)) { result in
+                let response = OOResult<BaseModelClass<O2SearchV2PageModel>>(result)
+                if response.isResultSuccess() {
+                    fulfill(response.model?.data)
+                } else {
+                    reject(response.error!)
+                }
+            }
+        }
+    }
+    
+    /// 根据job查询工作列表
+    func loadWorkByJob(jobId: String) -> Promise<WorkOrWorkcompleted> {
+        return Promise { fulfill, reject in
+            self.o2ProcessAPI.request(.workOrWorkcompletedByJob(jobId)) { result in
+                let myResult = OOResult<BaseModelClass<WorkOrWorkcompleted>>(result)
+                if myResult.isResultSuccess() {
+                     if let item = myResult.model?.data {
+                         fulfill(item)
+                     } else {
+                         reject(OOAppError.apiEmptyResultError)
+                    }
+                } else {
+                     reject(myResult.error!)
+                }
+            }
+        }
+    }
     
     func search(key: String) -> Promise<O2SearchPageModel> {
         return Promise {fulfill, reject in

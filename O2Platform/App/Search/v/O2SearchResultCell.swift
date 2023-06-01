@@ -45,17 +45,9 @@ class O2SearchResultCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setData(data: O2SearchEntry, currentKey: String) {
-        if data.type == "cms" {
-            self.appLabel.text = data.appName
-            self.typeNameLabel.text = L10n.Search.cmsCategory
-            self.typeValueLabel.text = data.categoryName
-        } else {
-            self.appLabel.text = data.applicationName
-            self.typeNameLabel.text = L10n.Search.processName
-            self.typeValueLabel.text = data.processName
-        }
-        if let title = data.title, !title.isBlank {
+    func setDataV2(data: O2SearchV2Entry, currentKey: String) {
+        let title = data.title
+        if  !title.isBlank {
             let titleAS = NSMutableAttributedString(string: title)
             let keyRange = NSString(string: title).range(of: currentKey)
             titleAS.addAttribute(.foregroundColor, value: UIColor.red, range: keyRange)
@@ -63,22 +55,49 @@ class O2SearchResultCell: UITableViewCell {
         } else {
             self.titleLabel.text = "无标题"
         }
-        let summaryAS = NSMutableAttributedString(string: data.summary ?? "")
-        let summaryRange = NSString(string: data.summary ?? "").range(of: currentKey)
+        let summaryAS = NSMutableAttributedString(string: data.summary)
+        let summaryRange = NSString(string: data.summary).range(of: currentKey)
         summaryAS.addAttribute(.foregroundColor, value: UIColor.red, range: summaryRange)
         self.summaryLabel.attributedText = summaryAS
-        self.createDayLabel.text = data.updateTime?.length ?? 0 > 10 ? data.updateTime?.subString(from: 0, to: 10) : data.updateTime
-        if data.creatorUnit != nil {
-            self.deptNameLabel.text = data.creatorUnit!.contains("@") ? data.creatorUnit!.split("@")[0] : data.creatorUnit
-        } else {
-            self.deptNameLabel.text = ""
-        }
-        if data.creatorPerson != nil {
-            self.personLabel.text = data.creatorPerson!.contains("@") ? data.creatorPerson!.split("@")[0] : data.creatorPerson
-        } else {
-            self.personLabel.text = ""
-        }
-        
+        self.createDayLabel.text = data.updateTime.length > 10 ? data.updateTime.subString(from: 0, to: 10) : data.updateTime
+        self.deptNameLabel.text = data.creatorUnit.contains("@") ? data.creatorUnit.split("@")[0] : data.creatorUnit
+        self.personLabel.text = data.creatorPerson.contains("@") ? data.creatorPerson.split("@")[0] : data.creatorPerson
     }
+    
+//    func setData(data: O2SearchEntry, currentKey: String) {
+//        if data.type == "cms" {
+//            self.appLabel.text = data.appName
+//            self.typeNameLabel.text = L10n.Search.cmsCategory
+//            self.typeValueLabel.text = data.categoryName
+//        } else {
+//            self.appLabel.text = data.applicationName
+//            self.typeNameLabel.text = L10n.Search.processName
+//            self.typeValueLabel.text = data.processName
+//        }
+//        if let title = data.title, !title.isBlank {
+//            let titleAS = NSMutableAttributedString(string: title)
+//            let keyRange = NSString(string: title).range(of: currentKey)
+//            titleAS.addAttribute(.foregroundColor, value: UIColor.red, range: keyRange)
+//            self.titleLabel.attributedText = titleAS
+//        } else {
+//            self.titleLabel.text = "无标题"
+//        }
+//        let summaryAS = NSMutableAttributedString(string: data.summary ?? "")
+//        let summaryRange = NSString(string: data.summary ?? "").range(of: currentKey)
+//        summaryAS.addAttribute(.foregroundColor, value: UIColor.red, range: summaryRange)
+//        self.summaryLabel.attributedText = summaryAS
+//        self.createDayLabel.text = data.updateTime?.length ?? 0 > 10 ? data.updateTime?.subString(from: 0, to: 10) : data.updateTime
+//        if data.creatorUnit != nil {
+//            self.deptNameLabel.text = data.creatorUnit!.contains("@") ? data.creatorUnit!.split("@")[0] : data.creatorUnit
+//        } else {
+//            self.deptNameLabel.text = ""
+//        }
+//        if data.creatorPerson != nil {
+//            self.personLabel.text = data.creatorPerson!.contains("@") ? data.creatorPerson!.split("@")[0] : data.creatorPerson
+//        } else {
+//            self.personLabel.text = ""
+//        }
+//        
+//    }
     
 }

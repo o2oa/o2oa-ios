@@ -50,3 +50,36 @@ struct O2SearchPageModel {
     
     
 }
+
+/// 查询 post
+class O2SearchV2Form : NSObject, DataModel {
+    var page: Int = 1
+    @objc var query: String = ""
+    var size: Int = O2.defaultPageSize
+    
+    
+    required override init(){}
+}
+
+class O2SearchV2PageModel: NSObject, DataModel {
+    var documentList:[O2SearchV2Entry] = []
+    var count: Int = 0
+    
+    
+    required override init(){}
+}
+class O2SearchV2Entry: NSObject, DataModel {
+    @objc var id: String = "" // 业务id
+    @objc var category: String = "" // cms processPlatform
+    @objc var title: String = ""
+    @objc    var highlighting: String = "" // html
+    @objc    var summary: String = "" // 文字
+    @objc    var creatorPerson: String = ""
+    @objc var creatorUnit: String = ""
+    @objc var indexTime: String = ""
+    @objc var createTime: String = ""
+    @objc var updateTime: String = ""
+    
+    
+    required override init(){}
+}

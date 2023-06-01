@@ -454,8 +454,7 @@ extension OOAttandanceViewModel{
                      if let item = myResult.model?.data {
                          fulfill(item)
                      } else {
-                         let customError = OOAppError.common(type: "processError", message: "job读取工作错误！", statusCode: 7001)
-                         reject(customError)
+                         reject(OOAppError.apiEmptyResultError)
                     }
                 } else {
                      reject(myResult.error!)

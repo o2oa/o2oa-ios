@@ -15,7 +15,8 @@ enum O2QuerySurfaceAPI {
     case segmentSearch(String)
     // 根据搜索的结果id 显示指定的搜索条目
     case segmentListEntry([String])
-   
+    // v2 搜索引擎
+    case search(O2SearchV2Form)
 }
 
 // MARK: - 通讯录上下文
@@ -50,6 +51,8 @@ extension O2QuerySurfaceAPI:TargetType {
             return "/jaxrs/segment/key/\(key)"
         case .segmentListEntry(_):
             return "/jaxrs/segment/list/entry"
+        case .search(_):
+            return "/jaxrs/search"
         }
     }
     
@@ -58,6 +61,8 @@ extension O2QuerySurfaceAPI:TargetType {
         case .segmentSearch(_):
             return .get
         case .segmentListEntry(_):
+            return .post
+        case .search(_):
             return .post
         }
     }
@@ -72,6 +77,8 @@ extension O2QuerySurfaceAPI:TargetType {
             return .requestPlain
         case .segmentListEntry(let list):
             return .requestParameters(parameters: ["entryList":  list], encoding: JSONEncoding.default)
+        case .search(let post):
+            return .requestParameters(parameters: post.toJSON() ?? [:], encoding: JSONEncoding.default)
         }
     }
     

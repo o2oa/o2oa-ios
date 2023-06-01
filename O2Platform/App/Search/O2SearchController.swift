@@ -58,7 +58,7 @@ class O2SearchController: UIViewController {
     // 搜索框
     private var searchBar: UISearchBar?
     private var searchKey: String = ""
-    private var resultList: [O2SearchEntry] = []
+    private var resultList: [O2SearchV2Entry] = []
     private var page = 1
     private var totalPage = 1
     
@@ -106,19 +106,44 @@ class O2SearchController: UIViewController {
     /// 查询数据
     private func search() {
         DDLogDebug("search key \(self.searchKey)")
+        self.page = 1
         if self.searchKey != "" {
             self.showLoading()
-            self.viewmodel.search(key: self.searchKey).then { (page) in
-                self.resultList = page.list
-                self.page = 1
-                self.totalPage = page.totalPage
-                self.refreshUI()
+            self.viewmodel.searchV2(key: self.searchKey, page: self.page).then { result in
+                if let result = result {
+                    self.resultList = result.documentList
+                    if result.count > O2.defaultPageSize {
+                        let m = result.count % O2.defaultPageSize
+                        if m > 0 {
+                            self.totalPage = (result.count / O2.defaultPageSize) + 1
+                        } else {
+                            self.totalPage = (result.count / O2.defaultPageSize)
+                        }
+                    } else {
+                        self.totalPage = 1
+                    }
+                    self.refreshUI()
+                }
             }.always {
                 self.hideLoading()
-            }.catch { (err) in
+            }.catch { err in
                 DDLogError(err.localizedDescription)
                 self.showError(title: L10n.errorWithMsg(err.localizedDescription))
             }
+//            self.viewmodel.search(key: self.searchKey).then { (page) in
+//                self.resultList = page.list
+//                self.page = 1
+//                self.totalPage = page.totalPage
+//                self.refreshUI()
+//            }.always {
+//                self.hideLoading()
+//            }.catch { (err) in
+//                DDLogError(err.localizedDescription)
+//                self.showError(title: L10n.errorWithMsg(err.localizedDescription))
+//            }
+        } else {
+            self.resultList = []
+            self.refreshUI()
         }
     }
     
@@ -126,13 +151,24 @@ class O2SearchController: UIViewController {
         DDLogDebug("morePage page \(self.page) total \(self.totalPage)")
         if self.page < self.totalPage {
             self.showLoading()
-            self.viewmodel.nextPage().then { (page)  in
-                page.list.forEach { (entry) in
-                    self.resultList.append(entry)
+            self.page += 1
+            self.viewmodel.searchV2(key: self.searchKey, page: self.page).then { result in
+                if let result = result {
+                    result.documentList.forEach { entry in
+                        self.resultList.append(entry)
+                    }
+                    if result.count > O2.defaultPageSize {
+                        let m = result.count % O2.defaultPageSize
+                        if m > 0 {
+                            self.totalPage = (result.count / O2.defaultPageSize) + 1
+                        } else {
+                            self.totalPage = (result.count / O2.defaultPageSize)
+                        }
+                    } else {
+                        self.totalPage = 1
+                    }
+                    self.refreshUI()
                 }
-                self.page = page.page
-                self.totalPage = page.totalPage
-                self.refreshUI()
             }.always {
                 self.hideLoading()
             }.catch { (err) in
@@ -153,6 +189,96 @@ class O2SearchController: UIViewController {
             self.tableview.isHidden = true
             self.emptyView.isHidden = false
         }
+    }
+    
+    
+    /// 打开文档
+    private func openCmsPage(id: String, title: String) {
+        let bbsStoryboard = UIStoryboard(name: "information", bundle: Bundle.main)
+        let destVC = bbsStoryboard.instantiateViewController(withIdentifier: "CMSSubjectDetailVC") as! CMSItemDetailViewController
+        destVC.documentId = id
+        destVC.title = title
+        destVC.modalPresentationStyle = .fullScreen
+        self.navigationController?.pushViewController(destVC, animated: false)
+    }
+    /// 根据job获取工作列表
+    private func loadWorkWithJob(job: String) {
+        self.viewmodel.loadWorkByJob(jobId: job).then { workData in
+            var workList: [WorkData] = []
+            if !workData.workList.isEmpty {
+                for work in workData.workList {
+                    work.completed = false
+                    workList.append(work)
+                }
+            }
+            if !workData.workCompletedList.isEmpty {
+                for workCompleted in workData.workCompletedList {
+                    workCompleted.completed = true
+                    workList.append(workCompleted)
+                }
+            }
+            if !workList.isEmpty {
+                if workList.count > 1 {
+                    var actions: [UIAlertAction] = []
+                    for work in workList {
+                        let action = UIAlertAction(title: "\(work.title ?? "")【\(work.processName ?? "")】\(work.completed == true ? "已完成": "")", style: .default, handler: { (a) in
+                            let task = TodoTask.init(JSON: [:])
+                            if work.completed == true {
+                                task?.work = work.id
+                            } else {
+                                task?.workCompleted = work.id
+                            }
+                            self.openWork(task: task)
+                        })
+                        actions.append(action)
+                    }
+                    self.showSheetAction(title: "提示", message: "请选择需要打开的工作", actions: actions)
+                } else {
+                    let task = TodoTask.init(JSON: [:])
+                    if workList[0].completed == true {
+                        task?.work = workList[0].id
+                    } else {
+                        task?.workCompleted = workList[0].id
+                    }
+                    self.openWork(task: task)
+                }
+            } else {
+                self.showError(title: "没有找到工作！")
+            }
+        }.catch { err in
+            DDLogError("\(err.localizedDescription)")
+            self.showError(title: "没有找到工作！")
+        }
+    }
+    /// 打开工作
+    private func openWork(task: TodoTask?) {
+        if task != nil {
+            DispatchQueue.main.async {
+                let taskStoryboard = UIStoryboard(name: "task", bundle: Bundle.main)
+                let todoTaskDetailVC = taskStoryboard.instantiateViewController(withIdentifier: "todoTaskDetailVC") as! TodoTaskDetailViewController
+                todoTaskDetailVC.todoTask = task
+                todoTaskDetailVC.backFlag = 3
+                todoTaskDetailVC.modalPresentationStyle = .fullScreen
+                self.pushVC(todoTaskDetailVC)
+            }
+        }
+    }
+    /// 打开工作
+    private func openWorkPage(work: String, title: String) {
+        if work.isEmpty {
+            DDLogError("没有传入work id")
+            self.showError(title: "参数不正确！")
+            return
+        }
+        let storyBoard = UIStoryboard(name: "task", bundle: nil)
+        let destVC = storyBoard.instantiateViewController(withIdentifier: "todoTaskDetailVC") as! TodoTaskDetailViewController
+        let json = """
+        {"work":"\(work)", "workCompleted":"", "title":"\(title)"}
+        """
+        let todo = TodoTask(JSONString: json)
+        destVC.todoTask = todo
+        destVC.backFlag = 3 //隐藏就行
+        self.show(destVC, sender: nil)
     }
     
 }
@@ -202,12 +328,12 @@ extension O2SearchController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 190
+        return 170
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableview.dequeueReusableCell(withIdentifier: "O2SearchResultCell") as? O2SearchResultCell {
-            cell.setData(data: self.resultList[indexPath.row], currentKey: self.searchKey)
+            cell.setDataV2(data: self.resultList[indexPath.row], currentKey: self.searchKey)
             return cell
         }
         return UITableViewCell()
@@ -216,39 +342,14 @@ extension O2SearchController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableview.deselectRow(at: indexPath, animated: false)
         let entry = self.resultList[indexPath.row]
-        if entry.type == "cms" {
-            self.openCmsPage(id: entry.reference ?? "", title: entry.title ?? "")
+        if entry.category == "cms" {
+            self.openCmsPage(id: entry.id, title: entry.title)
         } else {
-            self.openWorkPage(work: entry.reference ?? "", title: entry.title ?? "")
+            self.loadWorkWithJob(job: entry.id)
+//            self.openWorkPage(work: entry.id, title: entry.title )
         }
     }
     
-    /// 打开文档
-    private func openCmsPage(id: String, title: String) {
-        let bbsStoryboard = UIStoryboard(name: "information", bundle: Bundle.main)
-        let destVC = bbsStoryboard.instantiateViewController(withIdentifier: "CMSSubjectDetailVC") as! CMSItemDetailViewController
-        destVC.documentId = id
-        destVC.title = title
-        destVC.modalPresentationStyle = .fullScreen
-        self.navigationController?.pushViewController(destVC, animated: false)
-    }
-    /// 打开工作
-    private func openWorkPage(work: String, title: String) {
-        if work.isEmpty {
-            DDLogError("没有传入work id")
-            self.showError(title: "参数不正确！")
-            return
-        }
-        let storyBoard = UIStoryboard(name: "task", bundle: nil)
-        let destVC = storyBoard.instantiateViewController(withIdentifier: "todoTaskDetailVC") as! TodoTaskDetailViewController
-        let json = """
-        {"work":"\(work)", "workCompleted":"", "title":"\(title)"}
-        """
-        let todo = TodoTask(JSONString: json)
-        destVC.todoTask = todo
-        destVC.backFlag = 3 //隐藏就行
-        self.show(destVC, sender: nil)
-    }
     
     
     /// Cell 圆角背景计算
