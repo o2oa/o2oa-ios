@@ -390,9 +390,11 @@ extension OOAttandanceViewModel{
         }
     }
     /// 申诉流程启动后 修改状态
-    func appealStartProcess(id: String) -> Promise<OOCommonValueBoolModel> {
+    func appealStartProcess(id: String, jobId:String) -> Promise<OOCommonValueBoolModel> {
         return Promise { fulfill, reject in
-            self.ooAttanceAPI.request(.v2AppealStartProcess(id)) { result in
+            let body = OOAttandanceV2StartProcessBody()
+            body.job = jobId
+            self.ooAttanceAPI.request(.v2AppealStartProcess(id, body)) { result in
                 let myResult = OOResult<BaseModelClass<OOCommonValueBoolModel>>(result)
                 if myResult.isResultSuccess() {
                     if let data =  myResult.model?.data {
@@ -427,20 +429,15 @@ extension OOAttandanceViewModel{
     }
     
     /// 启动申诉流程
-    func startProcess(processId: String, identity: String, processData: AttendanceV2AppealInfoToProcessData) -> Promise<[TodoTaskData]> {
+    func startProcess(processId: String, identity: String, processData: AttendanceV2AppealInfoToProcessData) -> Promise<StartProcessData> {
         return Promise { fulfill, reject in
             self.o2ProcessAPI.request(.startProcess(processId, identity, "", processData.toJSON() ?? [:]), completion: { (result) in
                 let myResult = OOResult<BaseModelClass<[StartProcessData]>>(result)
                 if myResult.isResultSuccess() {
-                     if let item = myResult.model?.data {
-                        if let taskList = item[0].taskList {
-                            fulfill(taskList)
-                        }else {
-                            // 有可能当前启动人没有拟稿的待办
-                            fulfill([])
-                        }
+                     if let item = myResult.model?.data, item.count > 0 {
+                         fulfill(item[0])
                      } else {
-                         fulfill([])
+                         reject(OOAppError.apiEmptyResultError)
                     }
                 } else {
                      reject(myResult.error!)

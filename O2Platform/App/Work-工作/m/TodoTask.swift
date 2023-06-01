@@ -69,6 +69,7 @@ class StartProcessData: NSObject,DataModel {
     @objc var fromActivityName:String?
     @objc var fromActivityToken:String?
     @objc var fromTime:String?
+    @objc var job:String?
     var connected:Bool?
     var splitting:Bool?
     @objc var splitTokenList:[String]?

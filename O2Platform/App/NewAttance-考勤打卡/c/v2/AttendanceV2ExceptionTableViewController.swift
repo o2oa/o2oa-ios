@@ -176,9 +176,9 @@ class AttendanceV2ExceptionTableViewController: UITableViewController {
     /// 启动流程
     private func startProcess(processId: String, identity: String, processData: AttendanceV2AppealInfoToProcessData) {
         self.showLoading()
-        self.viewModel.startProcess(processId: processId, identity: identity, processData: processData).then { (taskList) in
-            self.updateAppealStatus(appealId: processData.appealId) 
-            if taskList.count > 0 {
+        self.viewModel.startProcess(processId: processId, identity: identity, processData: processData).then { (res) in
+            self.updateAppealStatus(appealId: processData.appealId, jobId: res.job ?? "")
+            if let taskList = res.taskList, taskList.count > 0 {
                 self.hideLoading()
                 self.openWork(task:  taskList[0].copyToTodoTask() )
             } else {
@@ -189,8 +189,9 @@ class AttendanceV2ExceptionTableViewController: UITableViewController {
                 self.showError(title: "启动流程出错！")
         }
     }
-    private func updateAppealStatus(appealId: String) {
-        self.viewModel.appealStartProcess(id: appealId).then { value in
+    
+    private func updateAppealStatus(appealId: String, jobId: String) {
+        self.viewModel.appealStartProcess(id: appealId, jobId: jobId).then { value in
             DDLogInfo("更新状态完成，\(value.value ?? false)")
             self.tableView.mj_header.beginRefreshing()
         }.catch { error in
@@ -239,7 +240,12 @@ class AttendanceV2ExceptionTableViewController: UITableViewController {
                     }
                     self.openWork(task: task)
                 }
+            } else {
+                self.showError(title: "没有找到工作！")
             }
+        }.catch { err in
+            DDLogError("\(err.localizedDescription)")
+            self.showError(title: "没有找到工作！")
         }
     }
     

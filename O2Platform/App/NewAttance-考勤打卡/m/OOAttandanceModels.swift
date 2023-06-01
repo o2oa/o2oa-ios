@@ -256,6 +256,14 @@ class AttendanceV2AppealInfoToProcessData: NSObject, DataModel {
         
     }
 }
+/// 启动流程后 更新考勤异常数据传递 job 字段
+class OOAttandanceV2StartProcessBody: NSObject, DataModel {
+    @objc var job: String = ""
+    override required init() {
+        
+    }
+}
+
 
 
 
