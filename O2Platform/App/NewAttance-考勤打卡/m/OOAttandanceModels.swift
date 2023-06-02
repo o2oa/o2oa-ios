@@ -220,7 +220,7 @@ class AttendanceV2AppealInfo: NSObject, DataModel {
         case 0:
             return "待处理"
         case 1:
-            return "审批中"
+            return "流转中"
         case 2:
             return "审批通过"
         case 3:

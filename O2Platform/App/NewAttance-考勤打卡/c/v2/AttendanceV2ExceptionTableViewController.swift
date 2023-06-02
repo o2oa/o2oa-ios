@@ -79,7 +79,7 @@ class AttendanceV2ExceptionTableViewController: UITableViewController {
             self.startCheck(appeal: item)
         } else if !item.jobId.isEmpty {
             DDLogInfo("查看流程")
-            self.loadWorkWithJob(job: item.jobId)
+            self.openJob(info: item)
         }
     }
     
@@ -199,9 +199,12 @@ class AttendanceV2ExceptionTableViewController: UITableViewController {
             self.tableView.mj_header.beginRefreshing()
         }
     }
-    /// 根据job获取工作列表
-    private func loadWorkWithJob(job: String) {
-        self.viewModel.loadWorkByJob(jobId: job).then { workData in
+    
+    /// 查看工作
+    private func openJob(info: AttendanceV2AppealInfo) {
+         
+        // 根据job获取工作列表
+        self.viewModel.loadWorkByJob(jobId: info.jobId).then { workData in
             var workList: [WorkData] = []
             if !workData.workList.isEmpty {
                 for work in workData.workList {
@@ -241,11 +244,21 @@ class AttendanceV2ExceptionTableViewController: UITableViewController {
                     self.openWork(task: task)
                 }
             } else {
-                self.showError(title: "没有找到工作！")
+                self.resetAppealStatus(id: info.id)
             }
         }.catch { err in
             DDLogError("\(err.localizedDescription)")
-            self.showError(title: "没有找到工作！")
+            self.resetAppealStatus(id: info.id)
+        }
+    }
+    
+    private func resetAppealStatus(id: String) {
+        self.showDefaultConfirm(title: L10n.alert, message: "没有找到对应的流程工作，是否还原当前申诉数据的状态？") { action in
+            self.viewModel.appealResetStatus(id: id).then { result in
+                self.tableView.mj_header.beginRefreshing()
+            }.catch { e in
+                self.showError(title: "还原状态失败！")
+            }
         }
     }
     

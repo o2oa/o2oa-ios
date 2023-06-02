@@ -408,6 +408,23 @@ extension OOAttandanceViewModel{
             }
         }
     }
+    /// 重置申诉数据的状态
+    func appealResetStatus(id: String) -> Promise<OOCommonValueBoolModel> {
+        return Promise { fulfill, reject in
+            self.ooAttanceAPI.request(.v2AppealResetStatus(id)) { result in
+                let myResult = OOResult<BaseModelClass<OOCommonValueBoolModel>>(result)
+                if myResult.isResultSuccess() {
+                    if let data =  myResult.model?.data {
+                        fulfill(data)
+                    }else{
+                        reject(OOAppError.common(type: "appealError", message: "申请申诉失败！", statusCode: 5002))
+                    }
+                }else{
+                    reject(myResult.error!)
+                }
+            }
+        }
+    }
     
     /// 申诉流程对应的身份信息
     func loadAppealProcessAvailableIdentity(processId: String) -> Promise<[OOMeetingProcessIdentity]> {

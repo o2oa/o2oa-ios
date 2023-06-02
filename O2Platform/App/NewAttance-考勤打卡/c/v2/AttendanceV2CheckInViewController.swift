@@ -129,11 +129,14 @@ class AttendanceV2CheckInViewController: UIViewController {
             self.showError(title: "无法获取到当前位置信息，请确认是否开启定位权限！")
             return
         }
+        
         if record.isLastRecord {
-            if self.isInWorkPlace && self.currentWorkPlace != nil {
-                self.postCheckIn(record: record, workPlaceId: self.currentWorkPlace?.id, fieldWork: false,fieldWorkRemark: nil)
-            } else {
-                self.outSideCheckIn(record: record)
+            self.showDefaultConfirm(title: L10n.alert, message: "确定要更新当前打卡信息【\(record.recordTime ?? "")】？") { action in
+                if self.isInWorkPlace && self.currentWorkPlace != nil {
+                    self.postCheckIn(record: record, workPlaceId: self.currentWorkPlace?.id, fieldWork: false,fieldWorkRemark: nil)
+                } else {
+                    self.outSideCheckIn(record: record)
+                }
             }
         }
     }
