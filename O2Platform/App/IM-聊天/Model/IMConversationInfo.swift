@@ -119,9 +119,18 @@ class IMUploadBackModel: NSObject, DataModel {
 }
 
 //websocket 消息对象
-class WsMessage: NSObject, DataModel {
+class WsImMessage: NSObject, DataModel {
     @objc var type: String? //im_create
     @objc var body: IMMessageInfo? //这个对象只有 type=im_create的时候才是这个对象
+    required override init() { }
+
+    func mapping(mapper: HelpingMapper) {
+
+    }
+}
+class WsImConvMessage: NSObject, DataModel {
+    @objc var type: String? //
+    @objc var body: IMConversationInfo? //
     required override init() { }
 
     func mapping(mapper: HelpingMapper) {

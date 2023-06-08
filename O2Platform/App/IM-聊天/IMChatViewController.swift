@@ -158,6 +158,8 @@ class IMChatViewController: UIViewController {
         // websocket 消息监听
         NotificationCenter.default.addObserver(self, selector: #selector(receiveMessageFromWs(notice:)), name: OONotification.imCreate.notificationName, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(receiveRevokeMsgFromWs(notice:)), name: OONotification.imRevoke.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(receiveImConvUpdateFromWs(notice:)), name: OONotification.imConvUpdate.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(receiveImConvDeleteFromWs(notice:)), name: OONotification.imConvDelete.notificationName, object: nil)
         // 监听 键盘打开
         NotificationCenter.default.addObserver(self, selector: #selector(openKeyboard(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         // 监听 键盘大小变化
@@ -214,6 +216,30 @@ class IMChatViewController: UIViewController {
                         self.tableView.endUpdates()
                     }
                 }
+            }
+        }
+    }
+    @objc private func receiveImConvUpdateFromWs(notice: Notification) {
+        DDLogDebug("接收到websocket 更新会话 消息")
+        if let message = notice.object as? IMConversationInfo {
+            if message.id == self.conversation?.id {
+                let personList = message.personList ?? []
+                let currentDn = O2AuthSDK.shared.myInfo()?.distinguishedName ?? ""
+                if personList.contains(currentDn) {
+                    self.conversation = message
+                    self.title = self.conversation?.title
+                } else {
+                    DDLogInfo("成员被删除")
+                    self.popVC()
+                }
+            }
+        }
+    }
+    @objc private func receiveImConvDeleteFromWs(notice: Notification) {
+        DDLogDebug("接收到websocket 删除会话 消息")
+        if let message = notice.object as? IMConversationInfo {
+            if message.id == self.conversation?.id {
+                self.popVC()
             }
         }
     }

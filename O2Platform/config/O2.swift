@@ -21,6 +21,8 @@ struct O2 {
     
     public static let O2_MESSAGE_TYPE_IM_CREATE = "im_create"
     public static let O2_MESSAGE_TYPE_IM_REVOKE = "im_revoke"
+    public static let O2_MESSAGE_TYPE_IM_CONVERSATION_UPDATE = "im_conv_update"
+    public static let O2_MESSAGE_TYPE_IM_CONVERSATION_DELETE = "im_conv_delete"
     
     // 通讯录权限查询视图key
     public static let CUSTOM_STYLE_CONTACT_PERMISSION_PREF_KEY = "customStyleContactPermissionViewKey"

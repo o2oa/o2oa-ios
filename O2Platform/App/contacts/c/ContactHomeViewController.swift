@@ -19,6 +19,7 @@ import CocoaLumberjack
 class ContactHomeViewController: UITableViewController {
 
     var contacts:[Int:[CellViewModel]] = [0:[],1:[],2:[]]
+    let group = DispatchGroup()
     
     var myDepartmentURL:String? {
         let acc = O2AuthSDK.shared.myInfo()!
@@ -354,38 +355,14 @@ class ContactHomeViewController: UITableViewController {
                     case .success(let val):
                         let objects = JSON(val)["data"]
                         print(objects.description)
-                        var identity = ""
+                        var identitys:[IdentityV2] = []
                         if let person = Mapper<PersonV2>().map(JSONString:objects.description) {
                             if let identities = person.woIdentityList, identities.count > 0 {
-                                identity = identities[0].distinguishedName ?? ""
+                                identitys = identities
                             }
                         }
-                        if !identity.isEmpty {
-                            AF.request(self.topUnitByIdentityURL!, method: .post, parameters: ["identity": identity as AnyObject, "level": 1 as AnyObject], encoding: JSONEncoding.default, headers: nil).responseJSON(completionHandler: { (res) in
-                                switch res.result {
-                                case .success(let val):
-                                    let objects = JSON(val)["data"]
-                                    print(objects.description)
-                                    self.contacts[order]?.removeAll()
-                                    if let unit = Mapper<OrgUnit>().map(JSONString:objects.description) {
-                                        unit.subDirectUnitCount = 1 //这个接口查询出来的组织没有下级组织的数量，假设是有下级组织的
-                                        let tile = HeadTitle(name: L10n.Contacts.orgStructre, icon: O2ThemeManager.string(for: "Icon.icon_bumen")!)
-                                        let vmt = CellViewModel(name: tile.name, sourceObject: tile)
-                                        self.contacts[order]?.append(vmt)
-                                        // 顶级组织
-                                        let vm = CellViewModel(name: unit.name,sourceObject: unit)
-                                        self.contacts[order]?.append(vm)
-                                    }
-                                    break
-                                case .failure(let err):
-                                    DDLogError(err.localizedDescription)
-                                }
-                                self.hideLoading()
-                                if self.tableView.mj_header.isRefreshing() == true {
-                                    self.tableView.mj_header.endRefreshing()
-                                }
-                                self.tableView.reloadData()
-                            })
+                        if !identitys.isEmpty {
+                            self.loadAllTopUnitByIdentity(order: order, identitys: identitys)
                         }else {
                             self.hideLoading()
                             if self.tableView.mj_header.isRefreshing() == true {
@@ -393,7 +370,6 @@ class ContactHomeViewController: UITableViewController {
                             }
                             self.tableView.reloadData()
                         }
-                        
                     case .failure(let err):
                         DDLogError(err.localizedDescription)
                         self.hideLoading()
@@ -404,6 +380,49 @@ class ContactHomeViewController: UITableViewController {
                     }
                 }
             }
+        }
+    }
+    
+    private func loadAllTopUnitByIdentity(order: Int, identitys: [IdentityV2]) {
+        self.contacts[order]?.removeAll()
+        for identity in identitys {
+            self.group.enter()
+            // 异步处理请求
+            DispatchQueue.main.async(group: self.group, execute: DispatchWorkItem(block: {
+                AF.request(self.topUnitByIdentityURL!, method: .post, parameters: ["identity": identity.distinguishedName as AnyObject, "level": 1 as AnyObject], encoding: JSONEncoding.default, headers: nil).responseJSON(completionHandler: { (res) in
+                    switch res.result {
+                    case .success(let val):
+                        let objects = JSON(val)["data"]
+                        if let unit = Mapper<OrgUnit>().map(JSONString:objects.description) {
+                            unit.subDirectUnitCount = 1 //这个接口查询出来的组织没有下级组织的数量，假设是有下级组织的
+                            if (self.contacts[order]?.isEmpty == true) { // 第一次 添加头部
+                                let tile = HeadTitle(name: L10n.Contacts.orgStructre, icon: O2ThemeManager.string(for: "Icon.icon_bumen")!)
+                                let vmt = CellViewModel(name: tile.name, sourceObject: tile)
+                                self.contacts[order]?.append(vmt)
+                            }
+                            // 顶级组织
+                            let vm = CellViewModel(name: unit.name,sourceObject: unit)
+                            self.contacts[order]?.append(vm)
+                        }
+                        self.group.leave()
+                        break
+                    case .failure(let err):
+                        DDLogError(err.localizedDescription)
+                        self.group.leave()
+                        break
+                    }
+                    
+                })
+            }))
+        }
+        
+        self.group.notify(queue: DispatchQueue.main) {
+            // 处理结果
+            self.hideLoading()
+            if self.tableView.mj_header.isRefreshing() == true {
+                self.tableView.mj_header.endRefreshing()
+            }
+            self.tableView.reloadData()
         }
     }
     

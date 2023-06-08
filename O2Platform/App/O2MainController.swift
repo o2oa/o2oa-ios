@@ -374,16 +374,26 @@ extension O2MainController: WebSocketDelegate {
                             return
                         }
                         if type == O2.O2_MESSAGE_TYPE_IM_CREATE {
-                            if let messageInfo = WsMessage.deserialize(from: text) {
+                            if let messageInfo = WsImMessage.deserialize(from: text) {
                                 DDLogDebug("接收到im消息 发送通知。。")
                                 NotificationCenter.post(customeNotification: OONotification.imCreate, object: messageInfo.body)
                             }
                             self.addUnreadNumber()
                             AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
                         } else if type == O2.O2_MESSAGE_TYPE_IM_REVOKE {
-                            if let messageInfo = WsMessage.deserialize(from: text) {
+                            if let messageInfo = WsImMessage.deserialize(from: text) {
                                 DDLogDebug("接收到im消息 撤回消息")
                                 NotificationCenter.post(customeNotification: OONotification.imRevoke, object: messageInfo.body)
+                            }
+                        } else if type == O2.O2_MESSAGE_TYPE_IM_CONVERSATION_UPDATE {
+                            if let messageInfo = WsImConvMessage.deserialize(from: text) {
+                                DDLogDebug("接收到im消息 更新会话消息")
+                                NotificationCenter.post(customeNotification: OONotification.imConvUpdate, object: messageInfo.body)
+                            }
+                        } else if type == O2.O2_MESSAGE_TYPE_IM_CONVERSATION_DELETE {
+                            if let messageInfo = WsImConvMessage.deserialize(from: text) {
+                                DDLogDebug("接收到im消息 删除消息")
+                                NotificationCenter.post(customeNotification: OONotification.imConvDelete, object: messageInfo.body)
                             }
                         }
                     }

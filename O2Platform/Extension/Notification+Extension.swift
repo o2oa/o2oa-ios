@@ -29,6 +29,10 @@ enum OONotification:String {
     case imCreate
     // im消息撤回
     case imRevoke
+    // 会话更新
+    case imConvUpdate
+    // 会话删除
+    case imConvDelete
     
     //日程管理Main中使用
     case calendarIds

@@ -51,6 +51,9 @@ class IMConversationListViewController: UIViewController {
         view.addSubview(emptyView)
 
         NotificationCenter.default.addObserver(self, selector: #selector(receiveMessageFromWs(notice:)), name: OONotification.imCreate.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(receiveImConvUpdateFromWs(notice:)), name: OONotification.imConvUpdate.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(receiveImConvDeleteFromWs(notice:)), name: OONotification.imConvDelete.notificationName, object: nil)
+        
 
         imConfig.enableClearMsg = false
         viewModel.loadImConfig().then { imConfig in
@@ -101,6 +104,19 @@ class IMConversationListViewController: UIViewController {
                     self.emptyView.isHidden = false
                 }
             }
+        }
+    }
+    
+    @objc private func receiveImConvUpdateFromWs(notice: Notification) {
+        DDLogDebug("接收到websocket 更新会话 消息")
+        if let _ = notice.object as? IMConversationInfo {
+            self.getConversationList()
+        }
+    }
+    @objc private func receiveImConvDeleteFromWs(notice: Notification) {
+        DDLogDebug("接收到websocket 删除会话 消息")
+        if let _ = notice.object as? IMConversationInfo {
+            self.getConversationList()
         }
     }
 
