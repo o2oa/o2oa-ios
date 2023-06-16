@@ -17,6 +17,7 @@ protocol IMChatMessageDelegate {
     func openWork(workId: String)
     func openWebview(url: String)
     func openHttpImage(imageUrl: String)
+    func openPersonInfo(person: String)
 }
 
 class IMChatMessageViewCell: UITableViewCell {
@@ -314,6 +315,10 @@ class IMChatMessageViewCell: UITableViewCell {
             }
             //姓名
             self.titleLabel.text = person.split("@").first ?? ""
+            // 头像点击
+            self.avatarImage.addTapGesture { tap in
+                self.delegate?.openPersonInfo(person: person)
+            }
         } else {
             self.avatarImage.image = UIImage(named: "icon_men")
             self.titleLabel.text = ""

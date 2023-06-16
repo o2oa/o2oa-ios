@@ -215,7 +215,10 @@ extension IMViewModel {
     
     func getInstantMsgList() -> Promise<[InstantMessage]> {
         return Promise { fulfill, reject in
-            self.communicateAPI.request(.instantMessageList(50), completion: { result in
+            let form = IMInstantMsgForm()
+            form.person = O2AuthSDK.shared.myInfo()?.distinguishedName
+            form.consume = "pmsinner"
+            self.communicateAPI.request(.instantMessageList(form), completion: { result in
                     let response = OOResult<BaseModelClass<[InstantMessage]>>(result)
                     if response.isResultSuccess() {
                         if let list = response.model?.data {

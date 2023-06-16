@@ -16,7 +16,7 @@ enum CommunicateAPI {
     case msgListByPaging(Int, Int, String)
     case sendMsg(IMMessageInfo)
     case readConversation(String)
-    case instantMessageList(Int)
+    case instantMessageList(IMInstantMsgForm)
     case createConversation(IMConversationInfo)
     case updateConversationTitle(String, String)
     case updateConversationPeople(String, [String])
@@ -65,8 +65,8 @@ extension CommunicateAPI: TargetType {
             return "/jaxrs/im/msg"
         case .readConversation(let conversationId):
             return "/jaxrs/im/conversation/\(conversationId)/read"
-        case .instantMessageList(let count):
-            return "/jaxrs/instant/list/currentperson/noim/count/\(count)/desc"
+        case .instantMessageList(_):
+            return "/jaxrs/message/list/paging/1/size/100"
         case .createConversation(_):
             return "/jaxrs/im/conversation"
         case .updateConversationTitle(_, _), .updateConversationPeople(_, _):
@@ -90,9 +90,9 @@ extension CommunicateAPI: TargetType {
     
     var method: Moya.Method {
         switch self {
-        case .myConversationList, .instantMessageList(_), .imDownloadFullFile(_, _), .revokeMsg(_), .getImConfig:
+        case .myConversationList, .imDownloadFullFile(_, _), .revokeMsg(_), .getImConfig:
             return .get
-        case .msgListByPaging(_, _, _), .sendMsg(_), .createConversation(_), .imUploadFile(_, _, _, _):
+        case .msgListByPaging(_, _, _), .instantMessageList(_), .sendMsg(_), .createConversation(_), .imUploadFile(_, _, _, _):
             return .post
         case .readConversation(_), .updateConversationPeople(_, _), .updateConversationTitle(_, _):
             return .put
@@ -107,9 +107,11 @@ extension CommunicateAPI: TargetType {
     
     var task: Task {
         switch self {
-        case .myConversationList, .instantMessageList(_), .readConversation(_), .clearAllChatMsg(_),
+        case .myConversationList,  .readConversation(_), .clearAllChatMsg(_),
                 .revokeMsg(_), .getImConfig, .deleteGroupConversation(_), .deleteSingleConversation(_):
             return .requestPlain
+        case .instantMessageList(let form):
+            return .requestParameters(parameters: form.toJSON()!, encoding: JSONEncoding.default)
         case .msgListByPaging(_, _, let conversationId):
             let form = IMMessageRequestForm()
             form.conversationId = conversationId

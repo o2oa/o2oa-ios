@@ -71,6 +71,18 @@ class IMMessageInfo: NSObject, DataModel {
 
     }
 }
+/// 查询系统消息的提交对象
+class IMInstantMsgForm: NSObject, DataModel {
+    @objc var person: String?
+    @objc var consume: String?
+   
+
+    required override init() { }
+
+    func mapping(mapper: HelpingMapper) {
+
+    }
+}
 
 class IMMessageBodyInfo: NSObject, DataModel {
     @objc var id: String?

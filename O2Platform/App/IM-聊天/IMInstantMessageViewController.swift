@@ -257,4 +257,7 @@ extension IMInstantMessageViewController : IMChatMessageDelegate {
         self.show(destVC, sender: nil)
     }
     
+    func openPersonInfo(person: String) {
+        //
+    }
 }

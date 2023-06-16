@@ -1061,6 +1061,19 @@ extension IMChatViewController: IMChatMessageDelegate {
         self.playAudioGif(id: id)
     }
     
+    func openPersonInfo(person: String) {
+        let storyBoard = UIStoryboard(name: "contacts", bundle: nil)
+        let destVC = storyBoard.instantiateViewController(withIdentifier: "ContactPersonInfoV2") as! ContactPersonInfoV2ViewController
+        let p = PersonV2()
+        p.id = person
+        destVC.person = p
+        destVC.modalPresentationStyle = .fullScreen
+        if destVC.isKind(of: ZLNavigationController.self) {
+            self.show(destVC, sender: nil)
+        }else{
+            self.navigationController?.pushViewController(destVC, animated: true)
+        }
+    }
     
 }
 
