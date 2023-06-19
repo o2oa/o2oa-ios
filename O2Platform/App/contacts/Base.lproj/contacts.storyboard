@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="iDJ-yD-7GA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="iDJ-yD-7GA">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -17,10 +17,10 @@
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="contactItemCell" id="EyC-x7-vmj" customClass="ContactItemCell" customModule="O2Platform" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="49.5" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EyC-x7-vmj" id="9oF-MQ-3Ei">
-                                    <rect key="frame" x="0.0" y="0.0" width="350.5" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="348.5" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ptf-Ml-OFP">
@@ -51,10 +51,10 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="contactPersonCell" id="b8p-Kf-TPW" customClass="ContactItemCell" customModule="O2Platform" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="99.5" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="105.5" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="b8p-Kf-TPW" id="9SB-Vc-9hf">
-                                    <rect key="frame" x="0.0" y="0.0" width="350.5" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="348.5" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cZm-m3-L0j">
@@ -226,30 +226,33 @@
                             </constraints>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="Btm-sH-ehp">
-                            <rect key="frame" x="0.0" y="441" width="375" height="44"/>
+                            <rect key="frame" x="0.0" y="452" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="personInfoSell" selectionStyle="default" indentationWidth="10" reuseIdentifier="personInfoCell" id="uPu-jr-Eup" customClass="ContactPersonInfoCell" customModule="O2Platform" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="374.5" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="380" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uPu-jr-Eup" id="7cS-du-cCp">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ay2-QP-fxz">
-                                            <rect key="frame" x="31" y="8" width="74" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ay2-QP-fxz">
+                                            <rect key="frame" x="31" y="13" width="80" height="18"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="80" id="xAw-VK-Ckh"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Ip-Ko-FAH">
-                                            <rect key="frame" x="317" y="3" width="31" height="31"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Ip-Ko-FAH">
+                                            <rect key="frame" x="319" y="9.5" width="25" height="25"/>
                                             <state key="normal" image="Shapes"/>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="值" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Unc-Jp-92I">
-                                            <rect key="frame" x="113" y="8" width="196" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="值" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Unc-Jp-92I">
+                                            <rect key="frame" x="121" y="13" width="183" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -257,6 +260,7 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="Unc-Jp-92I" firstAttribute="centerY" secondItem="7cS-du-cCp" secondAttribute="centerY" id="20U-7i-Ry3"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Unc-Jp-92I" secondAttribute="trailing" constant="55" id="4Wa-Ck-0bu"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="7Ip-Ko-FAH" secondAttribute="trailing" constant="15" id="66o-s2-llE"/>
                                         <constraint firstItem="Unc-Jp-92I" firstAttribute="leading" secondItem="7cS-du-cCp" secondAttribute="leadingMargin" constant="105" id="AOy-35-97e"/>
                                         <constraint firstItem="Ay2-QP-fxz" firstAttribute="centerY" secondItem="7cS-du-cCp" secondAttribute="centerY" id="MK6-L6-xZ3"/>
@@ -301,10 +305,10 @@
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="compContactCell" id="7bY-dM-eEp" customClass="ContactItemCell" customModule="O2Platform" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="49.5" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7bY-dM-eEp" id="mz8-vc-d4J">
-                                    <rect key="frame" x="0.0" y="0.0" width="350.5" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="348.5" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Prg-Tx-oEu">
@@ -360,10 +364,10 @@
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="searchItemCell" id="j4U-nO-WUz" customClass="ContactItemCell" customModule="O2Platform" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="49.5" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="j4U-nO-WUz" id="xGE-eP-qH3">
-                                    <rect key="frame" x="0.0" y="0.0" width="350.5" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="348.5" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="spM-02-Z2O">
@@ -418,10 +422,10 @@
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="groupItemCell" id="VH3-gE-Egt" customClass="ContactItemCell" customModule="O2Platform" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="49.5" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VH3-gE-Egt" id="r7U-bZ-8Ro">
-                                    <rect key="frame" x="0.0" y="0.0" width="350.5" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="348.5" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2Yy-Gs-zHR">
@@ -493,13 +497,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="885-HT-Hf5">
-                            <rect key="frame" x="0.0" y="217.5" width="375" height="8"/>
+                            <rect key="frame" x="0.0" y="223.5" width="375" height="8"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="addressBarCell" id="eVD-9I-9Fp" customClass="ContactItemCell" customModule="O2Platform" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="49.5" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eVD-9I-9Fp" id="KbZ-H9-Myg">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
@@ -521,10 +525,10 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="addressUnitCell" id="Tw8-69-DnB" customClass="ContactItemCell" customModule="O2Platform" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="99.5" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="105.5" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Tw8-69-DnB" id="gPk-m5-2mE">
-                                    <rect key="frame" x="0.0" y="0.0" width="350.5" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="348.5" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nq8-LU-vKm">
@@ -555,10 +559,10 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="addressPersonCell" id="vd8-tW-njc" customClass="ContactItemCell" customModule="O2Platform" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="149.5" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="155.5" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vd8-tW-njc" id="Zue-nP-fAf">
-                                    <rect key="frame" x="0.0" y="0.0" width="350.5" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="348.5" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zkg-Zp-guU">

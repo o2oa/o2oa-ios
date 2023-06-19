@@ -69,6 +69,8 @@ class ContactPersonInfoV2ViewController: UITableViewController {
             isLoadPerson = false
         }
     }
+    // 汇报对象 名称
+    var superiorName = ""
     // 个人属性
     var attributes: [PersonAttribute] = []
     // 包含用户信息 和 个人属性的列表 展现
@@ -183,7 +185,7 @@ class ContactPersonInfoV2ViewController: UITableViewController {
                 cell.valueLab.text = self.contact?.officePhone
                 cell.eventBut.isHidden = true
             case L10n.Contacts.superior:
-                cell.valueLab.text = self.contact?.superior
+                cell.valueLab.text = self.superiorName
                 cell.eventBut.isHidden = true
             case L10n.Contacts.boardDate:
                 cell.valueLab.text = self.contact?.boardDate
@@ -295,6 +297,11 @@ class ContactPersonInfoV2ViewController: UITableViewController {
             case .success( let val):
                 let json = JSON(val)["data"]
                 self.contact = Mapper<PersonV2>().map(JSONString:json.description)!
+                // 汇报对象
+                if let superior = self.contact?.superior {
+                    self.loadSuperior(id: superior)
+                }
+                
                 self.attributes = self.contact?.woPersonAttributeList ?? []
                 // 默认的用户信息
                 self.nameLabs.forEach { (label) in
@@ -346,6 +353,23 @@ class ContactPersonInfoV2ViewController: UITableViewController {
                 }
             }
             
+        }
+    }
+    
+    /// 查询汇报对象
+    private func loadSuperior(id: String) {
+        let url = AppDelegate.o2Collect.generateURLWithAppContextKey(ContactContext.contactsContextKeyV2, query: ContactContext.personInfoByNameQuery, parameter: ["##name##": id as AnyObject])
+        AF.request(url!).responseJSON {
+            response in
+            switch response.result {
+            case .success( let val):
+                let json = JSON(val)["data"]
+                let person = Mapper<PersonV2>().map(JSONString:json.description)!
+                self.superiorName = person.name ?? ""
+                self.tableView.reloadData()
+            case .failure(let err):
+                DDLogError(err.localizedDescription)
+            }
         }
     }
 }
