@@ -69,8 +69,8 @@ class SPasswordChangeViewController: FormViewController {
             return
         }
         if newRow.value != newConfirmRow.value {
-            let alert = UIAlertController(title: "提醒", message: "密码修改提示", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "新密码与确认密码不一致，请修改", style: .default, handler: nil))
+            let alert = UIAlertController(title: "提醒", message: "新密码与确认密码不一致", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "请修改", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }else{
             //生成参数
@@ -81,12 +81,20 @@ class SPasswordChangeViewController: FormViewController {
             AF.request(url!, method: .put, parameters: parameter, encoding: JSONEncoding.default, headers: nil).responseJSON(completionHandler: { (response) in
                 switch response.result {
                 case .success(let val):
-                    let type = JSON(val)["type"]
+                    let json = JSON(val)
+                    DDLogInfo(json.description)
+                    let type = json["type"]
                     if type == "success" {
                         self.showSuccess(title: "修改成功")
-                    }else{
-                        DDLogError(JSON(val).description)
-                        self.showError(title: "修改失败")
+                        self.closeSelf()
+                    }else {
+                        let n = json["message"]
+                        DDLogInfo(n.description)
+                        if  let message = n.string {
+                            self.showError(title: message)
+                        } else {
+                            self.showError(title: "修改失败")
+                        }
                     }
                 case .failure(let err):
                     DDLogError(err.localizedDescription)
@@ -97,6 +105,12 @@ class SPasswordChangeViewController: FormViewController {
         }
         
     
+    }
+    
+    private func closeSelf() {
+        DispatchQueue.main.async {
+            self.popVC()
+        }
     }
 
     override func didReceiveMemoryWarning() {
