@@ -131,12 +131,12 @@ class TodoedTaskViewController: UITableViewController {
     
     func setStatusModel(_ statusArray:[ActivityTaskData]){
         for task in statusArray {
-            if task.fromActivityType == "begin" {
-                continue
-            }
-            if (task.taskCompletedList == nil || task.taskCompletedList!.count == 0) && (task.taskList == nil || task.taskList!.count == 0) {
-                continue
-            }
+//            if task.fromActivityType == "begin" {
+//                continue
+//            }
+//            if (task.taskCompletedList == nil || task.taskCompletedList!.count == 0) && (task.taskList == nil || task.taskList!.count == 0) {
+//                continue
+//            }
             // 计算任务数
             var identities: [String] = []
             if (task.taskCompletedList ==  nil || task.taskCompletedList!.count == 0) {
@@ -148,23 +148,33 @@ class TodoedTaskViewController: UITableViewController {
                     })
                 }
             }else{
-//                identity = (task.taskCompletedList![0] as! NSDictionary)["identity"]! as! String;
                 task.taskCompletedList?.forEach({ (data) in
                     if let id = (data as? NSDictionary)?["identity"] as? String {
                         identities.append(id)
                     }
                 })
             }
-            if identities.count > 0 {
-                for item in identities {
-                    let activity = task.arrivedActivityName == nil ? task.fromActivityName : "\(task.fromActivityName ?? "") -> \(task.arrivedActivityName ?? "")"
-                    let status = task.routeName == nil ? "正在处理":"选择了【\(task.routeName ?? "")】"
-                    let time = task.arrivedTime == nil ? "到达于：\(task.fromTime ?? "")" : "提交于：\(task.arrivedTime ?? "")"
-                    let identity = item.components(separatedBy: "@").first ?? ""
-                    let statusModel = TodoedStatusModel(activity: activity, identity: identity, status: status, statusTime: time)
-                    self.todoedStatus.append(statusModel)
-                }
-            }
+            
+            let identityNames = identities.map { item in
+                item.components(separatedBy: "@").first ?? ""
+            }.joined(separator: ",")
+//            if identities.count > 0 {
+//                for item in identities {
+//                    let activity = task.arrivedActivityName == nil ? task.fromActivityName : "\(task.fromActivityName ?? "") -> \(task.arrivedActivityName ?? "")"
+//                    let status = task.routeName == nil ? "正在处理":"选择了【\(task.routeName ?? "")】"
+//                    let time = task.arrivedTime == nil ? "到达于：\(task.fromTime ?? "")" : "提交于：\(task.arrivedTime ?? "")"
+//                    identityNames = item.components(separatedBy: "@").first ?? ""
+//                    let statusModel = TodoedStatusModel(activity: activity, identity: identity, status: status, statusTime: time)
+//                    self.todoedStatus.append(statusModel)
+//                }
+//            }
+            
+            let activity = task.arrivedActivityName == nil ? task.fromActivityName : "\(task.fromActivityName ?? "") -> \(task.arrivedActivityName ?? "")"
+            let status = task.routeName == nil ? "正在处理":"选择了【\(task.routeName ?? "")】"
+            let time = task.arrivedTime == nil ? "到达于：\(task.fromTime ?? "")" : "提交于：\(task.arrivedTime ?? "")"
+            let identity = identityNames
+            let statusModel = TodoedStatusModel(activity: activity, identity: identity, status: status, statusTime: time)
+            self.todoedStatus.append(statusModel)
             
         }
      
