@@ -214,8 +214,6 @@
 	<string>APP需要您的同意，才能访问通讯录识别用户，如禁止将无法识别用户</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>App需要您的同意,才能访问人脸识别功能对应用进行解锁登录，如禁止将无法使用生物识别登录功能</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>APP需要您的同意，才能持续访问定位位置计算打卡位置，如禁止将无法获取精准的打卡结果</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>APP需要您的同意，才能访问定位位置进行打卡签到，如禁止将无法使用打卡功能</string>
 	<key>NSMicrophoneUsageDescription</key>
@@ -252,9 +250,9 @@
 		<key>centerContext</key>
 		<string>/x_program_center</string>
 		<key>centerHost</key>
-		<string>qywx.o2oa.net</string>
+		<string>1.13.82.244</string>
 		<key>centerPort</key>
-		<integer>80</integer>
+		<integer>8080</integer>
 		<key>httpProtocol</key>
 		<string>http</string>
 		<key>id</key>
