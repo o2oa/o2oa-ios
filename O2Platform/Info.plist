@@ -250,9 +250,9 @@
 		<key>centerContext</key>
 		<string>/x_program_center</string>
 		<key>centerHost</key>
-		<string>1.13.82.244</string>
+		<string>qywx.o2oa.net</string>
 		<key>centerPort</key>
-		<integer>8080</integer>
+		<integer>80</integer>
 		<key>httpProtocol</key>
 		<string>http</string>
 		<key>id</key>

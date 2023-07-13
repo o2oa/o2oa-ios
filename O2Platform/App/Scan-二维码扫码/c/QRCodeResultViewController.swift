@@ -18,6 +18,7 @@ class QRCodeResultViewController: UIViewController {
     
     ///打开扫码结果
     static func openQRResult(result: String, vc: UIViewController) {
+        DDLogDebug("openQRResult result \(result)")
         let resultVC = QRCodeResultViewController()
         resultVC.scanResult = result
         vc.navigationController?.pushViewController(resultVC, animated: false)
@@ -58,9 +59,8 @@ class QRCodeResultViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if let result = scanResult {
-            self.showLoading()
+            //self.showLoading()
             //开始解析结果
-            //todo 判断url还是其他
             self.resolveResult(result: result)
         }else {
             self.title = "扫码结果"
@@ -108,37 +108,174 @@ class QRCodeResultViewController: UIViewController {
     
     ///解析扫码结果
     private func resolveResult(result: String) {
-        let url = NSURL(string: result)
-       //会议签到功能
-       var isMeetingCheck = false
-       let allU = url?.absoluteString
-       if allU != nil && allU!.contains("/checkin") && allU!.contains("x_meeting_assemble_control") {
-           isMeetingCheck = true
-       }
-        if(isMeetingCheck) {//会议签到
-            self.meetingCheck(url: allU!)
-        }else {
-            self.hideLoading()
-            self.title = "扫码登录"
-            let query = url?.query
-            let querys = query?.split("&")
-            var meta = ""
-            querys?.forEach { (e) in
-                let name = e.split("=")[0]
-                if name == "meta" {
-                    meta = e.split("=")[1]
+        DDLogDebug("result \(result)" )
+        var resultUrl: URL? = nil
+        if let url = URL(string: result) {
+            resultUrl = url
+        } else if let urlEscapedString = result.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) , let escapedURL = URL(string: urlEscapedString){
+            resultUrl = escapedURL
+        }
+        guard let realUrl = resultUrl else {
+            self.resultLabel.isHidden = false
+            self.resultLabel.text = result
+            return
+        }
+        
+        let querys = realUrl.query?.split("&")  ?? []
+        // 内部 url
+        if let host = O2AuthSDK.shared.bindUnit()?.centerHost, result.contains(host) {
+            // 会议签到
+            if result.contains("/checkin") && result.contains("x_meeting_assemble_control") {
+                self.meetingCheck(url: result)
+                return
+            }
+            // cms 文档
+            if (result.contains("x_desktop/cmspreview.html")
+                            || result.contains("x_desktop/cmsdoc.html")
+                            || result.contains("x_desktop/cmsdocMobile.html")
+                || result.contains("x_desktop/cmsdocmobilewithaction.html")) {
+                var docId = self.getQuery(querys: querys, queryName: "documentId")
+                if docId.isEmpty {
+                    docId = self.getQuery(querys: querys, queryName: "id")
+                }
+                let title = self.getQuery(querys: querys, queryName: "title")
+                let readonly = self.getQuery(querys: querys, queryName: "readonly")
+                let readonlyBool = readonly == "true"
+                if !docId.isEmpty {
+                    self.openCmsDocument(docId: docId, docTitle: title, readonly: readonlyBool)
+                    return
                 }
             }
-            if meta != "" {//登录O2OA
-                self.loginURL = AppDelegate.o2Collect.generateURLWithAppContextKey(LoginContext.loginContextKey, query: LoginContext.scanCodeAuthActionQuery, parameter: ["##meta##":meta as AnyObject])
-                self.loginStackView.isHidden = false
-                self.loginBtn.isHidden = false
-                
-            }else {//其他扫描结果
-                self.resultLabel.isHidden = false
-                self.resultLabel.text = result
+            // work
+            if (result.contains("x_desktop/work.html")
+                           || result.contains("x_desktop/workmobile.html")
+                || result.contains("x_desktop/workmobilewithaction.html")) {
+                var workId = self.getQuery(querys: querys, queryName: "workId")
+                if workId.isEmpty {
+                    workId = self.getQuery(querys: querys, queryName: "workid")
+                }
+                if workId.isEmpty {
+                    workId = self.getQuery(querys: querys, queryName: "work")
+                }
+                if workId.isEmpty {
+                    workId = self.getQuery(querys: querys, queryName: "workcompletedid")
+                }
+                if workId.isEmpty {
+                    workId = self.getQuery(querys: querys, queryName: "workcompletedId")
+                }
+                if workId.isEmpty {
+                    workId = self.getQuery(querys: querys, queryName: "id")
+                }
+                let title = self.getQuery(querys: querys, queryName: "title")
+                if !workId.isEmpty {
+                    self.openWork(work: workId, title: title)
+                    return
+                }
+            }
+            // app
+            if (result.contains("x_desktop/app.html")
+                || result.contains("x_desktop/appMobile.html")) {
+                let app = self.getQuery(querys: querys, queryName: "app")
+                let status = self.getQuery(querys: querys, queryName: "status")
+                DDLogDebug("app \(app)" )
+                DDLogDebug("status \(status)")
+                if let statusMap = self.getAppStatusMap(status: status) {
+                    var workId = (statusMap["workId"] as? String) ?? ""
+                    if workId.isEmpty {
+                        workId =  (statusMap["workCompletedId"]  as? String) ?? ""
+                    }
+                    if app == "process.Work" && !workId.isEmpty {
+                        self.openWork(work: workId, title: "")
+                        return
+                    }
+                    let documentId = (statusMap["documentId"] as? String) ?? ""
+                    DDLogDebug("documentId \(documentId)" )
+                    let readonly = (statusMap["readonly"] as? Bool) ?? false
+                    DDLogDebug("readonly \(readonly)" )
+                    if app == "cms.Document" && !documentId.isEmpty {
+                        self.openCmsDocument(docId: documentId, docTitle: "", readonly: readonly)
+                        return
+                    }
+                }
             }
         }
+        
+        self.title = "扫码登录"
+        let meta = self.getQuery(querys: querys, queryName: "meta")
+        if meta != "" {//登录O2OA
+            self.loginURL = AppDelegate.o2Collect.generateURLWithAppContextKey(LoginContext.loginContextKey, query: LoginContext.scanCodeAuthActionQuery, parameter: ["##meta##":meta as AnyObject])
+            self.loginStackView.isHidden = false
+            self.loginBtn.isHidden = false
+            
+        }else {//其他扫描结果
+            self.resultLabel.isHidden = false
+            self.resultLabel.text = result
+        }
+         
+    }
+    
+    private func getAppStatusMap(status: String) -> Dictionary<String, Any>? {
+        if !status.isBlank {
+            if let jsonData = status.removingPercentEncoding?.data(using: .utf8) {
+                do {
+                    let dc = try JSONSerialization.jsonObject(with: jsonData, options: .mutableContainers)
+                    return dc as? Dictionary<String, Any>
+                } catch _ {
+                    // 解码两次
+                    if let json2Data = status.removingPercentEncoding?.removingPercentEncoding?.data(using: .utf8) {
+                        do {
+                            let dc2 = try JSONSerialization.jsonObject(with: json2Data, options: .mutableContainers)
+                            return dc2 as? Dictionary<String, Any>
+                        } catch _ {
+                            DDLogError("json 转化 出错")
+                        }
+                    }
+                }
+            }
+        }
+        return nil
+    }
+    
+    /// 获取query 参数的值
+    private func getQuery(querys:[String], queryName: String) -> String {
+        var v = ""
+        querys.forEach { (e) in
+            let name = e.split("=")[0]
+            if name == queryName {
+                v = e.split("=")[1]
+            }
+        }
+        return v
+    }
+    /// 打开工作
+    private func openWork(work: String, title: String) {
+        let storyBoard = UIStoryboard(name: "task", bundle: nil)
+        let destVC = storyBoard.instantiateViewController(withIdentifier: "todoTaskDetailVC") as! TodoTaskDetailViewController
+        let json = """
+        {"work":"\(work)", "title":"\(title)"}
+        """
+        DDLogDebug("openWork json: \(json)")
+        let todo = TodoTask(JSONString: json)
+        destVC.todoTask = todo
+        destVC.backFlag = 3 //隐藏就行
+        self.closeSelfAndOpen(newVC: destVC)
+    }
+    /// 打开cms文档
+    private func openCmsDocument(docId: String, docTitle: String, readonly: Bool) {
+        DDLogInfo("打开文档， docId：\(docId) , docTitle:\(docTitle) , readonly: \(readonly)")
+        let storyBoard = UIStoryboard(name: "information", bundle: nil)
+        let destVC = storyBoard.instantiateViewController(withIdentifier: "CMSSubjectDetailVC") as! CMSItemDetailViewController
+        let json = """
+        {"title":"\(docTitle)", "id":"\(docId)", "readonly": \(readonly)}
+        """
+        destVC.itemData =  CMSCategoryItemData(JSONString: json)
+        self.closeSelfAndOpen(newVC: destVC)
+    }
+    
+    private func closeSelfAndOpen(newVC: UIViewController) {
+        newVC.modalPresentationStyle = .fullScreen
+        self.navigationController?.pushViewController(newVC, animated: true)
+        self.navigationController?.viewControllers.remove(at: self.navigationController!.viewControllers.count - 1)
     }
     
     
