@@ -237,22 +237,22 @@ class O2BaseJsMessageHandler: NSObject, O2WKScriptMessageHandlerImplement {
     /// 打开cms栏目
     private func openCmsApplication(appId: String) {
         DDLogInfo("打开栏目， appId：\(appId)")
-        let url = AppDelegate.o2Collect.generateURLWithAppContextKey(CMSContext.cmsContextKey, query: CMSContext.cmsCategoryListQuery, parameter: ["##appId##": appId as AnyObject])
+        let url = AppDelegate.o2Collect.generateURLWithAppContextKey(CMSContext.cmsContextKey, query: CMSContext.cmsCategoryQuery, parameter: nil)
         self.viewController.showLoading(title: "Loading...")
         AF.request(url!, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
             switch response.result {
             case .success(let val):
-                let categroyList = Mapper<CMSCategoryData>().map(JSONObject: val)
-                if let count = categroyList?.data?.count {
-                    if count > 0 {
-                        let storyBoard = UIStoryboard(name: "information", bundle: nil)
-                        let destVC = storyBoard.instantiateViewController(withIdentifier: "CMSCategoryListController") as! CMSCategoryListViewController
-                        destVC.title = categroyList?.data?.first?.appName ?? ""
-                        let d = CMSData(JSONString: "{\"id\":\"\"}")
-                        d?.wrapOutCategoryList = categroyList?.data
-                        destVC.cmsData = d
-                        self.viewController.show(destVC, sender: nil)
-                    }
+                let result = Mapper<CMSApplication>().map(JSONObject: val)
+                let appList = result?.data ?? []
+                let app = appList.first { data in
+                    return data.id == appId
+                }
+                if app != nil {
+                    let storyBoard = UIStoryboard(name: "information", bundle: nil)
+                    let destVC = storyBoard.instantiateViewController(withIdentifier: "CMSCategoryListController") as! CMSCategoryListViewController
+                    destVC.title = app?.appName ?? ""
+                    destVC.cmsData = app
+                    self.viewController.show(destVC, sender: nil)
                 }
                 self.viewController.hideLoading()
             case .failure(let err):
