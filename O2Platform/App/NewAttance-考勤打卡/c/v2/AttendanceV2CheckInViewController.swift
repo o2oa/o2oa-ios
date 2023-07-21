@@ -204,6 +204,7 @@ class AttendanceV2CheckInViewController: UIViewController {
     
     
     private func loadPreCheckData() {
+        self.showLoading()
         self.viewModel.preCheckIn().then { data in
             // 先处理打卡场所
             self.workPlaceList.removeAll()
@@ -265,6 +266,8 @@ class AttendanceV2CheckInViewController: UIViewController {
             }
             self.setCheckInBtnEnable(self.canCheckIn)
             self.recordItemsCollectionView.reloadData()
+        }.always {
+            self.hideLoading()
         }.catch { error in
             DDLogError(error.localizedDescription)
             self.setCheckInBtnEnable(false)

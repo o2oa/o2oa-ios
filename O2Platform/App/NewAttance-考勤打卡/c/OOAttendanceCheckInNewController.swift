@@ -299,7 +299,9 @@ class OOAttendanceCheckInNewController: UIViewController {
     }
     ///获取打卡记录和班次数据
     private func loadMyRecords() {
+        self.showLoading()
         self.viewModel.listMyRecords { (result) in
+            self.hideLoading()
             switch result {
             case .ok(let record):
                 let model = record as? OOMyAttandanceRecords
