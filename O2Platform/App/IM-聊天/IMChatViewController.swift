@@ -937,7 +937,7 @@ extension IMChatViewController: AudioPlayerManagerDelegate {
 
 // MARK: - 消息点击 delegate
 extension IMChatViewController: IMChatMessageDelegate {
-    func openWebview(url: String) {
+    func openWebview(url: String, openExternally: Bool?) {
         //
     }
     

@@ -11,6 +11,7 @@ import Alamofire
 import AlamofireObjectMapper
 import ObjectMapper
 import CocoaLumberjack
+import Promises
 
 class NewMainAppCollectionViewCell: UICollectionViewCell {
     
@@ -22,6 +23,9 @@ class NewMainAppCollectionViewCell: UICollectionViewCell {
     
     
     private var nowData:O2App?
+    
+    private let portalAPI = OOMoyaProvider<PortalAPI>()
+    
     
     
     override func awakeFromNib() {
@@ -48,6 +52,14 @@ class NewMainAppCollectionViewCell: UICollectionViewCell {
                         self.appIconImageView.image = image
                         
                     }
+                }
+                self.loadPortalCornerMarkNumber(portalId: app.appId!).then { number in
+                    if number > 0 {
+                        self.numberLabel.text = "\(number)"
+                        self.numberLabel.isHidden = false
+                    }
+                }.catch { err in
+                    DDLogError("\(err.localizedDescription)")
                 }
             } else {
                 self.appIconImageView.image = UIImage(named: app.normalIcon!)
@@ -92,6 +104,21 @@ class NewMainAppCollectionViewCell: UICollectionViewCell {
                             }
                         }
                     }
+                }
+            }
+        }
+    }
+    
+    
+    private func loadPortalCornerMarkNumber(portalId: String) -> Promise<Int> {
+        return Promise { fulfill, reject in
+            self.portalAPI.request(.cornerMark(portalId)) { result in
+                let response = OOResult<BaseModelClass<O2PortalCornerMarkNumber>>(result)
+                if response.isResultSuccess() {
+                    var number = response.model?.data?.count ?? 0
+                    fulfill(number)
+                } else {
+                    fulfill(0)
                 }
             }
         }

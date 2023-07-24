@@ -12,6 +12,7 @@ import Moya
 
 enum PortalAPI {
     case listMobile
+    case cornerMark(String)
 }
 
 extension PortalAPI: OOAPIContextCapable {
@@ -42,12 +43,14 @@ extension PortalAPI: TargetType {
         switch self {
         case .listMobile:
             return "/jaxrs/portal/list/mobile"
+        case .cornerMark(let portalId):
+            return "/jaxrs/portal/\(portalId)/corner/mark"
         }
     }
     
     var method:  Moya.Method {
         switch self {
-        case .listMobile:
+        case .listMobile, .cornerMark(_):
             return .get
         }
     }
@@ -58,7 +61,7 @@ extension PortalAPI: TargetType {
     
     var task: Task {
         switch self {
-        case .listMobile:
+        case .listMobile, .cornerMark(_):
             return .requestPlain
         }
     }

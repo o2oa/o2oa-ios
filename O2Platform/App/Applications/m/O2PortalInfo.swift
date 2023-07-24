@@ -30,3 +30,10 @@ class O2PortalInfo:NSObject, DataModel {
         mapper <<< self.desc <-- "description"
     }
 }
+
+
+class O2PortalCornerMarkNumber: NSObject, DataModel {
+    var count: Int?
+    
+    required override init(){}
+}

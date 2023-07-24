@@ -15,7 +15,7 @@ protocol IMChatMessageDelegate {
     func openLocatinMap(info: IMMessageBodyInfo)
     func openApplication(storyboard: String, msgBody: String?)
     func openWork(workId: String)
-    func openWebview(url: String)
+    func openWebview(url: String, openExternally: Bool?)
     func openHttpImage(imageUrl: String)
     func openPersonInfo(person: String)
 }
@@ -101,7 +101,7 @@ class IMChatMessageViewCell: UITableViewCell {
                     isRender = true
                     if let url = text.url, url.isUrl() {
                         setcc(label: msgLabel) { tap in
-                            self.delegate?.openWebview(url: url)
+                            self.delegate?.openWebview(url: url, openExternally: text.openExternally)
                         }
                     }
                 }
@@ -115,7 +115,7 @@ class IMChatMessageViewCell: UITableViewCell {
             }
             if appMsg.msgType() == CustomO2AppMsgType.textcard {
                 if let textcard = appMsg.textcard, let title = textcard.title, let url = textcard.url {
-                    self.textCardMsgRender(title: title, desc: textcard.desc ?? title, url: url)
+                    self.textCardMsgRender(title: title, desc: textcard.desc ?? title, url: url, openExternally: textcard.openExternally ?? false)
                     isRender = true
                 }
             }
@@ -344,7 +344,7 @@ class IMChatMessageViewCell: UITableViewCell {
     }
     
     // 卡片消息
-    private func textCardMsgRender(title: String, desc: String, url: String) {
+    private func textCardMsgRender(title: String, desc: String, url: String, openExternally: Bool) {
         self.messageBackgroundWidth.constant = IMTextCardView.IMTextCardView_width + 20
         self.messageBackgroundHeight.constant =  IMTextCardView.IMTextCardView_height + 20
         self.textcardView.translatesAutoresizingMaskIntoConstraints = false
@@ -352,7 +352,7 @@ class IMChatMessageViewCell: UITableViewCell {
         self.textcardView.setupTextCard(title: title, desc: desc)
         self.constraintWithContent(contentView: self.textcardView)
         self.textcardView.addTapGesture { tap in
-            self.delegate?.openWebview(url: url)
+            self.delegate?.openWebview(url: url, openExternally: openExternally)
         }
     }
     

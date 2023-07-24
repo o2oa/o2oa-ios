@@ -193,7 +193,8 @@ class InstantMessage: NSObject, DataModel {
 // 自定义消息
 class CustomO2AppTextMsg: NSObject, DataModel {
     @objc var content: String?
-              @objc var url: String?
+    @objc var url: String?
+    var openExternally: Bool?
     required override init() { }
 }
 class CustomO2AppImageMsg: NSObject, DataModel {
@@ -204,6 +205,7 @@ class CustomO2AppCardMsg: NSObject, DataModel {
     @objc var title: String?
     @objc var desc: String?
     @objc var url: String?
+    var openExternally: Bool?
     required override init() { }
 }
 enum CustomO2AppMsgType{

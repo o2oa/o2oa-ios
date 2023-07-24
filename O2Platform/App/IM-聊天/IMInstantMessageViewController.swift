@@ -108,19 +108,7 @@ class IMInstantMessageViewController: UITableViewController {
             self.hideLoading()
             // 打开在线会议
             if let link = meeting.roomLink, let mode = meeting.mode, !link.isEmpty, mode == "online" {
-                guard let url = URL(string: link) else {
-                    DDLogError("url地址不正确，\(link)")
-                    return
-                }
-                if #available(iOS 10, *) {
-                    if UIApplication.shared.canOpenURL(url) {
-                        UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                    } else {
-                        DDLogError("无法打开url，\(link)")
-                    }
-                } else {
-                    UIApplication.shared.openURL(url)
-                }
+                self.openUrlBySafari(link: link)
             } else {
                 // 打开会议详情
                 let storyBoard = UIStoryboard(name: "meeting", bundle: nil)
@@ -139,15 +127,35 @@ class IMInstantMessageViewController: UITableViewController {
             self.showError(title: "\(error.localizedDescription)")
         }
     }
+    
+    private func openUrlBySafari(link: String) {
+        guard let url = URL(string: link) else {
+            DDLogError("url地址不正确，\(link)")
+            return
+        }
+        if #available(iOS 10, *) {
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                DDLogError("无法打开url，\(link)")
+            }
+        } else {
+            UIApplication.shared.openURL(url)
+        }
+    }
 }
 
 extension IMInstantMessageViewController : IMChatMessageDelegate {
-    func openWebview(url: String) {
-        let destVC = OOTabBarHelper.getVC(storyboardName: "apps", vcName: "OOMainWebVC")
-        if let mail = destVC as? MailViewController {
-            mail.openUrl = url
-            let nav = ZLNavigationController(rootViewController: mail)
-            self.present(nav, animated: true, completion: nil)
+    func openWebview(url: String, openExternally: Bool?) {
+        if let out = openExternally, out == true {
+            self.openUrlBySafari(link: url)
+        } else {
+            let destVC = OOTabBarHelper.getVC(storyboardName: "apps", vcName: "OOMainWebVC")
+            if let mail = destVC as? MailViewController {
+                mail.openUrl = url
+                let nav = ZLNavigationController(rootViewController: mail)
+                self.present(nav, animated: true, completion: nil)
+            }
         }
     }
     
