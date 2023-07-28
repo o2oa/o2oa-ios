@@ -942,6 +942,7 @@ public protocol IO2CustomStyleModel: HandyJSON, CustomStringConvertible {
     var nativeAppList : [O2CustomNativeAppModel]? { get set }
     var portalList : [O2CustomPortalAppModel]? { get set }
     var simpleMode: Bool? { get set } /// 简易模式
+    var appIndexPages : [String]? { get set }
 }
 open class O2CustomStyleModel: NSObject, DataModel, NSCoding, IO2CustomStyleModel {
     @objc open var images : [O2CustomImageModel]?
@@ -951,6 +952,7 @@ open class O2CustomStyleModel: NSObject, DataModel, NSCoding, IO2CustomStyleMode
     @objc open var nativeAppList : [O2CustomNativeAppModel]?
     @objc open var portalList : [O2CustomPortalAppModel]?
     open var simpleMode: Bool?
+    @objc open var appIndexPages: [String]?
     
     @objc public func encode(with aCoder: NSCoder) {
         if images != nil {
@@ -974,6 +976,9 @@ open class O2CustomStyleModel: NSObject, DataModel, NSCoding, IO2CustomStyleMode
         if simpleMode != nil {
             aCoder.encode(simpleMode, forKey: "simpleMode")
         }
+        if appIndexPages != nil {
+            aCoder.encode(appIndexPages, forKey: "appIndexPages")
+        }
     }
     
     @objc public required init?(coder aDecoder: NSCoder) {
@@ -984,6 +989,7 @@ open class O2CustomStyleModel: NSObject, DataModel, NSCoding, IO2CustomStyleMode
         nativeAppList = aDecoder.decodeObject(forKey: "nativeAppList") as? [O2CustomNativeAppModel]
         portalList = aDecoder.decodeObject(forKey: "portalList") as? [O2CustomPortalAppModel]
         simpleMode = aDecoder.decodeObject(forKey: "simpleMode") as? Bool
+        appIndexPages = aDecoder.decodeObject(forKey: "appIndexPages") as? [String]
     }
     
     required public override init() {}

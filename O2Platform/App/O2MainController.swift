@@ -45,7 +45,7 @@ class O2MainController: O2BaseForRotateUITabBarController, UITabBarControllerDel
     private lazy var bbsVm: BBSViewModel = {
         return BBSViewModel()
     }()
-    
+    private var pages: [MainPageType] = []
     private let barIm = L10n.mainBarIm
     private let barContact = L10n.mainBarContacts
     private let barApps = L10n.mainBarApps
@@ -69,20 +69,105 @@ class O2MainController: O2BaseForRotateUITabBarController, UITabBarControllerDel
             DDLogDebug("进入简易模式！！！！！！！")
             isSimple = true
         }
-        if isSimple {
-            _initSimpleControllers()
-            selectedIndex = 0
-            currentIndex = 0
-        }else {
-            _initControllers()
-            selectedIndex = 2
-            currentIndex = 2
+        self.pages.removeAll()
+        if let pageSet = O2AuthSDK.shared.customStyle()?.appIndexPages, !pageSet.isEmpty {
+            pageSet.forEach { p in
+                if (p == MainPageType.home.getKey()) {
+                    self.pages.append(MainPageType.home)
+                }
+                if (p == MainPageType.im.getKey()) {
+                    self.pages.append(MainPageType.im)
+                }
+                if (p == MainPageType.contact.getKey()) {
+                    self.pages.append(MainPageType.contact)
+                }
+                if (p == MainPageType.app.getKey()) {
+                    self.pages.append(MainPageType.app)
+                }
+                if (p == MainPageType.settings.getKey()) {
+                    self.pages.append(MainPageType.settings)
+                }
+            }
+            if !self.pages.contains(MainPageType.home) {
+                self.pages.append(MainPageType.home)
+            }
+            if !self.pages.contains(MainPageType.settings) {
+                self.pages.append(MainPageType.settings)
+            }
+        } else {
+            if isSimple {
+                self.pages.append(MainPageType.home)
+                self.pages.append(MainPageType.settings)
+            } else {
+                self.pages.append(MainPageType.home)
+                self.pages.append(MainPageType.im)
+                self.pages.append(MainPageType.contact)
+                self.pages.append(MainPageType.app)
+                self.pages.append(MainPageType.settings)
+            }
         }
+        
+        self.pages.sort { a, b in
+            return a.getOrder() < b.getOrder()
+        }
+        var controllers : [UIViewController] = []
+        for p in self.pages {
+            if p == MainPageType.home {
+                // main
+                let mainVC = mainController()
+                mainVC.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "icon_zhuye_nor"), selectedImage: O2ThemeManager.image(for: "Icon.icon_zhuye_pre"))
+                mainVC.tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
+                let blurImage = OOCustomImageManager.default.loadImage(.index_bottom_menu_logo_blur)
+                let newBlurImage = blurImage?.withRenderingMode(.alwaysOriginal)
+                mainVC.tabBarItem.image = newBlurImage
+                let focusImage = OOCustomImageManager.default.loadImage(.index_bottom_menu_logo_focus)
+                let newFocusImage = focusImage?.withRenderingMode(.alwaysOriginal)
+                mainVC.tabBarItem.selectedImage = newFocusImage
+                controllers.append(mainVC)
+            }
+            if p == MainPageType.im {
+                //消息
+                let conversationVC = IMConversationListViewController()
+                conversationVC.title = barIm
+                let messages = ZLNavigationController(rootViewController: conversationVC)
+                messages.tabBarItem = UITabBarItem(title: barIm, image: UIImage(named: "icon_news_nor"), selectedImage: O2ThemeManager.image(for: "Icon.icon_news_pre"))
+                controllers.append(messages)
+            }
+            if p == MainPageType.contact {
+                //通讯录
+                let addressVC = OOTabBarHelper.getVC(storyboardName: "contacts", vcName: nil)
+                let address = ZLNavigationController(rootViewController: addressVC)
+                address.tabBarItem = UITabBarItem(title: barContact, image: UIImage(named: "icon_address_g"), selectedImage: O2ThemeManager.image(for: "Icon.icon_address_list_pro"))
+                controllers.append(address)
+            }
+            if p == MainPageType.app {
+                //应用
+                let appsVC = OOTabBarHelper.getVC(storyboardName: "apps", vcName: nil)
+                let apps = ZLNavigationController(rootViewController: appsVC)
+                apps.tabBarItem = UITabBarItem(title: barApps, image: UIImage(named: "icon_yingyong"), selectedImage: O2ThemeManager.image(for: "Icon.icon_yingyong_pro"))
+                controllers.append(apps)
+            }
+            if p == MainPageType.settings {
+                //设置
+                let settingsVC = OOTabBarHelper.getVC(storyboardName: "setting", vcName: nil)
+                let settings = ZLNavigationController(rootViewController: settingsVC)
+                settings.tabBarItem = UITabBarItem(title: barSettings, image: UIImage(named: "setting_normal"), selectedImage: O2ThemeManager.image(for: "Icon.setting_selected"))
+                controllers.append(settings)
+            }
+        }
+        self.viewControllers = controllers
+        var cIndex = 0
+        for p in self.pages {
+            if p == MainPageType.home {
+                break
+            }
+            cIndex += 1
+        }
+        selectedIndex = cIndex
+        currentIndex = cIndex
+        
+        // 极光
         O2JPushManager.shared.o2JPushBind()
-//        if O2IsConnect2Collect == false {
-//            //处理内部直连的时候推送的设备绑定
-//            
-//        }
         //连接websocket
         self._startWebsocket()
         //读取消息
@@ -93,7 +178,6 @@ class O2MainController: O2BaseForRotateUITabBarController, UITabBarControllerDel
         self.checkCloudFileVersion()
         // 论坛禁言问题
         self.checkBBSMuteInfo()
-        
         // 极速打卡
         self.doFastCheckIn()
     }
@@ -121,64 +205,7 @@ class O2MainController: O2BaseForRotateUITabBarController, UITabBarControllerDel
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         self.currentIndex = tabBarController.selectedIndex
     }
-
-    /// 普通模式
-    private func _initControllers() {
-        //消息
-        let conversationVC = IMConversationListViewController()
-        conversationVC.title = barIm
-        let messages = ZLNavigationController(rootViewController: conversationVC)
-        messages.tabBarItem = UITabBarItem(title: barIm, image: UIImage(named: "icon_news_nor"), selectedImage: O2ThemeManager.image(for: "Icon.icon_news_pre"))
-
-        //通讯录
-        let addressVC = OOTabBarHelper.getVC(storyboardName: "contacts", vcName: nil)
-        let address = ZLNavigationController(rootViewController: addressVC)
-        address.tabBarItem = UITabBarItem(title: barContact, image: UIImage(named: "icon_address_g"), selectedImage: O2ThemeManager.image(for: "Icon.icon_address_list_pro"))
-
-        // main
-        let mainVC = mainController()
-        mainVC.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "icon_zhuye_nor"), selectedImage: O2ThemeManager.image(for: "Icon.icon_zhuye_pre"))
-        mainVC.tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
-        let blurImage = OOCustomImageManager.default.loadImage(.index_bottom_menu_logo_blur)
-        let newBlurImage = blurImage?.withRenderingMode(.alwaysOriginal)
-        mainVC.tabBarItem.image = newBlurImage
-        let focusImage = OOCustomImageManager.default.loadImage(.index_bottom_menu_logo_focus)
-        let newFocusImage = focusImage?.withRenderingMode(.alwaysOriginal)
-        mainVC.tabBarItem.selectedImage = newFocusImage
-
-        //应用
-        let appsVC = OOTabBarHelper.getVC(storyboardName: "apps", vcName: nil)
-        let apps = ZLNavigationController(rootViewController: appsVC)
-        apps.tabBarItem = UITabBarItem(title: barApps, image: UIImage(named: "icon_yingyong"), selectedImage: O2ThemeManager.image(for: "Icon.icon_yingyong_pro"))
-
-        //设置
-        let settingsVC = OOTabBarHelper.getVC(storyboardName: "setting", vcName: nil)
-        let settings = ZLNavigationController(rootViewController: settingsVC)
-        settings.tabBarItem = UITabBarItem(title: barSettings, image: UIImage(named: "setting_normal"), selectedImage: O2ThemeManager.image(for: "Icon.setting_selected"))
-
-        self.viewControllers = [messages, address, mainVC, apps, settings]
-
-    }
-    
-    /// 简版 只有首页和设置
-    private func _initSimpleControllers() {
-        // main
-        let mainVC = mainController()
-        mainVC.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "icon_zhuye_nor"), selectedImage: O2ThemeManager.image(for: "Icon.icon_zhuye_pre"))
-        mainVC.tabBarItem.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
-        let blurImage = OOCustomImageManager.default.loadImage(.index_bottom_menu_logo_blur)
-        let newBlurImage = blurImage?.withRenderingMode(.alwaysOriginal)
-        mainVC.tabBarItem.image = newBlurImage
-        let focusImage = OOCustomImageManager.default.loadImage(.index_bottom_menu_logo_focus)
-        let newFocusImage = focusImage?.withRenderingMode(.alwaysOriginal)
-        mainVC.tabBarItem.selectedImage = newFocusImage
-        //设置
-        let settingsVC = OOTabBarHelper.getVC(storyboardName: "setting", vcName: nil)
-        let settings = ZLNavigationController(rootViewController: settingsVC)
-        settings.tabBarItem = UITabBarItem(title: barSettings, image: UIImage(named: "setting_normal"), selectedImage: O2ThemeManager.image(for: "Icon.setting_selected"))
-
-        self.viewControllers = [mainVC, settings]
-    }
+  
 
     private func mainController() -> UIViewController {
         let appid = O2AuthSDK.shared.customStyle()?.indexPortal

@@ -135,3 +135,43 @@ enum O2BindDiscontinue: Error {
     case noUnitCanBindError
     case unknownError(String)
 }
+
+/// 首页 的 5个页面
+enum MainPageType {
+    case home
+    case im
+    case contact
+    case app
+    case settings
+}
+extension MainPageType {
+    func getKey() -> String {
+        switch(self) {
+        case .home:
+            return "home"
+        case .im:
+            return "im"
+        case .contact:
+            return "contact"
+        case .app:
+            return "app"
+        case .settings:
+            return "settings"
+        }
+    }
+    
+    func getOrder() -> Int {
+        switch(self) {
+        case .home:
+            return 1
+        case .im:
+            return 2
+        case .contact:
+            return 3
+        case .app:
+            return 4
+        case .settings:
+            return 5
+        }
+    }
+}
