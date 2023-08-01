@@ -45,12 +45,9 @@ class OOMeetingPersonTableViewCell: UITableViewCell,Configurable {
             if  let errMSG = errMSg {
                 if p.genderType == "f" {
                     self.iconImageView.image = #imageLiteral(resourceName: "icon_men")
-                }else if p.genderType == "m"{
-                    self.iconImageView.image = #imageLiteral(resourceName: "icon_women")
                 }else {
-                    self.iconImageView.image = iconImage
+                    self.iconImageView.image = #imageLiteral(resourceName: "icon_women")
                 }
-                
                 print(errMSG)
             }else{
                 self.iconImageView.image = iconImage

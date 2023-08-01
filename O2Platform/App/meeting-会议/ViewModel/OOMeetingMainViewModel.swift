@@ -57,22 +57,34 @@ extension OOMeetingMainViewModel {
     //获取会议配置信息
     func loadMeetingConfig() -> Promise<OOMeetingConfigInfo> {
         return Promise { fulfill, reject in
-            self.o2PersonalAPI.request(.meetingConfig, completion: { (result) in
-                let config = OOResult<BaseModelClass<String>>(result)
-                if config.isResultSuccess() {
-                    if let jsonString = config.model?.data {
-                        if let info = OOMeetingConfigInfo.deserialize(from: jsonString) {
-                            fulfill(info)
-                        }else {
-                            reject(OOAppError.jsonMapping(message: "json解析异常", statusCode: 1024, data: nil))
-                        }
+            self.o2MeetingAPI.request(.meetingConfigV2) { c in
+                let configv2 = OOResult<BaseModelClass<OOMeetingConfigInfo>>(c)
+                if configv2.isResultSuccess() {
+                    if let cv2 = configv2.model?.data {
+                        fulfill(cv2)
                     } else {
                         reject(OOAppError.apiResponseError("返回数据是空"))
                     }
-                }else {
-                    reject(config.error!)
+                } else {
+                    // 老接口
+                    self.o2PersonalAPI.request(.meetingConfig, completion: { (result) in
+                        let config = OOResult<BaseModelClass<String>>(result)
+                        if config.isResultSuccess() {
+                            if let jsonString = config.model?.data {
+                                if let info = OOMeetingConfigInfo.deserialize(from: jsonString) {
+                                    fulfill(info)
+                                }else {
+                                    reject(OOAppError.jsonMapping(message: "json解析异常", statusCode: 1024, data: nil))
+                                }
+                            } else {
+                                reject(OOAppError.apiResponseError("返回数据是空"))
+                            }
+                        }else {
+                            reject(configv2.error!)
+                        }
+                    })
                 }
-            })
+            }
             
         }
     }

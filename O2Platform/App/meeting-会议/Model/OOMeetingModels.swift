@@ -53,7 +53,7 @@ class OOMeetingConfigProcess: NSObject, DataModel, NSCoding {
 class OOMeetingConfigInfo: NSObject, DataModel, NSCoding {
     @objc var process: OOMeetingConfigProcess?
     var mobileCreateEnable:  Bool?
-    var weekBegin: Int?
+    @objc var weekBegin: String?
     @objc var typeList: [String]? // 会议类型可选值
     
     public func encode(with aCoder: NSCoder) {
@@ -75,7 +75,7 @@ class OOMeetingConfigInfo: NSObject, DataModel, NSCoding {
     public required init?(coder aDecoder: NSCoder) {
         process = aDecoder.decodeObject(forKey: "process") as? OOMeetingConfigProcess
         mobileCreateEnable = aDecoder.decodeObject(forKey: "mobileCreateEnable") as? Bool
-        weekBegin = aDecoder.decodeObject(forKey: "weekBegin") as? Int
+        weekBegin = aDecoder.decodeObject(forKey: "weekBegin") as? String
         typeList = aDecoder.decodeObject(forKey: "typeList") as? [String]
         
     }

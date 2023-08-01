@@ -53,7 +53,7 @@ enum O2MeetingAPI {
     case meetingAttachmentDelete(String)
     case meetingAttachmentDownload(OOMeetingAttachmentList)
     
-    
+    case meetingConfigV2
     
     
     
@@ -156,6 +156,8 @@ extension O2MeetingAPI:TargetType{
             return "/jaxrs/attachment/\(id)"
         case .meetingAttachmentDownload(let atta):
             return "/jaxrs/attachment/\(atta.id!)/download/false"
+        case .meetingConfigV2:
+            return "/jaxrs/config/system/config"
         }
             
     }
@@ -231,6 +233,8 @@ extension O2MeetingAPI:TargetType{
         case .meetingAttachmentDelete(_):
             return .delete
         case .meetingAttachmentDownload(_):
+            return .get
+        case .meetingConfigV2:
             return .get
         }
     }

@@ -88,13 +88,13 @@ extension OOMeetingCreateViewModel{
             switch result {
             case .success(let res):
                 guard let image = UIImage(data: res.data) else {
-                    compeletionBlock(#imageLiteral(resourceName: "icon_？"),"image transform error")
+                    compeletionBlock(nil, "image transform error")
                     return
                 }
                 compeletionBlock(image,nil)
                 break
             case .failure(let err):
-                compeletionBlock(#imageLiteral(resourceName: "icon_？"),err.errorDescription)
+                compeletionBlock(nil, err.errorDescription)
                 break
             }
         }
