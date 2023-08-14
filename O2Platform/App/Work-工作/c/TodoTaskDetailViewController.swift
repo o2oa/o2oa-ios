@@ -345,14 +345,20 @@ class TodoTaskDetailViewController: BaseWebViewUIViewController {
 
     @objc func closeForBackBtn() {
         DDLogDebug("点击关闭按钮了。。。。。。。。。")
-        //调用 js的 关闭当前工作的 函数 js会做新建检查工作
-        self.webView.evaluateJavaScript(TodoTaskJS.CLOSE_WORK, completionHandler: { (data, err) in
-            DDLogDebug("执行关闭js了。。 data:\(String(describing: data)) err:\(String(describing: err))")
-            guard err == nil else {
-                self.goBack()
-                return
-            }
-        })
+        let canback = self.webView?.canGoBack ?? false
+        if canback {
+            DDLogDebug("返回上一页。。。。。。。。")
+            self.webView?.goBack()
+        } else {
+            //调用 js的 关闭当前工作的 函数 js会做新建检查工作
+            self.webView.evaluateJavaScript(TodoTaskJS.CLOSE_WORK, completionHandler: { (data, err) in
+                DDLogDebug("执行关闭js了。。 data:\(String(describing: data)) err:\(String(describing: err))")
+                guard err == nil else {
+                    self.goBack()
+                    return
+                }
+            })
+        }
     }
 
     private var goBackDoing = false
