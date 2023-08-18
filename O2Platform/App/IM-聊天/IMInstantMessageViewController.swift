@@ -219,6 +219,12 @@ extension IMInstantMessageViewController : IMChatMessageDelegate {
             self.getMeetingInfo(id: id)
             return
         }
+        // 信息中心的消息 特殊处理 这里消息一般都是文档消息
+        if storyboard == "information",let body = msgBody, let jsonData = String(body).data(using: .utf8), let dicArr = try? JSONSerialization.jsonObject(with: jsonData, options: .allowFragments) as? [String:AnyObject], let id = dicArr["id"] as? String {
+            let title = dicArr["title"] as? String
+            self.openCmsDocument(docId: id, docTitle: title ?? "", readonly: true)
+            return
+        }
         
         let storyBoard = UIStoryboard(name: storyboard, bundle: nil)
         guard let destVC = storyBoard.instantiateInitialViewController() else {
@@ -231,6 +237,18 @@ extension IMInstantMessageViewController : IMChatMessageDelegate {
             self.navigationController?.pushViewController(destVC, animated: true)
         }
         
+    }
+    
+    /// 打开cms文档
+    private func openCmsDocument(docId: String, docTitle: String, readonly: Bool) {
+        DDLogInfo("打开文档， docId：\(docId) , docTitle:\(docTitle) , readonly: \(readonly)")
+        let storyBoard = UIStoryboard(name: "information", bundle: nil)
+        let destVC = storyBoard.instantiateViewController(withIdentifier: "CMSSubjectDetailVC") as! CMSItemDetailViewController
+        let json = """
+        {"title":"\(docTitle)", "id":"\(docId)", "readonly": \(readonly)}
+        """
+        destVC.itemData =  CMSCategoryItemData(JSONString: json)
+        self.show(destVC, sender: nil)
     }
     
     func openWork(workId: String) {
