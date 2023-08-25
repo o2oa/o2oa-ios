@@ -733,10 +733,12 @@ open class O2LoginAccountModel: NSObject, DataModel, NSCoding, IO2LoginAccountMo
 public protocol IO2CustomImageModel: HandyJSON, CustomStringConvertible  {
     var name : String? { get set }
     var value : String? { get set }
+    var path: String? { get set }
 }
 open  class O2CustomImageModel: NSObject, DataModel, NSCoding, IO2CustomImageModel {
     @objc open var name : String?
     @objc open var value : String? // base64 图片
+    @objc open var path: String? // 在线图片
     public func encode(with aCoder: NSCoder) {
         if name != nil {
             aCoder.encode(name, forKey: "name")
@@ -744,11 +746,15 @@ open  class O2CustomImageModel: NSObject, DataModel, NSCoding, IO2CustomImageMod
         if value != nil {
             aCoder.encode(value, forKey: "value")
         }
+        if path != nil {
+            aCoder.encode(path, forKey: "path")
+        }
     }
     
     public required init?(coder aDecoder: NSCoder) {
         name = aDecoder.decodeObject(forKey: "name") as? String
         value = aDecoder.decodeObject(forKey: "value") as? String
+        path = aDecoder.decodeObject(forKey: "path") as? String
     }
     
     required public override init() {}
@@ -943,6 +949,8 @@ public protocol IO2CustomStyleModel: HandyJSON, CustomStringConvertible {
     var portalList : [O2CustomPortalAppModel]? { get set }
     var simpleMode: Bool? { get set } /// 简易模式
     var appIndexPages : [String]? { get set }
+    var processFilterList : [String]? { get set }
+    var cmsCategoryFilterList : [String]? { get set }
 }
 open class O2CustomStyleModel: NSObject, DataModel, NSCoding, IO2CustomStyleModel {
     @objc open var images : [O2CustomImageModel]?
@@ -953,6 +961,8 @@ open class O2CustomStyleModel: NSObject, DataModel, NSCoding, IO2CustomStyleMode
     @objc open var portalList : [O2CustomPortalAppModel]?
     open var simpleMode: Bool?
     @objc open var appIndexPages: [String]?
+    @objc open var processFilterList: [String]?
+    @objc open var cmsCategoryFilterList: [String]?
     
     @objc public func encode(with aCoder: NSCoder) {
         if images != nil {
@@ -979,6 +989,12 @@ open class O2CustomStyleModel: NSObject, DataModel, NSCoding, IO2CustomStyleMode
         if appIndexPages != nil {
             aCoder.encode(appIndexPages, forKey: "appIndexPages")
         }
+        if processFilterList != nil {
+            aCoder.encode(processFilterList, forKey: "processFilterList")
+        }
+        if cmsCategoryFilterList != nil {
+            aCoder.encode(cmsCategoryFilterList, forKey: "cmsCategoryFilterList")
+        }
     }
     
     @objc public required init?(coder aDecoder: NSCoder) {
@@ -990,6 +1006,8 @@ open class O2CustomStyleModel: NSObject, DataModel, NSCoding, IO2CustomStyleMode
         portalList = aDecoder.decodeObject(forKey: "portalList") as? [O2CustomPortalAppModel]
         simpleMode = aDecoder.decodeObject(forKey: "simpleMode") as? Bool
         appIndexPages = aDecoder.decodeObject(forKey: "appIndexPages") as? [String]
+        processFilterList = aDecoder.decodeObject(forKey: "processFilterList") as? [String]
+        cmsCategoryFilterList = aDecoder.decodeObject(forKey: "cmsCategoryFilterList") as? [String]
     }
     
     required public override init() {}

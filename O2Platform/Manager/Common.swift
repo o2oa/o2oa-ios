@@ -9,7 +9,11 @@
 import UIKit
 import SwiftValidator
 import SwiftyUserDefaults
+import ObjectMapper
 import CocoaLumberjack
+import Alamofire
+import AlamofireImage
+import AlamofireObjectMapper
 
 import CoreTelephony
 
@@ -323,53 +327,53 @@ class OOCustomImageManager {
         self.loadCache()
     }
     
-    private func loadCache() {
+    func loadCache(_ block:  (()->Void)? = nil) {
         if let configInfo = O2AuthSDK.shared.customStyle() {
+            let group = DispatchGroup()
             configInfo.images?.forEach({ (ooImage) in
-                let value = ooImage.value!
-                let data = Data(base64Encoded: value)
-                let image = UIImage(data: data!)
-                let scaleImage = image?.scaledImageFrom3x()
-                imageCache.setObject(scaleImage!, forKey: ooImage.name! as NSString)
+                if let path = ooImage.path { // url
+                    group.enter()
+                    self.loadImageFromUrl(path: path, name: ooImage.name!, group: group)
+                } else if let value = ooImage.value { // base64
+                    let data = Data(base64Encoded: value)
+                    let image = UIImage(data: data!)
+                    let scaleImage = image?.scaledImageFrom3x()
+                    imageCache.setObject(scaleImage!, forKey: ooImage.name! as NSString)
+                }
             })
+            group.notify(queue: DispatchQueue.main) {
+                block?()
+            }
         }
+        
     }
     
     func loadImage(_ key:OOCustomImageKey) -> UIImage? {
         if let image = imageCache.object(forKey: key.rawValue) {
             return image
-        }else {
-            self.loadCache()
-            if let image = imageCache.object(forKey: key.rawValue) {
-                return image
-            }else {
-                return nil
-            }
         }
+        return nil
     }
     
-    //异步获取图片
-    func loadImageAsync(key:OOCustomImageKey, block:@escaping (UIImage?)->Void) {
-        let item = DispatchWorkItem {
-            var isBlock = false
-            if let configInfo = O2AuthSDK.shared.customStyle() {
-                configInfo.images?.forEach({ (ooImage) in
-                    let name = ooImage.name! as NSString
-                    if name == key.rawValue {
-                        DDLogDebug("name:\(name)")
-                        let value = ooImage.value!
-                        let data = Data(base64Encoded: value)
-                        let image = UIImage(data: data!)
-                        block(image)
-                        isBlock = true
-                    }
-                })
+   
+    
+    // 下图片 缓存
+    private func loadImageFromUrl(path: String, name:String, group: DispatchGroup) {
+        // 图片地址
+        if let url = AppDelegate.o2Collect.genrateURLWithWebContextKey2( path,  parameter: nil, covertd:false) {
+            DDLogDebug("图片地址：\(url)")
+            AF.download(url).responseData { resData in
+                if let data = resData.value, let image = UIImage(data: data) {
+                    let scaleImage = image.scaledImageFrom3x()
+                    self.imageCache.setObject(scaleImage, forKey: name as NSString)
+                    DDLogInfo("图片缓存成功 \(name)")
+                }
+                group.leave()
             }
-            if (!isBlock) {
-                block(nil)
-            }
+        } else {
+            group.leave()
         }
-        DispatchQueue.main.async(execute: item)
+        
     }
     
    

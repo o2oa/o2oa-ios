@@ -142,7 +142,7 @@ class O2Collect{
             }
         }
         if covertd {
-            return self.generateTimestampWithURL(baseURL)?.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed)
+            return self.generateTimestampWithURL(baseURL)?.urlEncoded
         }else{
             return self.generateTimestampWithURL(baseURL)
         }

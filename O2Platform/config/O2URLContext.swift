@@ -135,6 +135,7 @@ struct TaskContext {
     static let taskWorkDeleteQuery = "jaxrs/work/##id##"
     static let todoTaskSaveAndSubmitQuery = "jaxrs/task/##id##/processing"
     static let todoTaskListQuery = "jaxrs/task/list/##id##/next/##count##"
+    static let todoTaskListPagingQyery = "jaxrs/task/v2/list/paging/##page##/size/##size##"
     static let todoTaskListFilterQuery = "jaxrs/task/list/##id##/next/##count##/filter"
     static let todoTaskSubmitQuery = "jaxrs/task/##id##"
     static let todoTaskGetAttachmentInfoQuery = "jaxrs/attachment/##attachmentId##/work/##workId##"

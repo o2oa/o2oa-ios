@@ -381,7 +381,10 @@ public class O2AuthSDK: NSObject {
                         throw O2AuthError.blockError("检查移动端配置是否需要更新时出错， 没有获取到hash值")
                     }
                 }
-            }.flatMap { (result) -> Observable<Response> in
+            }.flatMap({ (response) -> Observable<Bool> in
+                // 加载在线图片
+                return self.loadStyleImagesObservable()
+            }).flatMap { (result) -> Observable<Response> in
                 if result {
                     if let token = O2UserDefaults.shared.myInfo?.token {
                         return self.loginWithToken(token)
@@ -494,7 +497,10 @@ public class O2AuthSDK: NSObject {
                     throw O2AuthError.blockError("检查移动端配置是否需要更新时出错， 没有获取到hash值")
                 }
             }
-        }.flatMap { (result) -> Observable<Response> in
+        }.flatMap({ (response) -> Observable<Bool> in
+            // 加载在线图片
+            return self.loadStyleImagesObservable()
+        }).flatMap { (result) -> Observable<Response> in
                 if result {
                     if let token = O2UserDefaults.shared.myInfo?.token {
                         return self.loginWithToken(token)
@@ -883,7 +889,10 @@ public class O2AuthSDK: NSObject {
                     throw O2BindDiscontinue.noLoginError("检查移动端配置是否需要更新时出错， 没有获取到hash值")
                 }
             }
-        }.flatMap { (result) -> Observable<RSAPublicKeyData> in
+        }.flatMap({ (response) -> Observable<Bool> in
+            // 加载在线图片
+            return self.loadStyleImagesObservable()
+        }).flatMap { (result) -> Observable<RSAPublicKeyData> in
             if result {
                 return self.getRsaPublicKey()
             }else {
@@ -1031,7 +1040,10 @@ public class O2AuthSDK: NSObject {
                         throw O2BindDiscontinue.noLoginError("检查移动端配置是否需要更新时出错， 没有获取到hash值")
                     }
                 }
-            }.flatMap { (result) -> Observable<Response> in
+            }.flatMap({ (response) -> Observable<Bool> in
+                // 加载在线图片
+                return self.loadStyleImagesObservable()
+            }).flatMap { (result) -> Observable<Response> in
                 if result {
                     if let token = O2UserDefaults.shared.myInfo?.token {
                         return self.loginWithToken(token)
@@ -1156,7 +1168,11 @@ public class O2AuthSDK: NSObject {
                         throw O2BindDiscontinue.noLoginError("检查移动端配置是否需要更新时出错， 没有获取到hash值")
                     }
                 }
-            }.flatMap { (result) -> Observable<Response> in
+            }.flatMap({ (response) -> Observable<Bool> in
+                // 加载在线图片
+                return self.loadStyleImagesObservable()
+            })
+            .flatMap { (result) -> Observable<Response> in
                 if result {
                     if let token = O2UserDefaults.shared.myInfo?.token {
                         return self.loginWithToken(token)
@@ -1279,6 +1295,17 @@ public class O2AuthSDK: NSObject {
                 observer.on(.completed)
                 return Disposables.create()
             })
+    }
+    
+    private func loadStyleImagesObservable() -> Observable<Bool> {
+        return Observable<Bool>.create { (observer)-> Disposable in
+            OOCustomImageManager.default.loadCache {
+                DDLogInfo("完成了？？？")
+                observer.on(.next(true))
+                observer.on(.completed)
+            }
+            return Disposables.create()
+        }
     }
     
     /// 检查是否绑定过

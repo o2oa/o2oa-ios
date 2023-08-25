@@ -235,31 +235,48 @@ class MainTaskSecondViewController: UIViewController {
     fileprivate func loadMainTodo(_ pageModel:CommonPageModel,_ isFirst:Bool = true){
         DDLogDebug("loadMainTodo ...........................")
         self.showLoading(title: "加载中...")
-        //ZoneHUD.showNormalHUD((self.navigationController?.view!)!)
-        let url = AppDelegate.o2Collect.generateURLWithAppContextKey(TaskContext.taskContextKey, query: TaskContext.todoTaskListQuery, parameter: pageModel.toDictionary() as [String : AnyObject]?)
+        
+        let url = AppDelegate.o2Collect.generateURLWithAppContextKey(TaskContext.taskContextKey, query: TaskContext.todoTaskListPagingQyery, parameter: pageModel.toNewDictionary() as [String : AnyObject]?)
         if isFirst {
             self.todoTasks.removeAll(keepingCapacity: true)
         }
-        AF.request(url!).responseArray(keyPath: "data", context: nil, completionHandler: { (response:AFDataResponse<[TodoTask]>) in
+        var processIds:[String] = []
+        if let current = O2AuthSDK.shared.customStyle() {
+            processIds = current.processFilterList ?? []
+        }
+        AF.request(url!, method: .post, parameters: ["processList": processIds], encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+//        AF.request(url!).responseArray(keyPath: "data", context: nil, completionHandler: { (response:AFDataResponse<[TodoTask]>) in
             DDLogDebug(response.debugDescription)
             switch response.result {
             case .success(let tTasks):
-                DispatchQueue.main.async {
-                    self.todoTasks.append(contentsOf: tTasks)
-                    //let count:Int = JSON(val)["count"].int ?? 0
-                    self.newTaskPageModel.setPageTotal(tTasks.count)
-                    self.hideLoading()
-                    self.tableView.beginUpdates()
-                    self.tableView.reloadSections(IndexSet.init(integer: 1), with: .automatic)
-                    self.tableView.endUpdates()
+                let json = JSON(tTasks)["data"]
+                let type = JSON(tTasks)["type"]
+                if type == "success" {
+                    let pInfos = Mapper<TodoTask>().mapArray(JSONString: json.description)
+                    if let uPInfos = pInfos {
+                        self.todoTasks.append(contentsOf: uPInfos)
+                        self.newTaskPageModel.setPageTotal(uPInfos.count)
+                    }
+                    DispatchQueue.main.async {
+                        self.hideLoading()
+                        self.tableView.beginUpdates()
+                        self.tableView.reloadSections(IndexSet.init(integer: 1), with: .automatic)
+                        self.tableView.endUpdates()
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.showSuccess(title: "加载待办失败")
+                        DDLogError(json.description)
+                    }
                 }
+                
             case .failure(let err):
                 DispatchQueue.main.async {
                     self.showSuccess(title: "加载待办失败")
                     DDLogError(err.localizedDescription)
                 }
             }
-        })
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -302,8 +319,12 @@ class MainTaskSecondViewController: UIViewController {
         if isFirst {
             self.newPublishInfos.removeAll()
         }
+        var categroyIds:[String] = []
+        if let current = O2AuthSDK.shared.customStyle() {
+            categroyIds = current.cmsCategoryFilterList ?? []
+        }
         // justData true 不查询count 速度可以快点
-        AF.request(npURL!, method: .put, parameters: ["justData": true], encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+        AF.request(npURL!, method: .put, parameters: ["justData": true, "categoryIdList": categroyIds], encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
             switch response.result {
             case .success(let val):
                 let json = JSON(val)["data"]
