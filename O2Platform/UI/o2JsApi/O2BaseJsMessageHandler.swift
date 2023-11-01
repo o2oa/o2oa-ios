@@ -206,11 +206,14 @@ class O2BaseJsMessageHandler: NSObject, O2WKScriptMessageHandlerImplement {
     private func openWork(work: String, workCompleted: String, title: String) {
         let storyBoard = UIStoryboard(name: "task", bundle: nil)
         let destVC = storyBoard.instantiateViewController(withIdentifier: "todoTaskDetailVC") as! TodoTaskDetailViewController
-        let json = """
-        {"work":"\(work)", "workCompleted":"\(workCompleted)", "title":"\(title)"}
-        """
-        DDLogDebug("openWork json: \(json)")
-        let todo = TodoTask(JSONString: json)
+//        let json = """
+//        {"work":"\(work)", "workCompleted":"\(workCompleted)", "title":"\(title)"}
+//        """
+//        DDLogDebug("openWork json: \(json)")
+        let todo = TodoTask(JSONString: "{}")
+        todo?.work = work
+        todo?.workCompleted = workCompleted
+        todo?.title = title
         destVC.todoTask = todo
         destVC.backFlag = 3 //隐藏就行
         self.viewController.show(destVC, sender: nil)

@@ -58,6 +58,8 @@ class FastCheckInManager: NSObject {
         self.isRunning = false
         self.stopTimer()
         self.stopLocationService()
+        self.nextCheckInRecord = nil
+        
         DDLogInfo("结束极速打卡====================================")
     }
     
